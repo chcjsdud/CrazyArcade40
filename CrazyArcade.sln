@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrazyArcade", "CrazyArcade\CrazyArcade.vcxproj", "{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level0", "Level0", "{3D9B0CF6-7BA5-4CAD-A4B9-E8AA65A85DE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level1", "Level1", "{E97DD7C8-31E4-4EDE-80E5-AE2F68BA2BFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level2", "Level2", "{7F48D5DB-63E8-4586-BB0E-1006868B1DBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level3", "Level3", "{12EF9827-C573-428D-9839-6CEDE81DC42C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Debug|x64.ActiveCfg = Debug|x64
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Debug|x64.Build.0 = Debug|x64
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Debug|x86.ActiveCfg = Debug|Win32
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Debug|x86.Build.0 = Debug|Win32
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Release|x64.ActiveCfg = Release|x64
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Release|x64.Build.0 = Release|x64
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Release|x86.ActiveCfg = Release|Win32
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D1E4C127-8276-4A53-8D46-A2ED5AFA2C04} = {12EF9827-C573-428D-9839-6CEDE81DC42C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C057FFF-F1D6-4C3F-B350-CA2C4FEBC236}
+	EndGlobalSection
+EndGlobal
