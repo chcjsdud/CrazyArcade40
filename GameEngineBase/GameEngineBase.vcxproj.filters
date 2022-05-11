@@ -13,9 +13,6 @@
     <Filter Include="Math">
       <UniqueIdentifier>{84a66b57-bf9c-4794-b333-c44a858aa6b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound">
-      <UniqueIdentifier>{fcdc289e-e38f-4557-94de-e54bdfb50bdd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="String">
       <UniqueIdentifier>{407b6aa1-8a67-4d98-a13b-69940cfc8eeb}</UniqueIdentifier>
     </Filter>
@@ -130,6 +127,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ThirdParty\inc\fmod.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </None>
+    <None Include="ThirdParty\inc\fmod.hpp">
+      <Filter>ThirdParty\Inc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\fmod.dll">
       <Filter>ThirdParty\bin</Filter>
     </CopyFileToFolders>
@@ -142,13 +147,5 @@
     <CopyFileToFolders Include="ThirdParty\bin\fmodL_vc.lib">
       <Filter>ThirdParty\bin</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ThirdParty\inc\fmod.h">
-      <Filter>ThirdParty\Inc</Filter>
-    </None>
-    <None Include="ThirdParty\inc\fmod.hpp">
-      <Filter>ThirdParty\Inc</Filter>
-    </None>
   </ItemGroup>
 </Project>
