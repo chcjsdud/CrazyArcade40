@@ -11,8 +11,5 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance,
     _In_ char*    lpCmdLine,
     _In_ int       nCmdShow)
 {
-
     GameEngine::Start<CrazyArcade>();
-
-
 }

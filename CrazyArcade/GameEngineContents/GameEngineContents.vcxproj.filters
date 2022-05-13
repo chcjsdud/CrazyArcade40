@@ -8,6 +8,10 @@
     <ClInclude Include="TitleBackGround.h">
       <Filter>Actor</Filter>
     </ClInclude>
+    <ClInclude Include="IntroLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoPlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -17,6 +21,10 @@
     <ClCompile Include="TitleBackGround.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
+    <ClCompile Include="IntroLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
