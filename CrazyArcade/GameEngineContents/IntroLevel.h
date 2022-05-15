@@ -14,7 +14,6 @@ public:
 	IntroLevel& operator=(const IntroLevel& _Other) = delete;
 	IntroLevel& operator=(IntroLevel&& _Other) noexcept = delete;
 
-
 protected:
 	void Loading() override;
 	void Update() override;
