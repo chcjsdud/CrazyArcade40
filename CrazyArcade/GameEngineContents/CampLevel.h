@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineSound.h>
 
+class MapBackGround;
 class Player;
 class CampLevel : public GameEngineLevel
 {

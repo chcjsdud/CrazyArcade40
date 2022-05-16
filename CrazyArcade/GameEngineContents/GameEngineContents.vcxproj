@@ -178,6 +178,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="LoginBackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LoginButton.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LoginLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MapBackGround.h" />
     <ClInclude Include="MapGameObject.h" />
     <ClInclude Include="Monster.h" />
@@ -185,6 +197,10 @@
     <ClInclude Include="Monster1Level.h" />
     <ClInclude Include="Monster2.h" />
     <ClInclude Include="Monster2Level.h" />
+    <ClInclude Include="Mouse.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -228,6 +244,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="LoginBackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LoginButton.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LoginLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MapBackGround.cpp" />
     <ClCompile Include="MapGameObject.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -235,6 +263,10 @@
     <ClCompile Include="Monster1Level.cpp" />
     <ClCompile Include="Monster2.cpp" />
     <ClCompile Include="Monster2Level.cpp" />
+    <ClCompile Include="Mouse.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>

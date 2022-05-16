@@ -1,6 +1,7 @@
 #include "CrazyArcade.h"
 #include "IntroLevel.h"
 #include "TitleLevel.h"
+#include "LoginLevel.h"
 #include "CampLevel.h"
 #include "VillageLevel.h"
 #include "CemeteryLevel.h"
@@ -53,6 +54,22 @@ void CrazyArcade::GameInit()
         ResourcesDir.Move("Resources");
         ResourcesDir.Move("PlayLevel");
         ResourcesDir.Move("TileMap");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
+
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("etc");
 
 
         std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
@@ -123,13 +140,14 @@ void CrazyArcade::GameInit()
 
     CreateLevel<IntroLevel>("IntroLevel");
 	CreateLevel<TitleLevel>("TitleLevel");
-CreateLevel<CampLevel>("CampLevel");
+    CreateLevel<CampLevel>("CampLevel");
+    CreateLevel<LoginLevel>("Login");
 //CreateLevel<VillageLevel>("VillageLevel");
 //CreateLevel<CemeteryLevel>("CemeteryLevel");
 //CreateLevel<Monster1Level>("Monster1Level");
 //CreateLevel<Monster2Level>("Monster2Level");
 //CreateLevel<BossLevel>("BossLevel");
-ChangeLevel("CampLevel");
+     ChangeLevel("Login");
 }
 
 void CrazyArcade::GameLoop()
