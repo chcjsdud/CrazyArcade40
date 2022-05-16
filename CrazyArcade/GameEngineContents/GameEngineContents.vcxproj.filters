@@ -48,6 +48,9 @@
     <ClInclude Include="Monster2Level.h">
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsEnum.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
