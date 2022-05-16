@@ -12,6 +12,24 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="VideoPlayer.h" />
+    <ClInclude Include="VillageLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="CemeteryLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="CampLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster1Level.h">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster2Level.h">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -25,6 +43,24 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="VideoPlayer.cpp" />
+    <ClCompile Include="VillageLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="CemeteryLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="CampLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster1Level.cpp">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster2Level.cpp">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -32,6 +68,12 @@
     </Filter>
     <Filter Include="Actor">
       <UniqueIdentifier>{6f1effb0-18fa-419e-9443-cd76c33b3c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel">
+      <UniqueIdentifier>{2bb25d99-15c5-473e-b9d4-c33b3686a4c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel\Monster">
+      <UniqueIdentifier>{d743701b-8291-4166-aa3c-1c169d0c0116}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

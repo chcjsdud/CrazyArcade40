@@ -160,30 +160,78 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BossLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="CampLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="CemeteryLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CrazyArcade.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="Monster1Level.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Monster2Level.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleBackGround.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="TitleLevel.h" />
     <ClInclude Include="VideoPlayer.h" />
+    <ClInclude Include="VillageLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BossLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CampLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CemeteryLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CrazyArcade.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="Monster1Level.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Monster2Level.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp" />
     <ClCompile Include="VideoPlayer.cpp" />
+    <ClCompile Include="VillageLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
