@@ -7,7 +7,7 @@ enum class ORDER
 	MONSTER,
 	PLAYER,
 	EFFECT,
-	UI,
+	UI
 };
 enum class BlockType
 {
