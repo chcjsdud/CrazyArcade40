@@ -94,3 +94,4 @@ public:
 	bool IsDie();
 };
 
+
