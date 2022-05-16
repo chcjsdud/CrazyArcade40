@@ -1,5 +1,8 @@
 #pragma once
-class MapBackGround
+#include <GameEngine/GameEngineActor.h>
+
+class GameEngineRenderer;
+class MapBackGround : public GameEngineActor
 {
 public:
 	MapBackGround();
@@ -13,5 +16,8 @@ public:
 protected:
 
 private:
-
+	void Start();
+	void Render();
+	void Update();
+	GameEngineRenderer* MapBackGroundRender_;
 };
