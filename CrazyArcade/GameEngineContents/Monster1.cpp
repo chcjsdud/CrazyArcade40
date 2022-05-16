@@ -13,16 +13,18 @@ Monster1::~Monster1()
 
 void Monster1::Start()
 {
+	//°¨±ÖÀÌ
 	Monster::Start();
 	SetSpeed(10);
-	Renderer_ = CreateRenderer("Monster1.bmp");
+	Renderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
-	//Image->CutCount(, );
-	Renderer_->CreateAnimation("Monster1.bmp", "WalkRight", 0, 1, 0.1f, true);
-	Renderer_->CreateAnimation("Monster1.bmp", "WalkLeft", 0, 1, 0.1f, true);
-	Renderer_->CreateAnimation("Monster1.bmp", "Attack", 0, 1, 0.1f, true);
-	Renderer_->CreateAnimation("Monster1.bmp", "Die", 0, 1, 0.1f, true);
-	Renderer_->ChangeAnimation("WalkRight");
+	Image->CutCount(10, 7);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 6, 7, 0.1f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 4, 5, 0.1f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 0, 1, 0.1f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 2, 3, 0.1f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Die", 8, 10, 0.1f, true);
+	Renderer_->ChangeAnimation("MoveRight");
 }
 
 void Monster1::Render()
