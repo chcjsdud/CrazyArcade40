@@ -177,6 +177,8 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="Monster1Level.h" />
+    <ClInclude Include="Monster2Level.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -218,6 +220,8 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="Monster1Level.cpp" />
+    <ClCompile Include="Monster2Level.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>

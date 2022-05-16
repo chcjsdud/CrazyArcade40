@@ -21,17 +21,23 @@
     <ClInclude Include="Player_Bazzi.h">
       <Filter>Actor\Play</Filter>
     </ClInclude>
-    <ClInclude Include="VillageLevel.h">
-      <Filter>Level</Filter>
+    <ClInclude Include="Monster1Level.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster2Level.h">
+      <Filter>Level\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="BossLevel.h">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="CampLevel.h">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="CemeteryLevel.h">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="VillageLevel.h">
+      <Filter>Level\PlayLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,17 +64,23 @@
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play</Filter>
     </ClCompile>
-    <ClCompile Include="VillageLevel.cpp">
-      <Filter>Level</Filter>
+    <ClCompile Include="Monster1Level.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster2Level.cpp">
+      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="BossLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="CampLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="CemeteryLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="VillageLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +92,9 @@
     </Filter>
     <Filter Include="Actor\Play">
       <UniqueIdentifier>{b7fee2e0-7ea1-40ee-9140-b6de1e23d85f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel">
+      <UniqueIdentifier>{936d36d6-4df3-4788-9d2e-a3de7bcc51ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
