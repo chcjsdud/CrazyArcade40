@@ -165,9 +165,9 @@ void CrazyArcade::GameInit()
     CreateLevel<Monster2Level>("Monster2Level");
     CreateLevel<BossLevel>("BossLevel");
 
-    CreateLevel<BossLevel>("MapTeamTest");
-    CreateLevel<BossLevel>("PlayerTeamTest");
-    CreateLevel<BossLevel>("UITeamTest");
+    CreateLevel<MapTeamTest>("MapTeamTest");
+    CreateLevel<PlayerTeamTest>("PlayerTeamTest");
+    CreateLevel<UITeamTest>("UITeamTest");
 
     ChangeLevel("CampLevel");
 
