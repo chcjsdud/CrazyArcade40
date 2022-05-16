@@ -21,6 +21,18 @@
     <ClInclude Include="Player_Bazzi.h">
       <Filter>Actor\Play</Filter>
     </ClInclude>
+    <ClInclude Include="VillageLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CampLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CemeteryLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -45,6 +57,18 @@
     </ClCompile>
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="VillageLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CampLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CemeteryLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
