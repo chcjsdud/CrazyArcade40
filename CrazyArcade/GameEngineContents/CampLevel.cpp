@@ -6,7 +6,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 
 #include"CampLevel.h"
-#include"TitleBackGround.h"
+#include"MapBackGround.h"
 
 CampLevel::CampLevel()
 {
@@ -18,8 +18,9 @@ CampLevel::~CampLevel()
 }
 void CampLevel::Loading()
 {
-		TitleBackGround_ = CreateActor<TitleBackGround>(1);
-	TitleBackGround_->GetRenderer()->SetImage("1Test.bmp");
+	MapBackGround_ = CreateActor<MapBackGround>(1);
+	MapBackGround_->GetRenderer()->SetImage("BossStage_Back.bmp");
+	MapBackGround_->GetRenderer()->SetPivot({ 320, 280 });//윈도우기준 그려줄 위치 정해주고
 }
 void CampLevel::Update()
 {

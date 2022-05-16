@@ -20,4 +20,9 @@ private:
 	void Render();
 	void Update();
 	GameEngineRenderer* MapBackGroundRender_;
+public:
+	GameEngineRenderer* GetRenderer()
+	{
+		return	MapBackGroundRender_;
+	}
 };

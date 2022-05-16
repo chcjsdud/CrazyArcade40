@@ -1,8 +1,10 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+#include "MapBackGround.h"
 class CampLevel : public GameEngineLevel
 {
-
+private:
+	MapBackGround* MapBackGround_;
 
 public:
 	CampLevel();
@@ -18,6 +20,5 @@ protected:
 	void Update() override;
 	void LevelChangeStart(GameEngineLevel* _NextLevel) override;
 	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
-private:
-	TitleBackGround* TitleBackGround_;
+
 };
