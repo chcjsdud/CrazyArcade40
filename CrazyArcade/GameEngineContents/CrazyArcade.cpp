@@ -124,6 +124,23 @@ void CrazyArcade::GameInit()
         }
     }
 
+    // 몬스터
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("Monster");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
+
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
 
@@ -169,7 +186,7 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("IntroLevel");
+    ChangeLevel("PlayerTeamTest");
 
 }
 

@@ -47,7 +47,7 @@
     <ClInclude Include="Monster2.h">
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
-        <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="ContentsEnum.h" />
     <ClInclude Include="LoginLevel.h">
       <Filter>Level\PlayLevel</Filter>
     </ClInclude>
@@ -142,7 +142,7 @@
     <ClCompile Include="Monster2.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
-        <ClCompile Include="LoginLevel.cpp">
+    <ClCompile Include="LoginLevel.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="LoginBackGround.cpp">
@@ -198,7 +198,7 @@
     <Filter Include="Level\PlayLevel">
       <UniqueIdentifier>{f11dbdb3-72be-4162-9605-53a59d87e2c6}</UniqueIdentifier>
     </Filter>
-       <Filter Include="Actor\UI">
+    <Filter Include="Actor\UI">
       <UniqueIdentifier>{b0aa6619-e9b1-40ba-85ce-6353b28d0955}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level\IntroLevel">

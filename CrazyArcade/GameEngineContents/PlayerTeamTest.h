@@ -1,5 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+
+class MapBackGround;
 class PlayerTeamTest : public GameEngineLevel
 {
 public:
@@ -15,5 +17,6 @@ protected:
 	void Loading() override;
 	void Update() override;
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
-
+private:
+	MapBackGround* MapBackGround_;
 };

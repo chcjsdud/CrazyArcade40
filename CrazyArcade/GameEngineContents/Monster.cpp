@@ -37,25 +37,25 @@ void Monster::UpdateMove()
 {
 	// Move
 	// Need to chk : 블럭 충돌 시 이동방향
-	if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(20.0f, 0.0f)))
-	{
-		Dir_ = float4::LEFT;
-	}
+	//if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(20.0f, 0.0f)))
+	//{
+	//	Dir_ = float4::LEFT;
+	//}
 
-	if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(-20.0f, 0.0f)))
-	{
-		Dir_ = float4::RIGHT;
-	}
+	//if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(-20.0f, 0.0f)))
+	//{
+	//	Dir_ = float4::RIGHT;
+	//}
 
-	if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(0.0f, -20.0f)))
-	{
-		Dir_ = float4::DOWN;
-	}
+	//if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(0.0f, -20.0f)))
+	//{
+	//	Dir_ = float4::DOWN;
+	//}
 
-	if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(0.0f, 20.0f)))
-	{
-		Dir_ = float4::UP;
-	}
+	//if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(0.0f, 20.0f)))
+	//{
+	//	Dir_ = float4::UP;
+	//}
 
 	SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 	
