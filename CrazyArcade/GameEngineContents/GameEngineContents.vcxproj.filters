@@ -12,6 +12,9 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="VideoPlayer.h" />
+    <ClInclude Include="Block.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -25,6 +28,9 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="VideoPlayer.cpp" />
+    <ClCompile Include="Block.cpp">
+      <Filter>Actor\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -32,6 +38,9 @@
     </Filter>
     <Filter Include="Actor">
       <UniqueIdentifier>{6f1effb0-18fa-419e-9443-cd76c33b3c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Map">
+      <UniqueIdentifier>{a402bb95-9023-4c8e-b0c7-c25421caacda}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
