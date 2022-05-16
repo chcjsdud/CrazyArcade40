@@ -20,4 +20,3 @@ protected:
 	void Update();
 	void UpdateMove() override;
 };
-
