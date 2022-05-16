@@ -16,12 +16,14 @@ TileIndex GameEngineRendererTileMap::GetTileIndex(const float4& _Pos)
 	return { static_cast<int>(_Pos.x / TileSize_.x), static_cast<int>(_Pos.y / TileSize_.y)};
 }
 
-
-
-
-
-
 void GameEngineRendererTileMap::DeleteTile(int _X, int _Y)
 {
+
+	if (nullptr != Tiles_[_Y][_X])
+	{
+		Tiles_[_Y][_X]->Renderer->Death();
+		delete Tiles_[_Y][_X];
+		Tiles_[_Y][_X] = nullptr;
+	}
 
 }
