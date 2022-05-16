@@ -1,6 +1,6 @@
 #pragma once
-
-class VillageLevel
+#include <GameEngine/GameEngineLevel.h>
+class VillageLevel : public GameEngineLevel
 {
 public:
 	VillageLevel();
@@ -12,7 +12,10 @@ public:
 	VillageLevel& operator=(const VillageLevel& _Other) = delete;
 	VillageLevel& operator=(VillageLevel&& _Other) noexcept = delete;
 protected:
-
+	void Loading() override;
+	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _NextLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
 private:
 
 };

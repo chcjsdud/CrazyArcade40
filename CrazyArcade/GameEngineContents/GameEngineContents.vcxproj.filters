@@ -12,29 +12,14 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="VideoPlayer.h" />
-    <ClInclude Include="VillageLevel.h">
-      <Filter>Level\PlayLevel</Filter>
+    <ClInclude Include="TestLevel.h">
+      <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="CemeteryLevel.h">
-      <Filter>Level\PlayLevel</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Play</Filter>
     </ClInclude>
-    <ClInclude Include="CampLevel.h">
-      <Filter>Level\PlayLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="BossLevel.h">
-      <Filter>Level\PlayLevel\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster1Level.h">
-      <Filter>Level\PlayLevel\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster2Level.h">
-      <Filter>Level\PlayLevel\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="MapBackGround.h">
-      <Filter>Actor\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGameObject.h">
-      <Filter>Actor\Map</Filter>
+    <ClInclude Include="Player_Bazzi.h">
+      <Filter>Actor\Play</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,29 +34,17 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="VideoPlayer.cpp" />
-    <ClCompile Include="VillageLevel.cpp">
-      <Filter>Level\PlayLevel</Filter>
+    <ClCompile Include="TestLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="CemeteryLevel.cpp">
-      <Filter>Level\PlayLevel</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Play</Filter>
     </ClCompile>
-    <ClCompile Include="CampLevel.cpp">
-      <Filter>Level\PlayLevel</Filter>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Play</Filter>
     </ClCompile>
-    <ClCompile Include="BossLevel.cpp">
-      <Filter>Level\PlayLevel\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster1Level.cpp">
-      <Filter>Level\PlayLevel\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster2Level.cpp">
-      <Filter>Level\PlayLevel\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="MapBackGround.cpp">
-      <Filter>Actor\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="MapGameObject.cpp">
-      <Filter>Actor\Map</Filter>
+    <ClCompile Include="Player_Bazzi.cpp">
+      <Filter>Actor\Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,14 +54,8 @@
     <Filter Include="Actor">
       <UniqueIdentifier>{6f1effb0-18fa-419e-9443-cd76c33b3c95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level\PlayLevel">
-      <UniqueIdentifier>{2bb25d99-15c5-473e-b9d4-c33b3686a4c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level\PlayLevel\Monster">
-      <UniqueIdentifier>{d743701b-8291-4166-aa3c-1c169d0c0116}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\Map">
-      <UniqueIdentifier>{a65f569b-ec6f-4dab-a620-15c39d768e48}</UniqueIdentifier>
+    <Filter Include="Actor\Play">
+      <UniqueIdentifier>{b7fee2e0-7ea1-40ee-9140-b6de1e23d85f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

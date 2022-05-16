@@ -7,6 +7,7 @@
 #include <GameEngineBase/GameEngineFile.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineSound.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 CrazyArcade::CrazyArcade()
 {
@@ -35,40 +36,46 @@ void CrazyArcade::GameInit()
         }
     }
 
-	{
+    // 배찌 리소스 
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("Player");
 
-		//맵 이미지
-		GameEngineDirectory ResourcesDir;
-		ResourcesDir.MoveParent("CrazyArcade");
-		ResourcesDir.Move("Resources");
-		ResourcesDir.Move("PlayLevel");
-		ResourcesDir.Move("TileMap");
 
-		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
 
-		for (size_t i = 0; i < AllImageFileList.size(); i++)
-		{
-			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
-		}
-	}
-	{
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
 
-		//콜리전 맵 이미지
-		GameEngineDirectory ResourcesDir;
-		ResourcesDir.MoveParent("CrazyArcade");
-		ResourcesDir.Move("Resources");
-		ResourcesDir.Move("PlayLevel");
-		ResourcesDir.Move("TileMap");
-		ResourcesDir.Move("ColMap");
+    // 리소스 로드
 
-		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+    // 플레이어 
+    {
+        GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
+        Left->CutCount(6, 1);
+        GameEngineImage* Right = GameEngineImageManager::GetInst()->Find("Right.bmp");
+        Right->CutCount(6, 1);
+        GameEngineImage* Down = GameEngineImageManager::GetInst()->Find("Down.bmp");
+        Down->CutCount(8, 1);
+        GameEngineImage* Up = GameEngineImageManager::GetInst()->Find("Up.bmp");
+        Up->CutCount(8, 1);
+    }
 
-		for (size_t i = 0; i < AllImageFileList.size(); i++)
-		{
-			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
-		}
-	}
 
+    // 키 생성
+    if (false == GameEngineInput::GetInst()->IsKey("Test1"))    // 테스트 레벨 생성 
+    {
+        GameEngineInput::GetInst()->CreateKey("Test1", '1');    // 캐릭터 이동 테스트 용도 
+        GameEngineInput::GetInst()->CreateKey("Test2", '2');
+    }
+
+	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
 	
     CreateLevel<IntroLevel>("IntroLevel");
 	CreateLevel<TitleLevel>("TitleLevel");

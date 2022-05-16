@@ -12,7 +12,10 @@ public:
 	CampLevel& operator=(const CampLevel& _Other) = delete;
 	CampLevel& operator=(CampLevel&& _Other) noexcept = delete;
 protected:
-
+	void Loading() override;
+	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _NextLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
 private:
 
 };

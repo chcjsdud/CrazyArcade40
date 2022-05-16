@@ -132,7 +132,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -177,19 +177,15 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
-    <ClInclude Include="MapBackGround.h">
+    <ClInclude Include="Player.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MapGameObject.h">
+    <ClInclude Include="Player_Bazzi.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Monster1Level.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Monster2Level.h">
+    <ClInclude Include="TestLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -222,19 +218,16 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
-    <ClCompile Include="MapBackGround.cpp">
+    <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="MapGameObject.cpp">
+    <ClCompile Include="Player_Bazzi.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Monster1Level.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Monster2Level.cpp">
+    <ClCompile Include="Player_State.cpp" />
+    <ClCompile Include="TestLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
