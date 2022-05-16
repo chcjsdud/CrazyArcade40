@@ -6,6 +6,8 @@
 #include <GameEngineBase/GameEngineWindow.h>
 
 #include"CampLevel.h"
+#include"Player_Bazzi.h"
+#include"ContentsEnum.h"
 
 
 CampLevel::CampLevel()
