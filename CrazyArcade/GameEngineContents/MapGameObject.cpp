@@ -8,3 +8,11 @@ MapGameObject::~MapGameObject()
 {
 
 }
+void MapGameObject::Start()
+{
+
+}
+void MapGameObject::Update()
+{
+
+}
