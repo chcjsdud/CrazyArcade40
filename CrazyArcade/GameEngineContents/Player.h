@@ -58,6 +58,12 @@ protected:
 	// Ãæµ¹
 	GameEngineCollision* PlayerCollision_;
 
+	// ¸Ê °ü·Ã
+	GameEngineImage* MapColImage_;
+
+	void ColMapUpdate();
+	void StagePixelCheck(float _Speed);
+
 protected:
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 

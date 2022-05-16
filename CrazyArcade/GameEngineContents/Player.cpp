@@ -2,6 +2,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngine/GameEngineImageManager.h>
 
 Player::Player()
     : Speed_(100.f)
@@ -42,6 +43,23 @@ void Player::Move()
 	}
 }
 
+void Player::ColMapUpdate()
+{
+}
+
+void Player::StagePixelCheck(float _Speed)
+{
+	float4 CheckPos = GetPosition() + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+
+	int Color = MapColImage_->GetImagePixel(CheckPos);
+	if (RGB(0, 0, 0) != Color)
+	{
+		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
+	}
+
+	float4 DownPos = GetPosition() + float4{ 0.0f, 15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+}
+
 void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 }
@@ -54,12 +72,6 @@ void Player::Start()
 	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
 	PlayerAnimationRender_->SetPivot({ 0.f, 30.f });
 
-
-
-	AnimationName_ = "Move_";
-	PlayerAnimationRender_->ChangeAnimation("Move_Down");
-
-
 	if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
 	{
 		// =============== 1P 이동 ===============
@@ -69,14 +81,14 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("MoveDown", VK_DOWN);
 
 		// =============== 1P 공격 ===============
-		GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_SPACE);
+		GameEngineInput::GetInst()->CreateKey("Attack1P", VK_SPACE);
 	}
 }
 
 void Player::Update()
 {
-	DirAnimationCheck();
-	PlayerStateUpdate();
+	/*DirAnimationCheck();
+	PlayerStateUpdate();*/
 }
 
 void Player::Render()
@@ -154,5 +166,38 @@ void Player::PlayerStateUpdate()
 
 void Player::DirAnimationCheck()
 {
+	std::string ChangeName;
+
+	PlayerDir CheckDir_ = CurDir_;
+
+	if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	{
+		CheckDir_ = PlayerDir::Right;
+		ChangeDirText_ = "Right";
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+	{
+		CheckDir_ = PlayerDir::Left;
+		ChangeDirText_ = "Left";
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+	{
+		CheckDir_ = PlayerDir::Up;
+		ChangeDirText_ = "Up";
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	{
+		CheckDir_ = PlayerDir::Down;
+		ChangeDirText_ = "Down";
+	}
+
+	if (CheckDir_ != CurDir_)
+	{
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+		CurDir_ = CheckDir_;
+	}
 }
 

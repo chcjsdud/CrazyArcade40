@@ -49,11 +49,11 @@ void Player::IdleUpdate()
 
 void Player::MoveUpdate()
 {
-	if (false == IsMoveKey())
-	{
-		ChangeState(PlayerState::Idle);
-		return;
-	}
+	//if (false == IsMoveKey())
+	//{
+	//	ChangeState(PlayerState::Idle);
+	//	return;
+	//}
 
 	MoveDir = float4::ZERO;
 
@@ -73,6 +73,8 @@ void Player::MoveUpdate()
 	{
 		MoveDir = float4::DOWN;
 	}
+
+	//StagePixelCheck(Speed_);
 }
 
 void Player::JumpUpdate()

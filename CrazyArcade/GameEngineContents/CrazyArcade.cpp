@@ -1,6 +1,12 @@
 #include "CrazyArcade.h"
 #include "IntroLevel.h"
 #include "TitleLevel.h"
+#include "CampLevel.h"
+#include "VillageLevel.h"
+#include "CemeteryLevel.h"
+//#include "Monster1Level.h"
+//#include "Monster2Level.h"
+#include "BossLevel.h"
 
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDirectory.h>
@@ -69,22 +75,25 @@ void CrazyArcade::GameInit()
 
 
     // 키 생성
-    if (false == GameEngineInput::GetInst()->IsKey("Test1"))    // 테스트 레벨 생성 
+    if (false == GameEngineInput::GetInst()->IsKey("TitleLevel"))    
     {
-        GameEngineInput::GetInst()->CreateKey("Test1", '1');    // 캐릭터 이동 테스트 용도 
-        GameEngineInput::GetInst()->CreateKey("Test2", '2');
+        GameEngineInput::GetInst()->CreateKey("TitleLevel", 'P');    
+        GameEngineInput::GetInst()->CreateKey("CampLevel", '1');
+        GameEngineInput::GetInst()->CreateKey("VillageLevel", '2');
+
+        GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
     }
 
 	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
 	
     CreateLevel<IntroLevel>("IntroLevel");
 	CreateLevel<TitleLevel>("TitleLevel");
-	CreateLevel<TitleLevel>("CampLevel");
-	CreateLevel<TitleLevel>("VillageLevel");
-	CreateLevel<TitleLevel>("CemeteryLevel");
-	CreateLevel<TitleLevel>("Monster1Level");
-	CreateLevel<TitleLevel>("Monster2Level");
-	CreateLevel<TitleLevel>("BossLevel");
+	CreateLevel<CampLevel>("CampLevel");
+	CreateLevel<VillageLevel>("VillageLevel");
+	CreateLevel<CemeteryLevel>("CemeteryLevel");
+	//CreateLevel<Monster1Level>("Monster1Level");
+	//CreateLevel<Monster2Level>("Monster2Level");
+	CreateLevel<BossLevel>("BossLevel");
     ChangeLevel("CampLevel");
 }
 

@@ -1,5 +1,7 @@
 #pragma once
-class BossLevel
+#include <GameEngine/GameEngineLevel.h>
+
+class BossLevel : public GameEngineLevel
 {
 public:
 	BossLevel();
@@ -11,6 +13,10 @@ public:
 	BossLevel& operator=(const BossLevel& _Other) = delete;
 	BossLevel& operator=(BossLevel&& _Other) noexcept = delete;
 protected:
+	void Loading() override;
+	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 private:
 

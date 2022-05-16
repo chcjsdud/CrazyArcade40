@@ -1,5 +1,10 @@
 #pragma once
-class CampLevel
+#include <GameEngine/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineInput.h>
+#include <GameEngineBase/GameEngineSound.h>
+
+class Player;
+class CampLevel : public GameEngineLevel
 {
 public:
 	CampLevel();
@@ -10,8 +15,12 @@ public:
 	CampLevel(CampLevel&& _Other) noexcept = delete;
 	CampLevel& operator=(const CampLevel& _Other) = delete;
 	CampLevel& operator=(CampLevel&& _Other) noexcept = delete;
-protected:
 
-private:
+protected:
+	void Loading() override;
+	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
+
 
 };
