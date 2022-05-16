@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 
+class GameEngineBackGroundRenderer_;
 class LoginBackGround : public GameEngineActor
 {
 public:
@@ -20,6 +21,8 @@ protected:
 private:
 	void Start() override;
 	void Update() override;
+
+	GameEngineRenderer* LoginBackGroundRenderer_;
 
 };
 

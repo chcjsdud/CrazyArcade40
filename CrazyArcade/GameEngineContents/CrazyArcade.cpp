@@ -72,6 +72,7 @@ void CrazyArcade::GameInit()
         }
     }
 
+    ////// UI 리소스 기타들(마우스 커서, ...)
     {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
@@ -87,6 +88,24 @@ void CrazyArcade::GameInit()
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
     }
+
+    ////// UI 리소스 LoginLevel에서 사용되는 리소스
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("Login");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
+
 
     //플레이어 배찌
     {
@@ -135,7 +154,7 @@ void CrazyArcade::GameInit()
     }
 
     CreateLevel<IntroLevel>("IntroLevel");
-    CreateLevel<LoginLevel>("Login");
+    CreateLevel<LoginLevel>("LoginLevel");
     CreateLevel<TitleLevel>("TitleLevel");
 
     CreateLevel<CampLevel>("CampLevel");

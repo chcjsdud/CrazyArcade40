@@ -19,7 +19,7 @@ void Mouse::Start()
 	ShowCursor(false);
 	GetCurPos();
 	SetPosition({ CurPos_.x,CurPos_.y });
-	GameEngineRenderer* Renderer = CreateRenderer("Mouse_1.bmp");
+    MouseRenderer_ = CreateRenderer("Mouse_1.bmp");
 	MouseCol_ = CreateCollision("MouseCol", { 16,20 }, { -8,-10 });
 	MouseCol_->CameraEffectOff();
 	if (false == GameEngineInput::GetInst()->IsKey("LeftMouse"))
@@ -33,4 +33,12 @@ void Mouse::Update()
 {
 	GetCurPos();
 	SetPosition({ CurPos_.x,CurPos_.y });
+	if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+	{
+		MouseRenderer_->SetImage("Mouse_2.bmp");
+	}
+	else
+	{
+		MouseRenderer_->SetImage("Mouse_1.bmp");
+	}
 }

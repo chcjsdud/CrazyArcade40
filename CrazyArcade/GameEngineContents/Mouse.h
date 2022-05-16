@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineSound.h>
 
+class GameEngineRenderer;
 class GameEngineCollision;
 class Mouse : public GameEngineActor
 {
@@ -38,6 +39,7 @@ protected:
 
 private:
 	GameEngineCollision* MouseCol_;
+	GameEngineRenderer* MouseRenderer_;
 	float4 CurPos_;
 	void Start() override;
 	void Update() override;
