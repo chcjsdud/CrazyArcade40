@@ -1,19 +1,29 @@
-#include "CrazyArcade.h"
-#include "IntroLevel.h"
-#include "TitleLevel.h"
-#include "CampLevel.h"
-#include "VillageLevel.h"
-#include "CemeteryLevel.h"
-//#include "Monster1Level.h"
-//#include "Monster2Level.h"
-#include "BossLevel.h"
-
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngineBase/GameEngineInput.h>
+
+#include "CrazyArcade.h"
+
+#include "IntroLevel.h"
+#include "TitleLevel.h"
+
+////////대결 맵//////////
+#include "CampLevel.h"
+#include "VillageLevel.h"
+#include "CemeteryLevel.h"
+////////몬스터 맵//////////
+#include "Monster1Level.h"
+#include "Monster2Level.h"
+#include "BossLevel.h"
+////////테스트레벨//////////
+#include "MapTeamTest.h"
+#include "PlayerTeamTest.h"
+#include "UITeamTest.h"
+
+
 
 CrazyArcade::CrazyArcade()
 {
@@ -26,13 +36,13 @@ CrazyArcade::~CrazyArcade()
 void CrazyArcade::GameInit()
 {
 
-	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
+    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
 
 
-    /////////////////////// 리소스 로드
+    //////////////////////////////아래 리소스 로드//////////////////////////////
 
-
-    {//인트로 리소스
+    //인트로 리소스
+    {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
         ResourcesDir.Move("Resources");
@@ -46,7 +56,7 @@ void CrazyArcade::GameInit()
         }
     }
 
-    // 타일맵
+    // 타일맵(콜리전맵, 맵UI 같이 들어 있음) 맵크기 600*560
     {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
@@ -63,24 +73,8 @@ void CrazyArcade::GameInit()
         }
     }
 
- // {//콜리전맵
- //     GameEngineDirectory ResourcesDir;
- //     ResourcesDir.MoveParent("CrazyArcade");
- //     ResourcesDir.Move("Resources");
- //     ResourcesDir.Move("PlayLevel");
- //     ResourcesDir.Move("TileMap");
- //     ResourcesDir.Move("ColMap");
- //
- //
- //     std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
- //
- //     for (size_t i = 0; i < AllImageFileList.size(); i++)
- //     {
- //         GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
- //     }
- // }
-
-    {//배찌
+    //플레이어 배찌
+    {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
         ResourcesDir.Move("Resources");
@@ -96,9 +90,13 @@ void CrazyArcade::GameInit()
         }
     }
 
+    //////////////////////////////아래 이미지 컷//////////////////////////////
 
 
-    // 플레이어  키
+
+   //////////////////////////////아래 게임 키 설정//////////////////////////////
+
+// 플레이어  키
     {
         GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
         Left->CutCount(6, 1);
@@ -112,9 +110,9 @@ void CrazyArcade::GameInit()
 
 
     // 키 생성
-    if (false == GameEngineInput::GetInst()->IsKey("TitleLevel"))    
+    if (false == GameEngineInput::GetInst()->IsKey("TitleLevel"))
     {
-        GameEngineInput::GetInst()->CreateKey("TitleLevel", 'P');    
+        GameEngineInput::GetInst()->CreateKey("TitleLevel", 'P');
         GameEngineInput::GetInst()->CreateKey("CampLevel", '1');
         GameEngineInput::GetInst()->CreateKey("VillageLevel", '2');
 
@@ -122,14 +120,22 @@ void CrazyArcade::GameInit()
     }
 
     CreateLevel<IntroLevel>("IntroLevel");
-	CreateLevel<TitleLevel>("TitleLevel");
-CreateLevel<CampLevel>("CampLevel");
-//CreateLevel<VillageLevel>("VillageLevel");
-//CreateLevel<CemeteryLevel>("CemeteryLevel");
-//CreateLevel<Monster1Level>("Monster1Level");
-//CreateLevel<Monster2Level>("Monster2Level");
-//CreateLevel<BossLevel>("BossLevel");
-ChangeLevel("CampLevel");
+    CreateLevel<TitleLevel>("TitleLevel");
+
+    CreateLevel<CampLevel>("CampLevel");
+    CreateLevel<VillageLevel>("VillageLevel");
+    CreateLevel<CemeteryLevel>("CemeteryLevel");
+
+    CreateLevel<Monster1Level>("Monster1Level");
+    CreateLevel<Monster2Level>("Monster2Level");
+    CreateLevel<BossLevel>("BossLevel");
+
+    CreateLevel<BossLevel>("MapTeamTest");
+    CreateLevel<BossLevel>("PlayerTeamTest");
+    CreateLevel<BossLevel>("UITeamTest");
+
+    ChangeLevel("CampLevel");
+
 }
 
 void CrazyArcade::GameLoop()
