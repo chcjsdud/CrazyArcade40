@@ -1,6 +1,7 @@
 #pragma once
 
 enum class ORDER
+enum class BlockType
 {
 	BACKGROUND,
 	STAGE,
@@ -8,4 +9,8 @@ enum class ORDER
 	PLAYER,
 	EFFECT,
 	UI,
+	FixBlock,
+	PullBlock,
+	BushBlock,
+	Max
 };

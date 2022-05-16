@@ -28,7 +28,11 @@ void CrazyArcade::GameInit()
 
 	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
 
-    {
+
+    /////////////////////// 리소스 로드
+
+
+    {//인트로 리소스
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
         ResourcesDir.Move("Resources");
@@ -42,8 +46,41 @@ void CrazyArcade::GameInit()
         }
     }
 
-    // 배찌 리소스 
+    // 타일맵
     {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("TileMap");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
+
+ // {//콜리전맵
+ //     GameEngineDirectory ResourcesDir;
+ //     ResourcesDir.MoveParent("CrazyArcade");
+ //     ResourcesDir.Move("Resources");
+ //     ResourcesDir.Move("PlayLevel");
+ //     ResourcesDir.Move("TileMap");
+ //     ResourcesDir.Move("ColMap");
+ //
+ //
+ //     std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+ //
+ //     for (size_t i = 0; i < AllImageFileList.size(); i++)
+ //     {
+ //         GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+ //     }
+ // }
+
+    {//배찌
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
         ResourcesDir.Move("Resources");
@@ -59,9 +96,9 @@ void CrazyArcade::GameInit()
         }
     }
 
-    // 리소스 로드
 
-    // 플레이어 
+
+    // 플레이어  키
     {
         GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
         Left->CutCount(6, 1);
@@ -84,17 +121,15 @@ void CrazyArcade::GameInit()
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
     }
 
-	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
-	
     CreateLevel<IntroLevel>("IntroLevel");
 	CreateLevel<TitleLevel>("TitleLevel");
-	CreateLevel<CampLevel>("CampLevel");
-	CreateLevel<VillageLevel>("VillageLevel");
-	CreateLevel<CemeteryLevel>("CemeteryLevel");
-	//CreateLevel<Monster1Level>("Monster1Level");
-	//CreateLevel<Monster2Level>("Monster2Level");
-	CreateLevel<BossLevel>("BossLevel");
-    ChangeLevel("CampLevel");
+CreateLevel<CampLevel>("CampLevel");
+//CreateLevel<VillageLevel>("VillageLevel");
+//CreateLevel<CemeteryLevel>("CemeteryLevel");
+//CreateLevel<Monster1Level>("Monster1Level");
+//CreateLevel<Monster2Level>("Monster2Level");
+//CreateLevel<BossLevel>("BossLevel");
+ChangeLevel("CampLevel");
 }
 
 void CrazyArcade::GameLoop()

@@ -1,9 +1,11 @@
-#include"CampLevel.h"
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngine.h>
+#include <GameEngine/GameEngineLevel.h>
+#include <GameEngine/GameEngineRenderer.h>
+#include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineWindow.h>
-#include "Player_Bazzi.h"
-#include "ContentsEnum.h"
+
+#include"CampLevel.h"
 
 
 CampLevel::CampLevel()

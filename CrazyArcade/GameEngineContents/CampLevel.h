@@ -6,6 +6,9 @@
 class Player;
 class CampLevel : public GameEngineLevel
 {
+private:
+	MapBackGround* MapBackGround_;
+
 public:
 	CampLevel();
 	~CampLevel();
