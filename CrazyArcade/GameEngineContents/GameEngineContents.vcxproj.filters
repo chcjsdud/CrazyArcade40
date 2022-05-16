@@ -12,6 +12,15 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="VideoPlayer.h" />
+    <ClInclude Include="TestLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Bazzi.h">
+      <Filter>Actor\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -25,6 +34,18 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="VideoPlayer.cpp" />
+    <ClCompile Include="TestLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Bazzi.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -32,6 +53,9 @@
     </Filter>
     <Filter Include="Actor">
       <UniqueIdentifier>{6f1effb0-18fa-419e-9443-cd76c33b3c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play">
+      <UniqueIdentifier>{b7fee2e0-7ea1-40ee-9140-b6de1e23d85f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
