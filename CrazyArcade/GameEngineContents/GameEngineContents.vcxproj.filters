@@ -12,6 +12,18 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="VideoPlayer.h" />
+    <ClInclude Include="Monster.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster1.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster2.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -25,6 +37,18 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="VideoPlayer.cpp" />
+    <ClCompile Include="Monster.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster1.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster2.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

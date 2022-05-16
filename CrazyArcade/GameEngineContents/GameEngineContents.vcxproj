@@ -160,11 +160,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="CrazyArcade.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Monster1.h" />
+    <ClInclude Include="Monster2.h" />
     <ClInclude Include="TitleBackGround.h">
       <SubType>
       </SubType>
@@ -173,11 +177,15 @@
     <ClInclude Include="VideoPlayer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="CrazyArcade.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Monster1.cpp" />
+    <ClCompile Include="Monster2.cpp" />
     <ClCompile Include="TitleBackGround.cpp">
       <SubType>
       </SubType>
