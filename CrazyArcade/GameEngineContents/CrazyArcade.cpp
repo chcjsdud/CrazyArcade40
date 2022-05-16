@@ -9,8 +9,7 @@
 
 #include "IntroLevel.h"
 #include "TitleLevel.h"
-
-////////´ë°á ¸Ê//////////
+#include "LoginLevel.h"
 #include "CampLevel.h"
 #include "VillageLevel.h"
 #include "CemeteryLevel.h"
@@ -73,6 +72,22 @@ void CrazyArcade::GameInit()
         }
     }
 
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("etc");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
+
     //ÇÃ·¹ÀÌ¾î ¹èÂî
     {
         GameEngineDirectory ResourcesDir;
@@ -120,6 +135,7 @@ void CrazyArcade::GameInit()
     }
 
     CreateLevel<IntroLevel>("IntroLevel");
+    CreateLevel<LoginLevel>("Login");
     CreateLevel<TitleLevel>("TitleLevel");
 
     CreateLevel<CampLevel>("CampLevel");

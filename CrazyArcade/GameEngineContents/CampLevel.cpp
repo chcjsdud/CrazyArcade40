@@ -4,7 +4,8 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineWindow.h>
-
+#include <GameEngineContents/ContentsEnum.h>
+#include "Player_Bazzi.h"
 #include"CampLevel.h"
 #include"Player_Bazzi.h"
 #include"ContentsEnum.h"

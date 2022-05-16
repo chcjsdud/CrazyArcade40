@@ -47,6 +47,19 @@
     <ClInclude Include="Monster2.h">
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
+        <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="LoginLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginBackGround.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginButton.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
     <ClInclude Include="IntroLevel.h">
       <Filter>Level\IntroLevel</Filter>
@@ -129,6 +142,18 @@
     <ClCompile Include="Monster2.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
+        <ClCompile Include="LoginLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginBackGround.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginButton.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
     <ClCompile Include="IntroLevel.cpp">
       <Filter>Level\IntroLevel</Filter>
     </ClCompile>
@@ -172,6 +197,9 @@
     </Filter>
     <Filter Include="Level\PlayLevel">
       <UniqueIdentifier>{f11dbdb3-72be-4162-9605-53a59d87e2c6}</UniqueIdentifier>
+    </Filter>
+       <Filter Include="Actor\UI">
+      <UniqueIdentifier>{b0aa6619-e9b1-40ba-85ce-6353b28d0955}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level\IntroLevel">
       <UniqueIdentifier>{517171fe-145b-47fd-94f0-048bb38a54a1}</UniqueIdentifier>

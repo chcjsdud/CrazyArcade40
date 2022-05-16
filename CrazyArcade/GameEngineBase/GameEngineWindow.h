@@ -45,6 +45,10 @@ public:
 		return Inst_->Scale_;
 	}
 
+	static inline HWND GethWnd()
+	{
+		return Inst_->hWnd_;
+	}
 
 protected:
 
