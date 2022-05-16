@@ -23,6 +23,8 @@ private:
 	void Update() override;
 
 	GameEngineRenderer* LoginBackGroundRenderer_;
+	GameEngineCollision* Change1PCollision_;
+	GameEngineCollision* Change2PCollision_;
 
 };
 
