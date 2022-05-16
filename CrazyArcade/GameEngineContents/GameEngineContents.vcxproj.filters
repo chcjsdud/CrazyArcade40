@@ -30,6 +30,12 @@
     <ClInclude Include="Monster2Level.h">
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="MapBackGround.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGameObject.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -61,6 +67,12 @@
     <ClCompile Include="Monster2Level.cpp">
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="MapBackGround.cpp">
+      <Filter>Actor\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGameObject.cpp">
+      <Filter>Actor\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -74,6 +86,9 @@
     </Filter>
     <Filter Include="Level\PlayLevel\Monster">
       <UniqueIdentifier>{d743701b-8291-4166-aa3c-1c169d0c0116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Map">
+      <UniqueIdentifier>{a65f569b-ec6f-4dab-a620-15c39d768e48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

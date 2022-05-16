@@ -177,6 +177,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="MapBackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MapGameObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Monster1Level.h">
       <SubType>
       </SubType>
@@ -214,6 +222,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="MapBackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MapGameObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Monster1Level.cpp">
       <SubType>
       </SubType>
