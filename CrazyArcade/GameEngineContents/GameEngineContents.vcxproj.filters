@@ -48,6 +48,18 @@
     <ClInclude Include="Monster2Level.h">
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster1.h">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster2.h">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -100,6 +112,18 @@
     <ClCompile Include="Monster2Level.cpp">
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster1.cpp">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster2.cpp">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -119,6 +143,9 @@
     </Filter>
     <Filter Include="Level\PlayLevel\Monster">
       <UniqueIdentifier>{6663bca6-7dce-49ed-be76-b8cc9f88f639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\Monster">
+      <UniqueIdentifier>{ea085e4f-b567-4902-b075-40eb65f5331a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
