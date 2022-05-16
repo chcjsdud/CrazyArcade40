@@ -55,7 +55,7 @@ void CrazyArcade::GameInit()
         }
     }
 
-    // 타일맵(콜리전맵, 맵UI 같이 들어 있음) 맵크기 600*560
+    // 타일맵(콜리전맵, 맵UI 같이 들어 있음) 맵크기 600*560 (15*14) (한타일 40*40)
     {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");

@@ -32,6 +32,6 @@ void IntroLevel::Update()
 	if (true == IntroVideo_->IsVideoFinished())
 	{
 		//BgmPlayer.Stop();
-		GameEngine::GetInst().ChangeLevel("TitleLevel");
+		GameEngine::GetInst().ChangeLevel("LoginLevel");
 	}
 }
