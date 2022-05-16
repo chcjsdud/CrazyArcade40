@@ -19,6 +19,9 @@ CrazyArcade::~CrazyArcade()
 
 void CrazyArcade::GameInit()
 {
+
+	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
+
     {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
@@ -76,8 +79,13 @@ void CrazyArcade::GameInit()
 	
     CreateLevel<IntroLevel>("IntroLevel");
 	CreateLevel<TitleLevel>("TitleLevel");
-	
-    ChangeLevel("IntroLevel");
+	CreateLevel<TitleLevel>("CampLevel");
+	CreateLevel<TitleLevel>("VillageLevel");
+	CreateLevel<TitleLevel>("CemeteryLevel");
+	CreateLevel<TitleLevel>("Monster1Level");
+	CreateLevel<TitleLevel>("Monster2Level");
+	CreateLevel<TitleLevel>("BossLevel");
+    ChangeLevel("CampLevel");
 }
 
 void CrazyArcade::GameLoop()
