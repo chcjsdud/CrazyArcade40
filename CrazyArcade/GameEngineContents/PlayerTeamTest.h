@@ -1,5 +1,6 @@
 #pragma once
-class PlayerTeamTest
+#include <GameEngine/GameEngineLevel.h>
+class PlayerTeamTest : public GameEngineLevel
 {
 public:
 	PlayerTeamTest();
@@ -11,7 +12,8 @@ public:
 	PlayerTeamTest& operator=(const PlayerTeamTest& _Other) = delete;
 	PlayerTeamTest& operator=(PlayerTeamTest&& _Other) noexcept = delete;
 protected:
-
-private:
+	void Loading() override;
+	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 
 };

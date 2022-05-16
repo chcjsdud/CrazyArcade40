@@ -1,5 +1,6 @@
 #pragma once
-class UITeamTest
+#include <GameEngine/GameEngineLevel.h>
+class UITeamTest : public GameEngineLevel
 {
 public:
 	UITeamTest();
@@ -11,7 +12,8 @@ public:
 	UITeamTest& operator=(const UITeamTest& _Other) = delete;
 	UITeamTest& operator=(UITeamTest&& _Other) noexcept = delete;
 protected:
-
-private:
+	void Loading() override;
+	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 
 };

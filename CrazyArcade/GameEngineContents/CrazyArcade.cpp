@@ -152,24 +152,24 @@ void CrazyArcade::GameInit()
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
     }
-
+    //////시작부분
     CreateLevel<IntroLevel>("IntroLevel");
     CreateLevel<LoginLevel>("LoginLevel");
     CreateLevel<TitleLevel>("TitleLevel");
-
+    //////결투맵 레벨
     CreateLevel<CampLevel>("CampLevel");
     CreateLevel<VillageLevel>("VillageLevel");
     CreateLevel<CemeteryLevel>("CemeteryLevel");
-
+    //////몬스터 맵 레벨
     CreateLevel<Monster1Level>("Monster1Level");
     CreateLevel<Monster2Level>("Monster2Level");
     CreateLevel<BossLevel>("BossLevel");
-
+    //////테스트 레벨
     CreateLevel<MapTeamTest>("MapTeamTest");
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("CampLevel");
+    ChangeLevel("IntroLevel");
 
 }
 
