@@ -27,6 +27,9 @@
     <ClInclude Include="VillageLevel.h">
       <Filter>Level\PlayLevel</Filter>
     </ClInclude>
+    <ClInclude Include="Monster2Level.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
     <ClInclude Include="BossLevel.h">
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
@@ -74,6 +77,9 @@
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="VillageLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster2Level.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="BossLevel.cpp">
