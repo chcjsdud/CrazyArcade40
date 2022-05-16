@@ -1,5 +1,6 @@
 #pragma once
-class CampLevel
+#include <GameEngine/GameEngineLevel.h>
+class CampLevel : public GameEngineLevel
 {
 public:
 	CampLevel();
