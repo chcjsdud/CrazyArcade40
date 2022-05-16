@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineLevel.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineSound.h>
+#include "MapBackGround.h"
 
 class MapBackGround;
 class Player;
