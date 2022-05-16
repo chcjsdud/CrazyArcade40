@@ -2,6 +2,8 @@
 #include <GameEngine/GameEngineLevel.h>
 class CampLevel : public GameEngineLevel
 {
+
+
 public:
 	CampLevel();
 	~CampLevel();
@@ -17,5 +19,5 @@ protected:
 	void LevelChangeStart(GameEngineLevel* _NextLevel) override;
 	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
 private:
-
+	TitleBackGround* TitleBackGround_;
 };

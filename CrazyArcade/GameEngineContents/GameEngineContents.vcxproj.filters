@@ -2,53 +2,56 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="CrazyArcade.h" />
-    <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="TitleBackGround.h">
       <Filter>Actor</Filter>
     </ClInclude>
-    <ClInclude Include="IntroLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="VideoPlayer.h" />
-    <ClInclude Include="TestLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Actor\Play</Filter>
     </ClInclude>
     <ClInclude Include="Player_Bazzi.h">
       <Filter>Actor\Play</Filter>
     </ClInclude>
-    <ClInclude Include="VillageLevel.h">
-      <Filter>Level</Filter>
+    <ClInclude Include="MapBackGround.h">
+      <Filter>Actor\Map</Filter>
     </ClInclude>
-    <ClInclude Include="BossLevel.h">
-      <Filter>Level</Filter>
+    <ClInclude Include="MapGameObject.h">
+      <Filter>Actor\Map</Filter>
     </ClInclude>
     <ClInclude Include="CampLevel.h">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="CemeteryLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="VillageLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster1Level.h">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster2Level.h">
+      <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
-    <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
-    <ClCompile Include="IntroLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="VideoPlayer.cpp" />
-    <ClCompile Include="TestLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Play</Filter>
     </ClCompile>
@@ -58,17 +61,38 @@
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play</Filter>
     </ClCompile>
-    <ClCompile Include="VillageLevel.cpp">
-      <Filter>Level</Filter>
+    <ClCompile Include="MapBackGround.cpp">
+      <Filter>Actor\Map</Filter>
     </ClCompile>
-    <ClCompile Include="BossLevel.cpp">
-      <Filter>Level</Filter>
+    <ClCompile Include="MapGameObject.cpp">
+      <Filter>Actor\Map</Filter>
     </ClCompile>
     <ClCompile Include="CampLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="CemeteryLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="VillageLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster1Level.cpp">
+      <Filter>Level\PlayLevel\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster2Level.cpp">
+      <Filter>Level\PlayLevel\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +104,15 @@
     </Filter>
     <Filter Include="Actor\Play">
       <UniqueIdentifier>{b7fee2e0-7ea1-40ee-9140-b6de1e23d85f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Map">
+      <UniqueIdentifier>{46e09254-661a-478b-abba-f355aaaab1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel">
+      <UniqueIdentifier>{210652a4-fc8f-4eab-908a-101147861dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel\Monster">
+      <UniqueIdentifier>{6663bca6-7dce-49ed-be76-b8cc9f88f639}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
