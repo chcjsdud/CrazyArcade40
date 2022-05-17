@@ -2,6 +2,7 @@
 #include "GameEngineBase//GameEngineInput.h"
 
 Player_1P::Player_1P()
+	//: Type(PlayerType::Pla)
 {
 
 }

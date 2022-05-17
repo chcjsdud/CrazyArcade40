@@ -13,6 +13,8 @@ enum class PlayerState
 	Damaged,
 	Live,
 	Die,
+
+	Max,
 };
 
 enum class PlayerDir
@@ -24,6 +26,21 @@ enum class PlayerDir
 	Max,
 };
 
+enum class PlayerType
+{
+	Player1,
+	Player2,
+	
+	Max,
+};
+
+enum class CharacterType
+{
+	BAZZI,
+	DAO,
+
+	MAX,
+};
 
 class Player : public GameEngineActor
 {
@@ -47,6 +64,9 @@ protected:
 	float MaxAttLength_;		// 최대 물줄기 길이
 	int CurAttCount_;			// 물풍선 개수 
 	int MaxAttCount_;			// 최대 물풍선 개수
+
+	
+	PlayerType Type;
 
 	// 플레이어 정보 세팅
 protected:
@@ -95,6 +115,30 @@ protected:
 	// 충돌
 	GameEngineCollision* PlayerCollision_;
 
+/////////////////////////////////////////////////// 테스트용
+protected:
+	GameEngineRenderer* BazziRenderer_;
+	GameEngineRenderer* DaoRenderer_;
+
+protected:
+	CharacterType CharType;
+
+protected:
+	void CharTypeUpdate();
+
+public:
+	void SetCharacter(CharacterType _CharType)
+	{
+		CharType = _CharType;
+	}
+
+	void SetPlayerType(PlayerType _Type)
+	{
+		Type = _Type;
+	}
+
+
+////////////////////////////////////////////////////////////
 	// 맵 관련
 	GameEngineImage* MapColImage_;
 
@@ -113,7 +157,7 @@ protected:
 	PlayerState CurState_;
 	//PlayerState PrevState_;
 
-	virtual bool IsMoveKey() { return false; };
+	virtual bool IsMoveKey();
 
 protected:
 	void ChangeState(PlayerState _State);

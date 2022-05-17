@@ -43,6 +43,21 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
 	Seal->SetPosition(float4(200.0f, 200.0f));
 
-	Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
-	NewPlayer->SetPosition({ 100.f, 100.f });
+	//Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
+	//NewPlayer->SetPosition({ 100.f, 100.f });
+
+
+	//Player_2P* NewPlayer = CreateActor<Player_2P>((int)ORDER::PLAYER);
+	//NewPlayer->SetPosition({ 100.f, 100.f });
+
+	Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
+	NewPlayer->SetCharacter(CharacterType::BAZZI);
+	NewPlayer->SetPlayerType(PlayerType::Player1);
+	NewPlayer->SetPosition({ 300.f, 300.f });
+
+	NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
+	NewPlayer->SetCharacter(CharacterType::BAZZI);
+	NewPlayer->SetPlayerType(PlayerType::Player2);
+	NewPlayer->SetPosition({ 500.f, 500.f });
+
 }
