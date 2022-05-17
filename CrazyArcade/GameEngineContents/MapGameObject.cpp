@@ -23,6 +23,11 @@ void MapGameObject::Update()
 
 }
 
+void MapGameObject::BubblePop(float4 _Pos, int Power)
+{
+
+}
+
 void MapGameObject::CreateBlockTile(int x_ ,int y_)
 {
 	if (GetLevel()->GetNameCopy() == "VillageLevel")

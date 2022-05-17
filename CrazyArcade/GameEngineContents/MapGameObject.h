@@ -44,5 +44,7 @@ protected:
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
+
+	void BubblePop(float4 _Pos, int Power);
 	void CreateBlockTile(int x_, int y_);
 };
