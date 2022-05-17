@@ -39,10 +39,47 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 
+	// 플레이어 정보
 protected:
-	float Speed_;				// 플레이어 속도 
-	float AttackLength_;		// 물줄기 길이
-	float AttackCount_;			// 물풍선 개수 
+	float CurSpeed_;			// 플레이어 속도 
+	float MaxSpeed_;
+	float CurAttLength_;		// 물줄기 길이
+	float MaxAttLength_;		// 최대 물줄기 길이
+	int CurAttCount_;			// 물풍선 개수 
+	int MaxAttCount_;			// 최대 물풍선 개수
+
+	// 플레이어 정보 세팅
+protected:
+	void SetSpeed(float _CurSpeed)
+	{
+		CurSpeed_ = _CurSpeed;
+	}
+
+	void SetAttLength(float _CurAttLength_)
+	{
+		CurAttLength_ = _CurAttLength_;
+	}
+
+	void SetAttCount(int _CurAttCount_)
+	{
+		CurAttCount_ = _CurAttCount_;
+	}
+
+	void SetMaxSpeed(float _MaxSpeed)
+	{
+		MaxSpeed_ = _MaxSpeed;
+	}
+
+	void SetMaxAttLength(float _MaxAttLength)
+	{
+		MaxAttLength_ = _MaxAttLength;
+	}
+
+	void SetMaxAttCount(int _MaxAttCount)
+	{
+		MaxAttCount_ = _MaxAttCount;
+	}
+
 
 protected:
 	void Move();
@@ -76,7 +113,7 @@ protected:
 	PlayerState CurState_;
 	//PlayerState PrevState_;
 
-	bool IsMoveKey();
+	virtual bool IsMoveKey() { return false; };
 
 protected:
 	void ChangeState(PlayerState _State);

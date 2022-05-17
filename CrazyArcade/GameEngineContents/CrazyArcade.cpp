@@ -12,7 +12,7 @@
 #include "LoginLevel.h"
 #include "CampLevel.h"
 #include "VillageLevel.h"
-#include "CemeteryLevel.h"
+#include "CemetoryLevel.h"
 ////////몬스터 맵//////////
 #include "Monster1Level.h"
 #include "Monster2Level.h"
@@ -170,24 +170,19 @@ void CrazyArcade::GameInit()
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 
 // 플레이어  키
-    {
-        GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
-        Left->CutCount(6, 1);
-        GameEngineImage* Right = GameEngineImageManager::GetInst()->Find("Right.bmp");
-        Right->CutCount(6, 1);
-        GameEngineImage* Down = GameEngineImageManager::GetInst()->Find("Down.bmp");
-        Down->CutCount(8, 1);
-        GameEngineImage* Up = GameEngineImageManager::GetInst()->Find("Up.bmp");
-        Up->CutCount(8, 1);
-    }
+
 
 
     // 키 생성
     if (false == GameEngineInput::GetInst()->IsKey("TitleLevel"))
     {
         GameEngineInput::GetInst()->CreateKey("TitleLevel", 'P');
-        GameEngineInput::GetInst()->CreateKey("CampLevel", '1');
-        GameEngineInput::GetInst()->CreateKey("VillageLevel", '2');
+        GameEngineInput::GetInst()->CreateKey("MapTeamTest", '1');
+        GameEngineInput::GetInst()->CreateKey("PlayerTeamTest", '2');
+        GameEngineInput::GetInst()->CreateKey("UITeamTest", '3');
+
+        GameEngineInput::GetInst()->CreateKey("CampLevel", '4');
+        GameEngineInput::GetInst()->CreateKey("VillageLevel", '5');
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
     }
@@ -198,7 +193,7 @@ void CrazyArcade::GameInit()
     //////결투맵 레벨
     CreateLevel<CampLevel>("CampLevel");
     CreateLevel<VillageLevel>("VillageLevel");
-    CreateLevel<CemeteryLevel>("CemeteryLevel");
+    CreateLevel<CemetoryLevel>("CemetoryLevel");
     //////몬스터 맵 레벨
     CreateLevel<Monster1Level>("Monster1Level");
     CreateLevel<Monster2Level>("Monster2Level");
@@ -208,7 +203,7 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("UITeamTest");
+    ChangeLevel("TitleLevel");
 
 }
 

@@ -3,7 +3,7 @@
 
 MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
-	AllBlock_()
+	AllBlockTiles_()
 {
 
 }
@@ -15,7 +15,7 @@ MapGameObject::~MapGameObject()
 
 void MapGameObject::Start()
 {
-	CreateBlockTile();
+
 }
 
 void MapGameObject::Update()
@@ -23,10 +23,10 @@ void MapGameObject::Update()
 
 }
 
-void MapGameObject::CreateBlockTile()
+void MapGameObject::CreateBlockTile(int x_ ,int y_)
 {
 	if (GetLevel()->GetNameCopy() == "VillageLevel")
 	{
-
+		
 	}
 }

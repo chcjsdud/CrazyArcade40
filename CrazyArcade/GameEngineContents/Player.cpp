@@ -5,9 +5,12 @@
 #include <GameEngine/GameEngineImageManager.h>
 
 Player::Player()
-    : Speed_(100.f)
-    , AttackLength_(20.f)   
-    , AttackCount_(1.f)
+    : CurSpeed_(0.f)
+	, MaxSpeed_(0.f)
+    , CurAttLength_(0.f)   
+    , CurAttCount_(0)
+	, MaxAttLength_(0.f)
+	, MaxAttCount_(0)
     , MoveDir(float4::ZERO)
     , PlayerAnimationRender_(nullptr)
     , CurState_(PlayerState::Idle)
@@ -25,26 +28,32 @@ void Player::Move()
 {
 	MoveDir = float4::ZERO;
 
+	float MovePos = 280.f;
+
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 	{
-		MoveDir = float4::LEFT;
+		MoveDir.x = -MovePos;
 	}
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
-		MoveDir = float4::RIGHT;
+		MoveDir.x = MovePos;
 	}
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
 	{
-		MoveDir = float4::UP;
+		MoveDir.y = -MovePos;
 	}
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
 	{
-		MoveDir = float4::DOWN;
+		MoveDir.y = MovePos;
 	}
+
+	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
+
 }
 
 void Player::ColMapUpdate()
 {
+
 }
 
 void Player::StagePixelCheck(float _Speed)
@@ -72,17 +81,17 @@ void Player::Start()
 	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
 	PlayerAnimationRender_->SetPivot({ 0.f, 30.f });
 
-	if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
-	{
-		// =============== 1P 이동 ===============
-		GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
-		GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
-		GameEngineInput::GetInst()->CreateKey("MoveUp", VK_UP);
-		GameEngineInput::GetInst()->CreateKey("MoveDown", VK_DOWN);
+	//if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
+	//{
+	//	// =============== 1P 이동 ===============
+	//	GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
+	//	GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
+	//	GameEngineInput::GetInst()->CreateKey("MoveUp", VK_UP);
+	//	GameEngineInput::GetInst()->CreateKey("MoveDown", VK_DOWN);
 
-		// =============== 1P 공격 ===============
-		GameEngineInput::GetInst()->CreateKey("Attack1P", VK_SPACE);
-	}
+	//	// =============== 1P 공격 ===============
+	//	GameEngineInput::GetInst()->CreateKey("Attack1P", VK_SPACE);
+	//}
 }
 
 void Player::Update()
@@ -95,19 +104,19 @@ void Player::Render()
 {
 }
 
-bool Player::IsMoveKey()
-{
-	if (false == GameEngineInput::GetInst()->IsPress("MoveLeft") &&
-		false == GameEngineInput::GetInst()->IsPress("MoveRight") &&
-		false == GameEngineInput::GetInst()->IsPress("MoveUp") &&
-		false == GameEngineInput::GetInst()->IsPress("MoveDown")
-		)
-	{
-		return false;
-	}
-
-	return true;
-}
+//bool Player::IsMoveKey()
+//{
+//	if (false == GameEngineInput::GetInst()->IsPress("MoveLeft") &&
+//		false == GameEngineInput::GetInst()->IsPress("MoveRight") &&
+//		false == GameEngineInput::GetInst()->IsPress("MoveUp") &&
+//		false == GameEngineInput::GetInst()->IsPress("MoveDown")
+//		)
+//	{
+//		return false;
+//	}
+//
+//	return true;
+//}
 
 void Player::ChangeState(PlayerState _State)
 {
@@ -170,29 +179,56 @@ void Player::DirAnimationCheck()
 
 	PlayerDir CheckDir_ = CurDir_;
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
 	{
 		CheckDir_ = PlayerDir::Right;
 		ChangeDirText_ = "Right";
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+	if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
 	{
 		CheckDir_ = PlayerDir::Left;
 		ChangeDirText_ = "Left";
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+	if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
 	{
 		CheckDir_ = PlayerDir::Up;
 		ChangeDirText_ = "Up";
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
 	{
 		CheckDir_ = PlayerDir::Down;
 		ChangeDirText_ = "Down";
 	}
+
+
+	if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
+	{
+		CheckDir_ = PlayerDir::Right;
+		ChangeDirText_ = "Right";
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
+	{
+		CheckDir_ = PlayerDir::Left;
+		ChangeDirText_ = "Left";
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
+	{
+		CheckDir_ = PlayerDir::Up;
+		ChangeDirText_ = "Up";
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
+	{
+		CheckDir_ = PlayerDir::Down;
+		ChangeDirText_ = "Down";
+	}
+
+
 
 	if (CheckDir_ != CurDir_)
 	{

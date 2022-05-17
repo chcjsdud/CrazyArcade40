@@ -1,15 +1,11 @@
-#include <GameEngineBase/GameEngineInput.h>
-#include <GameEngine/GameEngine.h>
-#include <GameEngine/GameEngineLevel.h>
-#include <GameEngine/GameEngineRenderer.h>
-#include <GameEngine/GameEngineImageManager.h>
-#include <GameEngineBase/GameEngineWindow.h>
-#include <GameEngineContents/ContentsEnum.h>
-#include "Player_Bazzi.h"
 #include"CampLevel.h"
-#include"Player_Bazzi.h"
+#include "Player_Bazzi.h"
 #include"ContentsEnum.h"
-#include"MapBackGround.h."
+#include "MapBackGround.h"
+#include "MapFront.h"
+#include <GameEngine/GameEngine.h>
+#include <GameEngine/GameEngineRenderer.h>
+#include <GameEngineBase/GameEngineWindow.h>
 
 
 CampLevel::CampLevel()
@@ -24,13 +20,16 @@ CampLevel::~CampLevel()
 
 void CampLevel::Loading()
 {
-	Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
-	NewPlayer->SetPosition({ 100.f, 100.f });
+	//Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
+	//NewPlayer->SetPosition({ 100.f, 100.f });
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
-	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고d
+	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고
 	MapBackGround_->GetRenderer()->SetPivot({320,280});//윈도우기준 그려줄 위치 정해주고
 
+	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
+	MapFrontBackGround_->GetRenderer()->SetImage("Camp_Front.bmp");//Actor에 이미지 세팅해주고
+	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 }
 
 void CampLevel::Update()

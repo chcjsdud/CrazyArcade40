@@ -1,6 +1,8 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
-
+class MapBackGround;
+class MapFront;
+class Player;
 class VillageLevel : public GameEngineLevel
 {
 public:
@@ -19,5 +21,6 @@ protected:
 	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
 
 private:
-
+	MapBackGround* MapBackGround_;
+	MapFront* MapFrontBackGround_;
 };

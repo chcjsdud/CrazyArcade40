@@ -1,15 +1,15 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
-#include <GameEngineBase/GameEngineInput.h>
-#include <GameEngineBase/GameEngineSound.h>
-#include "MapBackGround.h"
+
 
 class MapBackGround;
 class Player;
+class MapFront;
 class CampLevel : public GameEngineLevel
 {
 private:
 	MapBackGround* MapBackGround_;
+	MapFront* MapFrontBackGround_;
 
 public:
 	CampLevel();

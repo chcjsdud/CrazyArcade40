@@ -169,7 +169,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="CemeteryLevel.h">
+    <ClInclude Include="CemetoryLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -192,6 +192,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="MapBackGround.h" />
+    <ClInclude Include="MapFront.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MapGameObject.h" />
     <ClInclude Include="MapTeamTest.h">
       <SubType>
@@ -211,6 +215,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayerTeamTest.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Player_1P.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Player_2P.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -240,7 +252,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="CemeteryLevel.cpp">
+    <ClCompile Include="CemetoryLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -263,6 +275,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="MapBackGround.cpp" />
+    <ClCompile Include="MapFront.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MapGameObject.cpp" />
     <ClCompile Include="MapTeamTest.cpp">
       <SubType>
@@ -282,6 +298,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerTeamTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Player_1P.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Player_2P.cpp">
       <SubType>
       </SubType>
     </ClCompile>
