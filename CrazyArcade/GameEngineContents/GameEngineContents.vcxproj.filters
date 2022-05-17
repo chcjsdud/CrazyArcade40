@@ -79,6 +79,9 @@
     <ClInclude Include="UITeamTest.h">
       <Filter>Level\TestLevel</Filter>
     </ClInclude>
+    <ClInclude Include="CreateRoomBackGround.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -171,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="UITeamTest.cpp">
       <Filter>Level\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateRoomBackGround.cpp">
+      <Filter>Actor\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

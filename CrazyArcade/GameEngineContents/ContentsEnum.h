@@ -16,3 +16,11 @@ enum class BlockType
 	BushBlock,
 	Max
 };
+enum class UIType
+{
+	BackGround,
+	BackGroundButton,
+	PopUp,
+	PopUpButton,
+	Mouse
+};
