@@ -4,11 +4,12 @@
 
 class MapBackGround;
 class Player;
+class MapFront;
 class CampLevel : public GameEngineLevel
 {
 private:
 	MapBackGround* MapBackGround_;
-	MapBackGround* MapFrontBackGround_;
+	MapFront* MapFrontBackGround_;
 
 public:
 	CampLevel();

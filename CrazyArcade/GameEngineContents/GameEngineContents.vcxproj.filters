@@ -79,6 +79,9 @@
     <ClInclude Include="LoginLevel.h">
       <Filter>Level\IntroLevel</Filter>
     </ClInclude>
+    <ClInclude Include="MapFront.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -171,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="LoginLevel.cpp">
       <Filter>Level\IntroLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="MapFront.cpp">
+      <Filter>Actor\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
