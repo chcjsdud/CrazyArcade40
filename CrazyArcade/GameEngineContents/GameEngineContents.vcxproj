@@ -217,6 +217,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Player_1P.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Player_2P.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player_Bazzi.h">
       <SubType>
       </SubType>
@@ -288,6 +296,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerTeamTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Player_1P.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Player_2P.cpp">
       <SubType>
       </SubType>
     </ClCompile>

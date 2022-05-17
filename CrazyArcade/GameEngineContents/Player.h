@@ -113,7 +113,7 @@ protected:
 	PlayerState CurState_;
 	//PlayerState PrevState_;
 
-	bool IsMoveKey();
+	virtual bool IsMoveKey() { return false; };
 
 protected:
 	void ChangeState(PlayerState _State);
