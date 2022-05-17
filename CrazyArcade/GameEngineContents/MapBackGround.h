@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngine/GameEngineRendererTileMap.h>
 
 class GameEngineRenderer;
 class MapBackGround : public GameEngineActor
@@ -21,6 +22,9 @@ private:
 	void Update();
 	GameEngineRenderer* MapBackGroundRender_;
 public:
+
+	GameEngineRendererTileMap MapTileMap_;
+
 	GameEngineRenderer* GetRenderer()
 	{
 		return	MapBackGroundRender_;
