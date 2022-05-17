@@ -1,5 +1,5 @@
 #include "GameEngineRendererTileMap.h"
-
+//20,40
 float4 GameEngineRendererTileMap::GetWorldPostion(int _X, int _Y)
 {
 	float4 ReturnPos = TileSize_;
