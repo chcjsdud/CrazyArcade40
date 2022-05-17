@@ -51,12 +51,15 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	//NewPlayer->SetPosition({ 100.f, 100.f });
 
 	Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
-	NewPlayer->SetCharacter(CharacterType::BAZZI);
+	NewPlayer->SetCharacter(Character::BAZZI);
 	NewPlayer->SetPlayerType(PlayerType::Player1);
 	NewPlayer->SetPosition({ 300.f, 300.f });
 
+
+	// =================== 1P 2P 키 동시 입력 시 이동 확인 완료 
+
 	NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
-	NewPlayer->SetCharacter(CharacterType::BAZZI);
+	NewPlayer->SetCharacter(Character::BAZZI);
 	NewPlayer->SetPlayerType(PlayerType::Player2);
 	NewPlayer->SetPosition({ 500.f, 500.f });
 

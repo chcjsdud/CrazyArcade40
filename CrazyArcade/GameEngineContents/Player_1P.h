@@ -20,7 +20,7 @@ protected:
 	void Render() override;
 
 protected:
-	bool IsMoveKey() override;
+	//bool IsMoveKey() override;
 
 private:
 

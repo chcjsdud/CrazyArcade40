@@ -34,7 +34,7 @@ enum class PlayerType
 	Max,
 };
 
-enum class CharacterType
+enum class Character
 {
 	BAZZI,
 	DAO,
@@ -55,6 +55,10 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+protected:
+	bool IsDebug;
+
+	void DebugModeSwitch();
 
 	// 플레이어 정보
 protected:
@@ -64,10 +68,7 @@ protected:
 	float MaxAttLength_;		// 최대 물줄기 길이
 	int CurAttCount_;			// 물풍선 개수 
 	int MaxAttCount_;			// 최대 물풍선 개수
-
 	
-	PlayerType Type;
-
 	// 플레이어 정보 세팅
 protected:
 	void SetSpeed(float _CurSpeed)
@@ -100,9 +101,29 @@ protected:
 		MaxAttCount_ = _MaxAttCount;
 	}
 
+protected:
+	PlayerType Type;
+	Character CurCharacter;
 
 protected:
+	void CharTypeUpdate();
+
 	void Move();
+
+	virtual bool IsMoveKey();
+
+public:
+	void SetCharacter(Character _CurCharacter)
+	{
+		CurCharacter = _CurCharacter;
+	}
+
+	void SetPlayerType(PlayerType _Type)
+	{
+		Type = _Type;
+	}
+
+	
 
 protected:
 	GameEngineRenderer* PlayerAnimationRender_;
@@ -113,29 +134,13 @@ protected:
 
 protected:
 	// 충돌
-	GameEngineCollision* PlayerCollision_;
+	GameEngineCollision* Collision1P_;
+	GameEngineCollision* Collision2P_;
 
-/////////////////////////////////////////////////// 테스트용
-protected:
 	GameEngineRenderer* BazziRenderer_;
 	GameEngineRenderer* DaoRenderer_;
 
-protected:
-	CharacterType CharType;
 
-protected:
-	void CharTypeUpdate();
-
-public:
-	void SetCharacter(CharacterType _CharType)
-	{
-		CharType = _CharType;
-	}
-
-	void SetPlayerType(PlayerType _Type)
-	{
-		Type = _Type;
-	}
 
 
 ////////////////////////////////////////////////////////////
@@ -144,6 +149,8 @@ public:
 
 	void ColMapUpdate();
 	void StagePixelCheck(float _Speed);
+
+	void PlayerCollisionUpdate();
 
 protected:
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
@@ -156,8 +163,6 @@ protected:
 	float4 MoveDir;
 	PlayerState CurState_;
 	//PlayerState PrevState_;
-
-	virtual bool IsMoveKey();
 
 protected:
 	void ChangeState(PlayerState _State);

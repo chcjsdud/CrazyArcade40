@@ -15,13 +15,33 @@ Player::Player()
     , PlayerAnimationRender_(nullptr)
     , CurState_(PlayerState::Idle)
     , CurDir_(PlayerDir::Down)
-	, PlayerCollision_(nullptr)
+	, Collision1P_(nullptr)
+	, Collision2P_(nullptr)
 	, Type(PlayerType::Max)
+	, BazziRenderer_(nullptr)
+	, DaoRenderer_(nullptr)
+	, MapColImage_(nullptr)
+	, CurCharacter(Character::MAX)
 {
 
 }
 Player::~Player()
 {
+
+}
+
+void Player::DebugModeSwitch()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("DebugMode") && true == IsDebug)
+	{
+		GetLevel()->IsDebugModeOff();
+		IsDebug = false;
+	}
+	else if(true == GameEngineInput::GetInst()->IsDown("DebugMode") && false == IsDebug)
+	{
+		GetLevel()->IsDebugModeOn();
+		IsDebug = true;
+	}
 
 }
 
@@ -78,13 +98,14 @@ void Player::Move()
 
 void Player::CharTypeUpdate()
 {
-	switch (CharType)
+	switch (CurCharacter)
 	{
-	case CharacterType::BAZZI:
+	case Character::BAZZI:
 	{
+		BazziRenderer_->On();
 		PlayerAnimationRender_ = BazziRenderer_;
 		PlayerAnimationRender_->On();
-		//DaoRenderer_->SetAlpha(0);
+
 		SetSpeed(1.f);
 		SetAttCount(1);
 		SetAttLength(10.f);			// 일단 10배
@@ -95,12 +116,12 @@ void Player::CharTypeUpdate()
 
 	}
 		break;
-	case CharacterType::DAO:
+	case Character::DAO:
 	{
+		DaoRenderer_->On();
 		PlayerAnimationRender_ = DaoRenderer_;
 		PlayerAnimationRender_->On();
-		//BazziRenderer_->SetAlpha(0);
-		//DaoRenderer_->SetAlpha(255);
+
 		SetSpeed(1.f);
 		SetAttCount(1);
 		SetAttLength(10.f);			// 일단 10배
@@ -108,9 +129,8 @@ void Player::CharTypeUpdate()
 		SetMaxSpeed(90.f);
 		SetMaxAttCount(6);
 		SetMaxAttLength(70.f);
-
 	}
-	break;
+		break;
 	}
 
 }
@@ -133,21 +153,38 @@ void Player::StagePixelCheck(float _Speed)
 	float4 DownPos = GetPosition() + float4{ 0.0f, 15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 }
 
+void Player::PlayerCollisionUpdate()
+{
+	if (Type == PlayerType::Player1)
+	{
+		Collision1P_->On();
+	}
+	else
+	{
+		Collision2P_->On();
+	}
+}
+
 void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 }
 
 void Player::Start()
 {
-	PlayerCollision_ = CreateCollision("PlayerHitBox", { 80, 80 });
+	Collision1P_ = CreateCollision("1PColl", { 80, 80 });
+	Collision1P_->Off();
+
+	Collision2P_ = CreateCollision("2PColl", { 80, 80 });
+	Collision2P_->Off();
+
+
 
 	PlayerAnimationRender_ = CreateRenderer();
 	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
 	PlayerAnimationRender_->SetPivot({ 0.f, 30.f });
-
 	PlayerAnimationRender_->Off();
 
-	// 배찌
+	// BAZZI
 	{
 		GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
 		Left->CutCount(6, 1);
@@ -157,10 +194,9 @@ void Player::Start()
 		Down->CutCount(8, 1);
 		GameEngineImage* Up = GameEngineImageManager::GetInst()->Find("Up.bmp");
 		Up->CutCount(8, 1);
-	}
 
-	// 애니메이션
-	{
+		// 애니메이션
+		
 		BazziRenderer_ = CreateRenderer();
 		BazziRenderer_->SetPivotType(RenderPivot::BOT);
 		BazziRenderer_->SetPivot({ 0.f, 30.f });
@@ -177,43 +213,39 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 0.09f, true);
 
-
-		//AnimationName_ = "Move_";
-		//BazziRenderer_->ChangeAnimation("Move_Down");
-
-
 		AnimationName_ = "Idle_";
 		BazziRenderer_->ChangeAnimation("Idle_Down");
+		BazziRenderer_->Off();
+		
 	}
+
+	
 
 	///////////// 테스트
 	{
-		//DaoRenderer_ = CreateRenderer();
-		//DaoRenderer_->SetPivotType(RenderPivot::BOT);
-		//DaoRenderer_->SetPivot({ 0.f, 30.f });
+		DaoRenderer_ = CreateRenderer();
+		DaoRenderer_->SetPivotType(RenderPivot::BOT);
+		DaoRenderer_->SetPivot({ 0.f, 30.f });
 
-		//GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Monster.bmp");
-		//Left->CutCount(10, 7);
-		//DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Left", 0, 1, 0.2f, true);
-		//DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Right", 2, 3, 0.2f, true);
-		//DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Up", 4, 5, 0.2f, true);
-		//DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Down", 16, 17, 0.2f, true);
+		GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Monster.bmp");
+		Left->CutCount(10, 7);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Left", 0, 1, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Right", 2, 3, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Up", 4, 5, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Down", 16, 17, 0.2f, true);
 
-		//// Idle
-		////DaoRenderer_->CreateAnimation("Left.bmp", "Idle_Left", 0, 0, 1.f, false);
-		////DaoRenderer_->CreateAnimation("Right.bmp", "Idle_Right", 0, 0, 1.f, false);
-		////DaoRenderer_->CreateAnimation("Down.bmp", "Idle_Down", 0, 0, 1.f, false);
-		////DaoRenderer_->CreateAnimation("Up.bmp", "Idle_Up", 0, 0, 1.f, false);
-
-		////// Move
-		////DaoRenderer_->CreateAnimation("Left.bmp", "Move_Left", 0, 5, 0.09f, true);
-		////DaoRenderer_->CreateAnimation("Right.bmp", "Move_Right", 0, 5, 0.09f, true);
-		////DaoRenderer_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 0.09f, true);
-		////DaoRenderer_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 0.09f, true);
+		// Idle
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Left", 0, 0, 1.f, false);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Right", 0, 0, 1.f, false);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Down", 0, 0, 1.f, false);
+		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Up", 0, 0, 1.f, false);
 
 
-		//AnimationName_ = "Move_";
-		//DaoRenderer_->ChangeAnimation("Move_Down");
+
+		AnimationName_ = "Move_";
+		DaoRenderer_->ChangeAnimation("Move_Down");
+
+		DaoRenderer_->Off();
 	}
 	
 
@@ -238,6 +270,9 @@ void Player::Start()
 
 		// =============== 2P 공격 ===============
 		GameEngineInput::GetInst()->CreateKey("2PAttack", VK_LSHIFT);
+
+		// ============== 디버그 모드 =============
+		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
 	}
 
 	
@@ -249,6 +284,9 @@ void Player::Update()
 
 	DirAnimationCheck();
 	PlayerStateUpdate();
+	PlayerCollisionUpdate();
+
+	DebugModeSwitch();
 }
 
 void Player::Render()
