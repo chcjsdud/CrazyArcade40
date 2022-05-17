@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Player_2P.h"
 
 class Player_Bazzi : public Player
 {

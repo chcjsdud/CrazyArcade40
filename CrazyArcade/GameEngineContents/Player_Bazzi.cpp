@@ -36,22 +36,22 @@ void Player_Bazzi::Start()
 		PlayerAnimationRender_->CreateAnimation("Up.bmp", "Idle_Up", 0, 0, 1.f, false);
 	
 		// Move
-		PlayerAnimationRender_->CreateAnimation("Left.bmp", "Move_Left", 0, 5, 1.f, false);
-		PlayerAnimationRender_->CreateAnimation("Right.bmp", "Move_Right", 0, 5, 1.f, false);
-		PlayerAnimationRender_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 1.f, false);
-		PlayerAnimationRender_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 1.f, false);
+		PlayerAnimationRender_->CreateAnimation("Left.bmp", "Move_Left", 0, 5, 0.09f, true);
+		PlayerAnimationRender_->CreateAnimation("Right.bmp", "Move_Right", 0, 5, 0.09f, true);
+		PlayerAnimationRender_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 0.09f, true);
+		PlayerAnimationRender_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 0.09f, true);
 	}
 
 
-	AnimationName_ = "Move_";
-	PlayerAnimationRender_->ChangeAnimation("Move_Down");
+	//AnimationName_ = "Move_";
+	//PlayerAnimationRender_->ChangeAnimation("Move_Down");
 
-	//AnimationName_ = "Idle_";
-	//PlayerAnimationRender_->ChangeAnimation("Idle_Down");
+	AnimationName_ = "Idle_";
+	PlayerAnimationRender_->ChangeAnimation("Idle_Down");
 
 
 	// 플레이어 정보 세팅
-	SetSpeed(1.f);				// 일단 10배
+	SetSpeed(1.f);				
 	SetAttCount(1);
 	SetAttLength(10.f);			// 일단 10배
 
