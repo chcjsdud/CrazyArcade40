@@ -29,7 +29,11 @@ void TitleLevel::Update()
     }
     if (true == GameEngineInput::GetInst()->IsDown("UITeamTest"))
     {
-        GameEngine::GetInst().ChangeLevel("UITeamTest");
+        GameEngine::GetInst().ChangeLevel("UITeamTest"); 
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("CampLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("CampLevel");
     }
 }
 void TitleLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
