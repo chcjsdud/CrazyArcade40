@@ -21,5 +21,4 @@ protected:
 
 private:
 	MapBackGround* MapBackGround_;
-	MapBackGround* MapFrontBackGround_;
 };

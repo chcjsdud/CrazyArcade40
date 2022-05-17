@@ -169,7 +169,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="CemeteryLevel.h">
+    <ClInclude Include="CemetoryLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -239,7 +239,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="CemeteryLevel.cpp">
+    <ClCompile Include="CemetoryLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

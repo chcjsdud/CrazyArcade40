@@ -8,6 +8,7 @@ class CampLevel : public GameEngineLevel
 {
 private:
 	MapBackGround* MapBackGround_;
+	MapBackGround* MapFrontBackGround_;
 
 public:
 	CampLevel();

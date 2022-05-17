@@ -12,7 +12,7 @@
 #include "LoginLevel.h"
 #include "CampLevel.h"
 #include "VillageLevel.h"
-#include "CemeteryLevel.h"
+#include "CemetoryLevel.h"
 ////////∏ÛΩ∫≈Õ ∏ //////////
 #include "Monster1Level.h"
 #include "Monster2Level.h"
@@ -169,7 +169,7 @@ void CrazyArcade::GameInit()
     //////∞·≈ı∏  ∑π∫ß
     CreateLevel<CampLevel>("CampLevel");
     CreateLevel<VillageLevel>("VillageLevel");
-    CreateLevel<CemeteryLevel>("CemeteryLevel");
+    CreateLevel<CemetoryLevel>("CemetoryLevel");
     //////∏ÛΩ∫≈Õ ∏  ∑π∫ß
     CreateLevel<Monster1Level>("Monster1Level");
     CreateLevel<Monster2Level>("Monster2Level");
