@@ -76,6 +76,9 @@
     <ClInclude Include="LoginLevel.h">
       <Filter>Level\IntroLevel</Filter>
     </ClInclude>
+    <ClInclude Include="MapFront.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Actor\Play\Player</Filter>
     </ClInclude>
@@ -180,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="Player_2P.cpp">
       <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MapFront.cpp">
+      <Filter>Actor\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

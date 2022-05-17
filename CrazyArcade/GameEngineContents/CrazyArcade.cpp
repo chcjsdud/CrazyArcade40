@@ -155,11 +155,13 @@ void CrazyArcade::GameInit()
     if (false == GameEngineInput::GetInst()->IsKey("TitleLevel"))
     {
         GameEngineInput::GetInst()->CreateKey("TitleLevel", 'P');
-        GameEngineInput::GetInst()->CreateKey("CampLevel", '1');
-        GameEngineInput::GetInst()->CreateKey("VillageLevel", '2');
-        GameEngineInput::GetInst()->CreateKey("Monster1Level", '3');
-        GameEngineInput::GetInst()->CreateKey("Monster2Level", '4');
-        GameEngineInput::GetInst()->CreateKey("BossLevel", '5');
+        GameEngineInput::GetInst()->CreateKey("MapTeamTest", '1');
+        GameEngineInput::GetInst()->CreateKey("PlayerTeamTest", '2');
+        GameEngineInput::GetInst()->CreateKey("UITeamTest", '3');
+
+        GameEngineInput::GetInst()->CreateKey("CampLevel", '4');
+        GameEngineInput::GetInst()->CreateKey("VillageLevel", '5');
+
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
     }
     //////시작부분
@@ -179,7 +181,7 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("PlayerTeamTest");
+    ChangeLevel("TitleLevel");
 
 }
 
