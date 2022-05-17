@@ -16,6 +16,7 @@ public:
 	}
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
+
 	BlockType BlockType_;
 	ItemType ItemType_;
 };
@@ -43,5 +44,5 @@ protected:
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
-	void CreateBlockTile();
+	void CreateBlockTile(int x_, int y_);
 };
