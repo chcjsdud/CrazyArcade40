@@ -1,7 +1,10 @@
 #include"MapBackGround.h"
+#include <GameEngineBase/GameEngineWindow.h>
+#include <GameEngine/GameEngineRenderer.h>
 
 MapBackGround::MapBackGround()
 	:MapBackGroundRender_(nullptr)
+	, MapTileMap_(nullptr)
 {
 
 }
