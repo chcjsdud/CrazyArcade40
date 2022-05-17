@@ -5,9 +5,12 @@
 #include <GameEngine/GameEngineImageManager.h>
 
 Player::Player()
-    : Speed_(100.f)
-    , AttackLength_(20.f)   
-    , AttackCount_(1.f)
+    : CurSpeed_(0.f)
+	, MaxSpeed_(0.f)
+    , CurAttLength_(0.f)   
+    , CurAttCount_(0)
+	, MaxAttLength_(0.f)
+	, MaxAttCount_(0)
     , MoveDir(float4::ZERO)
     , PlayerAnimationRender_(nullptr)
     , CurState_(PlayerState::Idle)
@@ -25,26 +28,32 @@ void Player::Move()
 {
 	MoveDir = float4::ZERO;
 
+	float MovePos = 280.f;
+
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 	{
-		MoveDir = float4::LEFT;
+		MoveDir.x = -MovePos;
 	}
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
-		MoveDir = float4::RIGHT;
+		MoveDir.x = MovePos;
 	}
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
 	{
-		MoveDir = float4::UP;
+		MoveDir.y = -MovePos;
 	}
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
 	{
-		MoveDir = float4::DOWN;
+		MoveDir.y = MovePos;
 	}
+
+	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
+
 }
 
 void Player::ColMapUpdate()
 {
+
 }
 
 void Player::StagePixelCheck(float _Speed)

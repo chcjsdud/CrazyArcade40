@@ -19,8 +19,8 @@ CampLevel::~CampLevel()
 
 void CampLevel::Loading()
 {
-	Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
-	NewPlayer->SetPosition({ 100.f, 100.f });
+	//Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
+	//NewPlayer->SetPosition({ 100.f, 100.f });
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
 	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고

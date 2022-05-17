@@ -49,30 +49,13 @@ void Player::IdleUpdate()
 
 void Player::MoveUpdate()
 {
-	//if (false == IsMoveKey())
-	//{
-	//	ChangeState(PlayerState::Idle);
-	//	return;
-	//}
+	if (false == IsMoveKey())
+	{
+		ChangeState(PlayerState::Idle);
+		return;
+	}
 
-	MoveDir = float4::ZERO;
-
-	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
-	{
-		MoveDir = float4::LEFT;
-	}
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
-	{
-		MoveDir = float4::RIGHT;
-	}
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-	{
-		MoveDir = float4::UP;
-	}
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-	{
-		MoveDir = float4::DOWN;
-	}
+	Move();
 
 	//StagePixelCheck(Speed_);
 }
