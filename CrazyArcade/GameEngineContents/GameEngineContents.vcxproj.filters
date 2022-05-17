@@ -17,7 +17,7 @@
     <ClInclude Include="CampLevel.h">
       <Filter>Level\PlayLevel</Filter>
     </ClInclude>
-    <ClInclude Include="CemeteryLevel.h">
+    <ClInclude Include="CemetoryLevel.h">
       <Filter>Level\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="VillageLevel.h">
@@ -48,9 +48,6 @@
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
-    <ClInclude Include="LoginLevel.h">
-      <Filter>Level\PlayLevel</Filter>
-    </ClInclude>
     <ClInclude Include="LoginBackGround.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
     <ClInclude Include="UITeamTest.h">
       <Filter>Level\TestLevel</Filter>
     </ClInclude>
+    <ClInclude Include="LoginLevel.h">
+      <Filter>Level\IntroLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -97,7 +97,7 @@
     <ClCompile Include="CampLevel.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
-    <ClCompile Include="CemeteryLevel.cpp">
+    <ClCompile Include="CemetoryLevel.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="VillageLevel.cpp">
@@ -142,9 +142,6 @@
     <ClCompile Include="Monster2.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="LoginLevel.cpp">
-      <Filter>Level\PlayLevel</Filter>
-    </ClCompile>
     <ClCompile Include="LoginBackGround.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
@@ -171,6 +168,9 @@
     </ClCompile>
     <ClCompile Include="UITeamTest.cpp">
       <Filter>Level\TestLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginLevel.cpp">
+      <Filter>Level\IntroLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
