@@ -20,4 +20,5 @@ protected:
 	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
 private:
 	MapBackGround* MapBackGround_;
+	MapBackGround* MapFrontBackGround_;
 };
