@@ -148,16 +148,7 @@ void CrazyArcade::GameInit()
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 
 // 플레이어  키
-    {
-        GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
-        Left->CutCount(6, 1);
-        GameEngineImage* Right = GameEngineImageManager::GetInst()->Find("Right.bmp");
-        Right->CutCount(6, 1);
-        GameEngineImage* Down = GameEngineImageManager::GetInst()->Find("Down.bmp");
-        Down->CutCount(8, 1);
-        GameEngineImage* Up = GameEngineImageManager::GetInst()->Find("Up.bmp");
-        Up->CutCount(8, 1);
-    }
+
 
 
     // 키 생성

@@ -42,4 +42,7 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 	Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
 	Seal->SetPosition(float4(200.0f, 200.0f));
+
+	Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
+	NewPlayer->SetPosition({ 100.f, 100.f });
 }
