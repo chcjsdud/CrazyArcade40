@@ -3,6 +3,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngine/GameEngineRendererTileMap.h>
 
+class GameEngineRenderer;
 class GameEngineCollision;
 class BlockTile : public Tile
 {
@@ -13,9 +14,10 @@ public:
 	{
 
 	}
-
+	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
 	BlockType BlockType_;
+	ItemType ItemType_;
 };
 
 class MapGameObject : public GameEngineActor
@@ -39,7 +41,7 @@ protected:
 	void Start() override;
 	void Update() override;
 private:
-	std::vector<BlockTile*> AllBlock_;
+	std::vector<BlockTile*> AllBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 	void CreateBlockTile();
 };

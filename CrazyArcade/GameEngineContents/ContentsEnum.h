@@ -15,5 +15,16 @@ enum class BlockType
 	FixBlock,
 	PullBlock,
 	BushBlock,
+	ItemBlock,
+	Max
+};
+enum class ItemType
+{
+	Roller,
+	Bubble,
+	Fluid,
+	RedDevil,
+	Glove,
+	Shoes,
 	Max
 };

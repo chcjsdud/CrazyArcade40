@@ -3,7 +3,7 @@
 
 MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
-	AllBlock_()
+	AllBlockTiles_()
 {
 
 }
