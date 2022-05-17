@@ -106,6 +106,28 @@ void CrazyArcade::GameInit()
         }
     }
 
+    ////// UI 리소스 CreateRoom에서 사용되는 리소스
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("CreateRoom");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+
+        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("NormalBtn_Animation.bmp");
+        Image->Cut({ 256,256 });
+
+        Image = GameEngineImageManager::GetInst()->Find("MonsterBtn_Animation.bmp");
+        Image->Cut({ 256,256 });
+    }
 
     //플레이어 배찌
     {

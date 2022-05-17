@@ -32,3 +32,11 @@ enum class ItemType
 	Shoes,
 	Max
 };
+enum class UIType
+{
+	BackGround,
+	BackGroundButton,
+	PopUp,
+	PopUpButton,
+	Mouse
+};

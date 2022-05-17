@@ -177,6 +177,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CreateRoomBackGround.h" />
     <ClInclude Include="IntroLevel.h" />
     <ClInclude Include="LoginBackGround.h">
       <SubType>
@@ -259,6 +260,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CreateRoomBackGround.cpp" />
     <ClCompile Include="IntroLevel.cpp" />
     <ClCompile Include="LoginBackGround.cpp">
       <SubType>
