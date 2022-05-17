@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="CrazyArcade.h" />
-    <ClInclude Include="Player.h">
-      <Filter>Actor\Play</Filter>
-    </ClInclude>
     <ClInclude Include="Player_Bazzi.h">
       <Filter>Actor\Play</Filter>
     </ClInclude>
@@ -79,15 +76,21 @@
     <ClInclude Include="LoginLevel.h">
       <Filter>Level\IntroLevel</Filter>
     </ClInclude>
+    <ClInclude Include="MapFront.h">
+      <Filter>Actor\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_1P.h">
+      <Filter>Actor\Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_2P.h">
+      <Filter>Actor\Play\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
-    <ClCompile Include="Player.cpp">
-      <Filter>Actor\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_State.cpp">
-      <Filter>Actor\Play</Filter>
-    </ClCompile>
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play</Filter>
     </ClCompile>
@@ -110,9 +113,6 @@
       <Filter>Actor\Map</Filter>
     </ClCompile>
     <ClCompile Include="CampLevel.cpp">
-      <Filter>Level\PlayLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="CemeteryLevel.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="VillageLevel.cpp">
@@ -172,6 +172,21 @@
     <ClCompile Include="LoginLevel.cpp">
       <Filter>Level\IntroLevel</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_1P.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_2P.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MapFront.cpp">
+      <Filter>Actor\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -209,6 +224,9 @@
     </Filter>
     <Filter Include="Level\TestLevel">
       <UniqueIdentifier>{15c289d0-3a3a-4d6e-8b15-a6b59ef04e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\Player">
+      <UniqueIdentifier>{dc4135af-0179-4215-8ef7-920fd4d2c8b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

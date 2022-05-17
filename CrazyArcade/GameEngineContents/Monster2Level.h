@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineLevel.h>
 class MapBackGround;
 class Player;
+class MapFront;
 class Monster2Level : public GameEngineLevel
 {
 public:
@@ -20,5 +21,5 @@ protected:
 	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override;
 private:
 	MapBackGround* MapBackGround_;
-	MapBackGround* MapFrontBackGround_;
+	MapFront* MapFrontBackGround_;
 };

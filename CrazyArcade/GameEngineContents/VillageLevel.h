@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
 class MapBackGround;
+class MapFront;
 class Player;
 class VillageLevel : public GameEngineLevel
 {
@@ -21,5 +22,5 @@ protected:
 
 private:
 	MapBackGround* MapBackGround_;
-	MapBackGround* MapFrontBackGround_;
+	MapFront* MapFrontBackGround_;
 };
