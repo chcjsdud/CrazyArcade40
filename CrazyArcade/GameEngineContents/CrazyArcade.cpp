@@ -127,6 +127,12 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("MonsterBtn_Animation.bmp");
         Image->Cut({ 256,256 });
+
+        Image = GameEngineImageManager::GetInst()->Find("ConfirmBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("CancelBtn.bmp");
+        Image->Cut({ 128,128 });
     }
 
     //플레이어 배찌

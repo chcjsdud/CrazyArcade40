@@ -14,6 +14,10 @@ UITeamTest::~UITeamTest()
 }
 void UITeamTest::Loading()
 {
+	CreateActor<LoginBackGround>((int)UIType::BackGround);
+	CreateActor<CreateRoomBackGround>((int)UIType::PopUp);
+	CreateActor<Mouse>((int)UIType::Mouse);
+
 }
 void UITeamTest::Update()
 {
