@@ -28,7 +28,7 @@ void MapGameObject::Start()
 
 void MapGameObject::Update()
 {
-	if (IsWaveDeath ==true)
+	if (IsWaveDeath == true)
 	{
 		WaveDeathTime -= 1.0f * GameEngineTime::GetDeltaTime();
 		if (WaveDeathTime < 0.0f)
@@ -37,7 +37,7 @@ void MapGameObject::Update()
 			DestroyWave();
 		}
 	}
-	if (IsBoomDeath==true)
+	if (IsBoomDeath == true)
 	{
 		BoomDeathTime -= 1.0f * GameEngineTime::GetDeltaTime();
 		if (BoomDeathTime < 0.0f)
@@ -99,12 +99,13 @@ void MapGameObject::DestroyBoom()
 {
 	for (int i = 0; i < BoomBlockTiles_.size(); i++)
 	{
+		float4 _Poss= BoomBlockTiles_[i]->TilePos_;
 		MapTile_->DeleteTile(BoomBlockTiles_[i]->TileIndex_.X, BoomBlockTiles_[i]->TileIndex_.Y);
-		BubblePop(BoomBlockTiles_[i]->TilePos_, 3);
+		BubblePop(_Poss, 3);
 	}
 	BoomBlockTiles_.clear();
 	IsBoomDeath = false;
-	
+
 
 }
 
@@ -113,12 +114,12 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 
-	BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp",static_cast<int>(ORDER::EFFECT));
+	BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 	Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
 	Wave_->BlockType_ = BlockType::WaveBlock;
 	Wave_->TileIndex_ = TileIndex_;
 	Wave_->Renderer = CreateRenderer();
-	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y});
+	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y });
 	Wave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.1f, true);
 	Wave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.1f, false);
 	Wave_->Renderer->ChangeAnimation("Center");
@@ -142,7 +143,7 @@ void MapGameObject::WaveDeathAni()
 		for (int i = 1; i < WaveBlockTiles_.size(); i++)
 		{
 			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
-	
+
 		}
 		IsWaveDeathAni = false;
 	}
@@ -153,10 +154,10 @@ void MapGameObject::DestroyWave()
 	{
 		for (int i = 1; i < WaveBlockTiles_.size(); i++)
 		{
-				MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);
+			MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);
 		}
-				IsWaveDeath = false;
-				WaveBlockTiles_.clear();
+		IsWaveDeath = false;
+		WaveBlockTiles_.clear();
 	}
 
 }
@@ -173,7 +174,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 			IndexCount_ = i - 1;
 			i = static_cast<int>(Power) + 1;
 		}
-		else 
+		else
 		{
 			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);
 			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);
@@ -184,7 +185,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 			}
 		}
 
-		 
+
 
 	}
 
@@ -382,9 +383,9 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 	{
 		TileIndex TilePos = _Pos;
 		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X + i, TilePos.Y);
-		BlockTile* Tiles_= MapTile_->GetTile<BlockTile>(TilePos.X+i, TilePos.Y);
+		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X + i, TilePos.Y);
 
-		if (i==IndexCount_)
+		if (i == IndexCount_)
 		{
 			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
 			Wave_->TileIndex_.X = TilePos.X + i;
@@ -411,7 +412,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 			Wave_->Renderer->ChangeAnimation("Right2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
-		
+
 		}
 
 	}
