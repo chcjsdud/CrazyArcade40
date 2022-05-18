@@ -235,6 +235,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="StartIntroUI.h" />
     <ClInclude Include="TimeUI.h" />
     <ClInclude Include="RoomcharacterSelectUI.h">
       <SubType>
@@ -329,6 +330,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
+    <ClCompile Include="StartIntroUI.cpp" />
     <ClCompile Include="TimeUI.cpp" />
     <ClCompile Include="TitleLevel.cpp" />
     <ClCompile Include="UITeamTest.cpp">

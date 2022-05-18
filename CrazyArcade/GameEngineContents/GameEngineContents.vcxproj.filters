@@ -104,6 +104,9 @@
     <ClInclude Include="PlayBackGround.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
+    <ClInclude Include="StartIntroUI.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -207,9 +210,6 @@
     <ClCompile Include="LoginButton.cpp">
       <Filter>Actor\UI\Login</Filter>
     </ClCompile>
-    <ClCompile Include="RoomcharacterSelectUI.cpp">
-      <Filter>Actor\UI\Room</Filter>
-    </ClCompile>
     <ClCompile Include="CreateRoomBackGround.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
@@ -217,6 +217,9 @@
       <Filter>Actor\UI</Filter>
     </ClCompile>
     <ClCompile Include="PlayBackGround.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="StartIntroUI.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
   </ItemGroup>

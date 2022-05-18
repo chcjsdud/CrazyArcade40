@@ -5,6 +5,7 @@
 #include "ContentsEnum.h"
 #include "PlayBackGround.h"
 #include "TimeUI.h"
+#include "StartIntroUI.h"
 
 UITeamTest::UITeamTest()
 {
@@ -22,8 +23,9 @@ void UITeamTest::Loading()
 	CreateActor<Mouse>((int)UIType::Mouse);*/
 
 	//게임플레이화면
-	/*CreateActor<PlayBackGround>((int)UIType::BackGround);
-	CreateActor<TimeUI>((int)UIType::Time);*/
+	CreateActor<PlayBackGround>((int)UIType::BackGround);
+	CreateActor<StartIntroUI>((int)UIType::PopUp);
+	CreateActor<TimeUI>((int)UIType::Time);
 }
 void UITeamTest::Update()
 {
