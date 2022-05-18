@@ -56,4 +56,9 @@ private:
 	void CreateBlockTile(int x_, int y_);
 
 	void MakeWave(float4 _Pos, float Power);
+	void MakeRightWave(TileIndex _Pos, float Power);
+	void MakeLeftWave(TileIndex _Pos, float Power);
+	void MakeDownWave(TileIndex _Pos, float Power);
+	void MakeUpWave(TileIndex _Pos, float Power);
+
 };

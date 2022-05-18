@@ -35,6 +35,7 @@ void CampLevel::Loading()
 	bubble->SetMapTile(&MapBackGround_->MapTileMap_);
 	//bubble->BubblePop({ 60,60 }, 1);
 	bubble->CreateBoom(1, 1);
+	bubble->BubblePop({ 60,60 }, 2);
 }
 
 void CampLevel::Update()
