@@ -13,8 +13,7 @@ public:
 		ItemType_(ItemType::Max),
 		BlockCol(nullptr),
 		Renderer(nullptr),
-		TileX_(0),
-		TileY_(0),
+		TilePos_(),
 		TileIndex_()
 
 	{
@@ -32,8 +31,7 @@ public:
 	}
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
-	float TileX_;
-	float TileY_;
+	float4 TilePos_;
 	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
