@@ -36,6 +36,33 @@ void MapGameObject::Update()
 	}
 }
 
+// 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
+BlockType MapGameObject::CheckTile(float4 _Pos) {
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_ == nullptr)
+	{
+		return BlockType::Max;
+	}
+	else
+	{
+		return Tiles_->BlockType_;
+	}
+}
+// 플레이어가 서있는 위치의 타일의 BlockType이 아이템블록이라면 , 아이템이 무슨아이템인지 체크하는 함수입니당. 위치넣어주면 아이템타입이 리턴됩니당. 
+ItemType MapGameObject::CheckItem(float4 _Pos)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_ == nullptr)
+	{
+		return ItemType::Max;
+	}
+	else
+	{
+		return Tiles_->ItemType_;
+	}
+}
 
 void MapGameObject::CreateBoom(float4 _Pos)
 {
