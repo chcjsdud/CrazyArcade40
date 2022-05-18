@@ -57,7 +57,7 @@ void Player::MoveUpdate()
 
 	Move();
 
-	//StagePixelCheck(Speed_);
+	StagePixelCheck(CurSpeed_);
 }
 
 void Player::JumpUpdate()

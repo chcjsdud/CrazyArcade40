@@ -44,6 +44,8 @@ enum class Character
 
 class Player : public GameEngineActor
 {
+	static int PLAYER_COUNT;
+
 public:
 	// constrcuter destructer
 	Player();
@@ -101,6 +103,12 @@ protected:
 		MaxAttCount_ = _MaxAttCount;
 	}
 
+	void PlayerInfoUpdate();
+
+	void SpeedUpdate();
+	void AttackCountUpdate();
+	void AttackLengthUpdate();
+
 protected:
 	PlayerType Type;
 	Character CurCharacter;
@@ -144,13 +152,30 @@ protected:
 
 
 ////////////////////////////////////////////////////////////
+private:
 	// ¸Ê °ü·Ã
 	GameEngineImage* MapColImage_;
 
+	std::string CurrentLevel_;
+	//std::string CurrentColMap_;
+
+protected:
 	void ColMapUpdate();
 	void StagePixelCheck(float _Speed);
 
+	void CollisionResultUpdate();
+
 	void PlayerCollisionUpdate();
+
+	std::string GetCurrentLevel()
+	{
+		return GetLevel()->GetNameCopy();
+	}
+
+	//GameEngineImage* GetCurrentColMap(std::string _CurrentColMap)
+	//{
+	//	return GameEngineImageManager::GetInst()->Find(CurrentColMap_);
+	//}
 
 protected:
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;

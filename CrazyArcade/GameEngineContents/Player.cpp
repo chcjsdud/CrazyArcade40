@@ -22,6 +22,8 @@ Player::Player()
 	, DaoRenderer_(nullptr)
 	, MapColImage_(nullptr)
 	, CurCharacter(Character::MAX)
+	, IsDebug(false)
+	, CurrentLevel_("")
 {
 
 }
@@ -96,6 +98,25 @@ void Player::Move()
 
 }
 
+void Player::PlayerInfoUpdate()
+{
+	//SpeedUpdate();
+	//AttackCountUpdate();
+	//AttackLengthUpdate();
+}
+
+void Player::SpeedUpdate()
+{
+}
+
+void Player::AttackCountUpdate()
+{
+}
+
+void Player::AttackLengthUpdate()
+{
+}
+
 void Player::CharTypeUpdate()
 {
 	switch (CurCharacter)
@@ -137,20 +158,95 @@ void Player::CharTypeUpdate()
 
 void Player::ColMapUpdate()
 {
+	CurrentLevel_ = GetCurrentLevel();
 
+	//if (nullptr == MapColImage_)
+	//{
+	//	return;
+	//}
+	//	
+
+	// ====================================== 테스트 레벨
+	if (CurrentLevel_ == "PlayerTeamTest")
+	{
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+	}
+
+
+	if (CurrentLevel_ == "CampLevel")
+	{
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+	}
+	else if (CurrentLevel_ == "VillageLevel")
+	{
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Village_Col.bmp");
+	}
+	else if (CurrentLevel_ == "CemetoryLevel")
+	{
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Cemetory_ColMap.bmp");
+	}
+	else if (CurrentLevel_ == "Monster1Level")
+	{
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("MonsterStage1_ColMap.bmp");
+	}
+	else if (CurrentLevel_ == "Monster2Level")
+	{
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("MonsterStage2_ColMap.bmp");
+	}
+	else if (CurrentLevel_ == "BossLevel")
+	{
+		// ****** 보스레벨 ColMap 수정 필요 
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+	}
+	else
+		return;
 }
 
 void Player::StagePixelCheck(float _Speed)
 {
-	float4 CheckPos = GetPosition() + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	//float4 LeftPos = GetPosition() + float4{ -5.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	//float4 RightPos = GetPosition() + float4{ 15.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	//float4 UpPos = GetPosition() + float4{ 0.0f, -15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	//float4 DownPos = GetPosition() + float4{ 0.0f, 15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
-	int Color = MapColImage_->GetImagePixel(CheckPos);
-	if (RGB(0, 0, 0) != Color)
+	int LeftCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ -20.f, 0.f });
+	int RightCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ 20.f, 0.f });
+	int UpCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ 0.f, -20.f });
+	int DownCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ 0.f, 20.f });
+	
+	//int LeftColor = MapColImage_->GetImagePixel(LeftPos);
+	//int RightColor = MapColImage_->GetImagePixel(RightPos);
+	//int UpColor = MapColImage_->GetImagePixel(UpPos);
+	//int DownColor = MapColImage_->GetImagePixel(DownPos);
+
+	//if (RGB(0, 0, 0) != LeftColor
+	//	&& RGB(0, 0, 0) != RightColor
+	//	&& RGB(0, 0, 0) != UpColor
+	//	&& RGB(0, 0, 0) != DownColor)
+	//{
+	//	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
+	//}
+	if (RGB(0, 0, 0) == LeftCheck)
 	{
-		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
+		MoveDir.x = 1.f;
 	}
+	else if (RGB(0, 0, 0) != RightCheck)
+	{
+		MoveDir.x = -1.f;
+	}
+	else if (RGB(0, 0, 0) != UpCheck)
+	{
+		MoveDir.y = -1.f;
+	}
+	else if (RGB(0, 0, 0) != DownCheck)
+	{
+		MoveDir.y = 1.f;
+	}
+}
 
-	float4 DownPos = GetPosition() + float4{ 0.0f, 15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+void Player::CollisionResultUpdate()
+{
+
 }
 
 void Player::PlayerCollisionUpdate()
@@ -280,11 +376,15 @@ void Player::Start()
 
 void Player::Update()
 {
+	ColMapUpdate();
+
 	CharTypeUpdate();
 
 	DirAnimationCheck();
 	PlayerStateUpdate();
 	PlayerCollisionUpdate();
+
+	//PlayerInfoUpdate();
 
 	DebugModeSwitch();
 }

@@ -1,5 +1,4 @@
 #include"CampLevel.h"
-#include "Player_Bazzi.h"
 #include"ContentsEnum.h"
 #include "MapBackGround.h"
 #include "MapFront.h"

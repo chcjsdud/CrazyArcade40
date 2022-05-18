@@ -6,7 +6,7 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineContents/ContentsEnum.h>
-#include "Player_Bazzi.h"
+#include "Player.h"
 #include"ContentsEnum.h"
 #include"MapBackGround.h."
 #include "Monster1.h"
@@ -31,7 +31,7 @@ void PlayerTeamTest::Update()
 void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
-	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고d
+	MapBackGround_->GetRenderer()->SetImage("Camp_ColMap.bmp");//Actor에 이미지 세팅해주고d
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 
 	Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
@@ -58,9 +58,9 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 	// =================== 1P 2P 키 동시 입력 시 이동 확인 완료 
 
-	NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
-	NewPlayer->SetCharacter(Character::BAZZI);
-	NewPlayer->SetPlayerType(PlayerType::Player2);
-	NewPlayer->SetPosition({ 500.f, 500.f });
+	//NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
+	//NewPlayer->SetCharacter(Character::BAZZI);
+	//NewPlayer->SetPlayerType(PlayerType::Player2);
+	//NewPlayer->SetPosition({ 500.f, 500.f });
 
 }
