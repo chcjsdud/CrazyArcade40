@@ -12,16 +12,21 @@ public:
 		: BlockType_(BlockType::Max),
 		BlockCol(nullptr),
 		TileX_(0),
-		TileY_(0)
+		TileY_(0),
+		TileIndex_()
 
 	{
 
+	}
+	~BlockTile()
+	{
+		Renderer->Death();
 	}
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
 	float TileX_;
 	float TileY_;
-
+	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
 };
@@ -51,14 +56,16 @@ protected:
 	void Update() override;
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
+	std::vector<BlockTile*> WaveBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 
 	void CreateBlockTile(int x_, int y_);
 
-	void MakeWave(float4 _Pos, float Power);
 	void MakeRightWave(TileIndex _Pos, float Power);
 	void MakeLeftWave(TileIndex _Pos, float Power);
 	void MakeDownWave(TileIndex _Pos, float Power);
 	void MakeUpWave(TileIndex _Pos, float Power);
-
+	void DestroyWave();
+	float WaveDeathTime;
+	bool IsWaveDeath;
 };
