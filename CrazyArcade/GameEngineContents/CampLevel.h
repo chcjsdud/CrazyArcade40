@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
 
-
+class MapGameObject;
 class MapBackGround;
 class Player;
 class MapFront;
@@ -10,7 +10,7 @@ class CampLevel : public GameEngineLevel
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
-
+	MapGameObject* bubble_;
 public:
 	CampLevel();
 	~CampLevel();
