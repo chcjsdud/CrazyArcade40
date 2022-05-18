@@ -100,7 +100,7 @@ void MapGameObject::DestroyWave()
 }
 void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 {
-	float IndexCount_ = Power;
+	int IndexCount_ = static_cast<int>(Power);
 	for (int i = 1; i <= Power; i++)
 	{
 
@@ -109,7 +109,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 		if (TilePos.X - i < 0)
 		{
 			IndexCount_ = i - 1;
-			i = Power + 1;
+			i = static_cast<int>(Power) + 1;
 		}
 		else 
 		{
@@ -167,7 +167,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 }
 void MapGameObject::MakeDownWave(TileIndex _Pos, float Power)
 {
-	float IndexCount_ = Power;
+	int IndexCount_ = static_cast<int>(Power);
 	for (int i = 1; i <= Power; i++)
 	{
 
@@ -176,7 +176,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float Power)
 		if (TilePos.Y + i > 13)
 		{
 			IndexCount_ = i - 1;
-			i = Power + 1;
+			i = static_cast<int>(Power) + 1;
 		}
 		else
 		{
@@ -232,7 +232,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float Power)
 }
 void MapGameObject::MakeUpWave(TileIndex _Pos, float Power)
 {
-	float IndexCount_ = Power;
+	int IndexCount_ = static_cast<int>(Power);
 	for (int i = 1; i <= Power; i++)
 	{
 		TileIndex TilePos = _Pos;
@@ -240,7 +240,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float Power)
 		if (TilePos.Y - i < 0)
 		{
 			IndexCount_ = i - 1;
-			i = Power + 1;
+			i = static_cast<int>(Power) + 1;
 		}
 		else
 		{
@@ -294,7 +294,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float Power)
 
 void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 {
-	float IndexCount_=Power;
+	int IndexCount_ = static_cast<int>(Power);
 	for (int i = 1; i <= Power; i++)
 	{
 		TileIndex TilePos = _Pos;
@@ -302,7 +302,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 		if (TilePos.X + i > 15)
 		{
 			IndexCount_ = i - 1;
-			i = Power + 1;
+			i = static_cast<int>(Power) + 1;
 		}
 		else
 		{
@@ -354,11 +354,4 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 
 	}
 
-}
-void MapGameObject::CreateBlockTile(int x_ ,int y_)
-{
-	if (GetLevel()->GetNameCopy() == "VillageLevel")
-	{
-		
-	}
 }

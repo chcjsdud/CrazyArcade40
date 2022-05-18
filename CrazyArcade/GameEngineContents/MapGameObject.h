@@ -59,8 +59,6 @@ private:
 	std::vector<BlockTile*> WaveBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 
-	void CreateBlockTile(int x_, int y_);
-
 	void MakeRightWave(TileIndex _Pos, float Power);
 	void MakeLeftWave(TileIndex _Pos, float Power);
 	void MakeDownWave(TileIndex _Pos, float Power);
