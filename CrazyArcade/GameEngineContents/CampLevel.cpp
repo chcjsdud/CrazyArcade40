@@ -33,9 +33,7 @@ void CampLevel::Loading()
 
 	MapGameObject* bubble = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	bubble->SetMapTile(&MapBackGround_->MapTileMap_);
-	bubble->BubblePop({ 60,60 }, 2);
-
-	bubble->CreateBoom({ 20,20 });
+	bubble->CreateBoom({ 130,100 });
 }
 
 void CampLevel::Update()

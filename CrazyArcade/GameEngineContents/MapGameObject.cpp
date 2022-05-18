@@ -83,11 +83,12 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 	Boom_->BlockType_ = BlockType::BubbleBlock;
 	Boom_->Renderer = CreateRenderer();
 	Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
-	Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.1f, true);
-	Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.1f, true);
-	Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.1f, true);
+	Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
+	Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
+	Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.2f, true);
 	Boom_->Renderer->ChangeAnimation("BubbleDefault");
 	Boom_->TileIndex_ = TileIndex_;
+	Boom_->TilePos_ = _Pos;
 	Power = _Power;
 	BoomBlockTiles_.push_back(Boom_);
 	BoomDeathTime = 3.0f;
@@ -99,9 +100,11 @@ void MapGameObject::DestroyBoom()
 	for (int i = 0; i < BoomBlockTiles_.size(); i++)
 	{
 		MapTile_->DeleteTile(BoomBlockTiles_[i]->TileIndex_.X, BoomBlockTiles_[i]->TileIndex_.Y);
+		BubblePop(BoomBlockTiles_[i]->TilePos_, 3);
 	}
 	BoomBlockTiles_.clear();
 	IsBoomDeath = false;
+	
 
 }
 
@@ -125,7 +128,7 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	MakeRightWave(TileIndex_, Power);
 	MakeDownWave(TileIndex_, Power);
 	MakeUpWave(TileIndex_, Power);
-	WaveDeathTime = 3.0f;
+	WaveDeathTime = 1.5f;
 	IsWaveDeath = true;
 	IsWaveDeathAni = true;
 
