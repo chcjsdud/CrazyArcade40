@@ -55,9 +55,11 @@ void Player::MoveUpdate()
 		return;
 	}
 
+
 	Move();
 
 	StagePixelCheck(CurSpeed_);
+
 }
 
 void Player::JumpUpdate()

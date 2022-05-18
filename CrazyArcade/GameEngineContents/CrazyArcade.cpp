@@ -192,6 +192,9 @@ void CrazyArcade::GameInit()
         GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("TimeNumber.bmp");
         Image->Cut({ 12,10 });
 
+        Image = GameEngineImageManager::GetInst()->Find("GameStartIntro.bmp");
+        Image->Cut({ 128,128 });
+
     }
     //플레이어 배찌
     {
