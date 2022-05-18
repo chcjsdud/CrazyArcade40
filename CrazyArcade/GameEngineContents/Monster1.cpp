@@ -25,6 +25,9 @@ void Monster1::Start()
 	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 2, 3, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "Die", 8, 10, 0.2f, true);
 	Renderer_->ChangeAnimation("MoveRight");
+
+	SetSpeed(100);
+	Dir_ = float4::RIGHT;
 }
 
 void Monster1::Render()

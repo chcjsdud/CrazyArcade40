@@ -55,11 +55,11 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 
 
-	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin1->SetPosition(float4(100.0f, 100.0f));
+	Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	Mandarin1->SetPosition(float4(100.0f, 100.0f));
 
-	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	//Crocodile1->SetPosition(float4(150.0f, 150.0f));
+	Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+	Crocodile1->SetPosition(float4(150.0f, 100.0f));
 
 	Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
 	Seal->SetPosition(float4(320.0f, 200.0f));

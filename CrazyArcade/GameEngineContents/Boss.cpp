@@ -66,39 +66,7 @@ void Boss::Start()
         }
     }
 
-    /////////////////// Test Level ///////////////////
-    if (GetLevel()->GetNameCopy() == "PlayerTeamTest")
-    {
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
-    }
-    /////////////////// ColMap ///////////////////
-    if (GetLevel()->GetNameCopy() == "CampLevel")
-    {
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
-    }
-    else if (GetLevel()->GetNameCopy() == "VillageLevel")
-    {
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("Village_Col.bmp");
-    }
-    else if (GetLevel()->GetNameCopy() == "CemetoryLevel")
-    {
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("Cemetory_ColMap.bmp");
-    }
-    else if (GetLevel()->GetNameCopy() == "Monster1Level")
-    {
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("MonsterStage1_ColMap.bmp");
-    }
-    else if (GetLevel()->GetNameCopy() == "Monster2Level")
-    {
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("MonsterStage2_ColMap.bmp");
-    }
-    else if (GetLevel()->GetNameCopy() == "BossLevel")
-    {
-        /////////////////// 보스레벨 ColMap 수정 필요 ///////////////////
-        ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
-    }
-    else
-        return;
+
 }
 
 void Boss::Render()

@@ -1,6 +1,8 @@
 #include "Monster2.h"
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineImage.h>
+#include <GameEngine/GameEngineCollision.h>
+
 
 Monster2::Monster2()
 	:Monster()
@@ -24,7 +26,12 @@ void Monster2::Start()
 	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 12, 13, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 14, 15, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "Die", 18, 20, 0.2f, true);
-	Renderer_->ChangeAnimation("MoveRight");
+	Renderer_->ChangeAnimation("MoveLeft");
+	Collision_->SetScale(float4(50.0f, 80.0f));
+	Collision_->SetPivot(float4(0.0f, -40.0f));
+
+	SetSpeed(100);
+	Dir_ = float4::LEFT;
 }
 
 void Monster2::Render()
