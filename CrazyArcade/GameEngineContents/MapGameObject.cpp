@@ -25,7 +25,7 @@ void MapGameObject::Update()
 
 void MapGameObject::BubblePop(float4 _Pos, float Power)
 {
-	BlockTile* BubbleCenter = MapTile_->CreateTile<BlockTile>(_Pos, "Empty.bmp");
+	BlockTile* BubbleCenter = MapTile_->CreateTile<BlockTile>(_Pos, "Empty.bmp",static_cast<int>(ORDER::EFFECT));
 	BubbleCenter->BlockCol = CreateCollision("WaveCol", { 40,40 });
 	BubbleCenter->BlockType_ = BlockType::WaveBlock;
 	BubbleCenter->Renderer = CreateRenderer();

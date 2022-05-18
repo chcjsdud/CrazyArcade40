@@ -4,7 +4,7 @@
 
 MapBackGround::MapBackGround()
 	:MapBackGroundRender_(nullptr)
-	, MapTileMap_(nullptr)
+	, MapTileMap_(this)
 {
 
 }
