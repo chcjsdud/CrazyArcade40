@@ -139,26 +139,7 @@ void CrazyArcade::GameInit()
         
     }
 
-    //////// UI 리소스 RoomLevel에서 사용되는 리소스
-    {
-        GameEngineDirectory ResourcesDir;
-        ResourcesDir.MoveParent("CrazyArcade");
-        ResourcesDir.Move("Resources");
-        ResourcesDir.Move("UILevel");
-        ResourcesDir.Move("Room");
-
-
-        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
-
-        for (size_t i = 0; i < AllImageFileList.size(); i++)
-        {
-            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
-        }
-
-
-        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("BazziCharSelecter.bmp");
-        Image->Cut({ 128,100 });
-    }
+  
 
     ////// UI 리소스 Play에서 사용되는 리소스
     {
