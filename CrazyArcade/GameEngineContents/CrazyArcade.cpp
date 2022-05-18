@@ -281,6 +281,10 @@ void CrazyArcade::GameInit()
 
     GameEngineImage* Bubble_Dark = GameEngineImageManager::GetInst()->Find("Bubble_Dark.bmp");
     Bubble_Dark->CutCount(4, 1);
+    GameEngineImage* Bubble_Boss = GameEngineImageManager::GetInst()->Find("Bubble_Boss.bmp");
+    Bubble_Boss->CutCount(4, 1);
+    GameEngineImage* Bubble_Default = GameEngineImageManager::GetInst()->Find("Bubble_Default.bmp");
+    Bubble_Default->CutCount(5, 1);
 
 
 

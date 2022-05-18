@@ -49,7 +49,7 @@ public:
 	}
 
 	void BubblePop(float4 _Pos, float Power);
-	void CreateBoom(float _x, float _y);
+	void CreateBoom(float4 _Pos);
 
 protected:
 	void Start() override;
@@ -57,14 +57,17 @@ protected:
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	std::vector<BlockTile*> WaveBlockTiles_;
+	std::vector<BlockTile*> BoomBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 
 	void MakeRightWave(TileIndex _Pos, float Power);
 	void MakeLeftWave(TileIndex _Pos, float Power);
 	void MakeDownWave(TileIndex _Pos, float Power);
 	void MakeUpWave(TileIndex _Pos, float Power);
+	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
+	float BoomDeathTime;
 	float WaveDeathTime;
 	bool IsWaveDeath;
 	bool IsWaveDeathAni;
