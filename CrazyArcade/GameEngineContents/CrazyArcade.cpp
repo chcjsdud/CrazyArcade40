@@ -288,7 +288,7 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("UITeamTest");
+    ChangeLevel("TitleLevel");
 
 }
 
