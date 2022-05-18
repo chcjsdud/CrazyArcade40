@@ -45,13 +45,7 @@
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
-    <ClInclude Include="LoginBackGround.h">
-      <Filter>Actor\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Mouse.h">
-      <Filter>Actor\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginButton.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
@@ -91,6 +85,15 @@
     </ClInclude>
     <ClInclude Include="CreateRoomLevel.h">
       <Filter>Level\UILevel</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginBackGround.h">
+      <Filter>Actor\UI\Login</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginButton.h">
+      <Filter>Actor\UI\Login</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomcharacterSelectUI.h">
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="CreateRoomBackGround.h">
       <Filter>Actor\UI</Filter>
@@ -155,13 +158,7 @@
     <ClCompile Include="Monster2.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="LoginBackGround.cpp">
-      <Filter>Actor\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Mouse.cpp">
-      <Filter>Actor\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginButton.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp">
@@ -203,6 +200,15 @@
     </ClCompile>
     <ClCompile Include="CreateRoomLevel.cpp">
       <Filter>Level\UILevel</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginBackGround.cpp">
+      <Filter>Actor\UI\Login</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginButton.cpp">
+      <Filter>Actor\UI\Login</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomcharacterSelectUI.cpp">
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="CreateRoomBackGround.cpp">
       <Filter>Actor\UI</Filter>
@@ -256,6 +262,12 @@
     </Filter>
     <Filter Include="Level\UILevel">
       <UniqueIdentifier>{e9ee14d2-e4c2-477e-8fe6-2be990508e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\Login">
+      <UniqueIdentifier>{b1f1557b-bdea-4ad9-b8e5-e6af4747c4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\Room">
+      <UniqueIdentifier>{2e4a20aa-9014-4c87-b2e0-277cd5a910f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

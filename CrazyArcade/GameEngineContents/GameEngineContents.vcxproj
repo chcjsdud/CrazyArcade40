@@ -236,6 +236,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TimeUI.h" />
+    <ClInclude Include="RoomcharacterSelectUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleLevel.h" />
     <ClInclude Include="UITeamTest.h">
       <SubType>
