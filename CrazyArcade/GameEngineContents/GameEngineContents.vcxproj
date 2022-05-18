@@ -235,9 +235,8 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="RoomCharaterSelectUI.h">
+    <ClInclude Include="RoomCharaterSelectUI.h" />
     <ClInclude Include="StartIntroUI.h" />
-    <ClInclude Include="TimeUI.h" />
     <ClInclude Include="RoomcharacterSelectUI.h">
       <SubType>
       </SubType>
