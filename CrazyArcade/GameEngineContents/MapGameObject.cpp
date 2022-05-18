@@ -15,6 +15,7 @@ MapGameObject::~MapGameObject()
 
 void MapGameObject::Start()
 {
+	SetPosition({ 0.0f, 0.0f });
 
 }
 
@@ -25,15 +26,21 @@ void MapGameObject::Update()
 
 void MapGameObject::BubblePop(float4 _Pos, float Power)
 {
-	BlockTile* BubbleCenter = MapTile_->CreateTile<BlockTile>(_Pos, "Empty.bmp",static_cast<int>(ORDER::EFFECT));
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+
+	BlockTile* BubbleCenter = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp",static_cast<int>(ORDER::EFFECT));
 	BubbleCenter->BlockCol = CreateCollision("WaveCol", { 40,40 });
 	BubbleCenter->BlockType_ = BlockType::WaveBlock;
+
+	
 	BubbleCenter->Renderer = CreateRenderer();
+	BubbleCenter->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y});
 	BubbleCenter->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.1f, true);
 	BubbleCenter->Renderer->ChangeAnimation("Center");
 	for (int i = 1; i <= Power; i++)
 	{
-		MakeWave(_Pos, Power);
+		MakeWave(TileCenterPos_, Power);
 	}
 
 }
@@ -45,12 +52,13 @@ void MapGameObject::MakeWave( float4 _Pos, float Power)
 	float4 UpPos = _Pos + float4{  0,-40 * Power };
 
 
-	BlockTile* BubbleLeft = MapTile_->CreateTile<BlockTile>(LeftPos, "Empty.bmp");
+	BlockTile* BubbleLeft = MapTile_->CreateTile<BlockTile>(LeftPos, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 	BubbleLeft->BlockCol = CreateCollision("WaveCol", { 40,40 });
 	BubbleLeft->BlockType_ = BlockType::WaveBlock;
 	BubbleLeft->Renderer = CreateRenderer();
 	BubbleLeft->Renderer->CreateAnimation("Left1.bmp", "Left1", 0, 1, 0.1f, true);
 	BubbleLeft->Renderer->ChangeAnimation("Left1");
+	BubbleLeft->Renderer->SetPivot(LeftPos);
 
 	BlockTile* BubbleRight = MapTile_->CreateTile<BlockTile>(RightPos, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	BubbleRight->BlockCol = CreateCollision("WaveCol", { 40,40 });
@@ -58,6 +66,7 @@ void MapGameObject::MakeWave( float4 _Pos, float Power)
 	BubbleRight->Renderer = CreateRenderer();
 	BubbleRight->Renderer->CreateAnimation("Right1.bmp", "Right1", 0, 1, 0.1f, true);
 	BubbleRight->Renderer->ChangeAnimation("Right1");
+	BubbleRight->Renderer->SetPivot(RightPos);
 
 	BlockTile* BubbleDown = MapTile_->CreateTile<BlockTile>(DownPos, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	BubbleDown->BlockCol = CreateCollision("WaveCol", { 40,40 });
@@ -65,6 +74,7 @@ void MapGameObject::MakeWave( float4 _Pos, float Power)
 	BubbleDown->Renderer = CreateRenderer();
 	BubbleDown->Renderer->CreateAnimation("Down1.bmp", "Down1", 0, 1, 0.1f, true);
 	BubbleDown->Renderer->ChangeAnimation("Down1");
+	BubbleDown->Renderer->SetPivot(DownPos);
 
 	BlockTile* BubbleUp = MapTile_->CreateTile<BlockTile>(UpPos, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	BubbleUp->BlockCol = CreateCollision("WaveCol", { 40,40 });
@@ -72,6 +82,7 @@ void MapGameObject::MakeWave( float4 _Pos, float Power)
 	BubbleUp->Renderer = CreateRenderer();
 	BubbleUp->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
 	BubbleUp->Renderer->ChangeAnimation("Up1");
+	BubbleUp->Renderer->SetPivot(UpPos);
 }
 void MapGameObject::CreateBlockTile(int x_ ,int y_)
 {
