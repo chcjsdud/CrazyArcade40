@@ -58,7 +58,6 @@ public:
 
 	BlockType CheckTile(float4 _Pos);
 	ItemType CheckItem(float4 _Pos);
-	void CreateBoom(float _x, float _y);
 	void BubblePop(float4 _Pos, float Power);
 	void CreateBoom(float4 _Pos);
 
