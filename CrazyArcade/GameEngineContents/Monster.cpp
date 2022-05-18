@@ -55,8 +55,7 @@ void Monster::Start()
 	}
 	else if (GetLevel()->GetNameCopy() == "BossLevel")
 	{
-		/////////////////// 보스레벨 ColMap 수정 필요 ///////////////////
-		ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+		ColMapImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 	}
 	else
 		return;
@@ -70,10 +69,10 @@ void Monster::Update()
 
 void Monster::UpdateMove()
 {
-	if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x + 30), int(GetPosition().y)) && // 오른쪽이 검정
-		RGB(0, 0, 0) != ColMapImage_->GetImagePixel(int(GetPosition().x - 30), int(GetPosition().y))) // 왼쪽이 검정이 아닐 때
+	if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x + 20), int(GetPosition().y)) && // 오른쪽이 검정
+		RGB(0, 0, 0) != ColMapImage_->GetImagePixel(int(GetPosition().x - 20), int(GetPosition().y))) // 왼쪽이 검정이 아닐 때
 	{
-		if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x), int(GetPosition().y + 30))) // 아니고, 아래쪽이 검정이면 왼쪽으로 가라
+		if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x), int(GetPosition().y + 20))) // 아래쪽이 검정이면 왼쪽으로 가라
 		{
 			Dir_ = float4::LEFT;
 			Renderer_->ChangeAnimation("MoveLeft");
@@ -86,10 +85,10 @@ void Monster::UpdateMove()
 		}
 	}
 
-	if (RGB(0, 0, 0) != ColMapImage_->GetImagePixel(int(GetPosition().x + 30), int(GetPosition().y)) && // 오른쪽이 검정이 아니고,
-		RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x - 30), int(GetPosition().y))) // 왼쪽이 검정일 때,
+	if (RGB(0, 0, 0) != ColMapImage_->GetImagePixel(int(GetPosition().x + 20), int(GetPosition().y)) && // 오른쪽이 검정이 아니고,
+		RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x - 20), int(GetPosition().y))) // 왼쪽이 검정일 때,
 	{
-		if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x), int(GetPosition().y - 30))) // 위쪽이 검정이라면 오른쪽으로 가라
+		if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(int(GetPosition().x), int(GetPosition().y - 20))) // 위쪽이 검정이라면 오른쪽으로 가라
 		{
 			Dir_ = float4::RIGHT;
 			Renderer_->ChangeAnimation("MoveRight");
