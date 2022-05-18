@@ -73,9 +73,6 @@
     <ClInclude Include="UITeamTest.h">
       <Filter>Level\TestLevel</Filter>
     </ClInclude>
-    <ClInclude Include="LoginLevel.h">
-      <Filter>Level\IntroLevel</Filter>
-    </ClInclude>
     <ClInclude Include="MapFront.h">
       <Filter>Actor\Map</Filter>
     </ClInclude>
@@ -87,6 +84,13 @@
     </ClInclude>
     <ClInclude Include="Player_2P.h">
       <Filter>Actor\Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateRoomBackGround.h" />
+    <ClInclude Include="LoginLevel.h">
+      <Filter>Level\UILevel</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateRoomLevel.h">
+      <Filter>Level\UILevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -169,9 +173,6 @@
     <ClCompile Include="UITeamTest.cpp">
       <Filter>Level\TestLevel</Filter>
     </ClCompile>
-    <ClCompile Include="LoginLevel.cpp">
-      <Filter>Level\IntroLevel</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Play\Player</Filter>
     </ClCompile>
@@ -186,6 +187,13 @@
     </ClCompile>
     <ClCompile Include="MapFront.cpp">
       <Filter>Actor\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateRoomBackGround.cpp" />
+    <ClCompile Include="LoginLevel.cpp">
+      <Filter>Level\UILevel</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateRoomLevel.cpp">
+      <Filter>Level\UILevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +235,9 @@
     </Filter>
     <Filter Include="Actor\Play\Player">
       <UniqueIdentifier>{dc4135af-0179-4215-8ef7-920fd4d2c8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\UILevel">
+      <UniqueIdentifier>{e9ee14d2-e4c2-477e-8fe6-2be990508e95}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

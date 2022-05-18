@@ -17,7 +17,7 @@ Mouse::~Mouse()
 void Mouse::Start()
 {
 
-	//ShowCursor(false);
+
 	GetCurPos();
 	SetPosition({ CurPos_.x,CurPos_.y });
     MouseRenderer_ = CreateRenderer("Mouse_1.bmp");

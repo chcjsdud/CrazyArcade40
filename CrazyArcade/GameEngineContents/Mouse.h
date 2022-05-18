@@ -43,6 +43,6 @@ private:
 	float4 CurPos_;
 	void Start() override;
 	void Update() override;
-	void CheckPlayerIsLeftMouse();
+
 };
 
