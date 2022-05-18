@@ -37,14 +37,19 @@ void MapGameObject::Update()
 }
 
 
-void MapGameObject::CreateBoom(float _x, float _y)
+void MapGameObject::CreateBoom(float4 _Pos)
 {
-	BlockTile* Boom = MapTile_->CreateTile<BlockTile>(_x, _y, "TIleBase.bmp", static_cast<int>(ORDER::UI));
-	Boom->BlockType_ = BlockType::Max;
-	Boom->Renderer = CreateRenderer();
-	Boom->Renderer->SetPivot( {(_x * 40)+20, (_y * 40)+20});
-	Boom->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.1f, true);
-	Boom->Renderer->ChangeAnimation("BubbleDark");
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
+	Boom_->BlockType_ = BlockType::BubbleBlock;
+	Boom_->Renderer = CreateRenderer();
+	Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y+20 });
+	Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.1f, true);
+	Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.1f, true);
+	Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.1f, true);
+	Boom_->Renderer->ChangeAnimation("BubbleDefault");
+BoomBlockTiles_.push_back(Boom_);
 }
 
 void MapGameObject::BubblePop(float4 _Pos, float Power)
@@ -70,6 +75,7 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	WaveDeathTime = 3.0f;
 	IsWaveDeath = true;
 	IsWaveDeathAni = true;
+
 }
 void MapGameObject::WaveDeathAni()
 {
