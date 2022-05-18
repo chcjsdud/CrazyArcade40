@@ -168,10 +168,44 @@ void CrazyArcade::GameInit()
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
     }
+    // 효과
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("Effect");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
 
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
-
+    //////////물풍선 터지는 animationcut
+    GameEngineImage* Center = GameEngineImageManager::GetInst()->Find("Center.bmp");
+    Center->CutCount(6,1);
+    GameEngineImage* Right1 = GameEngineImageManager::GetInst()->Find("Right1.bmp");
+    Right1->CutCount(11,1);
+    GameEngineImage* Right2 = GameEngineImageManager::GetInst()->Find("Right2.bmp");
+    Right2->CutCount(11, 1);
+    GameEngineImage* Up1 = GameEngineImageManager::GetInst()->Find("Up1.bmp");
+    Up1->CutCount(11, 1);
+    GameEngineImage* Up2 = GameEngineImageManager::GetInst()->Find("Up2.bmp");
+    Up2->CutCount(11, 1);
+    GameEngineImage* Left1 = GameEngineImageManager::GetInst()->Find("Left1.bmp");
+    Left1->CutCount(11, 1);
+    GameEngineImage* Left2 = GameEngineImageManager::GetInst()->Find("Left2.bmp");
+    Left2->CutCount(11, 1);
+    GameEngineImage* Down1 = GameEngineImageManager::GetInst()->Find("Down1.bmp");
+    Down1->CutCount(11, 1);
+    GameEngineImage* Down2 = GameEngineImageManager::GetInst()->Find("Down2.bmp");
+    Down2->CutCount(11, 1);
 
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 

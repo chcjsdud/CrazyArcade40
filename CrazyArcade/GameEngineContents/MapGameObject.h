@@ -37,7 +37,7 @@ public:
 	{
 		MapTile_ = _MapTile;
 	}
-
+	void BubblePop(float4 _Pos, float Power);
 protected:
 	void Start() override;
 	void Update() override;
@@ -45,6 +45,7 @@ private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 
-	void BubblePop(float4 _Pos, int Power);
 	void CreateBlockTile(int x_, int y_);
+
+	void MakeWave(float4 _Pos, float Power);
 };
