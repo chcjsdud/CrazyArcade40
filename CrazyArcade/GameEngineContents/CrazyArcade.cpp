@@ -202,7 +202,6 @@ void CrazyArcade::GameInit()
         ResourcesDir.Move("PlayLevel");
         ResourcesDir.Move("Effect");
 
-
         std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
 
         for (size_t i = 0; i < AllImageFileList.size(); i++)
@@ -211,6 +210,20 @@ void CrazyArcade::GameInit()
         }
     }
 
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("Item");
+
+            std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
     //////////물풍선 터지는 animationcut
@@ -232,6 +245,15 @@ void CrazyArcade::GameInit()
     Down1->CutCount(11, 1);
     GameEngineImage* Down2 = GameEngineImageManager::GetInst()->Find("Down2.bmp");
     Down2->CutCount(11, 1);
+
+
+    GameEngineImage* Bubble_Dark = GameEngineImageManager::GetInst()->Find("Bubble_Dark.bmp");
+    Bubble_Dark->CutCount(4, 1);
+
+
+
+
+
 
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 
@@ -269,7 +291,7 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("TitleLevel");
+    ChangeLevel("CampLevel");
 
 }
 

@@ -10,12 +10,17 @@ class BlockTile : public Tile
 public:
 	BlockTile()
 		: BlockType_(BlockType::Max),
-		BlockCol(nullptr)
+		BlockCol(nullptr),
+		TileX_(0),
+		TileY_(0)
+
 	{
 
 	}
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
+	float TileX_;
+	float TileY_;
 
 	BlockType BlockType_;
 	ItemType ItemType_;
@@ -37,7 +42,10 @@ public:
 	{
 		MapTile_ = _MapTile;
 	}
+
 	void BubblePop(float4 _Pos, float Power);
+	void CreateBoom(float _x, float _y);
+
 protected:
 	void Start() override;
 	void Update() override;

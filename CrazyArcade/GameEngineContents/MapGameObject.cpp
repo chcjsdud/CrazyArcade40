@@ -24,6 +24,17 @@ void MapGameObject::Update()
 
 }
 
+
+void MapGameObject::CreateBoom(float _x, float _y)
+{
+	BlockTile* Boom = MapTile_->CreateTile<BlockTile>(_x, _y, "TIleBase.bmp", static_cast<int>(ORDER::UI));
+	Boom->BlockType_ = BlockType::Max;
+	Boom->Renderer = CreateRenderer();
+	Boom->Renderer->SetPivot( {(_x * 40)+20, (_y * 40)+20});
+	Boom->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.1f, true);
+	Boom->Renderer->ChangeAnimation("BubbleDark");
+}
+
 void MapGameObject::BubblePop(float4 _Pos, float Power)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
