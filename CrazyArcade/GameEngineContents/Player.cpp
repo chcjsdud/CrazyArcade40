@@ -7,9 +7,9 @@
 Player::Player()
     : CurSpeed_(0.f)
 	, MaxSpeed_(0.f)
-    , CurAttLength_(0.f)   
+    , CurAttPower_(0.f)   
     , CurAttCount_(0)
-	, MaxAttLength_(0.f)
+	, MaxAttPower_(0.f)
 	, MaxAttCount_(0)
     , MoveDir(float4::ZERO)
     , PlayerAnimationRender_(nullptr)
@@ -94,7 +94,7 @@ void Player::Move()
 
 
 
-	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
+	//SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
 
 }
 
@@ -102,7 +102,7 @@ void Player::PlayerInfoUpdate()
 {
 	//SpeedUpdate();
 	//AttackCountUpdate();
-	//AttackLengthUpdate();
+	//AttackPowerUpdate();
 }
 
 void Player::SpeedUpdate()
@@ -113,7 +113,7 @@ void Player::AttackCountUpdate()
 {
 }
 
-void Player::AttackLengthUpdate()
+void Player::AttackPowerUpdate()
 {
 }
 
@@ -129,11 +129,11 @@ void Player::CharTypeUpdate()
 
 		SetSpeed(1.f);
 		SetAttCount(1);
-		SetAttLength(10.f);			// 일단 10배
+		SetAttPower(10.f);			// 일단 10배
 
 		SetMaxSpeed(90.f);
 		SetMaxAttCount(6);
-		SetMaxAttLength(70.f);
+		SetMaxAttPower(70.f);
 
 	}
 		break;
@@ -145,13 +145,13 @@ void Player::CharTypeUpdate()
 
 		SetSpeed(1.f);
 		SetAttCount(1);
-		SetAttLength(10.f);			// 일단 10배
+		SetAttPower(10.f);			// 일단 10배
 
 		SetMaxSpeed(90.f);
 		SetMaxAttCount(6);
-		SetMaxAttLength(70.f);
+		SetMaxAttPower(70.f);
 	}
-		break;
+	break;
 	}
 
 }
@@ -204,43 +204,23 @@ void Player::ColMapUpdate()
 
 void Player::StagePixelCheck(float _Speed)
 {
-	//float4 LeftPos = GetPosition() + float4{ -5.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	//float4 RightPos = GetPosition() + float4{ 15.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	//float4 UpPos = GetPosition() + float4{ 0.0f, -15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	//float4 DownPos = GetPosition() + float4{ 0.0f, 15.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 LeftPos = GetPosition() + float4{ -10.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightPos = GetPosition() + float4{ 10.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 UpPos = GetPosition() + float4{ 0.f, -20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 DownPos = GetPosition() + float4{ 0.f, 20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
-	int LeftCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ -20.f, 0.f });
-	int RightCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ 20.f, 0.f });
-	int UpCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ 0.f, -20.f });
-	int DownCheck = MapColImage_->GetImagePixel(GetPosition() + float4{ 0.f, 20.f });
-	
-	//int LeftColor = MapColImage_->GetImagePixel(LeftPos);
-	//int RightColor = MapColImage_->GetImagePixel(RightPos);
-	//int UpColor = MapColImage_->GetImagePixel(UpPos);
-	//int DownColor = MapColImage_->GetImagePixel(DownPos);
+	int LeftColor = MapColImage_->GetImagePixel(LeftPos);
+	int RightColor = MapColImage_->GetImagePixel(RightPos);
+	int UpColor = MapColImage_->GetImagePixel(UpPos);
+	int DownColor = MapColImage_->GetImagePixel(DownPos);
 
-	//if (RGB(0, 0, 0) != LeftColor
-	//	&& RGB(0, 0, 0) != RightColor
-	//	&& RGB(0, 0, 0) != UpColor
-	//	&& RGB(0, 0, 0) != DownColor)
-	//{
-	//	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
-	//}
-	if (RGB(0, 0, 0) == LeftCheck)
+
+	if (RGB(0, 0, 0) != LeftColor
+		&& RGB(0, 0, 0) != RightColor
+		&& RGB(0, 0, 0) != UpColor
+		&& RGB(0, 0, 0) != DownColor)
 	{
-		MoveDir.x = 1.f;
-	}
-	else if (RGB(0, 0, 0) != RightCheck)
-	{
-		MoveDir.x = -1.f;
-	}
-	else if (RGB(0, 0, 0) != UpCheck)
-	{
-		MoveDir.y = -1.f;
-	}
-	else if (RGB(0, 0, 0) != DownCheck)
-	{
-		MoveDir.y = 1.f;
+		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
 	}
 }
 

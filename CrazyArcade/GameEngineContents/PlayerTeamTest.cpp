@@ -9,6 +9,7 @@
 #include "Player.h"
 #include"ContentsEnum.h"
 #include"MapBackGround.h."
+#include "MapFront.h"
 #include "Monster1.h"
 #include "Monster2.h"
 #include "Boss.h"
@@ -30,9 +31,30 @@ void PlayerTeamTest::Update()
 }
 void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+
+	{
+		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
+		MapBackGround_->GetRenderer()->SetImage("Camp_ColMap.bmp");//Actor에 이미지 세팅해주고
+		//MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
+
+		float4 Actor = {};
+		Actor.x = (MapBackGround_->GetRenderer()->GetImage()->GetScale().Half().x);
+		Actor.y = (MapBackGround_->GetRenderer()->GetImage()->GetScale().Half().y);
+
+		MapBackGround_->GetRenderer()->SetPivot(Actor);
+	}
+
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
-	MapBackGround_->GetRenderer()->SetImage("Camp_ColMap.bmp");//Actor에 이미지 세팅해주고d
+	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고d
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
+
+
+	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::FRONTBACKGROUND);//Actor 만들고
+	MapFrontBackGround_->GetRenderer()->SetImage("Camp_Front.bmp");//Actor에 이미지 세팅해주고
+	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
+
+	
+
 
 	Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	Mandarin1->SetPosition(float4(100.0f, 100.0f));
@@ -43,24 +65,17 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
 	Seal->SetPosition(float4(200.0f, 200.0f));
 
-	//Player_Bazzi* NewPlayer = CreateActor<Player_Bazzi>((int)ORDER::PLAYER);
-	//NewPlayer->SetPosition({ 100.f, 100.f });
-
-
-	//Player_2P* NewPlayer = CreateActor<Player_2P>((int)ORDER::PLAYER);
-	//NewPlayer->SetPosition({ 100.f, 100.f });
-
 	Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
 	NewPlayer->SetCharacter(Character::BAZZI);
 	NewPlayer->SetPlayerType(PlayerType::Player1);
-	NewPlayer->SetPosition({ 300.f, 300.f });
+	NewPlayer->SetPosition({ 200.f, 300.f });
 
 
 	// =================== 1P 2P 키 동시 입력 시 이동 확인 완료 
 
-	//NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
-	//NewPlayer->SetCharacter(Character::BAZZI);
-	//NewPlayer->SetPlayerType(PlayerType::Player2);
-	//NewPlayer->SetPosition({ 500.f, 500.f });
+	NewPlayer = CreateActor<Player>((int)ORDER::PLAYER);
+	NewPlayer->SetCharacter(Character::BAZZI);
+	NewPlayer->SetPlayerType(PlayerType::Player2);
+	NewPlayer->SetPosition({ 600.f, 300.f });
 
 }

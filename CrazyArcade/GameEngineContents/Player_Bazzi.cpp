@@ -53,11 +53,11 @@ void Player_Bazzi::Start()
 	// 플레이어 정보 세팅
 	SetSpeed(1.f);				
 	SetAttCount(1);
-	SetAttLength(10.f);			// 일단 10배
+	SetAttPower(10.f);			// 일단 10배
 
 	SetMaxSpeed(90.f);
 	SetMaxAttCount(6);
-	SetMaxAttLength(70.f);
+	SetMaxAttPower(70.f);
 }
 
 void Player_Bazzi::Update()

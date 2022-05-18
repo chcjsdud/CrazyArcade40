@@ -66,8 +66,8 @@ protected:
 protected:
 	float CurSpeed_;			// 플레이어 속도 
 	float MaxSpeed_;
-	float CurAttLength_;		// 물줄기 길이
-	float MaxAttLength_;		// 최대 물줄기 길이
+	float CurAttPower_;		// 물줄기 길이
+	float MaxAttPower_;		// 최대 물줄기 길이
 	int CurAttCount_;			// 물풍선 개수 
 	int MaxAttCount_;			// 최대 물풍선 개수
 	
@@ -78,9 +78,9 @@ protected:
 		CurSpeed_ = _CurSpeed;
 	}
 
-	void SetAttLength(float _CurAttLength_)
+	void SetAttPower(float _CurAttPower)
 	{
-		CurAttLength_ = _CurAttLength_;
+		CurAttPower_ = _CurAttPower;
 	}
 
 	void SetAttCount(int _CurAttCount_)
@@ -93,9 +93,9 @@ protected:
 		MaxSpeed_ = _MaxSpeed;
 	}
 
-	void SetMaxAttLength(float _MaxAttLength)
+	void SetMaxAttPower(float _MaxAttPower)
 	{
-		MaxAttLength_ = _MaxAttLength;
+		MaxAttPower_ = _MaxAttPower;
 	}
 
 	void SetMaxAttCount(int _MaxAttCount)
@@ -107,7 +107,7 @@ protected:
 
 	void SpeedUpdate();
 	void AttackCountUpdate();
-	void AttackLengthUpdate();
+	void AttackPowerUpdate();
 
 protected:
 	PlayerType Type;
@@ -155,6 +155,7 @@ protected:
 private:
 	// 맵 관련
 	GameEngineImage* MapColImage_;
+	GameEngineRenderer* MapColRenderer_;
 
 	std::string CurrentLevel_;
 	//std::string CurrentColMap_;
