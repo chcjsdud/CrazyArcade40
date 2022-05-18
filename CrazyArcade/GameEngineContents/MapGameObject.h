@@ -71,4 +71,5 @@ private:
 	float WaveDeathTime;
 	bool IsWaveDeath;
 	bool IsWaveDeathAni;
+	bool IsBoomDeath;
 };
