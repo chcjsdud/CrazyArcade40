@@ -39,5 +39,6 @@ enum class UIType
 	BackGroundButton,
 	PopUp,
 	PopUpButton,
+	Time,
 	Mouse
 };

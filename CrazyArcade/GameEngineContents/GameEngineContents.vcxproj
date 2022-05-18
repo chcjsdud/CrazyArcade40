@@ -214,6 +214,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PlayBackGround.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -234,6 +235,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TimeUI.h" />
     <ClInclude Include="TitleLevel.h" />
     <ClInclude Include="UITeamTest.h">
       <SubType>
@@ -301,6 +303,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PlayBackGround.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -322,6 +325,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
+    <ClCompile Include="TimeUI.cpp" />
     <ClCompile Include="TitleLevel.cpp" />
     <ClCompile Include="UITeamTest.cpp">
       <SubType>

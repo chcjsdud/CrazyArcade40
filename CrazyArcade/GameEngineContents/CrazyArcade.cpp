@@ -135,6 +135,26 @@ void CrazyArcade::GameInit()
         Image->Cut({ 128,128 });
     }
 
+    ////// UI 리소스 Play에서 사용되는 리소스
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("Play");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+
+        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("TimeNumber.bmp");
+        Image->Cut({ 12,10 });
+
+    }
     //플레이어 배찌
     {
         GameEngineDirectory ResourcesDir;
@@ -243,7 +263,7 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
-    ChangeLevel("TitleLevel");
+    ChangeLevel("UITeamTest");
 
 }
 
