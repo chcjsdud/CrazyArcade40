@@ -75,7 +75,7 @@ ItemType MapGameObject::CheckItem(float4 _Pos)
 	}
 }
 
-void MapGameObject::CreateBoom(float4 _Pos)
+void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
@@ -88,6 +88,7 @@ void MapGameObject::CreateBoom(float4 _Pos)
 	Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.1f, true);
 	Boom_->Renderer->ChangeAnimation("BubbleDefault");
 	Boom_->TileIndex_ = TileIndex_;
+	Power = _Power;
 	BoomBlockTiles_.push_back(Boom_);
 	BoomDeathTime = 3.0f;
 	IsBoomDeath = true;

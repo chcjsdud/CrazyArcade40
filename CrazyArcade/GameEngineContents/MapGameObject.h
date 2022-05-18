@@ -59,7 +59,7 @@ public:
 	BlockType CheckTile(float4 _Pos);
 	ItemType CheckItem(float4 _Pos);
 	void BubblePop(float4 _Pos, float Power);
-	void CreateBoom(float4 _Pos);
+	void CreateBoom(float4 _Pos, float Power);
 
 protected:
 	void Start() override;
@@ -78,6 +78,7 @@ private:
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
+	float Power;
 	float BoomDeathTime;
 	float WaveDeathTime;
 	bool IsWaveDeath;
