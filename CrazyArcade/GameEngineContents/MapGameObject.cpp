@@ -6,7 +6,8 @@ MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
 	AllBlockTiles_(),
 	WaveDeathTime(0.0f),
-	IsWaveDeath(false)
+	IsWaveDeath(false),
+	IsWaveDeathAni(false)
 {
 
 }
@@ -29,8 +30,8 @@ void MapGameObject::Update()
 		WaveDeathTime -= 1.0f * GameEngineTime::GetDeltaTime();
 		if (WaveDeathTime < 0.0f)
 		{
+			WaveDeathAni();
 			DestroyWave();
-			IsWaveDeath = false;
 		}
 	}
 }
@@ -58,6 +59,7 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	Wave_->Renderer = CreateRenderer();
 	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y});
 	Wave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.1f, true);
+	Wave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.1f, false);
 	Wave_->Renderer->ChangeAnimation("Center");
 	WaveBlockTiles_.push_back(Wave_);
 
@@ -65,16 +67,36 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	MakeRightWave(TileIndex_, Power);
 	MakeDownWave(TileIndex_, Power);
 	MakeUpWave(TileIndex_, Power);
-	WaveDeathTime = 5.0f;
+	WaveDeathTime = 3.0f;
 	IsWaveDeath = true;
+	IsWaveDeathAni = true;
+}
+void MapGameObject::WaveDeathAni()
+{
+	if (IsWaveDeathAni == true)
+	{
+		MapTile_->DeleteTile(WaveBlockTiles_[0]->TileIndex_.X, WaveBlockTiles_[0]->TileIndex_.Y);
 
+		for (int i = 1; i < WaveBlockTiles_.size(); i++)
+		{
+			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
+	
+		}
+		IsWaveDeathAni = false;
+	}
 }
 void MapGameObject::DestroyWave()
 {
-	for (int i = 0; i < WaveBlockTiles_.size(); i++)
+	if (WaveBlockTiles_[1]->Renderer->IsEndAnimation() == true)
 	{
-		MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);
+		for (int i = 1; i < WaveBlockTiles_.size(); i++)
+		{
+				MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);
+				IsWaveDeath = false;
+		}
+				WaveBlockTiles_.clear();
 	}
+
 }
 void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 {
@@ -119,6 +141,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Left1.bmp", "Left1", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Left1.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Left1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 
@@ -133,6 +156,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Left2.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Left2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
@@ -183,6 +207,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Down1.bmp", "Down1", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Down1.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Down1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
@@ -196,6 +221,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Down2.bmp", "Down2", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Down2.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Down2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
@@ -242,6 +268,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Up1.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Up1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
@@ -255,6 +282,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Up2.bmp", "Up2", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Up2.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Up2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
@@ -303,6 +331,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Right1.bmp", "Right1", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Right1.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Right1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);
@@ -316,6 +345,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float Power)
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
 			Wave_->Renderer->CreateAnimation("Right2.bmp", "Right2", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Right2.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Right2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			WaveBlockTiles_.push_back(Wave_);

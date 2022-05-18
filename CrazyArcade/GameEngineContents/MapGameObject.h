@@ -66,6 +66,8 @@ private:
 	void MakeDownWave(TileIndex _Pos, float Power);
 	void MakeUpWave(TileIndex _Pos, float Power);
 	void DestroyWave();
+	void WaveDeathAni();
 	float WaveDeathTime;
 	bool IsWaveDeath;
+	bool IsWaveDeathAni;
 };
