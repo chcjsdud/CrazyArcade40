@@ -158,19 +158,14 @@ void CrazyArcade::GameInit()
 
 
 
-        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("NormalBtn_Animation.bmp");
-        Image->Cut({ 256,256 });
+        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("BazziCharSelecter.bmp");
+        Image->Cut({ 128,100 });
 
-        Image = GameEngineImageManager::GetInst()->Find("MonsterBtn_Animation.bmp");
-        Image->Cut({ 256,256 });
+        Image = GameEngineImageManager::GetInst()->Find("DaoCharSelecter.bmp");
+        Image->Cut({ 128,100 });
 
-        Image = GameEngineImageManager::GetInst()->Find("ConfirmBtn.bmp");
-        Image->Cut({ 128,128 });
-
-        Image = GameEngineImageManager::GetInst()->Find("CancelBtn.bmp");
-        Image->Cut({ 128,128 });
-
-
+        Image = GameEngineImageManager::GetInst()->Find("MaridCharSelecter.bmp");
+        Image->Cut({ 128,100 });
     }
 
     ////// UI 리소스 Play에서 사용되는 리소스

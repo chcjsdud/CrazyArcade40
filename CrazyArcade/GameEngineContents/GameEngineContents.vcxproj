@@ -235,12 +235,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="RoomCharaterSelectUI.h">
     <ClInclude Include="StartIntroUI.h" />
     <ClInclude Include="TimeUI.h" />
     <ClInclude Include="RoomcharacterSelectUI.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="RoomLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TimeUI.h" />
     <ClInclude Include="TitleLevel.h" />
     <ClInclude Include="UITeamTest.h">
       <SubType>
@@ -330,6 +336,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
+    <ClCompile Include="RoomCharaterSelectUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="RoomLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="StartIntroUI.cpp" />
     <ClCompile Include="TimeUI.cpp" />
     <ClCompile Include="TitleLevel.cpp" />

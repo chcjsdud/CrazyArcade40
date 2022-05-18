@@ -92,9 +92,6 @@
     <ClInclude Include="LoginButton.h">
       <Filter>Actor\UI\Login</Filter>
     </ClInclude>
-    <ClInclude Include="RoomcharacterSelectUI.h">
-      <Filter>Actor\UI\Room</Filter>
-    </ClInclude>
     <ClInclude Include="CreateRoomBackGround.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
@@ -103,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="PlayBackGround.h">
       <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLevel.h">
+      <Filter>Level\UILevel</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomCharaterSelectUI.h">
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="StartIntroUI.h">
       <Filter>Actor\UI</Filter>
