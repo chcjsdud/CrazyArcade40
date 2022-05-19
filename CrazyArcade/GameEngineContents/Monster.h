@@ -16,9 +16,13 @@ enum class MonsterClass
 
 class GameEngineImage;
 class GameEngineRenderer;
+class BlockTile;
 class Monster : public GameEngineActor
 {
 public:
+	static int TTL_MONSTER_COUNT;
+public:
+
 	Monster();
 	~Monster();
 	Monster(const Monster& _Other) = delete;
@@ -28,6 +32,7 @@ public:
 
 protected:
 	virtual void UpdateMove();
+	virtual void TakeDamage();
 	void Start();
 	void Render();
 	void Update();
@@ -41,6 +46,8 @@ protected:
 	int HP_;
 	int Speed_;
 	float4 Dir_;
+	float GetAttTime_;
+	BlockTile* Tile_;
 
 private:
 
