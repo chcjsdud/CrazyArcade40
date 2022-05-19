@@ -238,10 +238,6 @@
     </ClInclude>
     <ClInclude Include="RoomCharaterSelectUI.h" />
     <ClInclude Include="StartIntroUI.h" />
-    <ClInclude Include="RoomcharacterSelectUI.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="RoomLevel.h">
       <SubType>
       </SubType>

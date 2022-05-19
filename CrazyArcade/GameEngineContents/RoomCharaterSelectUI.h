@@ -22,6 +22,9 @@ protected:
 
 private:
 	int SelectCharater;
+	GameEngineRenderer* BannerRenderer;
+	GameEngineRenderer* RandomRenderer;
+	GameEngineCollision* RandomCollision;
 	GameEngineRenderer* BazziRenderer;
 	GameEngineCollision* BazziCollision;
 	GameEngineRenderer* DaoRenderer;

@@ -9,7 +9,10 @@
 
 
 RoomCharaterSelectUI::RoomCharaterSelectUI()
-	: BazziRenderer(nullptr)
+	: BannerRenderer(nullptr)
+	, RandomRenderer(nullptr)
+	, RandomCollision(nullptr)
+	, BazziRenderer(nullptr)
 	, DaoRenderer(nullptr)
 	, MaridRenderer(nullptr)
 	, BazziCollision(nullptr)
@@ -26,9 +29,18 @@ RoomCharaterSelectUI::~RoomCharaterSelectUI()
 void RoomCharaterSelectUI::Start()
 {
 	SetPosition(GameEngineWindow::GetScale().Half());
-	BazziRenderer = CreateRenderer((int)UIType::PopUpButton,RenderPivot::CENTER, float4{ -70.0f, -8.0f });
-	DaoRenderer = CreateRenderer((int)UIType::PopUpButton , RenderPivot::CENTER, float4{0,0 });
-	MaridRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 70.0f, -4.0f  });
+	BannerRenderer = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER, { -33.0f, -49.0f });
+	BannerRenderer->SetImage("BazziSelect_Image.bmp");
+	RandomRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -146.0f, -8.0f });
+	BazziRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -67.0f, -7.0f });
+	DaoRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 0,0 });
+	MaridRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 70.0f, -5.0f });
+
+	RandomRenderer->CreateAnimation("RandomCharSelecter.bmp", "RandomCharSelecter_Idle", 0, 0, 0.1f, false);
+	RandomRenderer->CreateAnimation("RandomCharSelecter.bmp", "RandomCharSelecter_Approach", 0, 6, 0.1f, false);
+	RandomRenderer->CreateAnimation("RandomCharSelecter.bmp", "RandomCharSelecter_Cilck", 7, 7, 0.1f, false);
+	RandomRenderer->CreateAnimation("RandomCharSelecter.bmp", "RandomCharSelecter_CilckUp", 8, 8, 0.1f, false);
+
 
 	BazziRenderer->CreateAnimation("BazziCharSelecter.bmp", "BazziCharSelecter_Idle", 0, 0, 0.1f, false);
 	BazziRenderer->CreateAnimation("BazziCharSelecter.bmp", "BazziCharSelecter_Approach", 0, 6, 0.1f, false);
@@ -45,20 +57,49 @@ void RoomCharaterSelectUI::Start()
 	MaridRenderer->CreateAnimation("MaridCharSelecter.bmp", "MaridCharSelecter_Cilck", 7, 8, 0.1f, false);
 	MaridRenderer->CreateAnimation("MaridCharSelecter.bmp", "MaridCharSelecter_CilckUp", 9, 11, 0.1f, false);
 
-	BazziCollision = CreateCollision("CharSelecter", { 64,50 } ,{-74.0f, 8.0f});
-	DaoCollision = CreateCollision("CharSelecter", { 64,50 } , { -4.0f, 8.0f });
-	MaridCollision = CreateCollision("CharSelecter", { 64,50 } , {66.0f, 8.0f});
+	RandomCollision = CreateCollision("CharSelecter", { 64,50 }, { -144.0f, 8.0f });
+	BazziCollision = CreateCollision("CharSelecter", { 64,50 }, { -74.0f, 8.0f });
+	DaoCollision = CreateCollision("CharSelecter", { 64,50 }, { -4.0f, 8.0f });
+	MaridCollision = CreateCollision("CharSelecter", { 64,50 }, { 66.0f, 8.0f });
 
-
-	BazziRenderer->ChangeAnimation("BazziCharSelecter_CilckUp");
+	RandomRenderer->ChangeAnimation("RandomCharSelecter_CilckUp");
+	BazziRenderer->ChangeAnimation("BazziCharSelecter_Idle");
 	DaoRenderer->ChangeAnimation("DaoCharSelecter_Idle");
 	MaridRenderer->ChangeAnimation("MaridCharSelecter_Idle");
 
-	SelectCharater = 1;
+	SelectCharater = 0;
 }
 
 void RoomCharaterSelectUI::Update()
 {
+	if (SelectCharater != 0)
+	{
+		if (true == RandomCollision->CollisionCheck("MouseCol"))
+		{
+			RandomRenderer->ChangeAnimation("RandomCharSelecter_Approach");
+		}
+
+
+		else if (false == RandomCollision->CollisionCheck("MouseCol"))
+		{
+			RandomRenderer->ChangeAnimation("RandomCharSelecter_Idle");
+		}
+
+		if (true == RandomCollision->CollisionCheck("MouseCol") &&
+			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+		{
+			RandomRenderer->ChangeAnimation("RandomCharSelecter_Cilck");
+		}
+
+		if (true == RandomCollision->CollisionCheck("MouseCol") &&
+			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
+		{
+			RandomRenderer->ChangeAnimation("RandomCharSelecter_CilckUp");
+			BannerRenderer->SetImage("BazziSelect_Image.bmp");
+			SelectCharater = 0;
+		}
+	}
+
 	if (SelectCharater != 1)
 	{
 		if (true == BazziCollision->CollisionCheck("MouseCol"))
@@ -72,7 +113,7 @@ void RoomCharaterSelectUI::Update()
 			BazziRenderer->ChangeAnimation("BazziCharSelecter_Idle");
 		}
 
-		if(true == BazziCollision->CollisionCheck("MouseCol") &&
+		if (true == BazziCollision->CollisionCheck("MouseCol") &&
 			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			BazziRenderer->ChangeAnimation("BazziCharSelecter_Cilck");
@@ -82,6 +123,7 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			BazziRenderer->ChangeAnimation("BazziCharSelecter_CilckUp");
+			BannerRenderer->SetImage("BazziSelect_Image.bmp");
 			SelectCharater = 1;
 		}
 	}
@@ -110,6 +152,7 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			DaoRenderer->ChangeAnimation("DaoCharSelecter_CilckUp");
+			BannerRenderer->SetImage("DaoSelect_Image.bmp");
 			SelectCharater = 2;
 		}
 	}
@@ -138,6 +181,7 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			MaridRenderer->ChangeAnimation("MaridCharSelecter_CilckUp");
+			BannerRenderer->SetImage("MaridSelect_Image.bmp");
 			SelectCharater = 3;
 		}
 	}

@@ -110,7 +110,6 @@
     <ClInclude Include="StartIntroUI.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
-    <ClInclude Include="RoomcharacterSelectUI.h" />
     <ClInclude Include="Area.h">
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
@@ -229,10 +228,12 @@
     <ClCompile Include="StartIntroUI.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
-    <ClCompile Include="RoomCharaterSelectUI.cpp" />
     <ClCompile Include="RoomLevel.cpp" />
     <ClCompile Include="Area.cpp">
       <Filter>Actor\Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomCharaterSelectUI.cpp">
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -156,9 +156,10 @@ void CrazyArcade::GameInit()
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
 
+        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("RandomCharSelecter.bmp");
+        Image->Cut({ 128,100 });
 
-
-        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("BazziCharSelecter.bmp");
+        Image = GameEngineImageManager::GetInst()->Find("BazziCharSelecter.bmp");
         Image->Cut({ 128,100 });
 
         Image = GameEngineImageManager::GetInst()->Find("DaoCharSelecter.bmp");
