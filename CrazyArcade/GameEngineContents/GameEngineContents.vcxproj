@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Area.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="BossLevel.h">
       <SubType>
@@ -259,6 +260,7 @@
     <ClInclude Include="ContentsEnum.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Area.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossLevel.cpp">
       <SubType>
