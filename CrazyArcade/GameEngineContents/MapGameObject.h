@@ -14,7 +14,9 @@ public:
 		BlockCol(nullptr),
 		Renderer(nullptr),
 		TilePos_(),
-		TileIndex_()
+		TileIndex_(),
+		DeathTime_(),
+		Power_()
 
 	{
 
@@ -29,6 +31,8 @@ public:
 		BlockType_ = BlockType::Max;
 		ItemType_ = ItemType::Max;
 	}
+	float DeathTime_;
+	float Power_;
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
 	float4 TilePos_;
@@ -56,8 +60,8 @@ public:
 
 	BlockType CheckTile(float4 _Pos);
 	ItemType CheckItem(float4 _Pos);
-	void BubblePop(float4 _Pos, float Power);
-	void CreateBoom(float4 _Pos, float Power);
+	void BubblePop(float4 _Pos, float _Power);
+	void CreateBoom(float4 _Pos, float _Power);
 
 protected:
 	void Start() override;
@@ -69,14 +73,14 @@ private:
 	std::vector<BlockTile*> BoomBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 
-	void MakeRightWave(TileIndex _Pos, float Power);
-	void MakeLeftWave(TileIndex _Pos, float Power);
-	void MakeDownWave(TileIndex _Pos, float Power);
-	void MakeUpWave(TileIndex _Pos, float Power);
+	void MakeRightWave(TileIndex _Pos, float _Power);
+	void MakeLeftWave(TileIndex _Pos, float _Power);
+	void MakeDownWave(TileIndex _Pos, float _Power);
+	void MakeUpWave(TileIndex _Pos, float _Power);
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
-	float Power;
+
 	float BoomDeathTime;
 	float WaveDeathTime;
 	bool IsWaveDeath;

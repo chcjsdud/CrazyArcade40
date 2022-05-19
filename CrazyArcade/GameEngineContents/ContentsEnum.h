@@ -20,6 +20,7 @@ enum class BlockType
 	ItemBlock, // 아이템만 있는 타일
 	BubbleBlock, // 물풍선있는 타일
 	WaveBlock, //물풍선 터질때 생기는 타일
+	WallBlock, //안부서지는 타일
 	Max
 };
 

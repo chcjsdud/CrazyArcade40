@@ -46,7 +46,7 @@ void CampLevel::Update()
 {
 	if (GameEngineInput::GetInst()->IsDown("CreatBoom")==true)
 	{
-		bubble_->CreateBoom({ 300,300 }, 3);
+		bubble_->CreateBoom({ 40,130 }, 3);
 	}
 }
 
