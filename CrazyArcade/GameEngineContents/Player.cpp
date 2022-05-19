@@ -14,6 +14,7 @@ Player::Player()
     , MoveDir(float4::ZERO)
     , PlayerAnimationRender_(nullptr)
     , CurState_(PlayerState::Idle)
+	, PrevState_(CurState_)
     , CurDir_(PlayerDir::Down)
 	, Collision1P_(nullptr)
 	, Collision2P_(nullptr)
@@ -259,10 +260,16 @@ void Player::Start()
 	PlayerAnimationRender_ = CreateRenderer();
 	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
 	PlayerAnimationRender_->SetPivot({ 0.f, 30.f });
+
+	AnimationName_ = "Ready_";
+	ChangeDirText_ = "Down";
+	CurState_ = PlayerState::Ready;
 	PlayerAnimationRender_->Off();
 
 	// BAZZI
 	{
+		GameEngineImage* Ready = GameEngineImageManager::GetInst()->Find("Ready.bmp");
+		Ready->CutCount(18, 1);
 		GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
 		Left->CutCount(6, 1);
 		GameEngineImage* Right = GameEngineImageManager::GetInst()->Find("Right.bmp");
@@ -279,6 +286,7 @@ void Player::Start()
 		BazziRenderer_->SetPivot({ 0.f, 30.f });
 
 		// Idle
+		BazziRenderer_->CreateAnimation("Ready.bmp", "Ready_Down", 0, 17, 0.06f, false);
 		BazziRenderer_->CreateAnimation("Left.bmp", "Idle_Left", 0, 0, 1.f, false);
 		BazziRenderer_->CreateAnimation("Right.bmp", "Idle_Right", 0, 0, 1.f, false);
 		BazziRenderer_->CreateAnimation("Down.bmp", "Idle_Down", 0, 0, 1.f, false);
@@ -290,8 +298,10 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 0.09f, true);
 
-		AnimationName_ = "Idle_";
-		BazziRenderer_->ChangeAnimation("Idle_Down");
+		BazziRenderer_->ChangeAnimation("Ready_Down");
+
+		//AnimationName_ = "Idle_";
+		//BazziRenderer_->ChangeAnimation("Idle_Down");
 		BazziRenderer_->Off();
 		
 	}
@@ -317,10 +327,10 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Down", 0, 0, 1.f, false);
 		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Up", 0, 0, 1.f, false);
 
+		//DaoRenderer_->ChangeAnimation("Ready_Down");
 
-
-		AnimationName_ = "Move_";
-		DaoRenderer_->ChangeAnimation("Move_Down");
+		//AnimationName_ = "Idle_";
+		DaoRenderer_->ChangeAnimation("Idle_Down");
 
 		DaoRenderer_->Off();
 	}
@@ -409,6 +419,9 @@ void Player::ChangeState(PlayerState _State)
 	{
 		switch (_State)
 		{
+		case PlayerState::Ready:
+			ReadyStart();
+			break;
 		case PlayerState::Idle:
 			IdleStart();
 			break;
@@ -437,6 +450,9 @@ void Player::PlayerStateUpdate()
 {
 	switch (CurState_)
 	{
+	case PlayerState::Ready:
+		ReadyUpdate();
+		break;
 	case PlayerState::Idle:
 		IdleUpdate();
 		break;

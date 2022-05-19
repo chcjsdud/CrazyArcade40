@@ -7,6 +7,7 @@ class GameEngineCollision;
 
 enum class PlayerState
 {
+	Ready,
 	Idle, 
 	Move,
 	Jump,
@@ -188,7 +189,7 @@ protected:
 protected:
 	float4 MoveDir;
 	PlayerState CurState_;
-	//PlayerState PrevState_;
+	PlayerState PrevState_;
 
 protected:
 	void ChangeState(PlayerState _State);
@@ -196,6 +197,7 @@ protected:
 	virtual void DirAnimationCheck();
 
 protected:
+	virtual void ReadyStart();
 	virtual void IdleStart();
 	virtual void MoveStart();
 	virtual void JumpStart();
@@ -203,6 +205,7 @@ protected:
 	virtual void LiveStart();
 	virtual void DieStart();
 
+	virtual void ReadyUpdate();
 	virtual void IdleUpdate();
 	virtual void MoveUpdate();
 	virtual void JumpUpdate();
