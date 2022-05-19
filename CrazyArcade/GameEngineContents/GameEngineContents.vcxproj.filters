@@ -113,6 +113,9 @@
     <ClInclude Include="Area.h">
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="RoomBackGround.h">
+      <Filter>Actor\UI\Room</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -233,6 +236,9 @@
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="RoomCharaterSelectUI.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomBackGround.cpp">
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
   </ItemGroup>

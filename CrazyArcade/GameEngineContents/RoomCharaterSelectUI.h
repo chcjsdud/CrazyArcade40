@@ -22,6 +22,7 @@ protected:
 
 private:
 	int SelectCharater;
+	GameEngineRenderer* StatusRenderer;
 	GameEngineRenderer* BannerRenderer;
 	GameEngineRenderer* RandomRenderer;
 	GameEngineCollision* RandomCollision;
@@ -31,5 +32,8 @@ private:
 	GameEngineCollision* DaoCollision;
 	GameEngineRenderer* MaridRenderer;
 	GameEngineCollision* MaridCollision;
+
+	void StatusUISet(); // 스테이터스 이미지를 바꿔주는 함수
+	void BannerSet(); // 배너 이미지를 바꿔주는 함수
 };
 

@@ -10,6 +10,7 @@
 
 RoomCharaterSelectUI::RoomCharaterSelectUI()
 	: BannerRenderer(nullptr)
+	, StatusRenderer(nullptr)
 	, RandomRenderer(nullptr)
 	, RandomCollision(nullptr)
 	, BazziRenderer(nullptr)
@@ -28,8 +29,11 @@ RoomCharaterSelectUI::~RoomCharaterSelectUI()
 
 void RoomCharaterSelectUI::Start()
 {
-	SetPosition(GameEngineWindow::GetScale().Half());
-	BannerRenderer = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER, { -33.0f, -49.0f });
+	SetPosition({ 670, 95 });
+	StatusRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -294.0f, 22.0f });
+	StatusRenderer->SetImage("RandomStatusUI.bmp");
+	StatusRenderer->Off();
+	BannerRenderer = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER, { -42.0f, -49.0f });
 	BannerRenderer->SetImage("BazziSelect_Image.bmp");
 	RandomRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -146.0f, -8.0f });
 	BazziRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -67.0f, -7.0f });
@@ -95,7 +99,6 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			RandomRenderer->ChangeAnimation("RandomCharSelecter_CilckUp");
-			BannerRenderer->SetImage("BazziSelect_Image.bmp");
 			SelectCharater = 0;
 		}
 	}
@@ -123,7 +126,6 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			BazziRenderer->ChangeAnimation("BazziCharSelecter_CilckUp");
-			BannerRenderer->SetImage("BazziSelect_Image.bmp");
 			SelectCharater = 1;
 		}
 	}
@@ -145,14 +147,12 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			DaoRenderer->ChangeAnimation("DaoCharSelecter_Cilck");
-
 		}
 
 		if (true == DaoCollision->CollisionCheck("MouseCol") &&
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			DaoRenderer->ChangeAnimation("DaoCharSelecter_CilckUp");
-			BannerRenderer->SetImage("DaoSelect_Image.bmp");
 			SelectCharater = 2;
 		}
 	}
@@ -181,8 +181,74 @@ void RoomCharaterSelectUI::Update()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			MaridRenderer->ChangeAnimation("MaridCharSelecter_CilckUp");
-			BannerRenderer->SetImage("MaridSelect_Image.bmp");
 			SelectCharater = 3;
 		}
+	}
+
+	StatusUISet(); 
+	BannerSet();
+}
+
+void RoomCharaterSelectUI::StatusUISet()
+{
+	if (true == RandomCollision->CollisionCheck("MouseCol"))
+	{
+		StatusRenderer->SetPivot({ -291.0f, 15.0f });
+		StatusRenderer->SetImage("RandomStatusUI.bmp");
+		StatusRenderer->On();
+	}
+
+	else if (true == DaoCollision->CollisionCheck("MouseCol"))
+	{
+		StatusRenderer->SetPivot({ -294.0f, 22.0f });
+		StatusRenderer->SetImage("DaoStatusUI.bmp");
+		StatusRenderer->On();
+	}
+
+	else if (true == BazziCollision->CollisionCheck("MouseCol"))
+	{
+		StatusRenderer->SetPivot({ -294.0f, 22.0f });
+		StatusRenderer->SetImage("BazziStatusUI.bmp");
+		StatusRenderer->On();
+	}
+
+	else if (true == MaridCollision->CollisionCheck("MouseCol"))
+	{
+		StatusRenderer->SetPivot({ -294.0f, 22.0f });
+		StatusRenderer->SetImage("MaridStatusUI.bmp");
+		StatusRenderer->On();
+	}
+
+	if (false == RandomCollision->CollisionCheck("MouseCol") &&
+		false == MaridCollision->CollisionCheck("MouseCol") &&
+		false == DaoCollision->CollisionCheck("MouseCol") &&
+		false == BazziCollision->CollisionCheck("MouseCol"))
+	{
+		StatusRenderer->Off();
+	}
+}
+
+void RoomCharaterSelectUI::BannerSet()
+{
+	switch (SelectCharater)
+	{
+	case 0:
+		BannerRenderer->SetPivot({ -40.0f, -50.0f });
+		BannerRenderer->SetImage("RandomSelect_Image.bmp");
+		break;
+	case 1:
+		BannerRenderer->SetPivot({ -42.0f, -49.0f });
+		BannerRenderer->SetImage("BazziSelect_Image.bmp");
+		break;
+	case 2:
+		BannerRenderer->SetPivot({ -42.0f, -49.0f });
+		BannerRenderer->SetImage("DaoSelect_Image.bmp");
+		break;
+	case 3:
+		BannerRenderer->SetPivot({ -42.0f, -49.0f });
+		BannerRenderer->SetImage("MaridSelect_Image.bmp");
+		break;
+	default:
+		break;
 	}
 }
