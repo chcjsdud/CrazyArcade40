@@ -60,19 +60,19 @@ ItemType MapGameObject::CheckItem(float4 _Pos)
 // 블럭이 사라질때 위치를 넣어주고 ItemType 이 max가 아니라면 createItem을 해준다.
 void MapGameObject::CreateItem(float4 _Pos)
 {
-	if (ItemType::Max == CheckItem(_Pos))
-	{
-		return;
-	};
+	//if (ItemType::Max == CheckItem(_Pos))
+	//{
+	//	return;
+	//};
 
 	// 블럭이 아이템을 가지고 있을때
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	BlockTile* Tiles_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
-	Tiles_->Renderer = CreateRenderer();w
-	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 30 }); // 아이템 y가 70이라고 가정했을때
+	Tiles_->Renderer = CreateRenderer();
+	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y}); // 아이템 y는 90이어야한다.
 
-	Tiles_->Renderer->CreateAnimation("Balloon.bmp", "Animation", 0, 1, 0.4f, true);
+	Tiles_->Renderer->CreateAnimation("Fluid.bmp", "Animation", 0, 5, 0.2f, true);
 	Tiles_->Renderer->ChangeAnimation("Animation");
 
 

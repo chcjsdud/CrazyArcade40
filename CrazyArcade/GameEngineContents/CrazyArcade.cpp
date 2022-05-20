@@ -285,7 +285,8 @@ void CrazyArcade::GameInit()
     GameEngineImage* Bubble_Default = GameEngineImageManager::GetInst()->Find("Bubble_Default.bmp");
     Bubble_Default->CutCount(5, 1);
 
-
+    GameEngineImage* Fluid = GameEngineImageManager::GetInst()->Find("Fluid.bmp");
+    Fluid->CutCount(6, 1);
 
 
 
