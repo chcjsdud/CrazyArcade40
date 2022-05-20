@@ -14,6 +14,6 @@ RoomBackGround::~RoomBackGround()
 void RoomBackGround::Start()
 {
 	SetPosition(GameEngineWindow::GetScale().Half());
-	CreateRenderer((int)UIType::PopUp)->SetImage("MonsterRoomBackGround.bmp");
+	CreateRenderer((int)UIType::PopUp)->SetImage("RoomBackGround.bmp");
 }
 

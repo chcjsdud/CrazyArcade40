@@ -30,15 +30,17 @@ RoomCharaterSelectUI::~RoomCharaterSelectUI()
 void RoomCharaterSelectUI::Start()
 {
 	SetPosition({ 670, 95 });
+	RoomCharacterRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 48.0f });
+	RoomCharacterRenderer->SetImage("RandomCharacter.bmp");
 	StatusRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -294.0f, 22.0f });
 	StatusRenderer->SetImage("RandomStatusUI.bmp");
 	StatusRenderer->Off();
-	BannerRenderer = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER, { -42.0f, -49.0f });
-	BannerRenderer->SetImage("BazziSelect_Image.bmp");
+	BannerRenderer = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER, { -40.0f, -50.0f });
+	BannerRenderer->SetImage("RandomSelect_Image.bmp");
 	RandomRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -146.0f, -8.0f });
-	BazziRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -67.0f, -7.0f });
-	DaoRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 0,0 });
-	MaridRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 70.0f, -5.0f });
+	BazziRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -72.0f, -7.0f });
+	DaoRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -3.0f,0 });
+	MaridRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 68.0f, -5.0f });
 
 	RandomRenderer->CreateAnimation("RandomCharSelecter.bmp", "RandomCharSelecter_Idle", 0, 0, 0.1f, false);
 	RandomRenderer->CreateAnimation("RandomCharSelecter.bmp", "RandomCharSelecter_Approach", 0, 6, 0.1f, false);
@@ -235,10 +237,12 @@ void RoomCharaterSelectUI::BannerSet()
 	case 0:
 		BannerRenderer->SetPivot({ -40.0f, -50.0f });
 		BannerRenderer->SetImage("RandomSelect_Image.bmp");
+		RoomCharacterRenderer->SetImage("RandomCharacter.bmp");
 		break;
 	case 1:
 		BannerRenderer->SetPivot({ -42.0f, -49.0f });
 		BannerRenderer->SetImage("BazziSelect_Image.bmp");
+		RoomCharacterRenderer->SetImage("BazziCharacter.bmp");
 		break;
 	case 2:
 		BannerRenderer->SetPivot({ -42.0f, -49.0f });

@@ -241,6 +241,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="RoomCharaterSelectUI.h" />
+    <ClInclude Include="StartButton.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="StartIntroUI.h" />
     <ClInclude Include="RoomLevel.h">
       <SubType>
@@ -346,6 +350,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="RoomLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="StartButton.cpp">
       <SubType>
       </SubType>
     </ClCompile>

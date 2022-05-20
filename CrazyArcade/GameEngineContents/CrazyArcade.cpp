@@ -140,7 +140,7 @@ void CrazyArcade::GameInit()
     }
 
 
-    ////// UI 리소스 eRoom에서 사용되는 리소스
+    ////// UI 리소스 Room에서 사용되는 리소스
     {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
@@ -167,6 +167,9 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("MaridCharSelecter.bmp");
         Image->Cut({ 128,100 });
+
+        Image = GameEngineImageManager::GetInst()->Find("StartButton.bmp");
+        Image->Cut({ 200,100 });
     }
 
     ////// UI 리소스 Play에서 사용되는 리소스

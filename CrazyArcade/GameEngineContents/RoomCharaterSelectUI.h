@@ -22,6 +22,7 @@ protected:
 
 private:
 	int SelectCharater;
+	GameEngineRenderer* RoomCharacterRenderer;
 	GameEngineRenderer* StatusRenderer;
 	GameEngineRenderer* BannerRenderer;
 	GameEngineRenderer* RandomRenderer;

@@ -1,4 +1,5 @@
 #include "UITeamTest.h"
+#include "StartButton.h"
 #include "CreateRoomBackGround.h"
 #include "RoomBackGround.h"
 #include "RoomCharaterSelectUI.h"
@@ -31,6 +32,7 @@ void UITeamTest::Loading()
 
 	// ¹æ È­¸é
 	CreateActor<RoomBackGround>((int)UIType::PopUp);
+	CreateActor<StartButton>((int)UIType::PopUpButton);
 	CreateActor<RoomCharaterSelectUI>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 }
