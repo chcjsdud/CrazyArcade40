@@ -202,6 +202,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="MapGameObject.h" />
+    <ClInclude Include="MapSelectUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MapTeamTest.h">
       <SubType>
       </SubType>
@@ -306,6 +310,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="MapGameObject.cpp" />
+    <ClCompile Include="MapSelectUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MapTeamTest.cpp">
       <SubType>
       </SubType>

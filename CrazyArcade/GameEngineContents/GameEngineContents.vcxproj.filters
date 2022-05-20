@@ -119,6 +119,9 @@
     <ClInclude Include="StartButton.h">
       <Filter>Actor\UI\Room</Filter>
     </ClInclude>
+    <ClInclude Include="MapSelectUI.h">
+      <Filter>Actor\UI\Room</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrazyArcade.cpp" />
@@ -247,6 +250,9 @@
       <Filter>Level\UILevel</Filter>
     </ClCompile>
     <ClCompile Include="StartButton.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSelectUI.cpp">
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
   </ItemGroup>
