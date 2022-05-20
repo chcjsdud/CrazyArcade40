@@ -34,7 +34,7 @@ void CampLevel::Loading()
 
 	bubble_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
-	bubble_->CreateBoom({ 130,100 },3);
+	bubble_->CreateBoom({ 520,100 },3);
 
 	if (false == GameEngineInput::GetInst()->IsKey("CreatBoom"))
 	{
@@ -46,7 +46,7 @@ void CampLevel::Update()
 {
 	if (GameEngineInput::GetInst()->IsDown("CreatBoom")==true)
 	{
-		bubble_->CreateBoom({ 40,130 }, 3);
+		bubble_->CreateBoom({ 200,100 }, 3);
 	}
 }
 

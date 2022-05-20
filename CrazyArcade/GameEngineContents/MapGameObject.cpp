@@ -4,12 +4,7 @@
 
 MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
-	AllBlockTiles_(),
-	BoomDeathTime(0.0f),
-	IsBoomDeath(false),
-	WaveDeathTime(0.0f),
-	IsWaveDeath(false),
-	IsWaveDeathAni(false)
+	AllBlockTiles_()
 
 {
 
@@ -28,16 +23,10 @@ void MapGameObject::Start()
 
 void MapGameObject::Update()
 {
-	if (IsWaveDeath == true)
-	{
-		WaveDeathTime -= 1.0f * GameEngineTime::GetDeltaTime();
-		if (WaveDeathTime < 0.0f)
-		{
-			WaveDeathAni();
-			DestroyWave();
-		}
-	}
-			DestroyBoom();
+
+	WaveDeathAni();
+	DestroyWave();
+	DestroyBoom();
 }
 
 // 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
@@ -85,10 +74,38 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 	Boom_->DeathTime_ = 3.0f;
 	Boom_->Power_ = _Power;
 	BoomBlockTiles_.push_back(Boom_);
-	BoomDeathTime = 3.0f;
-	IsBoomDeath = true;
+
 }
 
+
+
+void MapGameObject::BubblePop(float4 _Pos, float Power)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+
+	BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
+	Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
+	Wave_->BlockType_ = BlockType::WaveBlock;
+	Wave_->TileIndex_ = TileIndex_;
+	Wave_->Renderer = CreateRenderer();
+	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y });
+	Wave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.1f, true);
+	Wave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.1f, false);
+	Wave_->Renderer->ChangeAnimation("Center");
+	Wave_->DeathTime_ = 1.5f;
+	Wave_->IsWaveDeath;
+	Wave_->IsWaveDeathAni;
+	Wave_->DeathAniTime_=1.5f;
+
+	WaveBlockTiles_.push_back(Wave_);
+
+	MakeLeftWave(TileIndex_, Power);
+	MakeRightWave(TileIndex_, Power);
+	//MakeDownWave(TileIndex_, Power);
+	//MakeUpWave(TileIndex_, Power);
+
+}
 void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 {
 
@@ -106,70 +123,60 @@ void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 	}
 
 }
-
-void MapGameObject::BubblePop(float4 _Pos, float Power)
+void MapGameObject::DestroyWave()
 {
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
-
-	BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
-	Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
-	Wave_->BlockType_ = BlockType::WaveBlock;
-	Wave_->TileIndex_ = TileIndex_;
-	Wave_->Renderer = CreateRenderer();
-	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y });
-	Wave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.1f, true);
-	Wave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.1f, false);
-	Wave_->Renderer->ChangeAnimation("Center");
-	WaveBlockTiles_.push_back(Wave_);
-
-	MakeLeftWave(TileIndex_, Power);
-	MakeRightWave(TileIndex_, Power);
-	MakeDownWave(TileIndex_, Power);
-	MakeUpWave(TileIndex_, Power);
-	WaveDeathTime = 1.5f;
-	IsWaveDeath = true;
-	IsWaveDeathAni = true;
-
+	for (int i = 0; i < WaveBlockTiles_.size(); i++) // 물풍선 중앙 탐색
+	{
+		if (WaveBlockTiles_[i]->IsWaveDeath == true) // 물풍선 파도가 다 만들어졌으면
+		{
+			for (int j = 0; j < WaveBlockTiles_[i]->MyWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
+			{
+				WaveBlockTiles_[i]->MyWave_[j]->Renderer->ChangeAnimation("Death");
+				WaveBlockTiles_[i]->MyWave_[j]->IsWaveDeathAni = true;
+			}
+			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
+			WaveBlockTiles_[i]->IsWaveDeath = false;
+		}
+		if (WaveBlockTiles_[i]->MyWave_[0]->Renderer->IsEndAnimation() == true)//시간이 다줄었으면
+		{
+			WaveBlockTiles_[i]->IsWaveDeathAni = true;
+		}
+	}
 }
 void MapGameObject::WaveDeathAni()
 {
-	if (IsWaveDeathAni == true)
+
+	for (int i = 0; i < WaveBlockTiles_.size(); i++)//물풍선 백터 돌다가
 	{
-		MapTile_->DeleteTile(WaveBlockTiles_[0]->TileIndex_.X, WaveBlockTiles_[0]->TileIndex_.Y);
-
-		for (int i = 1; i < WaveBlockTiles_.size(); i++)
+		if (WaveBlockTiles_[i]->IsWaveDeathAni == true)//죽는 애니재생이면
 		{
-			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
-			//터지는 중앙지점 다른 wave오면 덮어씌워져야함
-
+			{
+				for (int j = 0; j < WaveBlockTiles_[i]->MyWave_.size(); j++)
+				{
+					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.Y);//물줄기 지워라
+				}
+				WaveBlockTiles_[i]->MyWave_.clear(); //물줄기 백터에서 지워준다.
+				MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);//중앙부분지우기
+				WaveBlockTiles_.erase(WaveBlockTiles_.begin() + i);//중앙벡터 지우기
+			}
 		}
-		IsWaveDeathAni = false;
+
 	}
 }
-void MapGameObject::DestroyWave()
-{
-	if (WaveBlockTiles_[1]->Renderer->IsEndAnimation() == true)
-	{
-		for (int i = 1; i < WaveBlockTiles_.size(); i++)
-		{
-			MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);
-		}
-		IsWaveDeath = false;
-		WaveBlockTiles_.clear();
-	}
 
-}
 void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 {
+
 	int IndexCount_ = static_cast<int>(_Power);//파도 만들어줄 거리
 	int PowerCount_ = static_cast<int>(_Power);//체크해줘야할 칸
+
+
 	for (int i = 1; i <= PowerCount_; i++)//파워가 0이될때까지 체크
 	{
 
 		TileIndex TilePos = _Pos;
 
-		if (TilePos.X - i < 0)//벽에 부딪혔다면
+		if (TilePos.X - i < 0)//--------------------------------------------벽에 부딪혔다면
 		{
 			IndexCount_ = i - 1;//이만큼 가면된다.
 			i = PowerCount_ + 1;//여기서 for문 종료
@@ -179,53 +186,55 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일위치
 			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
 
-			if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::WallBlock) //안부서지는 벽이 있을 때
+			if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
 		
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)// 폭탄이 있을 때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//----------------------------- 폭탄이 있을 때
 			{
-				PowerCount_ += static_cast<int>(Tiles_->Power_);
+				PowerCount_ += static_cast<int>(Tiles_->Power_);//파워 전달해주기
+				IndexCount_ += static_cast<int>(Tiles_->Power_);
 				{
-		
-				MapTile_->DeleteTile(TileCenterPos_.x, TileCenterPos_.y);
-				for (int i = 0; i < BoomBlockTiles_.size(); i++){
-					if(BoomBlockTiles_[i] == Tiles_){
-					BoomBlockTiles_.erase(BoomBlockTiles_.begin()+i);////벡터에서 지워줘야함
+
+//					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
+//					MakeUpWave(TilePos, Tiles_->Power_);
+					MapTile_->DeleteTile(TilePos.X-i, TilePos.Y);//폭탄지워주고
+					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
+					{
+						if (BoomBlockTiles_[i] == Tiles_)
+						{
+							BoomBlockTiles_.erase(BoomBlockTiles_.begin() + i);
+						}
 					}
-				}
-				BubblePop(TileCenterPos_, Tiles_->Power_);//폭탄 지워진 자리에 웨이브 만들어줌
 				}
 			}
 			else if (Tiles_ != nullptr && 
-				Tiles_->BlockType_ == BlockType::FixBlock&& //부서지는벽
+				Tiles_->BlockType_ == BlockType::FixBlock&& //------------------------------------------------부서지는벽
 				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//이미 터지고 있을때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
 				//나중에 터지는 친구가 덮어씌워야해서 지워줘야함
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock)//아이템이 있을때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock&&//-----------------------------아이템이 있을때
+				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
 			{
 				//아이템 없애주는 함수
 			}
 		}
-
-
-
 	}
 
 	for (int i = 1; i <= IndexCount_; i++)//가면되는곳까지 반복, 0은 따로 뿌려줄것임
 	{
 		TileIndex TilePos = _Pos;
 		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);
-
+		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X , TilePos.Y);//시작 타일
 		if (i == IndexCount_) //마지막지점이 되면
 		{
 			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
@@ -240,7 +249,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->ChangeAnimation("Left1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 
-			WaveBlockTiles_.push_back(Wave_);
+			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->IsWaveDeath = true;
 		}
 		else//마지막지점 아니면
 		{
@@ -254,174 +264,89 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->CreateAnimation("Left2.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Left2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
+			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 
 		}
 
 	}
 }
-void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
-{
-	int IndexCount_ = static_cast<int>(_Power);
-	for (int i = 1; i <= _Power; i++)
-	{
-
-		TileIndex TilePos = _Pos;
-
-		if (TilePos.Y + i > 13)
-		{
-			IndexCount_ = i - 1;
-			i = static_cast<int>(_Power) + 1;
-		}
-		else
-		{
-			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y + i);
-			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y + i);
-
-			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::FixBlock)
-			{
-				IndexCount_ = i - 1;
-			}
-
-		}
-
-	}
-
-	for (int i = 1; i <= IndexCount_; i++)
-	{
-		TileIndex TilePos = _Pos;
-		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y + i);
-
-		if (i == IndexCount_)
-		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X, TilePos.Y + i, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
-			Wave_->TileIndex_.X = TilePos.X;
-			Wave_->TileIndex_.Y = TilePos.Y + i;
-
-			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
-			Wave_->BlockType_ = BlockType::WaveBlock;
-			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Down1.bmp", "Down1", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Down1.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Down1");
-			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
-		}
-		else
-		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X, TilePos.Y + i, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
-			Wave_->TileIndex_.X = TilePos.X;
-			Wave_->TileIndex_.Y = TilePos.Y + i;
-			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
-			Wave_->BlockType_ = BlockType::WaveBlock;
-			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Down2.bmp", "Down2", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Down2.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Down2");
-			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
-
-		}
-
-	}
-}
-void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
-{
-	int IndexCount_ = static_cast<int>(_Power);
-	for (int i = 1; i <= _Power; i++)
-	{
-		TileIndex TilePos = _Pos;
-
-		if (TilePos.Y - i < 0)
-		{
-			IndexCount_ = i - 1;
-			i = static_cast<int>(_Power) + 1;
-		}
-		else
-		{
-			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y - i);
-			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y - i);
-
-			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::FixBlock)
-			{
-				IndexCount_ = i - 1;
-			}
-		}
-	}
-
-	for (int i = 1; i <= IndexCount_; i++)
-	{
-		TileIndex TilePos = _Pos;
-		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y - i);
-
-		if (i == IndexCount_)
-		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X, TilePos.Y - i, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
-			Wave_->TileIndex_.X = TilePos.X;
-			Wave_->TileIndex_.Y = TilePos.Y - i;
-			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
-			Wave_->BlockType_ = BlockType::WaveBlock;
-			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Up1.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Up1");
-			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
-		}
-		else
-		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X, TilePos.Y - i, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
-			Wave_->TileIndex_.X = TilePos.X;
-			Wave_->TileIndex_.Y = TilePos.Y - i;
-			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
-			Wave_->BlockType_ = BlockType::WaveBlock;
-			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Up2.bmp", "Up2", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Up2.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Up2");
-			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
-
-		}
-
-	}
-}
-
 void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 {
-	int IndexCount_ = static_cast<int>(_Power);
-	for (int i = 1; i <= _Power; i++)
+
+	int IndexCount_ = static_cast<int>(_Power);//파도 만들어줄 거리
+	int PowerCount_ = static_cast<int>(_Power);//체크해줘야할 칸
+
+
+	for (int i = 1; i <= PowerCount_; i++)//파워가 0이될때까지 체크
 	{
+
 		TileIndex TilePos = _Pos;
 
-		if (TilePos.X + i > 15)
+		if (TilePos.X + i > 14)//--------------------------------------------벽에 부딪혔다면
 		{
-			IndexCount_ = i - 1;
-			i = static_cast<int>(_Power) + 1;
+			IndexCount_ = i- 1;//이만큼 가면된다.
+			i = PowerCount_ + 1;//여기서 for문 종료
 		}
-		else
+		else//벽에 안 부딪혔다면
 		{
-			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y);
-			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X + i, TilePos.Y);
+			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X + i, TilePos.Y);//현재 검사중인 타일위치
+			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X + i, TilePos.Y);//현재 검사중인 타일 정보
 
-			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::FixBlock)
+			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
+
 			{
-				IndexCount_ = i - 1;
+				IndexCount_ = i - 1;//이만큼 가면된다.
+				i = PowerCount_ + 1;//여기서 for문 종료
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//----------------------------- 폭탄이 있을 때
+			{
+				PowerCount_ += static_cast<int>(Tiles_->Power_);//파워 전달해주기
+				IndexCount_ += static_cast<int>(Tiles_->Power_);
+				{
+
+					//					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
+					//					MakeUpWave(TilePos, Tiles_->Power_);
+					MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);//폭탄지워주고
+					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
+					{
+						if (BoomBlockTiles_[i] == Tiles_)
+						{
+							BoomBlockTiles_.erase(BoomBlockTiles_.begin() + i);
+						}
+					}
+				}
+			}
+			else if (Tiles_ != nullptr &&
+				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
+				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+			{
+				IndexCount_ = i - 1;//이만큼 가면된다.
+				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
+				//여기서 해당 오브젝트부숴주면됨
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
+			{
+				//나중에 터지는 친구가 덮어씌워야해서 지워줘야함
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
+				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
+			{
+				//아이템 없애주는 함수
 			}
 		}
 	}
 
-	for (int i = 1; i <= IndexCount_; i++)
+	for (int i = 1; i <= IndexCount_; i++)//가면되는곳까지 반복, 0은 따로 뿌려줄것임
 	{
 		TileIndex TilePos = _Pos;
 		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X + i, TilePos.Y);
-		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X + i, TilePos.Y);
-
-		if (i == IndexCount_)
+		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y);//시작 타일
+		if (i == IndexCount_) //마지막지점이 되면
 		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
+			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 			Wave_->TileIndex_.X = TilePos.X + i;
 			Wave_->TileIndex_.Y = TilePos.Y;
+
 			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
@@ -429,11 +354,13 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->CreateAnimation("Right1.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Right1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
+
+			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->IsWaveDeath = true;
 		}
-		else
+		else//마지막지점 아니면
 		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::MAPOBJECT));
+			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 			Wave_->TileIndex_.X = TilePos.X + i;
 			Wave_->TileIndex_.Y = TilePos.Y;
 			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
@@ -443,10 +370,9 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->CreateAnimation("Right2.bmp", "Death", 2, 10, 0.05f, false);
 			Wave_->Renderer->ChangeAnimation("Right2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
-			WaveBlockTiles_.push_back(Wave_);
+			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 
 		}
 
 	}
-
 }

@@ -13,6 +13,8 @@ public:
 		ItemType_(ItemType::Max),
 		BlockCol(nullptr),
 		Renderer(nullptr),
+		IsWaveDeath(false),
+		IsWaveDeathAni(false),
 		TilePos_(),
 		TileIndex_(),
 		DeathTime_(),
@@ -32,13 +34,17 @@ public:
 		ItemType_ = ItemType::Max;
 	}
 	float DeathTime_;
+	float DeathAniTime_;
 	float Power_;
+	bool IsWaveDeath;
+	bool IsWaveDeathAni;
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
 	float4 TilePos_;
 	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
+	std::vector<BlockTile*> MyWave_;
 };
 
 class MapGameObject : public GameEngineActor
@@ -75,15 +81,10 @@ private:
 
 	void MakeRightWave(TileIndex _Pos, float _Power);
 	void MakeLeftWave(TileIndex _Pos, float _Power);
-	void MakeDownWave(TileIndex _Pos, float _Power);
-	void MakeUpWave(TileIndex _Pos, float _Power);
+	//void MakeDownWave(TileIndex _Pos, float _Power);
+	//void MakeUpWave(TileIndex _Pos, float _Power);
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
 
-	float BoomDeathTime;
-	float WaveDeathTime;
-	bool IsWaveDeath;
-	bool IsWaveDeathAni;
-	bool IsBoomDeath;
 };
