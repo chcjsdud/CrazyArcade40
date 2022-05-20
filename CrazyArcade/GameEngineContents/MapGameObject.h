@@ -71,7 +71,7 @@ public:
 	ItemType CheckItem(float4 _Pos);
 	void BubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power);
-
+	void CreateItem(float4 _Pos);
 protected:
 	void Start() override;
 	void Update() override;
