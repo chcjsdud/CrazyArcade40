@@ -57,6 +57,27 @@ ItemType MapGameObject::CheckItem(float4 _Pos)
 	}
 }
 
+// 블럭이 사라질때 위치를 넣어주고 ItemType 이 max가 아니라면 createItem을 해준다.
+void MapGameObject::CreateItem(float4 _Pos)
+{
+	if (ItemType::Max == CheckItem(_Pos))
+	{
+		return;
+	};
+
+	// 블럭이 아이템을 가지고 있을때
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* Tiles_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
+	Tiles_->Renderer = CreateRenderer();w
+	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 30 }); // 아이템 y가 70이라고 가정했을때
+
+	Tiles_->Renderer->CreateAnimation("Balloon.bmp", "Animation", 0, 1, 0.4f, true);
+	Tiles_->Renderer->ChangeAnimation("Animation");
+
+
+}
+
 void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
@@ -96,7 +117,7 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	Wave_->DeathTime_ = 1.5f;
 	Wave_->IsWaveDeath;
 	Wave_->IsWaveDeathAni;
-	Wave_->DeathAniTime_=1.5f;
+	Wave_->DeathAniTime_ = 1.5f;
 
 	WaveBlockTiles_.push_back(Wave_);
 
@@ -155,7 +176,7 @@ void MapGameObject::WaveDeathAni()
 				{
 					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.Y);//물줄기 지워라
 				}
-				WaveBlockTiles_[i]->MyWave_.clear(); //물줄기 백터에서 지워준다.
+				WaveBlockTiles_[i]->MyWave_.clear(); //물줄기 백터 클리어
 				MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);//중앙부분지우기
 				WaveBlockTiles_.erase(WaveBlockTiles_.begin() + i);//중앙벡터 지우기
 			}
@@ -176,18 +197,18 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 
 		TileIndex TilePos = _Pos;
 
-		if (TilePos.X - i < 0)//--------------------------------------------벽에 부딪혔다면
+		if (TilePos.X - i < 0)//--------------------------------------------맵에 부딪혔다면
 		{
 			IndexCount_ = i - 1;//이만큼 가면된다.
 			i = PowerCount_ + 1;//여기서 for문 종료
 		}
-		else//벽에 안 부딪혔다면
+		else//맵에 안 부딪혔다면
 		{
 			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일위치
 			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
 
-			if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
-		
+			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
+
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
@@ -198,9 +219,9 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				IndexCount_ += static_cast<int>(Tiles_->Power_);
 				{
 
-//					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
-//					MakeUpWave(TilePos, Tiles_->Power_);
-					MapTile_->DeleteTile(TilePos.X-i, TilePos.Y);//폭탄지워주고
+					//					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
+					//					MakeUpWave(TilePos, Tiles_->Power_);
+					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
 						if (BoomBlockTiles_[i] == Tiles_)
@@ -210,8 +231,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 					}
 				}
 			}
-			else if (Tiles_ != nullptr && 
-				Tiles_->BlockType_ == BlockType::FixBlock&& //------------------------------------------------부서지는벽
+			else if (Tiles_ != nullptr &&
+				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
 				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
@@ -222,7 +243,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			{
 				//나중에 터지는 친구가 덮어씌워야해서 지워줘야함
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock&&//-----------------------------아이템이 있을때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
 				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
 			{
 				//아이템 없애주는 함수
@@ -234,7 +255,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 	{
 		TileIndex TilePos = _Pos;
 		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);
-		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X , TilePos.Y);//시작 타일
+		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y);//시작 타일
 		if (i == IndexCount_) //마지막지점이 되면
 		{
 			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
@@ -284,7 +305,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 		if (TilePos.X + i > 14)//--------------------------------------------벽에 부딪혔다면
 		{
-			IndexCount_ = i- 1;//이만큼 가면된다.
+			IndexCount_ = i - 1;//이만큼 가면된다.
 			i = PowerCount_ + 1;//여기서 for문 종료
 		}
 		else//벽에 안 부딪혔다면
