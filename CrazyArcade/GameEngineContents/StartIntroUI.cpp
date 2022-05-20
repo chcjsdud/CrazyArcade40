@@ -76,9 +76,9 @@ void StartIntroUI::Update()
 {
 	IntroMoveTime_ += GameEngineTime::GetDeltaTime();
 
-	if (GetAccTime() > 0.0f && GetAccTime() < 1.3f)
+	if (GetAccTime() > 0.0f && GetAccTime() < 1.5f)
 	{
-		if (GetAccTime() < 0.4) {
+		if (GetAccTime() < 0.6) {
 			if (StartIntroUIRenderer_[0]->GetPivot().y < 250.f) {
 				StartIntroUIRenderer_[0]->SetPivot(StartIntroUIRenderer_[0]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
 			}
@@ -86,7 +86,7 @@ void StartIntroUI::Update()
 				StartIntroUIRenderer_[0]->SetPivot(float4(StartIntroUIRenderer_[0]->GetPivot().x, 250.0f));
 			}
 		}
-		else if (GetAccTime() < 0.7) {
+		else if (GetAccTime() < 0.9) {
 			if (StartIntroUIRenderer_[1]->GetPivot().y < 250.f) {
 				StartIntroUIRenderer_[1]->SetPivot(StartIntroUIRenderer_[1]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
 			}
@@ -94,7 +94,7 @@ void StartIntroUI::Update()
 				StartIntroUIRenderer_[1]->SetPivot(float4(StartIntroUIRenderer_[1]->GetPivot().x, 250.0f));
 			}
 		}
-		else if (GetAccTime() < 1.0) {
+		else if (GetAccTime() < 1.2) {
 			if (StartIntroUIRenderer_[2]->GetPivot().y < 250.f) {
 				StartIntroUIRenderer_[2]->SetPivot(StartIntroUIRenderer_[2]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
 			}
@@ -102,7 +102,7 @@ void StartIntroUI::Update()
 				StartIntroUIRenderer_[2]->SetPivot(float4(StartIntroUIRenderer_[2]->GetPivot().x, 250.0f));
 			}
 		}
-		else if (GetAccTime() < 1.3) {
+		else if (GetAccTime() < 1.5) {
 			if (StartIntroUIRenderer_[3]->GetPivot().y < 250.f) {
 				StartIntroUIRenderer_[3]->SetPivot(StartIntroUIRenderer_[3]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
 			}
@@ -112,14 +112,14 @@ void StartIntroUI::Update()
 		}
 
 	}
-	else if (GetAccTime() > 1.3f && GetAccTime() < 1.5f)
+	else if (GetAccTime() > 1.5f && GetAccTime() < 1.7f)
 	{
 		for (int i = 4; i < 11; i++)
 		{
 			StartIntroUIRenderer_[i]->On();
 		}
 	}
-	else if (GetAccTime() > 2.0f && GetAccTime() > 2.5f)
+	else if (GetAccTime() > 2.2f && GetAccTime() > 2.7f)
 	{
 		for (int i = 0; i < 11; i++)
 		{
