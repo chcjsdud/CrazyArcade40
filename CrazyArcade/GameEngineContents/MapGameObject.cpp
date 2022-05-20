@@ -152,8 +152,13 @@ void MapGameObject::WaveDeathAni()
 		{
 			for (int j = 0; j < WaveBlockTiles_[i]->MyWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
 			{
-				WaveBlockTiles_[i]->MyWave_[j]->Renderer->ChangeAnimation("Death");
-				WaveBlockTiles_[i]->MyWave_[j]->IsWaveDeathAni = true;
+				if (nullptr != WaveBlockTiles_[i]->MyWave_[j]->Renderer)
+				{
+
+					WaveBlockTiles_[i]->MyWave_[j]->Renderer->ChangeAnimation("Death");
+					WaveBlockTiles_[i]->MyWave_[j]->IsWaveDeathAni = true;
+				}
+
 			}
 			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
 			WaveBlockTiles_[i]->IsWaveDeath = false;
@@ -174,6 +179,7 @@ void MapGameObject::DestroyWave()
 			{
 				for (int j = 0; j < WaveBlockTiles_[i]->MyWave_.size(); j++)
 				{
+
 					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.Y);//물줄기 지워라
 				}
 				WaveBlockTiles_[i]->MyWave_.clear(); //물줄기 백터 클리어
@@ -219,8 +225,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				IndexCount_ += static_cast<int>(Tiles_->Power_);
 				{
 
-					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
-					MakeUpWave(TilePos, Tiles_->Power_);
+					//MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
+					//MakeUpWave(TilePos, Tiles_->Power_);
 					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
@@ -337,8 +343,8 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 				IndexCount_ += static_cast<int>(Tiles_->Power_);
 				{
 
-					MakeLeftWave(TilePos, Tiles_->Power_);
-					MakeRightWave(TilePos, Tiles_->Power_);
+					//MakeLeftWave(TilePos, Tiles_->Power_);
+					//MakeRightWave(TilePos, Tiles_->Power_);
 					MapTile_->DeleteTile(TilePos.X , TilePos.Y+i);
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) 
 					{
@@ -456,8 +462,8 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 				IndexCount_ += static_cast<int>(Tiles_->Power_);
 				{
 
-					MakeDownWave(TilePos, Tiles_->Power_);	
-					MakeUpWave(TilePos, Tiles_->Power_);
+					//MakeDownWave(TilePos, Tiles_->Power_);	
+					//MakeUpWave(TilePos, Tiles_->Power_);
 					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
@@ -489,6 +495,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 						}
 					}
 				}
+			
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
 				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
@@ -575,8 +582,8 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 				IndexCount_ += static_cast<int>(Tiles_->Power_);
 				{
 
-					MakeLeftWave(TilePos, Tiles_->Power_);
-					MakeRightWave(TilePos, Tiles_->Power_);
+					//MakeLeftWave(TilePos, Tiles_->Power_);
+					//MakeRightWave(TilePos, Tiles_->Power_);
 					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
