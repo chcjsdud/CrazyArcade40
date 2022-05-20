@@ -336,7 +336,7 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Right.bmp", "Idle_Right", 0, 0, 1.f, false);
 		BazziRenderer_->CreateAnimation("Down.bmp", "Idle_Down", 0, 0, 1.f, false);
 		BazziRenderer_->CreateAnimation("Up.bmp", "Idle_Up", 0, 0, 1.f, false);
-
+		
 		// Move
 		BazziRenderer_->CreateAnimation("Left.bmp", "Move_Left", 0, 5, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Right.bmp", "Move_Right", 0, 5, 0.09f, true);
