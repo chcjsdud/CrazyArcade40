@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include <GameEngine/GameEngineLevel.h>
 
 #include "CrazyArcade.h"
 
@@ -21,6 +22,8 @@
 #include "MapTeamTest.h"
 #include "PlayerTeamTest.h"
 #include "UITeamTest.h"
+///////////UI레벨///////////
+#include "RoomLevel.h"
 
 
 
@@ -310,8 +313,11 @@ void CrazyArcade::GameInit()
 
         GameEngineInput::GetInst()->CreateKey("CampLevel", '4');
         GameEngineInput::GetInst()->CreateKey("VillageLevel", '5');
+        GameEngineInput::GetInst()->CreateKey("LoginLevel", '6');
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
+
+        GameEngineInput::GetInst()->CreateKey("Debug_Col", VK_OEM_6); // ]키
     }
     //////시작부분
     CreateLevel<IntroLevel>("IntroLevel");
@@ -325,6 +331,8 @@ void CrazyArcade::GameInit()
     CreateLevel<Monster1Level>("Monster1Level");
     CreateLevel<Monster2Level>("Monster2Level");
     CreateLevel<BossLevel>("BossLevel");
+    //////UI 레벨
+    CreateLevel<RoomLevel>("RoomLevel");
     //////테스트 레벨
     CreateLevel<MapTeamTest>("MapTeamTest");
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
@@ -336,6 +344,10 @@ void CrazyArcade::GameInit()
 
 void CrazyArcade::GameLoop()
 {
+    if (true == GameEngineInput::GetInst()->IsDown("Debug_Col"))
+    {
+        GameEngineLevel::IsDebugModeSwitch();
+    }
 }
 
 void CrazyArcade::GameEnd()

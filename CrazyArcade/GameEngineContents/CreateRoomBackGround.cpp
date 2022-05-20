@@ -109,7 +109,7 @@ void CreateRoomBackGround::Update()
 		ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Select");
 		if (true == GameEngineInput::GetInst()->IsDown("LeftMouse"))
 		{
-			GameEngine::GetInst().ChangeLevel("TitleLevel");
+			GameEngine::GetInst().ChangeLevel("RoomLevel");
 		}
 	}
 	else {

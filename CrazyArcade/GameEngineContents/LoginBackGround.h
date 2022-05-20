@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 
+class CreateRoomBackGround;
 class GameEngineBackGroundRenderer_;
 class LoginBackGround : public GameEngineActor
 {
@@ -26,5 +27,9 @@ private:
 	GameEngineCollision* Change1PCollision_;
 	GameEngineCollision* Change2PCollision_;
 
+	GameEngineCollision* LoginCollision_;
+	GameEngineCollision* ExitCollision_;
+
+	CreateRoomBackGround* createRoomBackGround_;
 };
 

@@ -35,6 +35,10 @@ void TitleLevel::Update()
     {
         GameEngine::GetInst().ChangeLevel("CampLevel");
     }
+    if (true == GameEngineInput::GetInst()->IsDown("LoginLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("LoginLevel");
+    }
 }
 void TitleLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 {

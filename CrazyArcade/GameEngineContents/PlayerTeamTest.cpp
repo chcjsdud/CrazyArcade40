@@ -14,6 +14,12 @@
 #include "Monster2.h"
 #include "Boss.h"
 
+////////////////////UI
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+
 PlayerTeamTest::PlayerTeamTest()
 {
 
@@ -31,6 +37,10 @@ void PlayerTeamTest::Update()
 }
 void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<StartIntroUI>(21);
+	CreateActor<TimeUI>(22);
+	CreateActor<Mouse>(23);
 
 	{
 		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
@@ -78,4 +88,14 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	//NewPlayer->SetPlayerType(PlayerType::Player2);
 	//NewPlayer->SetPosition({ 200.f, 300.f });
 
+
+
+	//윈도우 마우스 숨김
+	ShowCursor(false);
+}
+
+void PlayerTeamTest::LevelChangeEnd(GameEngineLevel* _PrevLevel)
+{
+	//윈도우 마우스 보이기
+	ShowCursor(true);
 }

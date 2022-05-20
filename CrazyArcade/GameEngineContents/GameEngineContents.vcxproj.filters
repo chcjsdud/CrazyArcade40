@@ -234,7 +234,6 @@
     <ClCompile Include="StartIntroUI.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
-    <ClCompile Include="RoomLevel.cpp" />
     <ClCompile Include="Area.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
@@ -243,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="RoomBackGround.cpp">
       <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomLevel.cpp">
+      <Filter>Level\UILevel</Filter>
     </ClCompile>
     <ClCompile Include="StartButton.cpp">
       <Filter>Actor\UI\Room</Filter>
