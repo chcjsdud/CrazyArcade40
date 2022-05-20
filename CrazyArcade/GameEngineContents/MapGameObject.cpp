@@ -442,8 +442,8 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 		}
 		else//벽에 안 부딪혔다면
 		{
-			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일위치
-			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
+			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X + i, TilePos.Y);//현재 검사중인 타일위치
+			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X + i, TilePos.Y);//현재 검사중인 타일 정보
 
 			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
 
@@ -459,7 +459,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 					//					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
 					//					MakeUpWave(TilePos, Tiles_->Power_);
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
+					MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
 						if (BoomBlockTiles_[i] == Tiles_)
@@ -502,20 +502,20 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 	for (int i = 1; i <= IndexCount_; i++)//가면되는곳까지 반복, 0은 따로 뿌려줄것임
 	{
 		TileIndex TilePos = _Pos;
-		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);
+		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X + i, TilePos.Y);
 		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y);//시작 타일
 		if (i == IndexCount_) //마지막지점이 되면
 		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
-			Wave_->TileIndex_.X = TilePos.X - i;
+			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
+			Wave_->TileIndex_.X = TilePos.X + i;
 			Wave_->TileIndex_.Y = TilePos.Y;
 
 			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Left1.bmp", "Left1", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Left1.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Left1");
+			Wave_->Renderer->CreateAnimation("Right1.bmp", "Right1", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Right1.bmp", "Death", 2, 10, 0.05f, false);
+			Wave_->Renderer->ChangeAnimation("Right1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
@@ -524,15 +524,15 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 		}
 		else//마지막지점 아니면
 		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
-			Wave_->TileIndex_.X = TilePos.X - i;
+			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X + i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
+			Wave_->TileIndex_.X = TilePos.X + i;
 			Wave_->TileIndex_.Y = TilePos.Y;
 			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Left2.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Left2");
+			Wave_->Renderer->CreateAnimation("Right2.bmp", "Right2", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Right2.bmp", "Death", 2, 10, 0.05f, false);
+			Wave_->Renderer->ChangeAnimation("Right2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
@@ -561,8 +561,8 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 		}
 		else//벽에 안 부딪혔다면
 		{
-			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일위치
-			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
+			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y - i);//현재 검사중인 타일위치
+			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y - i);//현재 검사중인 타일 정보
 
 			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
 
@@ -578,7 +578,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 
 					//					MakeDownWave(TilePos, Tiles_->Power_);	//왼쪽으로 가다가 터졌으니까 위 아래로 물줄기 만들어줌
 					//					MakeUpWave(TilePos, Tiles_->Power_);
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
+					MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
 						if (BoomBlockTiles_[i] == Tiles_)
@@ -599,7 +599,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
 				{
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
+					MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);//웨이브 지워주고
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
 					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
 					{
@@ -621,20 +621,20 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 	for (int i = 1; i <= IndexCount_; i++)//가면되는곳까지 반복, 0은 따로 뿌려줄것임
 	{
 		TileIndex TilePos = _Pos;
-		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);
+		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X, TilePos.Y - i);
 		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y);//시작 타일
 		if (i == IndexCount_) //마지막지점이 되면
 		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
-			Wave_->TileIndex_.X = TilePos.X - i;
-			Wave_->TileIndex_.Y = TilePos.Y;
+			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X, TilePos.Y - i, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
+			Wave_->TileIndex_.X = TilePos.X;
+			Wave_->TileIndex_.Y = TilePos.Y - i;
 
 			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Left1.bmp", "Left1", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Left1.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Left1");
+			Wave_->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Up1.bmp", "Death", 2, 10, 0.05f, false);
+			Wave_->Renderer->ChangeAnimation("Up1");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
@@ -643,15 +643,15 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 		}
 		else//마지막지점 아니면
 		{
-			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
-			Wave_->TileIndex_.X = TilePos.X - i;
-			Wave_->TileIndex_.Y = TilePos.Y;
+			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X, TilePos.Y - i, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
+			Wave_->TileIndex_.X = TilePos.X;
+			Wave_->TileIndex_.Y = TilePos.Y - i;
 			Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
 			Wave_->BlockType_ = BlockType::WaveBlock;
 			Wave_->Renderer = CreateRenderer();
-			Wave_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
-			Wave_->Renderer->CreateAnimation("Left2.bmp", "Death", 2, 10, 0.05f, false);
-			Wave_->Renderer->ChangeAnimation("Left2");
+			Wave_->Renderer->CreateAnimation("Up2.bmp", "Up2", 0, 1, 0.1f, true);
+			Wave_->Renderer->CreateAnimation("Up2.bmp", "Death", 2, 10, 0.05f, false);
+			Wave_->Renderer->ChangeAnimation("Up2");
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
