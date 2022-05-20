@@ -315,7 +315,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 
 		TileIndex TilePos = _Pos;
 
-		if (TilePos.Y + i > 13)
+		if (TilePos.Y + i > 12)
 		{
 			IndexCount_ = i - 1;
 			i = PowerCount_ + 1;
@@ -434,7 +434,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 		TileIndex TilePos = _Pos;
 
-		if (TilePos.X - i < 0)//--------------------------------------------벽에 부딪혔다면
+		if (TilePos.X + i > 14)//--------------------------------------------벽에 부딪혔다면
 		{
 			IndexCount_ = i - 1;//이만큼 가면된다.
 			i = PowerCount_ + 1;//여기서 for문 종료
@@ -553,7 +553,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 
 		TileIndex TilePos = _Pos;
 
-		if (TilePos.X - i < 0)//--------------------------------------------벽에 부딪혔다면
+		if (TilePos.Y - i < 0)//--------------------------------------------벽에 부딪혔다면
 		{
 			IndexCount_ = i - 1;//이만큼 가면된다.
 			i = PowerCount_ + 1;//여기서 for문 종료
