@@ -58,14 +58,38 @@ void Player::Move()
 	{
 		if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
 		{
-			MoveDir.x = -MovePos;
+			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+			{
+				MoveDir.y = -MovePos;
+			}
+			else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
+			{
+				MoveDir.y = MovePos;
+			}
+			else
+			{
+				MoveDir.x = -MovePos;
+			}
+			
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
 		{
-			MoveDir.x = MovePos;
+			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+			{
+				MoveDir.y = -MovePos;
+			}
+			else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
+			{
+				MoveDir.y = MovePos;
+			}
+			else
+			{
+				MoveDir.x = MovePos;
+			}
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
 		{
+			
 			MoveDir.y = -MovePos;
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
@@ -77,11 +101,33 @@ void Player::Move()
 	{
 		if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
 		{
-			MoveDir.x = -MovePos;
+			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+			{
+				MoveDir.y = -MovePos;
+			}
+			else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
+			{
+				MoveDir.y = MovePos;
+			}
+			else
+			{
+				MoveDir.x = -MovePos;
+			}
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
 		{
-			MoveDir.x = MovePos;
+			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+			{
+				MoveDir.y = -MovePos;
+			}
+			else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
+			{
+				MoveDir.y = MovePos;
+			}
+			else
+			{
+				MoveDir.x = MovePos;
+			}
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
 		{
@@ -120,6 +166,7 @@ void Player::AttackPowerUpdate()
 
 void Player::CharTypeUpdate()
 {
+	
 	switch (CurCharacter)
 	{
 	case Character::BAZZI:
@@ -135,7 +182,6 @@ void Player::CharTypeUpdate()
 		SetMaxSpeed(90.f);
 		SetMaxAttCount(6);
 		SetMaxAttPower(70.f);
-
 	}
 		break;
 	case Character::DAO:
@@ -155,6 +201,8 @@ void Player::CharTypeUpdate()
 	break;
 	}
 
+	
+
 }
 
 void Player::ColMapUpdate()
@@ -170,8 +218,8 @@ void Player::ColMapUpdate()
 	// ====================================== 테스트 레벨
 	if (CurrentLevel_ == "PlayerTeamTest")
 	{
-		MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
-		//MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+		//MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 	}
 
 
@@ -206,8 +254,8 @@ void Player::ColMapUpdate()
 
 void Player::StagePixelCheck(float _Speed)
 {
-	float4 LeftPos = GetPosition() + float4{ -10.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 RightPos = GetPosition() + float4{ 10.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 LeftPos = GetPosition() + float4{ -15.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightPos = GetPosition() + float4{ 15.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 	float4 UpPos = GetPosition() + float4{ 0.f, -20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 	float4 DownPos = GetPosition() + float4{ 0.f, 20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
@@ -261,9 +309,6 @@ void Player::Start()
 	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
 	PlayerAnimationRender_->SetPivot({ 0.f, 30.f });
 
-	AnimationName_ = "Ready_";
-	ChangeDirText_ = "Down";
-	CurState_ = PlayerState::Ready;
 	PlayerAnimationRender_->Off();
 
 	// BAZZI
@@ -280,13 +325,13 @@ void Player::Start()
 		Up->CutCount(8, 1);
 
 		// 애니메이션
-		
+
 		BazziRenderer_ = CreateRenderer();
 		BazziRenderer_->SetPivotType(RenderPivot::BOT);
 		BazziRenderer_->SetPivot({ 0.f, 30.f });
 
 		// Idle
-		BazziRenderer_->CreateAnimation("Ready.bmp", "Ready_Down", 0, 17, 0.06f, false);
+		BazziRenderer_->CreateAnimation("Ready.bmp", "Ready_", 0, 17, 0.06f, false);
 		BazziRenderer_->CreateAnimation("Left.bmp", "Idle_Left", 0, 0, 1.f, false);
 		BazziRenderer_->CreateAnimation("Right.bmp", "Idle_Right", 0, 0, 1.f, false);
 		BazziRenderer_->CreateAnimation("Down.bmp", "Idle_Down", 0, 0, 1.f, false);
@@ -298,11 +343,17 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 0.09f, true);
 
-		BazziRenderer_->ChangeAnimation("Ready_Down");
+		BazziRenderer_->ChangeAnimation("Ready_");
+		CurState_ = PlayerState::Ready;
+		AnimationName_ = "Ready_";
+		ChangeDirText_ = "Down";
+
+		BazziRenderer_->Off();
+
 
 		//AnimationName_ = "Idle_";
 		//BazziRenderer_->ChangeAnimation("Idle_Down");
-		BazziRenderer_->Off();
+	
 		
 	}
 
@@ -362,7 +413,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
 	}
 
-	
+	IsReady = true;
 }
 
 void Player::Update()
@@ -386,35 +437,47 @@ void Player::Render()
 
 bool Player::IsMoveKey()
 {
-	if (Type == PlayerType::Player1)
+	if (true == IsMove)
 	{
-		if (false == GameEngineInput::GetInst()->IsPress("1PLeft")
-			&& false == GameEngineInput::GetInst()->IsPress("1PRight")
-			&& false == GameEngineInput::GetInst()->IsPress("1PUp")
-			&& false == GameEngineInput::GetInst()->IsPress("1PDown")
-			)
+		if (Type == PlayerType::Player1)
 		{
-			return false;
+			if (false == GameEngineInput::GetInst()->IsPress("1PLeft")
+				&& false == GameEngineInput::GetInst()->IsPress("1PRight")
+				&& false == GameEngineInput::GetInst()->IsPress("1PUp")
+				&& false == GameEngineInput::GetInst()->IsPress("1PDown")
+				)
+			{
+				return false;
+			}
 		}
-	}
-	else
-	{
-		if (false == GameEngineInput::GetInst()->IsPress("2PLeft")
-			&& false == GameEngineInput::GetInst()->IsPress("2PRight")
-			&& false == GameEngineInput::GetInst()->IsPress("2PUp")
-			&& false == GameEngineInput::GetInst()->IsPress("2PDown")
-			)
+		else
 		{
-			return false;
+			if (false == GameEngineInput::GetInst()->IsPress("2PLeft")
+				&& false == GameEngineInput::GetInst()->IsPress("2PRight")
+				&& false == GameEngineInput::GetInst()->IsPress("2PUp")
+				&& false == GameEngineInput::GetInst()->IsPress("2PDown")
+				)
+			{
+				return false;
+			}
 		}
-	}
 
 
-	return true;
+		return true;
+	}
+
+	return false;
 }
 
 void Player::ChangeState(PlayerState _State)
 {
+	if (true == IsReady)
+	{
+		ReadyStart();
+		IsReady = false;
+		
+	}
+
 	if (CurState_ != _State)
 	{
 		switch (_State)
@@ -476,69 +539,76 @@ void Player::PlayerStateUpdate()
 
 void Player::DirAnimationCheck()
 {
+
 	std::string ChangeName;
 
 	PlayerDir CheckDir_ = CurDir_;
 
-	if (Type == PlayerType::Player1)
+	if (CurState_ != PlayerState::Ready)
 	{
-		if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
+		if (Type == PlayerType::Player1)
 		{
-			CheckDir_ = PlayerDir::Right;
-			ChangeDirText_ = "Right";
+
+			if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
+			{
+
+				CheckDir_ = PlayerDir::Right;
+				ChangeDirText_ = "Right";
+			}
+
+			if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
+			{
+				CheckDir_ = PlayerDir::Left;
+				ChangeDirText_ = "Left";	
+			}
+
+			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
+			{
+				CheckDir_ = PlayerDir::Up;
+				ChangeDirText_ = "Up";
+			}
+
+			if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
+			{
+				CheckDir_ = PlayerDir::Down;
+				ChangeDirText_ = "Down";
+			}
+
+		}
+		else if (Type == PlayerType::Player2)
+		{
+			if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
+			{
+				CheckDir_ = PlayerDir::Right;
+				ChangeDirText_ = "Right";
+			}
+
+			if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
+			{
+				CheckDir_ = PlayerDir::Left;
+				ChangeDirText_ = "Left";
+			}
+
+			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
+			{
+				CheckDir_ = PlayerDir::Up;
+				ChangeDirText_ = "Up";
+			}
+
+			if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
+			{
+				CheckDir_ = PlayerDir::Down;
+				ChangeDirText_ = "Down";
+			}
 		}
 
-		if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
-		{
-			CheckDir_ = PlayerDir::Left;
-			ChangeDirText_ = "Left";
-		}
 
-		if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
+		if (CheckDir_ != CurDir_)
 		{
-			CheckDir_ = PlayerDir::Up;
-			ChangeDirText_ = "Up";
+			PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+			CurDir_ = CheckDir_;
 		}
-
-		if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
-		{
-			CheckDir_ = PlayerDir::Down;
-			ChangeDirText_ = "Down";
-		}
-
 	}
-	else if (Type == PlayerType::Player2)
-	{
-		if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
-		{
-			CheckDir_ = PlayerDir::Right;
-			ChangeDirText_ = "Right";
-		}
-
-		if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
-		{
-			CheckDir_ = PlayerDir::Left;
-			ChangeDirText_ = "Left";
-		}
-
-		if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
-		{
-			CheckDir_ = PlayerDir::Up;
-			ChangeDirText_ = "Up";
-		}
-
-		if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
-		{
-			CheckDir_ = PlayerDir::Down;
-			ChangeDirText_ = "Down";
-		}
-	}
-
-
-	if (CheckDir_ != CurDir_)
-	{
-		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
-		CurDir_ = CheckDir_;
-	}
+	
 }
 
