@@ -489,7 +489,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 				{
 
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
+					MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);//웨이브 지워주고
 					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
 					{
 						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고

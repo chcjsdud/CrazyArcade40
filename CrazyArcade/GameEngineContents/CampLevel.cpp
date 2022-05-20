@@ -36,11 +36,11 @@ void CampLevel::Loading()
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
 	bubble_->CreateBoom({ 240,380 }, 3);
 	bubble_->CreateBoom({ 80,380 }, 3);
-	//bubble_->CreateBoom({ 400,380 }, 3);
-	//bubble_->CreateBoom({ 240,60 }, 3);
-	//bubble_->CreateBoom({ 240,220 }, 3);
+	bubble_->CreateBoom({ 400,380 }, 3);
+	bubble_->CreateBoom({ 240,60 }, 3);
+	bubble_->CreateBoom({ 240,220 }, 3);
 
-	bubble_->CreateItem({ 240,40 });
+
 
 	if (false == GameEngineInput::GetInst()->IsKey("CreatBoom"))
 	{
