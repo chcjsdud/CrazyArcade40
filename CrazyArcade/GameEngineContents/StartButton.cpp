@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include "ContentsEnum.h"
+#include <GameEngine/GameEngine.h>
 
 
 StartButton::StartButton()
@@ -29,7 +30,8 @@ void StartButton::Start()
 
 	StartRenderer_->ChangeAnimation("StartButton_Idle");
 
-	StartCollision_ = CreateCollision("StartButton", { 200.0f, 56.0f });
+	StartCollision_ = CreateCollision("StartButton", { 200.0f, 66.0f });
+	StartCollision_->SetPivot(float4{0.0f,20.0f});
 
 }
 
@@ -61,5 +63,5 @@ void StartButton::Update()
 
 void StartButton::StartButtonClick()
 {
-
+	GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
 }
