@@ -248,8 +248,9 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
 				{
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
+			
 					BlockTile*CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_,Tiles_->CenterWaveY_ );//검사하고 있는 웨이브의 시작점
+					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
 					for (int i = 0; i < CenterPos_->MyWave_.size(); i++) 
 					{
 						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
@@ -366,8 +367,9 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
 				{
-					MapTile_->DeleteTile(TilePos.X , TilePos.Y+i);//웨이브 지워주고
+
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
+					MapTile_->DeleteTile(TilePos.X, TilePos.Y + i);//웨이브 지워주고
 					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
 					{
 						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
@@ -464,7 +466,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 					//MakeDownWave(TilePos, Tiles_->Power_);	
 					//MakeUpWave(TilePos, Tiles_->Power_);
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//폭탄지워주고
+					MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);//폭탄지워주고
 					for (int i = 0; i < BoomBlockTiles_.size(); i++) //벡터에서 찾아서 지워주고
 					{
 						if (BoomBlockTiles_[i] == Tiles_)
@@ -485,8 +487,9 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
 				{
-					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
+
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
+					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
 					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
 					{
 						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
@@ -605,8 +608,9 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
 				{
-					MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);//웨이브 지워주고
+
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
+					MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);//웨이브 지워주고
 					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
 					{
 						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
@@ -645,7 +649,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
 			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
-			Tiles_->IsWaveDeath = true;
+	
 		}
 		else//마지막지점 아니면
 		{
