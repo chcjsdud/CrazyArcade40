@@ -11,12 +11,16 @@
 
 void Player::ReadyStart()
 {
+	IsMove = false;
+
 	AnimationName_ = "Ready_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ /*+ ChangeDirText_*/);
 }
 
 void Player::IdleStart()
 {
+	IsMove = true;
+
 	AnimationName_ = "Idle_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
@@ -46,16 +50,12 @@ void Player::DieStart()
 
 void Player::ReadyUpdate()
 {
-	if (PrevState_ != PlayerState::Ready)
+	if (true == PlayerAnimationRender_->IsEndAnimation())
 	{
-		if (true == PlayerAnimationRender_->IsEndAnimation())
-		{
-			//ChangeDirText_ = "Down";
-			ChangeState(PlayerState::Idle);
-			return;
-		}
+		
+		ChangeState(PlayerState::Idle);
+		return;
 	}
-
 }
 
 void Player::IdleUpdate()

@@ -117,6 +117,8 @@ protected:
 protected:
 	void CharTypeUpdate();
 
+	bool IsReady;
+	bool IsMove;
 	void Move();
 
 	virtual bool IsMoveKey();
