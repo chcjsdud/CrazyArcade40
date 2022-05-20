@@ -18,8 +18,9 @@ public:
 		TilePos_(),
 		TileIndex_(),
 		DeathTime_(),
-		Power_()
-
+		Power_(),
+		CenterWaveX_(0),
+		CenterWaveY_(0)
 	{
 
 	}
@@ -38,6 +39,8 @@ public:
 	float Power_;
 	bool IsWaveDeath;
 	bool IsWaveDeathAni;
+	int CenterWaveX_;
+	int CenterWaveY_;
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
 	float4 TilePos_;
@@ -81,8 +84,8 @@ private:
 
 	void MakeRightWave(TileIndex _Pos, float _Power);
 	void MakeLeftWave(TileIndex _Pos, float _Power);
-	//void MakeDownWave(TileIndex _Pos, float _Power);
-	//void MakeUpWave(TileIndex _Pos, float _Power);
+	void MakeDownWave(TileIndex _Pos, float _Power);
+	void MakeUpWave(TileIndex _Pos, float _Power);
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
