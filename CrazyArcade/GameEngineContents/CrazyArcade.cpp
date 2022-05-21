@@ -198,6 +198,27 @@ void CrazyArcade::GameInit()
         Image->Cut({ 128,128 });
 
     }
+
+    ////// UI 리소스 ChoiceMap에서 사용되는 리소스
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("ChoiceMap");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+
+
+    }
+
+
     //플레이어 배찌
     {
         GameEngineDirectory ResourcesDir;
