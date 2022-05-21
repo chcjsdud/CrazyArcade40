@@ -19,26 +19,7 @@ void TitleLevel::Loading()
 void TitleLevel::Update()
 {
 
-    if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
-    {
-        GameEngine::GetInst().ChangeLevel("MapTeamTest");
-    }
-    if (true == GameEngineInput::GetInst()->IsDown("PlayerTeamTest"))
-    {
-        GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
-    }
-    if (true == GameEngineInput::GetInst()->IsDown("UITeamTest"))
-    {
-        GameEngine::GetInst().ChangeLevel("UITeamTest"); 
-    }
-    if (true == GameEngineInput::GetInst()->IsDown("CampLevel"))
-    {
-        GameEngine::GetInst().ChangeLevel("CampLevel");
-    }
-    if (true == GameEngineInput::GetInst()->IsDown("LoginLevel"))
-    {
-        GameEngine::GetInst().ChangeLevel("LoginLevel");
-    }
+   
 }
 void TitleLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
