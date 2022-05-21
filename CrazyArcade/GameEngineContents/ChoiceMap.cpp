@@ -37,8 +37,10 @@ void ChoiceMap::Start()
 	ChoiceMapRenderer_3->SetAlpha(130);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Idle", 4, 4, 0.1f, true);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Select", 0, 3, 0.1f, true);
+	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Click", 5, 5, 0.1f, true);
 	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Idle", 4, 4, 0.1f, true);
 	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Select", 0, 3, 0.1f, true);
+	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Click", 5, 5, 0.1f, true);
 	ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Idle");
 	CancelBtnRenderer_->ChangeAnimation("CancelBtn_Idle");
 
@@ -113,7 +115,12 @@ void ChoiceMap::Update()
 	if (true == ConfirmBtnCollision_->CollisionCheck("MouseCol"))
 	{
 		ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Select");
-		if (true == GameEngineInput::GetInst()->IsDown("LeftMouse"))
+
+		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+		{
+			ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Click");
+		}
+		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			ChoiceMap_ = TempChoiceMap_;
 			this->Off();
@@ -128,7 +135,12 @@ void ChoiceMap::Update()
 	if (true == CancelBtnCollision_->CollisionCheck("MouseCol"))
 	{
 		CancelBtnRenderer_->ChangeAnimation("CancelBtn_Select");
-		if (true == GameEngineInput::GetInst()->IsDown("LeftMouse"))
+
+		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+		{
+			CancelBtnRenderer_->ChangeAnimation("CancelBtn_Click");
+		}
+		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			TempChoiceMap_ = ChoiceMap_;
 			this->Off();
