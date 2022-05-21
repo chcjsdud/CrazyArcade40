@@ -85,9 +85,6 @@
     <ClInclude Include="LoginBackGround.h">
       <Filter>Actor\UI\Login</Filter>
     </ClInclude>
-    <ClInclude Include="LoginButton.h">
-      <Filter>Actor\UI\Login</Filter>
-    </ClInclude>
     <ClInclude Include="CreateRoomBackGround.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
@@ -221,9 +218,6 @@
       <Filter>Level\UILevel</Filter>
     </ClCompile>
     <ClCompile Include="LoginBackGround.cpp">
-      <Filter>Actor\UI\Login</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginButton.cpp">
       <Filter>Actor\UI\Login</Filter>
     </ClCompile>
     <ClCompile Include="CreateRoomBackGround.cpp">

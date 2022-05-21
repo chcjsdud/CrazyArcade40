@@ -189,10 +189,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="LoginButton.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="LoginLevel.h">
       <SubType>
       </SubType>
@@ -295,10 +291,6 @@
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
     <ClCompile Include="LoginBackGround.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="LoginButton.cpp">
       <SubType>
       </SubType>
     </ClCompile>

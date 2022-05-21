@@ -24,11 +24,16 @@ private:
 	void Update() override;
 
 	GameEngineRenderer* LoginBackGroundRenderer_;
+
+	GameEngineRenderer* Change1PRenderer_;
+	GameEngineRenderer* Change2PRenderer_;
+	GameEngineRenderer* LoginBtnRenderer_;
+	GameEngineRenderer* ExitBtnRenderer_;
+
 	GameEngineCollision* Change1PCollision_;
 	GameEngineCollision* Change2PCollision_;
-
-	GameEngineCollision* LoginCollision_;
-	GameEngineCollision* ExitCollision_;
+	GameEngineCollision* LoginBtnCollision_;
+	GameEngineCollision* ExitBtnCollision_;
 
 	CreateRoomBackGround* createRoomBackGround_;
 };

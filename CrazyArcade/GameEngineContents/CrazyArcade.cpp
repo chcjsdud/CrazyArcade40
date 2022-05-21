@@ -38,7 +38,7 @@ CrazyArcade::~CrazyArcade()
 void CrazyArcade::GameInit()
 {
 
-    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
+    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 560, 240 }, { 800, 600 });
 
 
     //////////////////////////////아래 리소스 로드//////////////////////////////
@@ -107,6 +107,18 @@ void CrazyArcade::GameInit()
         {
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
+
+        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("LoginBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("ExitBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("1pBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("2pBtn.bmp");
+        Image->Cut({ 128,128 });
     }
 
     ////// UI 리소스 CreateRoom에서 사용되는 리소스
