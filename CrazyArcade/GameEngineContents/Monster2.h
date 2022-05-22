@@ -16,10 +16,6 @@ protected:
 	void Start();
 	void Render();
 	void Update();
-	void ChangeAppearance();
 	void TakeDamage() override;
 	void UpdateMove() override;
-
-private:
-	GameEngineRenderer* MiniRenderer_;
 };

@@ -126,7 +126,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CrazyArcade.cpp" />
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play</Filter>
     </ClCompile>
@@ -258,6 +257,9 @@
     </ClCompile>
     <ClCompile Include="MapSelectUI.cpp">
       <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="CrazyArcade.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "Monster1.h"
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineImage.h>
+#include "Area.h"
 
 Monster1::Monster1()
 	:Monster()
@@ -25,9 +26,8 @@ void Monster1::Start()
 	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 2, 3, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "Die", 8, 10, 0.2f, true);
 	Renderer_->ChangeAnimation("MoveRight");
-
+	Index_ = 50;
 	SetSpeed(100);
-	Dir_ = float4::RIGHT;
 }
 
 void Monster1::Render()
@@ -36,6 +36,8 @@ void Monster1::Render()
 
 void Monster1::Update()
 {
+	UpdateDirection();
 	UpdateMove();
+	TakeDamage();
 	Die();
 }
