@@ -2,8 +2,11 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
 
+GameItemObject* GameItemObject::GameItemObject_ = nullptr;
+
 GameItemObject::GameItemObject()
 	:	MapTile_(nullptr)
+
 {
 
 }
@@ -13,12 +16,13 @@ GameItemObject::~GameItemObject()
 }
 void GameItemObject::Start()
 {
-
+	GameItemObject_ = this;
 }
 void GameItemObject::Update()
 {
 
 }
+
 
 // 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
 void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
@@ -36,7 +40,7 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	ItemBlockTile* Tiles_ = MapTile_->CreateTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Tiles_->Renderer = CreateRenderer();
 	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y }); // 아이템 y는 90이어야한다.
-
+	Tiles_->ItemType_ = ItemType::Fluid;
 	Tiles_->Renderer->CreateAnimation("Fluid.bmp", "Animation", 0, 5, 0.2f, true);
 	Tiles_->Renderer->ChangeAnimation("Animation");
 	}

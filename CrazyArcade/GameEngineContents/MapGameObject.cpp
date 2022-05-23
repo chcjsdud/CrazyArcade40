@@ -1,4 +1,5 @@
 #include"MapGameObject.h"
+#include"GameItemObject.h"
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
 
@@ -265,6 +266,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 		{
 			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일위치
 			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
+			ItemBlockTile* Ti_ = MapTile_->GetTile<ItemBlockTile>(TilePos.X - i, TilePos.Y);
+
 
 			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
 
@@ -335,10 +338,12 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				i = static_cast<int>(_Power) + 1;
 
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
-				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
+		
+			else if (Tiles_ != nullptr && Ti_-> BlockType_ == BlockType::ItemBlock )//-----------------------------아이템이 있을때
+				//Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
 			{
-				//아이템 없애주는 함수
+				MapTile_->DeleteTile(Tiles_->TilePos_.x , Tiles_->TilePos_.y);
+				//GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
 			}
 		}
 	}

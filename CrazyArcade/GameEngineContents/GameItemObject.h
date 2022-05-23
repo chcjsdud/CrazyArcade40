@@ -45,15 +45,24 @@ public:
 	GameItemObject& operator=(const GameItemObject& _Other) = delete;
 	GameItemObject& operator=(GameItemObject&& _Other) noexcept = delete;
 
+	static GameItemObject* GameItemObject_;
+
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{
 		MapTile_ = _MapTile;
 	}
+	inline GameEngineRendererTileMap* ReturnGameTileObejctMap_()
+	{
+		return MapTile_;
+	}
+	GameEngineRendererTileMap* MapTile_;
+
 	void CreateItem(float4 _Pos, ItemType _Type);
 	ItemType CheckItem(float4 _Pos);
 protected:
 	void Start() override;
 	void Update() override;
+
 private:
-	GameEngineRendererTileMap* MapTile_;
+
 };

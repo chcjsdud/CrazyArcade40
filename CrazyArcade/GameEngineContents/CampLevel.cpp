@@ -35,11 +35,12 @@ void CampLevel::Loading()
 
 	bubble_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
-	bubble_->CreateBoom({ 240,380 }, 3);
-	bubble_->CreateBoom({ 200,340 }, 3);
+
+
 	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	//Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
+	bubble_->CreateBoom({ 240,380 }, 3);
+	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
 
 
 
