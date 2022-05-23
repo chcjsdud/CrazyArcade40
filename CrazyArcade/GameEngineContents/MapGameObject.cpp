@@ -107,7 +107,7 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 
 	BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 	Wave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
-	Wave_->BlockType_ = BlockType::CenterWaveBlock;
+	Wave_->BlockType_ = BlockType::BubbleBlock;
 	Wave_->TileIndex_ = TileIndex_;
 	Wave_->Renderer = CreateRenderer();
 	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y });
@@ -273,10 +273,6 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//----------------------------- 폭탄이 있을 때
-			{
-				Tiles_->DeathTime_ = 0.0f;
-			}
 			else if (Tiles_ != nullptr &&
 				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
 				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
@@ -300,18 +296,23 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 					}
 				}
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//-------------------------------물풍선이 있을때
 			{
+				Tiles_->DeathTime_ = 0.0f;
+				IndexCount_ = i - 1;//이만큼 가면된다.
+
 				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
-				CenterPos_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
-				CenterPos_->Renderer->ChangeAnimation("Left2");//왼쪽이랑 부딪혔으면 왼쪽 vector없애주기
-				for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
+				if (CenterPos_ != nullptr)
 				{
-					if (CenterPos_->MyLeftWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+					CenterPos_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
+					CenterPos_->Renderer->ChangeAnimation("Left2");//왼쪽이랑 부딪혔으면 왼쪽 vector없애주기
+					for (int i = 0 + IndexCount_; i < CenterPos_->MyRightWave_.size()/4; i++)
 					{
 						CenterPos_->MyLeftWave_.erase(CenterPos_->MyRightWave_.begin() + i);
+
 					}
 				}
+				i = static_cast<int>(_Power) + 1;
 
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
@@ -392,10 +393,6 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 				IndexCount_ = i - 1;
 				i = PowerCount_ + 1;
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)
-			{
-				Tiles_->DeathTime_ = 0.0f;
-			}
 			else if (Tiles_ != nullptr &&
 				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
 				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
@@ -419,12 +416,23 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 					}
 				}
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//-------------------------------물풍선이 있을때
 			{
+				Tiles_->DeathTime_ = 0.0f;
+				IndexCount_ = i - 1;//이만큼 가면된다.
 
-				Tiles_->Renderer->CreateAnimation("Down1.bmp", "Down1", 0, 1, 0.1f, true);
-				Tiles_->Renderer->ChangeAnimation("Down1");
-				return;
+				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
+				if (CenterPos_ != nullptr)
+				{
+					CenterPos_->Renderer->CreateAnimation("Down2.bmp", "Down2", 0, 1, 0.1f, true);
+					CenterPos_->Renderer->ChangeAnimation("Down2");//왼쪽이랑 부딪혔으면 왼쪽 vector없애주기
+					for (int i = 0 + IndexCount_; i < CenterPos_->MyUpWave_.size() / 4; i++)
+					{
+						CenterPos_->MyUpWave_.erase(CenterPos_->MyUpWave_.begin() + i);
+
+					}
+				}
+				i = static_cast<int>(_Power) + 1;
 
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
@@ -506,10 +514,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//----------------------------- 폭탄이 있을 때
-			{
-				Tiles_->DeathTime_ = 0.0f;
-			}
+
 			else if (Tiles_ != nullptr &&
 				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
 				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
@@ -534,12 +539,23 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 				}
 			
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//-------------------------------물풍선이 있을때
 			{
+				Tiles_->DeathTime_ = 0.0f;
+				IndexCount_ = i - 1;//이만큼 가면된다.
 
-				Tiles_->Renderer->CreateAnimation("Right1.bmp", "Right1", 0, 1, 0.1f, true);
-				Tiles_->Renderer->ChangeAnimation("Right1");
-				return;
+				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
+				if (CenterPos_ != nullptr)
+				{
+					CenterPos_->Renderer->CreateAnimation("Right2.bmp", "Right2", 0, 1, 0.1f, true);
+					CenterPos_->Renderer->ChangeAnimation("Right2");//왼쪽이랑 부딪혔으면 왼쪽 vector없애주기
+					for (int i = 0 + IndexCount_; i < CenterPos_->MyLeftWave_.size() / 4; i++)
+					{
+						CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
+
+					}
+				}
+				i = static_cast<int>(_Power) + 1;
 
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
@@ -621,10 +637,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//----------------------------- 폭탄이 있을 때
-			{
-				Tiles_->DeathTime_ = 0.0f;
-			}
+
 			else if (Tiles_ != nullptr &&
 				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
 				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
@@ -648,12 +661,23 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 					}
 				}
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BubbleBlock)//-------------------------------물풍선이 있을때
 			{
+				Tiles_->DeathTime_ = 0.0f;
+				IndexCount_ = i - 1;//이만큼 가면된다.
 
-				Tiles_->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
-				Tiles_->Renderer->ChangeAnimation("Up1");
-				return;
+				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
+				if (CenterPos_ != nullptr)
+				{
+					CenterPos_->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
+					CenterPos_->Renderer->ChangeAnimation("Up1");//왼쪽이랑 부딪혔으면 왼쪽 vector없애주기
+					for (int i = 0 + IndexCount_; i < CenterPos_->MyDownWave_.size() / 4; i++)
+					{
+						CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
+
+					}
+				}
+				i = static_cast<int>(_Power) + 1;
 
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
