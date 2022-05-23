@@ -47,6 +47,11 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Check != nullptr)
+	{
+		return;
+	}
 	BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
 	Boom_->BlockType_ = BlockType::BubbleBlock;
 	Boom_->Renderer = CreateRenderer();
