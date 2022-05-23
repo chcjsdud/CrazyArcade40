@@ -14,6 +14,13 @@ RoomBackGround::~RoomBackGround()
 void RoomBackGround::Start()
 {
 	SetPosition(GameEngineWindow::GetScale().Half());
-	CreateRenderer((int)UIType::PopUp)->SetImage("RoomBackGround.bmp");
+	if (GetLevel()->GetNameConstRef() == "MonsterRoomLevel")
+	{
+		CreateRenderer((int)UIType::PopUp)->SetImage("MonsterRoomBackGround.bmp");
+	}
+	else
+	{
+		CreateRenderer((int)UIType::PopUp)->SetImage("RoomBackGround.bmp");
+	}
 }
 

@@ -24,6 +24,7 @@
 #include "UITeamTest.h"
 ///////////UI레벨///////////
 #include "RoomLevel.h"
+#include "MonsterRoomLevel.h"
 
 
 
@@ -370,6 +371,7 @@ void CrazyArcade::GameInit()
     CreateLevel<BossLevel>("BossLevel");
     //////UI 레벨
     CreateLevel<RoomLevel>("RoomLevel");
+    CreateLevel<MonsterRoomLevel>("MonsterRoomLevel");
     //////테스트 레벨
     CreateLevel<MapTeamTest>("MapTeamTest");
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");

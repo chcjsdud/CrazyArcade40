@@ -208,6 +208,10 @@
     <ClInclude Include="Monster1Level.h" />
     <ClInclude Include="Monster2.h" />
     <ClInclude Include="Monster2Level.h" />
+    <ClInclude Include="MonsterRoomLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Mouse.h">
       <SubType>
       </SubType>
@@ -309,6 +313,10 @@
     <ClCompile Include="Monster1Level.cpp" />
     <ClCompile Include="Monster2.cpp" />
     <ClCompile Include="Monster2Level.cpp" />
+    <ClCompile Include="MonsterRoomLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <SubType>
       </SubType>

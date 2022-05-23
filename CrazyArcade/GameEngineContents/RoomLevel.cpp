@@ -1,5 +1,6 @@
 #include "RoomLevel.h"
 #include "Mouse.h"
+#include "MapChoiceUI.h"
 #include "ContentsEnum.h"
 #include "RoomBackGround.h"
 #include "RoomCharaterSelectUI.h"

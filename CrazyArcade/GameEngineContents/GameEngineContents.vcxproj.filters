@@ -118,7 +118,12 @@
     <ClInclude Include="ChoiceMap.h">
       <Filter>Actor\UI\MapChoice</Filter>
     </ClInclude>
-    <ClInclude Include="MapChoiceUI.h" />
+    <ClInclude Include="MonsterRoomLevel.h">
+      <Filter>Level\UILevel</Filter>
+    </ClInclude>
+    <ClInclude Include="MapChoiceUI.h">
+      <Filter>Actor\UI\Room</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player_Bazzi.cpp">
@@ -247,10 +252,13 @@
     <ClCompile Include="ChoiceMap.cpp">
       <Filter>Actor\UI\MapChoice</Filter>
     </ClCompile>
-    <ClCompile Include="CrazyArcade.cpp">
-      <Filter>Level</Filter>
+    <ClCompile Include="CrazyArcade.cpp" />
+    <ClCompile Include="MonsterRoomLevel.cpp">
+      <Filter>Level\UILevel</Filter>
     </ClCompile>
-    <ClCompile Include="MapChoiceUI.cpp" />
+    <ClCompile Include="MapChoiceUI.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

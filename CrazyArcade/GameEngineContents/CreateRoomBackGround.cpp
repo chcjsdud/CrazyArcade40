@@ -116,7 +116,14 @@ void CreateRoomBackGround::Update()
 		}
 		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
-			GameEngine::GetInst().ChangeLevel("RoomLevel");
+			if (SelectMode_ == 1)
+			{
+				GameEngine::GetInst().ChangeLevel("RoomLevel");
+			}
+			else if (SelectMode_ == 2)
+			{
+				GameEngine::GetInst().ChangeLevel("MonsterRoomLevel");
+			}
 		}
 	}
 	else {
