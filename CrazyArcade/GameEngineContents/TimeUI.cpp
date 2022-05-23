@@ -38,5 +38,8 @@ void TimeUI::Update()
 
 	Renderer[3]->SetIndex(((static_cast<int>(GameTime_) % 60) % 10));
 	Renderer[3]->SetPivot(float4(767.0f, 82.0f));
-
+	
+	if (GameTime_ < 0) {
+		GameTime_ = 0.0f;
+	}
 }
