@@ -16,8 +16,10 @@ public:
 
 protected:
 	void Start() override;
-	void Update() override {};
-private:
+	void Update() override;
 
+private:
+	GameEngineCollision* BackBtnCollision_;
+	GameEngineCollision* ExitBtnCollision_;
 };
 
