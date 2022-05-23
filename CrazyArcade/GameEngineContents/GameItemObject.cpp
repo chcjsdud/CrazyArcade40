@@ -31,16 +31,15 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	//{
 	//	return;
 	//};
-
-	// 블럭이 아이템을 가지고 있을때
-	if (_Type == (ItemType::Fluid))
+	
+	if (ItemType::Fluid == _Type)
 	{
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	ItemBlockTile* Tiles_ = MapTile_->CreateTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Tiles_->Renderer = CreateRenderer();
 	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y }); // 아이템 y는 90이어야한다.
-	Tiles_->ItemType_ = ItemType::Fluid;
+	Tiles_->BlockType_ = BlockType::ItemBlock;
 	Tiles_->Renderer->CreateAnimation("Fluid.bmp", "Animation", 0, 5, 0.2f, true);
 	Tiles_->Renderer->ChangeAnimation("Animation");
 	}

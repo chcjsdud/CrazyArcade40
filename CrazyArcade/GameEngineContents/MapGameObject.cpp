@@ -42,41 +42,6 @@ BlockType MapGameObject::CheckTile(float4 _Pos) {
 		return Tiles_->BlockType_;
 	}
 }
-// 플레이어가 서있는 위치의 타일의 BlockType이 아이템블록이라면 , 아이템이 무슨아이템인지 체크하는 함수입니당. 위치넣어주면 아이템타입이 리턴됩니당. 
-ItemType MapGameObject::CheckItem(float4 _Pos)
-{
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
-	if (Tiles_ == nullptr)
-	{
-		return ItemType::Max;
-	}
-	else
-	{
-		return Tiles_->ItemType_;
-	}
-}
-
-// 블럭이 사라질때 위치를 넣어주고 ItemType 이 max가 아니라면 createItem을 해준다.
-void MapGameObject::CreateItem(float4 _Pos)
-{
-	//if (ItemType::Max == CheckItem(_Pos))
-	//{
-	//	return;
-	//};
-
-	// 블럭이 아이템을 가지고 있을때
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
-	BlockTile* Tiles_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
-	Tiles_->Renderer = CreateRenderer();
-	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y}); // 아이템 y는 90이어야한다.
-
-	Tiles_->Renderer->CreateAnimation("Fluid.bmp", "Animation", 0, 5, 0.2f, true);
-	Tiles_->Renderer->ChangeAnimation("Animation");
-
-
-}
 
 void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 {
