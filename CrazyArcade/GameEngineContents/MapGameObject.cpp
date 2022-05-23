@@ -307,8 +307,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Ti_-> BlockType_ == BlockType::ItemBlock )//-----------------------------아이템이 있을때
 				//Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
 			{
-				MapTile_->DeleteTile(Tiles_->TilePos_.x , Tiles_->TilePos_.y);
-				//GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
+				GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
 			}
 		}
 	}
