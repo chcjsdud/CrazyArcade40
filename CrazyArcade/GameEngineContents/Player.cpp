@@ -3,6 +3,11 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageManager.h>
+#include "MapGameObject.h"
+#include "MapBackGround.h"
+
+Player* Player::MainPlayer_1 = nullptr;
+Player* Player::MainPlayer_2 = nullptr;
 
 Player::Player()
     : CurSpeed_(0.f)
@@ -348,13 +353,13 @@ void Player::Start()
 		AnimationName_ = "Ready_";
 		ChangeDirText_ = "Down";
 
-		BazziRenderer_->Off();
-
-
-		//AnimationName_ = "Idle_";
 		//BazziRenderer_->ChangeAnimation("Idle_Down");
-	
-		
+		//AnimationName_ = "Idle_";
+		//ChangeDirText_ = "Down";
+		//ChangeState(PlayerState::Idle);
+
+
+		BazziRenderer_->Off();
 	}
 
 	
@@ -411,6 +416,8 @@ void Player::Start()
 
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
+
+		GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}
 
 	IsReady = true;
@@ -422,9 +429,10 @@ void Player::Update()
 
 	CharTypeUpdate();
 
-	DirAnimationCheck();
 	PlayerStateUpdate();
 	PlayerCollisionUpdate();
+
+	DirAnimationCheck();
 
 	//PlayerInfoUpdate();
 
@@ -494,6 +502,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Jump:
 			JumpStart();
 			break;
+		case PlayerState::Attack:
+			AttackStart();
+			break;
 		case PlayerState::Damaged:
 			DamagedStart();
 			break;
@@ -524,6 +535,9 @@ void Player::PlayerStateUpdate()
 		break;
 	case PlayerState::Jump:
 		JumpUpdate();
+		break;
+	case PlayerState::Attack:
+		AttackUpdate();
 		break;
 	case PlayerState::Damaged:
 		DamagedUpdate();

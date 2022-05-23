@@ -6,8 +6,10 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngine/GameEngineLevel.h> 
+#include "MapGameObject.h"
+#include "MapBackGround.h"
 
-#include <GameEngine/GameEngineLevel.h> // 레벨을 통해서
 
 void Player::ReadyStart()
 {
@@ -33,6 +35,10 @@ void Player::MoveStart()
 
 
 void Player::JumpStart()
+{
+}
+
+void Player::AttackStart()
 {
 }
 
@@ -65,6 +71,18 @@ void Player::IdleUpdate()
 		ChangeState(PlayerState::Move);
 		return;
 	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("1PAttack"))
+	{
+		ChangeState(PlayerState::Attack);
+		return;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
+	{
+		ChangeState(PlayerState::Attack);
+		return;
+	}
 }
 
 void Player::MoveUpdate()
@@ -79,11 +97,28 @@ void Player::MoveUpdate()
 	Move();
 
 	StagePixelCheck(CurSpeed_);
-
 }
 
 void Player::JumpUpdate()
 {
+}
+
+void Player::AttackUpdate()
+{
+	if (Type == PlayerType::Player1)
+	{
+		Boom_->SetMapTile(MapTile_);
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->CreateBoom(MainPlayer_1->GetPosition(), 3);
+	}
+	
+	if (Type == PlayerType::Player2)
+	{
+		Boom_->SetMapTile(MapTile_);
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->CreateBoom(MainPlayer_2->GetPosition(), 3);
+	}
+
 }
 
 void Player::DamagedUpdate()

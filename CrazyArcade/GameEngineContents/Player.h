@@ -1,9 +1,8 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineSound.h>
+#include <GameEngine/GameEngineRendererTileMap.h>
 
-class GameEngineImage;
-class GameEngineCollision;
 
 enum class PlayerState
 {
@@ -11,6 +10,7 @@ enum class PlayerState
 	Idle, 
 	Move,
 	Jump,
+	Attack,
 	Damaged,
 	Live,
 	Die,
@@ -43,11 +43,19 @@ enum class Character
 	MAX,
 };
 
+class GameEngineImage;
+class GameEngineCollision;
+
+class MapGameObject;
+class MapBackGround;
 class Player : public GameEngineActor
 {
+public:
 	static int PLAYER_COUNT;
 
-public:
+	static Player* MainPlayer_1;
+	static Player* MainPlayer_2;
+
 	// constrcuter destructer
 	Player();
 	~Player();
@@ -124,6 +132,21 @@ protected:
 	virtual bool IsMoveKey();
 
 public:
+	MapGameObject* GetBoom()
+	{
+		return Boom_;
+	}
+
+	MapBackGround* GetMapBackGround()
+	{
+		return MapBackGround_;
+	}
+
+protected:
+	MapGameObject* Boom_;
+	MapBackGround* MapBackGround_;
+
+public:
 	void SetCharacter(Character _CurCharacter)
 	{
 		CurCharacter = _CurCharacter;
@@ -133,8 +156,10 @@ public:
 	{
 		Type = _Type;
 	}
-
-	
+	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
+	{
+		MapTile_ = _MapTile;
+	}
 
 protected:
 	GameEngineRenderer* PlayerAnimationRender_;
@@ -151,8 +176,8 @@ protected:
 	GameEngineRenderer* BazziRenderer_;
 	GameEngineRenderer* DaoRenderer_;
 
-
-
+private:
+	GameEngineRendererTileMap* MapTile_;
 
 ////////////////////////////////////////////////////////////
 private:
@@ -203,6 +228,7 @@ protected:
 	virtual void IdleStart();
 	virtual void MoveStart();
 	virtual void JumpStart();
+	virtual void AttackStart();
 	virtual void DamagedStart();
 	virtual void LiveStart();
 	virtual void DieStart();
@@ -211,6 +237,7 @@ protected:
 	virtual void IdleUpdate();
 	virtual void MoveUpdate();
 	virtual void JumpUpdate();
+	virtual void AttackUpdate();
 	virtual void DamagedUpdate();
 	virtual void LiveUpdate();
 	virtual void DieUpdate();

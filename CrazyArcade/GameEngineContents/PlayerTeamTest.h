@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineLevel.h>
 #include <GameEngine/GameEngineRenderer.h>
 
+class MapGameObject;
 class MapBackGround;
 class MapFront;
 class PlayerTeamTest : public GameEngineLevel
@@ -23,6 +24,7 @@ protected:
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
+	MapGameObject* bubble_;
 
 	//GameEngineImage* MapColMap_;
 	GameEngineRenderer* MapColRenderer_;
