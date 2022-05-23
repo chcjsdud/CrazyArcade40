@@ -39,7 +39,7 @@ CrazyArcade::~CrazyArcade()
 void CrazyArcade::GameInit()
 {
 
-    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 560, 240 }, { 800, 600 });
+    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 200, 80 }, { 800, 600 });
 
 
     //////////////////////////////아래 리소스 로드//////////////////////////////
