@@ -477,6 +477,26 @@ bool Player::IsMoveKey()
 	return false;
 }
 
+bool Player::IsAttackKey()
+{
+	if (Type == PlayerType::Player1)
+	{
+		if (true == GameEngineInput::GetInst()->IsDown("1PAttack"))
+		{
+			return true;
+		}
+	}
+	else
+	{
+		if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Player::ChangeState(PlayerState _State)
 {
 	if (true == IsReady)

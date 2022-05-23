@@ -48,6 +48,7 @@ class GameEngineCollision;
 
 class MapGameObject;
 class MapBackGround;
+class BlockTile;
 class Player : public GameEngineActor
 {
 public:
@@ -129,7 +130,8 @@ protected:
 	bool IsMove;
 	void Move();
 
-	virtual bool IsMoveKey();
+	bool IsMoveKey();
+	bool IsAttackKey();
 
 public:
 	MapGameObject* GetBoom()
@@ -144,6 +146,7 @@ public:
 
 protected:
 	MapGameObject* Boom_;
+	MapGameObject* Wave_;
 	MapBackGround* MapBackGround_;
 
 public:

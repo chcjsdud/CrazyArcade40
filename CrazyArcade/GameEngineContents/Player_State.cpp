@@ -72,13 +72,19 @@ void Player::IdleUpdate()
 		return;
 	}
 
-	if (true == GameEngineInput::GetInst()->IsDown("1PAttack"))
-	{
-		ChangeState(PlayerState::Attack);
-		return;
-	}
+	//if (true == GameEngineInput::GetInst()->IsDown("1PAttack"))
+	//{
+	//	ChangeState(PlayerState::Attack);
+	//	return;
+	//}
 
-	if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
+	//if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
+	//{
+	//	ChangeState(PlayerState::Attack);
+	//	return;
+	//}
+
+	if (true == IsAttackKey())
 	{
 		ChangeState(PlayerState::Attack);
 		return;
@@ -90,6 +96,12 @@ void Player::MoveUpdate()
 	if (false == IsMoveKey())
 	{
 		ChangeState(PlayerState::Idle);
+		return;
+	}
+
+	if (true == IsAttackKey())
+	{
+		ChangeState(PlayerState::Attack);
 		return;
 	}
 
@@ -105,18 +117,31 @@ void Player::JumpUpdate()
 
 void Player::AttackUpdate()
 {
+	if (true == IsMoveKey())
+	{
+		ChangeState(PlayerState::Move);
+		return;
+	}
+
 	if (Type == PlayerType::Player1)
 	{
-		Boom_->SetMapTile(MapTile_);
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom_->CreateBoom(MainPlayer_1->GetPosition(), 3);
+		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom->SetMapTile(MapTile_);
+		Boom->CreateBoom(MainPlayer_1->GetPosition(), 3);
+
+		//BlockType block = Boom->CheckTile(MainPlayer_1->GetPosition());
+		//체크타일이 웨이브면 -> Damaged
+
+		ChangeState(PlayerState::Idle);
+		return;
+	
 	}
 	
 	if (Type == PlayerType::Player2)
 	{
-		Boom_->SetMapTile(MapTile_);
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom_->CreateBoom(MainPlayer_2->GetPosition(), 3);
+		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom->SetMapTile(MapTile_);
+		Boom->CreateBoom(MainPlayer_2->GetPosition(), 3);
 	}
 
 }

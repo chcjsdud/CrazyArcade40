@@ -117,6 +117,7 @@ void MapGameObject::WaveDeathAni()
 		{
 			for (int j = 0; j < WaveBlockTiles_[i]->MyLeftWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
 			{
+
 				if (nullptr != WaveBlockTiles_[i]->MyLeftWave_[j]->Renderer)
 				{
 
