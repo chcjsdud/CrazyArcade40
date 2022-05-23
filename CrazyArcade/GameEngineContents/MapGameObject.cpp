@@ -286,11 +286,32 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			
 					BlockTile*CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_,Tiles_->CenterWaveY_ );//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
+					for (int i = 0; i < CenterPos_->MyLeftWave_.size(); i++)
+					{
+						if (CenterPos_->MyLeftWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
+						}
+					}
 					for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
 					{
 						if (CenterPos_->MyRightWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
 						{
 							CenterPos_->MyRightWave_.erase(CenterPos_->MyRightWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyDownWave_.size(); i++)
+					{
+						if (CenterPos_->MyDownWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyUpWave_.size(); i++)
+					{
+						if (CenterPos_->MyUpWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyUpWave_.erase(CenterPos_->MyUpWave_.begin() + i);
 						}
 					}
 				}
@@ -415,6 +436,27 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 							CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
 						}
 					}
+					for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
+					{
+						if (CenterPos_->MyRightWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyRightWave_.erase(CenterPos_->MyRightWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyDownWave_.size(); i++)
+					{
+						if (CenterPos_->MyDownWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyUpWave_.size(); i++)
+					{
+						if (CenterPos_->MyUpWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyUpWave_.erase(CenterPos_->MyUpWave_.begin() + i);
+						}
+					}
 				}
 
 			}
@@ -529,6 +571,27 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X, TilePos.Y + i);//웨이브 지워주고
+					for (int i = 0; i < CenterPos_->MyLeftWave_.size(); i++)
+					{
+						if (CenterPos_->MyLeftWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
+					{
+						if (CenterPos_->MyRightWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyRightWave_.erase(CenterPos_->MyRightWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyDownWave_.size(); i++)
+					{
+						if (CenterPos_->MyDownWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
+						}
+					}
 					for (int i = 0; i < CenterPos_->MyUpWave_.size(); i++)
 					{
 						if (CenterPos_->MyUpWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
@@ -652,11 +715,32 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);//웨이브 지워주고
+					for (int i = 0; i < CenterPos_->MyLeftWave_.size(); i++)
+					{
+						if (CenterPos_->MyLeftWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
+					{
+						if (CenterPos_->MyRightWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyRightWave_.erase(CenterPos_->MyRightWave_.begin() + i);
+						}
+					}
 					for (int i = 0; i < CenterPos_->MyDownWave_.size(); i++)
 					{
 						if (CenterPos_->MyDownWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
 						{
 							CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
+						}
+					}
+					for (int i = 0; i < CenterPos_->MyUpWave_.size(); i++)
+					{
+						if (CenterPos_->MyUpWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						{
+							CenterPos_->MyUpWave_.erase(CenterPos_->MyUpWave_.begin() + i);
 						}
 					}
 				}
