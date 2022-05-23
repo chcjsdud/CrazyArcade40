@@ -150,23 +150,61 @@ void MapGameObject::WaveDeathAni()
 	{
 		if (WaveBlockTiles_[i]->IsWaveDeath == true) // 물풍선 파도가 다 만들어졌으면
 		{
-			for (int j = 0; j < WaveBlockTiles_[i]->MyWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
+			for (int j = 0; j < WaveBlockTiles_[i]->MyLeftWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
 			{
-				if (nullptr != WaveBlockTiles_[i]->MyWave_[j]->Renderer)
+				if (nullptr != WaveBlockTiles_[i]->MyLeftWave_[j]->Renderer)
 				{
 
-					WaveBlockTiles_[i]->MyWave_[j]->Renderer->ChangeAnimation("Death");
-					WaveBlockTiles_[i]->MyWave_[j]->IsWaveDeathAni = true;
+					WaveBlockTiles_[i]->MyLeftWave_[j]->Renderer->ChangeAnimation("Death");
+					WaveBlockTiles_[i]->MyLeftWave_[j]->IsWaveDeathAni = true;
 				}
 
 			}
+
+			for (int j = 0; j < WaveBlockTiles_[i]->MyRightWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
+			{
+				if (nullptr != WaveBlockTiles_[i]->MyRightWave_[j]->Renderer)
+				{
+
+					WaveBlockTiles_[i]->MyRightWave_[j]->Renderer->ChangeAnimation("Death");
+					WaveBlockTiles_[i]->MyRightWave_[j]->IsWaveDeathAni = true;
+				}
+
+			}
+		
+
+			for (int j = 0; j < WaveBlockTiles_[i]->MyDownWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
+			{
+				if (nullptr != WaveBlockTiles_[i]->MyDownWave_[j]->Renderer)
+				{
+
+					WaveBlockTiles_[i]->MyDownWave_[j]->Renderer->ChangeAnimation("Death");
+					WaveBlockTiles_[i]->MyDownWave_[j]->IsWaveDeathAni = true;
+				}
+
+			}
+
+			for (int j = 0; j < WaveBlockTiles_[i]->MyUpWave_.size(); j++)//물풍선 중앙에서 보관하던 물줄기 백터돌면서
+			{
+				if (nullptr != WaveBlockTiles_[i]->MyUpWave_[j]->Renderer)
+				{
+
+					WaveBlockTiles_[i]->MyUpWave_[j]->Renderer->ChangeAnimation("Death");
+					WaveBlockTiles_[i]->MyUpWave_[j]->IsWaveDeathAni = true;
+				}
+
+			}
+
 			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
 			WaveBlockTiles_[i]->IsWaveDeath = false;
+			
 		}
-		if (WaveBlockTiles_[i]->MyWave_[0]->Renderer->IsEndAnimation() == true)//시간이 다줄었으면
+		if (WaveBlockTiles_[i]->MyUpWave_[0]->Renderer->IsEndAnimation() == true)//시간이 다줄었으면
 		{
 			WaveBlockTiles_[i]->IsWaveDeathAni = true;
+
 		}
+
 	}
 }
 void MapGameObject::DestroyWave()
@@ -177,12 +215,28 @@ void MapGameObject::DestroyWave()
 		if (WaveBlockTiles_[i]->IsWaveDeathAni == true)//죽는 애니재생이면
 		{
 			{
-				for (int j = 0; j < WaveBlockTiles_[i]->MyWave_.size(); j++)
+				for (int j = 0; j < WaveBlockTiles_[i]->MyLeftWave_.size(); j++)
 				{
 
-					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyWave_[j]->TileIndex_.Y);//물줄기 지워라
+					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyLeftWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyLeftWave_[j]->TileIndex_.Y);//물줄기 지워라
 				}
-				WaveBlockTiles_[i]->MyWave_.clear(); //물줄기 백터 클리어
+				for (int j = 0; j < WaveBlockTiles_[i]->MyRightWave_.size(); j++)
+				{
+
+					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyRightWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyRightWave_[j]->TileIndex_.Y);//물줄기 지워라
+				}
+				for (int j = 0; j < WaveBlockTiles_[i]->MyDownWave_.size(); j++)
+				{
+
+					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyDownWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyDownWave_[j]->TileIndex_.Y);//물줄기 지워라
+				}
+				for (int j = 0; j < WaveBlockTiles_[i]->MyUpWave_.size(); j++)
+				{
+
+					MapTile_->DeleteTile(WaveBlockTiles_[i]->MyUpWave_[j]->TileIndex_.X, WaveBlockTiles_[i]->MyUpWave_[j]->TileIndex_.Y);//물줄기 지워라
+				}
+
+				WaveBlockTiles_[i]->MyUpWave_.clear(); //물줄기 백터 클리어
 				MapTile_->DeleteTile(WaveBlockTiles_[i]->TileIndex_.X, WaveBlockTiles_[i]->TileIndex_.Y);//중앙부분지우기
 				WaveBlockTiles_.erase(WaveBlockTiles_.begin() + i);//중앙벡터 지우기
 			}
@@ -237,20 +291,27 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			
 					BlockTile*CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_,Tiles_->CenterWaveY_ );//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);//웨이브 지워주고
-					for (int i = 0; i < CenterPos_->MyWave_.size(); i++) 
+					for (int i = 0; i < CenterPos_->MyLeftWave_.size(); i++)
 					{
-						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						if (CenterPos_->MyLeftWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
 						{
-							CenterPos_->MyWave_.erase(CenterPos_->MyWave_.begin() + i);
+							CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
 						}
 					}
 				}
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
 			{
-				//MapTile_->DeleteTile(TilePos.X - i, TilePos.Y); //중앙웨이브 지우기
-				Tiles_->Renderer->CreateAnimation("Left1.bmp", "Left1", 0, 1, 0.1f, true);
-				Tiles_->Renderer->ChangeAnimation("Left1");
+				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
+				CenterPos_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
+				CenterPos_->Renderer->ChangeAnimation("Left2");//왼쪽이랑 부딪혔으면 왼쪽 vector없애주기
+				for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
+				{
+					if (CenterPos_->MyLeftWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+					{
+						CenterPos_->MyLeftWave_.erase(CenterPos_->MyRightWave_.begin() + i);
+					}
+				}
 
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
@@ -266,7 +327,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 		TileIndex TilePos = _Pos;
 		float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);
 		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X, TilePos.Y);//시작 타일
-		if (i == IndexCount_&& Tiles_->BlockType_!=BlockType::CenterWaveBlock) //마지막지점이 되면
+		if (i == IndexCount_) //마지막지점이 되면
 		{
 			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 			Wave_->TileIndex_.X = TilePos.X - i;
@@ -281,10 +342,10 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyLeftWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 			Tiles_->IsWaveDeath = true;
 		}
-		else if(i!= IndexCount_ && Tiles_->BlockType_ != BlockType::CenterWaveBlock)//마지막지점 아니면
+		else//마지막지점 아니면
 		{
 			BlockTile* Wave_ = MapTile_->CreateTile<BlockTile>(TilePos.X - i, TilePos.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
 			Wave_->TileIndex_.X = TilePos.X - i;
@@ -298,7 +359,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyLeftWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 
 		}
 
@@ -349,14 +410,22 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X, TilePos.Y + i);//웨이브 지워주고
-					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
+					for (int i = 0; i < CenterPos_->MyDownWave_.size(); i++)
 					{
-						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						if (CenterPos_->MyDownWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
 						{
-							CenterPos_->MyWave_.erase(CenterPos_->MyWave_.begin() + i);
+							CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
 						}
 					}
 				}
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			{
+
+				Tiles_->Renderer->CreateAnimation("Down1.bmp", "Down1", 0, 1, 0.1f, true);
+				Tiles_->Renderer->ChangeAnimation("Down1");
+				return;
+
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
 				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
@@ -386,7 +455,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyDownWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 			Tiles_->IsWaveDeath = true;
 		}
 		else//마지막지점 아니면
@@ -403,7 +472,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyDownWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 
 		}
 
@@ -455,15 +524,23 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);//웨이브 지워주고
-					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
+					for (int i = 0; i < CenterPos_->MyRightWave_.size(); i++)
 					{
-						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						if (CenterPos_->MyRightWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
 						{
-							CenterPos_->MyWave_.erase(CenterPos_->MyWave_.begin() + i);
+							CenterPos_->MyRightWave_.erase(CenterPos_->MyRightWave_.begin() + i);
 						}
 					}
 				}
 			
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			{
+
+				Tiles_->Renderer->CreateAnimation("Right1.bmp", "Right1", 0, 1, 0.1f, true);
+				Tiles_->Renderer->ChangeAnimation("Right1");
+				return;
+
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
 				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
@@ -493,7 +570,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyRightWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 			Tiles_->IsWaveDeath = true;
 		}
 		else//마지막지점 아니면
@@ -510,7 +587,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyRightWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 
 		}
 
@@ -562,14 +639,22 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 
 					BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);//검사하고 있는 웨이브의 시작점
 					MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);//웨이브 지워주고
-					for (int i = 0; i < CenterPos_->MyWave_.size(); i++)
+					for (int i = 0; i < CenterPos_->MyUpWave_.size(); i++)
 					{
-						if (CenterPos_->MyWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
+						if (CenterPos_->MyUpWave_[i] == Tiles_)//웨이브 만든 시작점 찾고 거기서 벡터 지워줘야함 벡터에서 찾아서 지워주고
 						{
-							CenterPos_->MyWave_.erase(CenterPos_->MyWave_.begin() + i);
+							CenterPos_->MyUpWave_.erase(CenterPos_->MyUpWave_.begin() + i);
 						}
 					}
 				}
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::CenterWaveBlock)//-------------------------------중앙일때
+			{
+
+				Tiles_->Renderer->CreateAnimation("Up1.bmp", "Up1", 0, 1, 0.1f, true);
+				Tiles_->Renderer->ChangeAnimation("Up1");
+				return;
+
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::ItemBlock &&//-----------------------------아이템이 있을때
 				Tiles_->BlockType_ == BlockType::BushBlock)//부쉬있을때
@@ -599,7 +684,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyUpWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 	
 		}
 		else//마지막지점 아니면
@@ -616,7 +701,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			Wave_->Renderer->SetPivot(TileCenterPos_);
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
-			Tiles_->MyWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
+			Tiles_->MyUpWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
 
 		}
 

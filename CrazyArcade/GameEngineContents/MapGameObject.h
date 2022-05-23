@@ -47,7 +47,10 @@ public:
 	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
-	std::vector<BlockTile*> MyWave_;
+	std::vector<BlockTile*> MyRightWave_;
+	std::vector<BlockTile*> MyLeftWave_;
+	std::vector<BlockTile*> MyDownWave_;
+	std::vector<BlockTile*> MyUpWave_;
 };
 
 class MapGameObject : public GameEngineActor
