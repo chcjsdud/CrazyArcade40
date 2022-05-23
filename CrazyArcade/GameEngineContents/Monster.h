@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include "Area.h"
 
 enum class MonsterState
 {
@@ -22,11 +23,11 @@ class BlockTile;
 class Area;
 class Monster : public GameEngineActor
 {
+	friend Area;
 public:
 	static int TTL_MONSTER_COUNT;
 
 public:
-
 	Monster();
 	~Monster();
 	Monster(const Monster& _Other) = delete;
@@ -57,6 +58,12 @@ protected:
 	float4 Dir_;
 	std::string Direction_;
 	std::vector<Area> Areas_;
+	Area EastArea;
+	Area WestArea;
+	Area NorthArea;
+	Area SouthArea;
+	Area NorthWestArea;
+	Area EastSouthArea;
 
 	int HP_;
 	int Index_;
@@ -66,7 +73,7 @@ protected:
 	float GetAttTime_;
 	const float MapSizeX_;
 	const float MapSizeY_;
-
+	bool IndexCheck_;
 
 	GameEngineCollision* TopCol_;
 	GameEngineCollision* LeftCol_;

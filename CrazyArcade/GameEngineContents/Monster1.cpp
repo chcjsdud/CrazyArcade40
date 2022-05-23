@@ -28,6 +28,8 @@ void Monster1::Start()
 	Renderer_->ChangeAnimation("MoveRight");
 	Index_ = 50;
 	SetSpeed(100);
+	Direction_ = "Right";
+	Dir_ = float4::RIGHT;
 }
 
 void Monster1::Render()

@@ -33,16 +33,16 @@
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster1.h">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster2.h">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
     <ClInclude Include="ContentsEnum.h" />
@@ -92,7 +92,7 @@
       <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="Area.h">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClInclude>
     <ClInclude Include="RoomBackGround.h">
       <Filter>Actor\UI\Room</Filter>
@@ -125,9 +125,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player_Bazzi.cpp">
-      <Filter>Actor\Play</Filter>
-    </ClCompile>
     <ClCompile Include="BossLevel.cpp">
       <Filter>Level\PlayLevel</Filter>
     </ClCompile>
@@ -165,16 +162,16 @@
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Boss.cpp">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster1.cpp">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster2.cpp">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp">
       <Filter>Level\IntroLevel</Filter>
@@ -219,7 +216,7 @@
       <Filter>Actor\UI</Filter>
     </ClCompile>
     <ClCompile Include="Area.cpp">
-      <Filter>Actor\Play\Monster</Filter>
+      <Filter>Actor\Play\Player\Monster</Filter>
     </ClCompile>
     <ClCompile Include="RoomCharaterSelectUI.cpp">
       <Filter>Actor\UI\Room</Filter>
@@ -257,6 +254,9 @@
     <ClCompile Include="GameItemObject.cpp">
       <Filter>Actor\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Player_Bazzi.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -277,17 +277,11 @@
     <Filter Include="Level\PlayLevel\Monster">
       <UniqueIdentifier>{6663bca6-7dce-49ed-be76-b8cc9f88f639}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\Monster">
-      <UniqueIdentifier>{ea085e4f-b567-4902-b075-40eb65f5331a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level\PlayLevel">
       <UniqueIdentifier>{f11dbdb3-72be-4162-9605-53a59d87e2c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Actor\UI">
       <UniqueIdentifier>{b0aa6619-e9b1-40ba-85ce-6353b28d0955}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level\IntroLevel">
-      <UniqueIdentifier>{517171fe-145b-47fd-94f0-048bb38a54a1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level\TitleLevel">
       <UniqueIdentifier>{cd46ac79-2c6f-4f1e-9178-ed2604516a5b}</UniqueIdentifier>
@@ -318,6 +312,12 @@
     </Filter>
     <Filter Include="Actor\UI\MapChoice">
       <UniqueIdentifier>{5df733e4-9135-47d2-91eb-49c84a202e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\Player\Monster">
+      <UniqueIdentifier>{ea085e4f-b567-4902-b075-40eb65f5331a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\IntroLevel">
+      <UniqueIdentifier>{517171fe-145b-47fd-94f0-048bb38a54a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

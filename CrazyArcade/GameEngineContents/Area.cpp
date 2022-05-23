@@ -16,8 +16,6 @@ Area::Area(GameEngineImage* _ColMapImage, float _StartX, float _StartY, float _E
     CenterX_ = StartX_ + (EndX_ - StartX_) * 0.5;
     //CenterY_ = StartY_ + (EndY_ - StartY_) * 0.5;
     CenterY_ = EndY_ - 1;
-    
-
 }
 
 Area::~Area()

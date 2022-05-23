@@ -45,24 +45,23 @@ void Monster1Level::Loading()
 		}
 	}
 
-	//TODO chowon : Edge 처리 후 주석 풀기
-	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin1->SetPosition(Areas_[87].GetCenter());
+	Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	Mandarin1->SetPosition(Areas_[0].GetCenter());
 
-	//Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin2->SetPosition(Areas_[0].GetCenter());
+	Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	Mandarin2->SetPosition(Areas_[182].GetCenter());
 
-	//Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin3->SetPosition(Areas_[182].GetCenter());
+	Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	Mandarin3->SetPosition(Areas_[12].GetCenter());
 
-	//Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin4->SetPosition(Areas_[193].GetCenter());
+	Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	Mandarin4->SetPosition(Areas_[166].GetCenter());
 
-	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	//Crocodile1->SetPosition(Areas_[6].GetCenter());
+	Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+	Crocodile1->SetPosition(Areas_[6].GetCenter());
 
-	//Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	//Crocodile1->SetPosition(Areas_[188].GetCenter());
+	Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
+	Crocodile2->SetPosition(Areas_[188].GetCenter());
 }
 void Monster1Level::Update()
 {

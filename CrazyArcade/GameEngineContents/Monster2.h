@@ -17,5 +17,4 @@ protected:
 	void Render();
 	void Update();
 	void TakeDamage() override;
-	void UpdateMove() override;
 };
