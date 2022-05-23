@@ -47,10 +47,8 @@ private:
     Player* Player_;
     BossState BossState_;
     std::string Direction_;
-    std::vector<Area> Areas_;
     std::string CurrentLevel_;
-    int PlayerIndex_;
-    int BossIndex_;	
+    int PlayerIndex_;	
     float SettingTime_;
 
 

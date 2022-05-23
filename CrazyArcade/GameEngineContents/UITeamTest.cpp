@@ -9,6 +9,7 @@
 #include "PlayBackGround.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
+#include "ChoiceMap.h"
 
 UITeamTest::UITeamTest()
 {
@@ -31,9 +32,12 @@ void UITeamTest::Loading()
 	CreateActor<TimeUI>((int)UIType::Time);*/
 
 	// ¹æ È­¸é
-	CreateActor<RoomBackGround>((int)UIType::PopUp);
+	/*CreateActor<RoomBackGround>((int)UIType::PopUp);
 	CreateActor<StartButton>((int)UIType::PopUpButton);
 	CreateActor<RoomCharaterSelectUI>((int)UIType::PopUpButton);
+	CreateActor<Mouse>((int)UIType::Mouse);*/
+
+	CreateActor<ChoiceMap>((int)UIType::PopUp);
 	CreateActor<Mouse>((int)UIType::Mouse);
 }
 void UITeamTest::Update()

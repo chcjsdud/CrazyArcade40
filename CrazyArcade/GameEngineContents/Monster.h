@@ -3,8 +3,10 @@
 
 enum class MonsterState
 {
+	IDLE,
 	WALK,
 	ATTCK,
+	TAKEDAMAGE,
 	DIE,
 };
 
@@ -17,10 +19,12 @@ enum class MonsterClass
 class GameEngineImage;
 class GameEngineRenderer;
 class BlockTile;
+class Area;
 class Monster : public GameEngineActor
 {
 public:
 	static int TTL_MONSTER_COUNT;
+
 public:
 
 	Monster();
@@ -36,22 +40,44 @@ protected:
 	void Start();
 	void Render();
 	void Update();
+	virtual void UpdateDirection();
 
+	// 방향별 블럭 체크 Need to chk : 구현
+	virtual bool HasEastTile();
+	virtual bool HasWestTile();
+	virtual bool HasNorthTile();
+	virtual bool HasSouthTile();
+	
 protected:
+	BlockTile* Tile_;
 	GameEngineRenderer* Renderer_;
-	GameEngineCollision* Collision_;
 	GameEngineImage* ColMapImage_;
 	MonsterClass MonsterClass_;
 	MonsterState MonsterState_;
-	int HP_;
-	int Speed_;
 	float4 Dir_;
-	float GetAttTime_;
-	BlockTile* Tile_;
+	std::string Direction_;
+	std::vector<Area> Areas_;
 
-private:
+	int HP_;
+	int Index_;
+	int AreaWidth_;
+	int AreaHeight_;
+	float Speed_;
+	float GetAttTime_;
+	const float MapSizeX_;
+	const float MapSizeY_;
+
+
+	GameEngineCollision* TopCol_;
+	GameEngineCollision* LeftCol_;
+	GameEngineCollision* RightCol_;
+	GameEngineCollision* BottomCol_;
+	GameEngineCollision* CenterCol_;
 
 public:
+	void SetColMapImage(std::string _Name);
+	virtual GameEngineImage* GetColMapImage();
+
 	void SetMonsterClass(MonsterClass _MonsterClass)
 	{
 		MonsterClass_ = _MonsterClass;

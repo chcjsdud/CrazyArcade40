@@ -19,7 +19,7 @@ PlayBackGround::~PlayBackGround()
 void PlayBackGround::Start()
 {
 	SetPosition(GameEngineWindow::GetScale().Half());
-	PlayBackGroundRenderer_ = CreateRenderer("PlayBackGround.bmp");
+	PlayBackGroundRenderer_ = CreateRenderer("PlayBackGroundUI.bmp");
 
 }
 

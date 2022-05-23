@@ -30,8 +30,9 @@ void BossLevel::Update()
 
 void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
-	Seal->SetPosition(float4(320.0f, 200.0f));
+	//Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
+	// TODO chowon : 주석 풀기
+	//Seal->SetPosition(float4(320.0f, 200.0f));
 }
 
 void BossLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)

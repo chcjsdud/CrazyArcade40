@@ -1,8 +1,11 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+
+class GameEngineImage;
 class MapBackGround;
 class Player;
 class MapFront;
+class Area;
 class Monster1Level : public GameEngineLevel
 {
 public:
@@ -22,4 +25,6 @@ protected:
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
+	std::vector<Area> Areas_;
+	GameEngineImage* ColMapImage_;
 };

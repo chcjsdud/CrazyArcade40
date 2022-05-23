@@ -3,6 +3,7 @@
 #include "GameEngineCollision.h"
 #include "GameEngineRenderer.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngine/GameEngineImageManager.h>
 
 bool GameEngineLevel::IsDebug = false;
 
@@ -593,3 +594,4 @@ void GameEngineLevel::ObjectLevelMoveCheck(GameEngineLevel* _NextLevel)
 		}
 	}
 }
+

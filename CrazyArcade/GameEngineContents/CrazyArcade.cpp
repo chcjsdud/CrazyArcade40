@@ -38,7 +38,7 @@ CrazyArcade::~CrazyArcade()
 void CrazyArcade::GameInit()
 {
 
-    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 800, 600 });
+    GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 560, 240 }, { 800, 600 });
 
 
     //////////////////////////////아래 리소스 로드//////////////////////////////
@@ -107,6 +107,18 @@ void CrazyArcade::GameInit()
         {
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
+
+        GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("LoginBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("ExitBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("1pBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("2pBtn.bmp");
+        Image->Cut({ 128,128 });
     }
 
     ////// UI 리소스 CreateRoom에서 사용되는 리소스
@@ -173,6 +185,10 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("StartButton.bmp");
         Image->Cut({ 200,100 });
+
+
+        Image = GameEngineImageManager::GetInst()->Find("MapChoiceButton.bmp");
+        Image->Cut({ 200,100 });
     }
 
     ////// UI 리소스 Play에서 사용되는 리소스
@@ -198,6 +214,27 @@ void CrazyArcade::GameInit()
         Image->Cut({ 128,128 });
 
     }
+
+    ////// UI 리소스 ChoiceMap에서 사용되는 리소스
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("UILevel");
+        ResourcesDir.Move("ChoiceMap");
+
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+
+
+    }
+
+
     //플레이어 배찌
     {
         GameEngineDirectory ResourcesDir;
@@ -347,6 +384,28 @@ void CrazyArcade::GameLoop()
     if (true == GameEngineInput::GetInst()->IsDown("Debug_Col"))
     {
         GameEngineLevel::IsDebugModeSwitch();
+    }
+
+
+    if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
+    {
+        GameEngine::GetInst().ChangeLevel("MapTeamTest");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("PlayerTeamTest"))
+    {
+        GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("UITeamTest"))
+    {
+        GameEngine::GetInst().ChangeLevel("UITeamTest");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("CampLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("CampLevel");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("LoginLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("LoginLevel");
     }
 }
 

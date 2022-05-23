@@ -14,9 +14,9 @@ Boss::Boss()
     , BossState_(BossState::IDLE)
     , Player_(nullptr)
     , WaterTime_(0.0f)
-    , BossIndex_(2)
     , PlayerIndex_(5)
     , SettingTime_(5.0f)
+    , RollTime_(0.0f)
 {
 }
 
@@ -27,9 +27,7 @@ Boss::~Boss()
 void Boss::Start()
 {
     Monster::Start();
-    SetMonsterClass(MonsterClass::BOSS);
-    SetHP(15);
-    SetSpeed(50);
+
     Renderer_ = CreateRenderer("Monster.bmp");
     GameEngineImage* Image = Renderer_->GetImage();
     Image->CutCount(10, 7);
@@ -45,28 +43,31 @@ void Boss::Start()
     Renderer_->CreateAnimation("Monster.bmp", "BubbleAttack", 29, 30, 0.2f, true); // 물주기
     Renderer_->CreateAnimation("Monster.bmp", "RollAttack", 31, 34, 0.2f, true); // 구르기
     Renderer_->ChangeAnimation("Idle");
-    Renderer_->SetPivot(float4(0, 0));
     Dir_ = float4::ZERO;
 
-    Collision_->SetScale(float4(130.0, 150.0f));
-    Collision_->SetPivot(float4(0.0f, 0.0f));
+    CenterCol_->SetScale(float4(130.0, 150.0f));
 
-    const float MapSizeX = 603;
-    const float MapSizeY = 522;
-    for (int x = 0; x < 3; ++x)
+    AreaHeight_ = 3;
+    AreaWidth_ = 3;
+    Index_ = 3;
+    SetMonsterClass(MonsterClass::BOSS);
+    SetHP(150);
+    SetSpeed(50); // Need to chk : Speed
+
+    for (int x = 0; x < AreaWidth_; ++x)
     {
-        for (int y = 0; y < 3; ++y)
+        for (int y = 0; y < AreaHeight_; ++y)
         {
-            Area area;
-            area.StartX_ = (MapSizeX / 3 * x) + 19;
-            area.StartY_ = (MapSizeY / 3 * y) + 40;
-            area.EndX_ = (MapSizeX / 3 * (x + 1)) + 19;
-            area.EndY_ = (MapSizeY / 3 * (y + 1)) + 40;
+            float StartX = (MapSizeX_ / AreaWidth_ * x) + 20;
+            float StartY = (MapSizeY_ / AreaHeight_ * y) + 40;
+            float EndX = (MapSizeX_ / AreaWidth_ * (x + 1)) + 20;
+            float EndY = (MapSizeY_ / AreaHeight_ * (y + 1)) + 40;
+
+            Area area(ColMapImage_, StartX, StartY, EndX, EndY);
             Areas_.push_back(area);
         }
     }
-
-
+    SetPosition(Areas_[3].GetCenter());
 }
 
 void Boss::Render()
@@ -75,13 +76,20 @@ void Boss::Render()
 
 void Boss::Update()
 {
+    UpdateDirection();
+    SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
+
+    /// 연습코드
+
     WaterTime_ += GameEngineTime::GetDeltaTime();
     MoveTime_ += GameEngineTime::GetDeltaTime();
     RollTime_ += GameEngineTime::GetDeltaTime();
-    UpdateState();
-    UpdateMove();
-    Die();
-    StateUpdate();
+
+    // TODO  주석 풀기
+    //UpdateState();
+    //UpdateMove();
+    //Die();
+    //StateUpdate();
 }
 
 void Boss::UpdateMove()
@@ -121,7 +129,7 @@ void Boss::UpdateState()
                 }
                 if (true == NewArea.Contains(GetPosition()))
                 {
-                    BossIndex_ = i;
+                    Index_ = i;
                 }
             }
         }
@@ -150,7 +158,7 @@ void Boss::UpdateState()
             }
         }
 
-        if (PlayerIndex_ != BossIndex_)
+        if (PlayerIndex_ != Index_)
         {
             if (MoveTime_ > SettingTime_)
             {
@@ -283,19 +291,19 @@ void Boss::UpdateDie()
 bool Boss::SameXLine() // 세로줄
 
 {
-    if (PlayerIndex_ < 3 && BossIndex_ < 3) 
+    if (PlayerIndex_ < 3 && Index_ < 3) 
     {
         return true;
     }
 
-    else if (PlayerIndex_ >= 3 && BossIndex_ >= 3 &&
-        PlayerIndex_ < 6 && BossIndex_ < 6)
+    else if (PlayerIndex_ >= 3 && Index_ >= 3 &&
+        PlayerIndex_ < 6 && Index_ < 6)
     {
         return true;
     }
 
-    else if (PlayerIndex_ >= 6 && BossIndex_ >= 6 &&
-        PlayerIndex_ < 9 && BossIndex_ < 9)
+    else if (PlayerIndex_ >= 6 && Index_ >= 6 &&
+        PlayerIndex_ < 9 && Index_ < 9)
     {
         return true;
     }
@@ -305,7 +313,7 @@ bool Boss::SameXLine() // 세로줄
 
 bool Boss::SameYLine() // 가로줄
 {
-    int Offset = PlayerIndex_ - BossIndex_;
+    int Offset = PlayerIndex_ - Index_;
     if (Offset < 0)
     {
         Offset = Offset * -1;
