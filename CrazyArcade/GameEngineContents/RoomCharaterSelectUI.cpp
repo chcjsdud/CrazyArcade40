@@ -29,8 +29,16 @@ RoomCharaterSelectUI::~RoomCharaterSelectUI()
 
 void RoomCharaterSelectUI::Start()
 {
+	if (GetLevel()->GetNameConstRef() == "RoomLevel")
+	{
+		RoomCharacterRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 48.0f });
+	}
+	else if (GetLevel()->GetNameConstRef() == "MonsterRoomLevel")
+	{
+		RoomCharacterRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 67.0f });
+	}
 	SetPosition({ 670, 95 });
-	RoomCharacterRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 48.0f });
+	
 	RoomCharacterRenderer->SetImage("RandomCharacter.bmp");
 	StatusRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -294.0f, 22.0f });
 	StatusRenderer->SetImage("RandomStatusUI.bmp");

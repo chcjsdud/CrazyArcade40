@@ -43,7 +43,11 @@ void MapChoiceUI::Start()
 	else
 	{
 		MapUIBackGround_ = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER);
-		MapUIBackGround_->SetImage("VillageMapChoice.bmp");
+		MapUIBackGround_->SetImage("MonsterMapChoice.bmp");
+		MapChoiceButton_ = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { 77.0f,14.0f });
+		MapChoiceButton_->SetImage("MapChoiceButton.bmp");
+		MapChoiceButton_->CreateAnimation("MapChoiceButton.bmp", "MapChoiceButton_Idle", 0, 0, 0.1f, false);
+		MapChoiceButton_->ChangeAnimation("MapChoiceButton_Idle");
 	}
 }
 
