@@ -122,9 +122,9 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	WaveBlockTiles_.push_back(Wave_);
 
 	MakeLeftWave(TileIndex_, Power);
-	MakeRightWave(TileIndex_, Power);
-	MakeDownWave(TileIndex_, Power);
-	MakeUpWave(TileIndex_, Power);
+	//MakeRightWave(TileIndex_, Power);
+	//MakeDownWave(TileIndex_, Power);
+	//MakeUpWave(TileIndex_, Power);
 
 }
 void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림

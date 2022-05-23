@@ -3,6 +3,7 @@
 #include "MapBackGround.h"
 #include "MapFront.h"
 #include "MapGameObject.h"
+#include"GameItemObject.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineWindow.h>
@@ -36,6 +37,9 @@ void CampLevel::Loading()
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
 	bubble_->CreateBoom({ 240,380 }, 3);
 	
+	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+//Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
 
 
 
