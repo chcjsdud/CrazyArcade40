@@ -3,6 +3,7 @@
 
 class GameEngineRenderer;
 class GameEngineCollision;
+class ChoiceMap;
 class MapChoiceUI : public GameEngineActor
 {
 public:
@@ -27,5 +28,7 @@ private:
 	void Render() override {};
 
 	void  MapButtonClick();
+
+	ChoiceMap* choicemap;
 };
 

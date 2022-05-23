@@ -40,5 +40,10 @@ private:
 private:
 	int ChoiceMap_ = 0;
 	int TempChoiceMap_ = 0;
+
+public:
+	int GetChoiceMap() {
+		return ChoiceMap_;
+	}
 };
 

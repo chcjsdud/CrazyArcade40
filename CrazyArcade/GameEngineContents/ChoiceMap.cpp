@@ -19,12 +19,12 @@ ChoiceMap::~ChoiceMap()
 void ChoiceMap::Start()
 {
 	SetPosition(GameEngineWindow::GetScale().Half());
-	ChoiceMapRenderer_ = CreateRenderer((int)UIType::PopUp);
-	ChoiceMapRenderer_1 = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -178.0f,0.0f });
-	ChoiceMapRenderer_2 = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
-	ChoiceMapRenderer_3 = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 178.0f,0.0f });
-	ConfirmBtnRenderer_ = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ -59.0f,216.0f });
-	CancelBtnRenderer_ = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, float4{ 58.0f,216.0f });
+	ChoiceMapRenderer_ = CreateRenderer((int)UIType::PopScreen);
+	ChoiceMapRenderer_1 = CreateRenderer((int)UIType::PopScreenButton, RenderPivot::CENTER, float4{ -178.0f,0.0f });
+	ChoiceMapRenderer_2 = CreateRenderer((int)UIType::PopScreenButton, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
+	ChoiceMapRenderer_3 = CreateRenderer((int)UIType::PopScreenButton, RenderPivot::CENTER, float4{ 178.0f,0.0f });
+	ConfirmBtnRenderer_ = CreateRenderer((int)UIType::PopScreenButton, RenderPivot::CENTER, float4{ -59.0f,216.0f });
+	CancelBtnRenderer_ = CreateRenderer((int)UIType::PopScreenButton, RenderPivot::CENTER, float4{ 58.0f,216.0f });
 
 
 	//·£´õ·¯
@@ -52,6 +52,9 @@ void ChoiceMap::Start()
 	ConfirmBtnCollision_ = CreateCollision("ConfirmBtn", { 90.0f,30.0f }, float4{ -59.0f,216.0f });
 	CancelBtnCollision_ = CreateCollision("CancelBtn", { 90.0f,30.0f }, float4{ 58.0f,216.0f });
 
+	TempChoiceMap_ = 1;
+	ChoiceMap_ = 1;
+	ChoiceMapRenderer_1->SetAlpha(255);
 }
 
 void ChoiceMap::Update()

@@ -4,6 +4,7 @@
 #include "RoomBackGround.h"
 #include "RoomCharaterSelectUI.h"
 #include "StartButton.h"
+#include "MapChoiceUI.h"
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngine.h>
 
@@ -20,9 +21,9 @@ void RoomLevel::Loading()
 	CreateActor<RoomBackGround>((int)UIType::PopUp);
 	CreateActor<StartButton>((int)UIType::PopUpButton);
 	CreateActor<RoomCharaterSelectUI>((int)UIType::PopUpButton);
+	CreateActor<MapChoiceUI>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 
-	
 }
 
 void RoomLevel::Update()

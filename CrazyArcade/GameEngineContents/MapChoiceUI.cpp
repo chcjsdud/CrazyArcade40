@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include "ContentsEnum.h"
+#include "ChoiceMap.h"
 
 
 
@@ -21,7 +22,8 @@ MapChoiceUI::~MapChoiceUI()
 void MapChoiceUI::Start()
 {
 	SetPosition({ 625, 410 });
-	MapUIBackGround_ = CreateRenderer("CampMapChoice.bmp");
+	MapUIBackGround_ = CreateRenderer((int)UIType::PopUp, RenderPivot::CENTER);
+	MapUIBackGround_->SetImage("VillageMapChoice.bmp");
 
 	MapChoiceButton_ = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, {77.0f,14.0f});
 	MapChoiceButton_->SetImage("MapChoiceButton.bmp");
@@ -32,6 +34,9 @@ void MapChoiceUI::Start()
 	MapChoiceButton_->ChangeAnimation("MapChoiceButton_Idle");
 
 	MapButton_ = CreateCollision("MapButton", { 120, 50 }, {78, 40});
+
+	choicemap = GetLevel()->CreateActor<ChoiceMap>((int)UIType::PopUp);
+	choicemap->Off();
 }
 
 
@@ -59,9 +64,24 @@ void MapChoiceUI::Update()
 	{
 		MapButtonClick();
 	}
+
+	if (choicemap->GetChoiceMap() == 1)
+	{
+		MapUIBackGround_->SetImage("VillageMapChoice.bmp");
+	}
+	else if (choicemap->GetChoiceMap() == 2)
+	{
+		MapUIBackGround_->SetImage("CemetoryMapChoice.bmp");
+	}
+	else if (choicemap->GetChoiceMap() == 3)
+	{
+		MapUIBackGround_->SetImage("CampMapChoice.bmp");
+	}
+
 }
 
 void MapChoiceUI::MapButtonClick()
 {
+	choicemap->On();
 
 }

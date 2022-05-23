@@ -27,5 +27,6 @@ private:
 
 private:
 	float IntroMoveTime_;
+	float StartTime_ =0.1f;
 };
 

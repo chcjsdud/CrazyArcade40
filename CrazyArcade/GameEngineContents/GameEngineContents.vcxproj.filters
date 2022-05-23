@@ -79,9 +79,6 @@
     <ClInclude Include="LoginLevel.h">
       <Filter>Level\UILevel</Filter>
     </ClInclude>
-    <ClInclude Include="CreateRoomLevel.h">
-      <Filter>Level\UILevel</Filter>
-    </ClInclude>
     <ClInclude Include="LoginBackGround.h">
       <Filter>Actor\UI\Login</Filter>
     </ClInclude>
@@ -121,9 +118,7 @@
     <ClInclude Include="ChoiceMap.h">
       <Filter>Actor\UI\MapChoice</Filter>
     </ClInclude>
-    <ClInclude Include="MapSelectUI.h">
-      <Filter>Actor\UI\Room</Filter>
-    </ClInclude>
+    <ClInclude Include="MapChoiceUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player_Bazzi.cpp">
@@ -213,9 +208,6 @@
     <ClCompile Include="LoginLevel.cpp">
       <Filter>Level\UILevel</Filter>
     </ClCompile>
-    <ClCompile Include="CreateRoomLevel.cpp">
-      <Filter>Level\UILevel</Filter>
-    </ClCompile>
     <ClCompile Include="LoginBackGround.cpp">
       <Filter>Actor\UI\Login</Filter>
     </ClCompile>
@@ -255,12 +247,10 @@
     <ClCompile Include="ChoiceMap.cpp">
       <Filter>Actor\UI\MapChoice</Filter>
     </ClCompile>
-    <ClCompile Include="MapSelectUI.cpp">
-      <Filter>Actor\UI\Room</Filter>
-    </ClCompile>
     <ClCompile Include="CrazyArcade.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="MapChoiceUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

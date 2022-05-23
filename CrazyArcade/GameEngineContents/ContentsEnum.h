@@ -41,6 +41,8 @@ enum class UIType
 	BackGroundButton,
 	PopUp,
 	PopUpButton,
+	PopScreen,
+	PopScreenButton,
 	Time,
 	Mouse
 };
