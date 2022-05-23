@@ -48,17 +48,23 @@ void StartButton::Update()
 		StartRenderer_->ChangeAnimation("StartButton_Idle");
 	}
 
-	if (true == StartCollision_->CollisionCheck("MouseCol") &&
-		true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+
+
+	if (true == StartCollision_->CollisionCheck("MouseCol"))
 	{
-		StartRenderer_->ChangeAnimation("StartButton_Cilck");
+		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+		{
+			StartRenderer_->ChangeAnimation("StartButton_Cilck");
+		}
+		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
+		{
+			StartButtonClick();
+		}
+	}
+	else {
 	}
 
-	if (true == StartCollision_->CollisionCheck("MouseCol") &&
-		true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
-	{
-		StartButtonClick();
-	}
+
 }
 
 void StartButton::StartButtonClick()

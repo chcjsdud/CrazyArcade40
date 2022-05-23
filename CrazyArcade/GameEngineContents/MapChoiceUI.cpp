@@ -75,7 +75,7 @@ void MapChoiceUI::Update()
 		}
 
 		if (true == MapButton_->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			MapButtonClick();
 		}
