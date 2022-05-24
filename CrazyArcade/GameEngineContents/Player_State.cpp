@@ -127,7 +127,7 @@ void Player::AttackUpdate()
 	{
 		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom->SetMapTile(MapTile_);
-		Boom->CreateBoom(MainPlayer_1->GetPosition(), 3);
+		Boom->CreateBoom(MainPlayer_1->GetPosition() - float4({25,15}), 3);
 
 		//BlockType block = Boom->CheckTile(MainPlayer_1->GetPosition());
 		//체크타일이 웨이브면 -> Damaged
