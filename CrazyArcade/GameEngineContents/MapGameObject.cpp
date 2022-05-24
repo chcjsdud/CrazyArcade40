@@ -81,8 +81,8 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 	Wave_->TileIndex_ = TileIndex_;
 	Wave_->Renderer = CreateRenderer();
 	Wave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y });
-	Wave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.1f, true);
-	Wave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.1f, false);
+	Wave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.05f, true);
+	Wave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.05f, false);
 	Wave_->Renderer->ChangeAnimation("Center");
 	Wave_->DeathTime_ = 1.5f;
 	Wave_->IsWaveDeath;
