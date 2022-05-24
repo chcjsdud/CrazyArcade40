@@ -117,12 +117,7 @@ void Player::JumpUpdate()
 
 void Player::AttackUpdate()
 {
-	if (true == IsMoveKey())
-	{
-		ChangeState(PlayerState::Move);
-		return;
-	}
-
+	
 	if (Type == PlayerType::Player1)
 	{
 		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
@@ -142,6 +137,12 @@ void Player::AttackUpdate()
 		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom->SetMapTile(MapTile_);
 		Boom->CreateBoom(MainPlayer_2->GetPosition(), 3);
+	}
+
+	if (true == IsMoveKey())
+	{
+		ChangeState(PlayerState::Move);
+		return;
 	}
 
 }

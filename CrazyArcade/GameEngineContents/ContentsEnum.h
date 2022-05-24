@@ -7,8 +7,8 @@ enum class ORDER
 	MAPOBJECT,
 	STAGE,
 	MONSTER,
-	PLAYER,
 	EFFECT,
+	PLAYER,
 	UI
 };
 
@@ -43,6 +43,8 @@ enum class UIType
 	PopUpButton,
 	PopScreen,
 	PopScreenButton,
-	Time,
-	Mouse
+	StartIntroUI = 20,
+	Time = 21,
+	Mouse = 22,
+
 };
