@@ -250,8 +250,8 @@ void Player::ColMapUpdate()
 	}
 	else if (CurrentLevel_ == "BossLevel")
 	{
-		// ****** 보스레벨 ColMap 수정 필요 
-		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+		// ****** 보스레벨 ColMap 수정 필요 // 몬스터 테스트 위해서 기존 CampColMap->BossColMap으로 바꿔놨어용
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 	}
 	else
 		return;

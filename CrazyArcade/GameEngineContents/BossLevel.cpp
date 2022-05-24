@@ -5,6 +5,8 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include "Boss.h"
+#include <GameEngine/GameEngineImageManager.h>
+#include "Player.h"
 
 BossLevel::BossLevel()
 {
@@ -21,7 +23,34 @@ void BossLevel::Loading()
 	MapBackGround_->GetRenderer()->SetImage("BossStage_Back.bmp");//Actor에 이미지 세팅해주고
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 
+	{
+		////// 몬스터 //////
+		ColMapImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 
+		for (int x = 0; x < 3; ++x)
+		{
+			for (int y = 0; y < 3; ++y)
+			{
+				float StartX = (600 / 3 * x) + 20;
+				float StartY = (520 / 3 * y) + 40;
+				float EndX = (600 / 3 * (x + 1)) + 20;
+				float EndY = (520 / 3 * (y + 1)) + 40;
+
+				Area area(ColMapImage_, StartX, StartY, EndX, EndY);
+				Areas_.push_back(area);
+			}
+		}
+
+		Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
+		Seal->SetPosition(Areas_[3].GetCenter());
+
+		Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+		NewPlayer->SetCharacter(Character::BAZZI);
+		NewPlayer->SetPlayerType(PlayerType::Player1);
+		NewPlayer->SetPosition({ 500.f, 300.f });
+
+		Seal->SetPlayer(NewPlayer);
+	}
 }
 
 void BossLevel::Update()
@@ -30,9 +59,7 @@ void BossLevel::Update()
 
 void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	//Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
-	// TODO chowon : 주석 풀기
-	//Seal->SetPosition(float4(320.0f, 200.0f));
+
 }
 
 void BossLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)

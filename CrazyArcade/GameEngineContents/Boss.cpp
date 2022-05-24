@@ -26,6 +26,8 @@ Boss::~Boss()
 
 void Boss::Start()
 {
+    AreaHeight_ = 3;
+    AreaWidth_ = 3;
     Monster::Start();
 
     Renderer_ = CreateRenderer("Monster.bmp");
@@ -44,30 +46,13 @@ void Boss::Start()
     Renderer_->CreateAnimation("Monster.bmp", "RollAttack", 31, 34, 0.2f, true); // 구르기
     Renderer_->ChangeAnimation("Idle");
     Dir_ = float4::ZERO;
-
     CenterCol_->SetScale(float4(130.0, 150.0f));
+    CenterCol_->SetPivot(float4(0.0f, -50.0f));
 
-    AreaHeight_ = 3;
-    AreaWidth_ = 3;
     Index_ = 3;
     SetMonsterClass(MonsterClass::BOSS);
     SetHP(150);
     SetSpeed(50); // Need to chk : Speed
-
-    for (int x = 0; x < AreaWidth_; ++x)
-    {
-        for (int y = 0; y < AreaHeight_; ++y)
-        {
-            float StartX = (MapSizeX_ / AreaWidth_ * x) + 20;
-            float StartY = (MapSizeY_ / AreaHeight_ * y) + 40;
-            float EndX = (MapSizeX_ / AreaWidth_ * (x + 1)) + 20;
-            float EndY = (MapSizeY_ / AreaHeight_ * (y + 1)) + 40;
-
-            Area area(ColMapImage_, StartX, StartY, EndX, EndY);
-            Areas_.push_back(area);
-        }
-    }
-    SetPosition(Areas_[3].GetCenter());
 }
 
 void Boss::Render()
@@ -76,8 +61,8 @@ void Boss::Render()
 
 void Boss::Update()
 {
-    UpdateDirection();
-    SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
+    //UpdateDirection();
+    //SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 
     /// 연습코드
 
@@ -86,10 +71,10 @@ void Boss::Update()
     RollTime_ += GameEngineTime::GetDeltaTime();
 
     // TODO  주석 풀기
-    //UpdateState();
-    //UpdateMove();
-    //Die();
-    //StateUpdate();
+    UpdateState();
+    UpdateMove();
+    Die();
+    StateUpdate();
 }
 
 void Boss::UpdateMove()

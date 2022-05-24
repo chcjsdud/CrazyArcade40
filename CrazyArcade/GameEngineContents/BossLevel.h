@@ -1,7 +1,10 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+
+class Area;
 class MapBackGround;
 class Player;
+class GameEngineImage;
 class BossLevel : public GameEngineLevel
 {
 public:
@@ -21,4 +24,6 @@ protected:
 
 private:
 	MapBackGround* MapBackGround_;
+	std::vector<Area> Areas_;
+	GameEngineImage* ColMapImage_;
 };
