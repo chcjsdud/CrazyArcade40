@@ -1,4 +1,5 @@
 #include "LoginBackGround.h"
+#include "TextArea.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineWindow.h>
@@ -52,6 +53,17 @@ void LoginBackGround::Start()
 
 	createRoomBackGround_ = GetLevel()->CreateActor<CreateRoomBackGround>((int)UIType::PopUp);
 	createRoomBackGround_->Off();
+
+
+	NickName_One_ = GetLevel()->CreateActor<TextArea>((int)UIType::Time);
+	NickName_One_->TextAreaInit({ 150.0f, 23.0f }, 15);
+	NickName_One_->SetPosition(float4(442.0f + 10.0f, 16.0f + 482.0f));
+	NickName_One_->On();
+
+	NickName_Two_ = GetLevel()->CreateActor<TextArea>((int)UIType::Time);
+	NickName_Two_->TextAreaInit({ 150.0f, 23.0f }, 15);
+	NickName_Two_->SetPosition(float4(582.0f + 10.0f, 16.0f + 482.0f));
+	NickName_Two_->Off();
 }
 
 void LoginBackGround::Update()
@@ -66,6 +78,8 @@ void LoginBackGround::Update()
 		else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			LoginBackGroundRenderer_->SetImage("LoginUI_1P.bmp");
+			NickName_One_->SetPosition(float4(442.0f + 10.0f, 16.0f + 482.0f));
+			NickName_Two_->Off();
 			Change1PRenderer_->SetPivot({ -208,173 });
 			Change2PRenderer_->SetPivot({ 208, 173 });
 			Change1PCollision_->SetPivot({ -208, 173 });
@@ -82,7 +96,7 @@ void LoginBackGround::Update()
 
 
 
-
+	// 2p ¹öÆ°
 	if (true == Change2PCollision_->CollisionCheck("MouseCol")) {
 
 		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
@@ -92,6 +106,8 @@ void LoginBackGround::Update()
 		else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			LoginBackGroundRenderer_->SetImage("LoginUI_2P.bmp");
+			NickName_One_->SetPosition(float4(298.0f + 10.0f, 16.0f + 482.0f));
+			NickName_Two_->On();
 			Change1PRenderer_->SetPivot({ -345, 173 });
 			Change2PRenderer_->SetPivot({ 345, 173 });
 			Change1PCollision_->SetPivot({ -345, 173 });
