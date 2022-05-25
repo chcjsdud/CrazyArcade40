@@ -2,7 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngine/GameEngineRendererTileMap.h>
-
+#include "ContentsEnum.h"
 
 enum class PlayerState
 {
@@ -140,6 +140,9 @@ protected:
 	bool IsMoveKey();
 	bool IsAttackKey();
 
+private:
+	//블럭 체크하는 함수
+	BlockType CheckBlockTile(float4 _Pos);
 public:
 	MapGameObject* GetBoom()
 	{

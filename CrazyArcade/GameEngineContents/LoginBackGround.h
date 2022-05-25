@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 
+class TextArea;
 class CreateRoomBackGround;
 class GameEngineBackGroundRenderer_;
 class LoginBackGround : public GameEngineActor
@@ -23,6 +24,9 @@ private:
 	void Start() override;
 	void Update() override;
 	void Render() override;
+
+	TextArea* NickName_One_;
+	TextArea* NickName_Two_;
 
 	GameEngineRenderer* LoginBackGroundRenderer_;
 

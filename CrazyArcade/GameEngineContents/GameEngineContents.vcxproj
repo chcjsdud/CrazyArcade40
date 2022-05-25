@@ -260,6 +260,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TileMapEditor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TileMapEditorLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TextArea.h">
       <SubType>
       </SubType>
@@ -383,6 +391,14 @@
     </ClCompile>
     <ClCompile Include="StartIntroUI.cpp" />
     <ClCompile Include="TextArea.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TileMapEditor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TileMapEditorLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

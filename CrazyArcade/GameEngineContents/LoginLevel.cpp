@@ -1,5 +1,5 @@
 #include "LoginLevel.h"
-#include "ChattingInput.h"
+#include "TextArea.h"
 #include "Mouse.h"
 #include "LoginBackGround.h"
 #include "ContentsEnum.h"
@@ -16,7 +16,7 @@ void LoginLevel::Loading()
 {
 	CreateActor<LoginBackGround>((int)UIType::BackGround);
 	CreateActor<Mouse>((int)UIType::Mouse);
-	CreateActor<ChattingInput>((int)UIType::Time);
+	
 }
 
 void LoginLevel::Update()

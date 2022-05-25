@@ -27,7 +27,10 @@ public:
 		CurPos_.x = static_cast<float>(Pos_.x);
 		CurPos_.y = static_cast<float>(Pos_.y);
 	}
-
+	inline float4 ReturnPos()
+	{
+		return CurPos_;
+	}
 
 	inline GameEngineCollision* GetMouseCol()
 	{
