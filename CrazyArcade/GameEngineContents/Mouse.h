@@ -3,8 +3,8 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineSound.h>
+#include <GameEngine/GameEngineRenderer.h>
 
-class GameEngineRenderer;
 class GameEngineCollision;
 class Mouse : public GameEngineActor
 {
@@ -31,7 +31,10 @@ public:
 	{
 		return CurPos_;
 	}
-
+	inline void RenderOff()
+	{
+		MouseRenderer_->Off();
+	}
 	inline GameEngineCollision* GetMouseCol()
 	{
 		return MouseCol_;

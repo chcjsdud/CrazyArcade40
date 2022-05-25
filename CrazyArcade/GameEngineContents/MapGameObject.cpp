@@ -29,10 +29,44 @@ void MapGameObject::Update()
 	DestroyBoom();
 }
 
+BlockType MapGameObject::CheckTile(float4 _Pos) {
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	if (0 > TileIndex_.X)
+	{
+		return BlockType::NoBlock;
+	}
+	if (0 > TileIndex_.Y)
+	{
+		return BlockType::NoBlock;
+	}
+	if (14 < TileIndex_.X)
+	{
+		return BlockType::NoBlock;
+	}
+	if (12 < TileIndex_.Y)
+	{
+		return BlockType::NoBlock;
+	}
+
+	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_ == nullptr)
+	{
+		return BlockType::Max;
+	}
+	else
+	{
+		return Tiles_->BlockType_;
+	}
+	}
 
 
 void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 {
+	if (BlockType::NoBlock == CheckTile(_Pos))
+	{
+		return;
+	}
+
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
@@ -44,30 +78,54 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	Block_->BlockType_ = BlockType::FixBlock;
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y });
-	if (_Box == "CampBox1")
+	
+	if (_Box == "CampBlock1")
 	{
-		Block_->Renderer->SetImage("CampBox1.bmp");
+		Block_->Renderer->SetImage("CampBlock1.bmp");
 	}
-	else if (_Box == "CampBox2")
+	else if (_Box == "CampBlock2")
 	{
-		Block_->Renderer->SetImage("CampBox2.bmp");
+		Block_->Renderer->SetImage("CampBlock2.bmp");
 	}
 	else if (_Box == "CampBush1")
 	{
 		Block_->Renderer->SetImage("CampBush1.bmp");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 10.0f });
 	}
 	else if (_Box == "CampBush2")
 	{
 		Block_->Renderer->SetImage("CampBush2.bmp");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y -10.0f});
 	}
 	else if (_Box == "CampMoveBox1")
 	{
 		Block_->Renderer->SetImage("CampMoveBox1.bmp");
 	}
-	else if (_Box == "CampMoveBox2")
+	else if (_Box == "CampMoveBox2_3")
 	{
-		Block_->Renderer->SetImage("CampMoveBox2.bmp");
+		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 2, 2, 0.0f, false);
+		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
+		Block_->BlockHp_ = 1;
 	}
+	else if (_Box == "CampMoveBox2_2")
+	{
+		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_2", 1, 1, 0.0f, false);
+		Block_->Renderer->ChangeAnimation("CampMoveBox2_2");
+		Block_->BlockHp_ = 2;
+	}
+	else if (_Box == "CampMoveBox2_1")
+	{
+		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_1", 0, 0, 0.0f, false);
+		Block_->Renderer->ChangeAnimation("CampMoveBox2_1");
+		Block_->BlockHp_ = 3; 
+	}
+	else if (_Box == "CampTownBush")
+	{
+		Block_->Renderer->CreateAnimation("TownBush.bmp", "TownBush", 0, 4, 0.1f, true);
+		Block_->Renderer->ChangeAnimation("TownBush");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
+	}
+
 
 	AllBlockTiles_.push_back(Block_);
 }

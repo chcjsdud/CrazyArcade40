@@ -15,6 +15,8 @@ enum class BossState
 class Player;
 class GameEngineImage;
 class GameEngineRenderer;
+
+
 class Boss : public Monster
 {
 public:
@@ -31,38 +33,32 @@ public:
     {
         Player_ = _Player;
     }
+
 protected:
-    void Start();
+    void Start() override;
     void Render();
     void Update();
     void UpdateMove() override;
-    void UpdateState();
+    void UpdateDirection() override;
 
 private:
-    bool StartMove_;
-    float WaterTime_;
-    float MoveTime_;
-    float RollTime_;
-    float4 PlayerPos_;
+    float AttTime_;
+    float StayIdleTime_;
     Player* Player_;
-    BossState BossState_;
-    std::string Direction_;
-    std::string CurrentLevel_;
-    int PlayerIndex_;	
-    float SettingTime_;
-
+    //BossState BassState_;
+    //, BossState_(BossState::IDLE)
+    int PlayerIndex_;
+    float RollTime_;
+    float WaterTime_;
+    float4 PlayerPos_;
+    int CheckIndex_;
 
 private:
-    void SetState(BossState _BossState);
-    BossState GetState() { return BossState_; }
-    void StateUpdate();
-    void UpdateIdle();
-    void UpdateWalk();
-    void UpdateBubbleAttack();
-    void UpdateRollAttack();
-    void UpdateTakeDamage();
-    void UpdateDie();
-    void CollisionCheck();
+    void UpdateAttack();
+    //void SetState(BossState _BossState);
+    //BossState GetState() { return BossState_; }
     bool SameXLine();
     bool SameYLine();
+    void RollAttack();
+    void WaterAttack();
 };

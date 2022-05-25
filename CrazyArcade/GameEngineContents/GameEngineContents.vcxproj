@@ -189,6 +189,10 @@
     </ClInclude>
     <ClInclude Include="CreateRoomBackGround.h" />
     <ClInclude Include="GameItemObject.h" />
+    <ClInclude Include="GlobalUIName.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="IntroLevel.h" />
     <ClInclude Include="LoginBackGround.h">
       <SubType>
@@ -315,6 +319,10 @@
     </ClCompile>
     <ClCompile Include="CreateRoomBackGround.cpp" />
     <ClCompile Include="GameItemObject.cpp" />
+    <ClCompile Include="GlobalUIName.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
     <ClCompile Include="LoginBackGround.cpp">
       <SubType>

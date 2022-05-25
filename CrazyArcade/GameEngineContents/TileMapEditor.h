@@ -1,9 +1,11 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineRendererTileMap.h>
 // Ό³Έν :
 class GameEngineRenderer;
 class GameEngineCollision;
+class MapGameObject;
 class TileMapEditor : public GameEngineActor
 {
 public:
@@ -27,15 +29,17 @@ public:
 	{
 		return MapBack;
 	}
-	inline void SetMousePos(float4 _Pos)
+
+	inline void SetCurPos(float4 _Pos)
 	{
-		MousePos = _Pos;
+		MousePos = _Pos - float4{20.0f, 40.0f};
 	}
 	GameEngineRendererTileMap EditorTileMap_;
 
 private:
 	std::string LevelNameReturnToString();
 	std::string TileNameReturnToString();
+	MapGameObject* BlockSet;
 	GameEngineRenderer* MapBack;
 	float4 MousePos;
 	std::string RenderName_;

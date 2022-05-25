@@ -339,20 +339,21 @@ void CrazyArcade::GameInit()
     GameEngineImage* Down2 = GameEngineImageManager::GetInst()->Find("Down2.bmp");
     Down2->CutCount(11, 1);
 
-
+    //물풍선 이미지
     GameEngineImage* Bubble_Dark = GameEngineImageManager::GetInst()->Find("Bubble_Dark.bmp");
     Bubble_Dark->CutCount(4, 1);
     GameEngineImage* Bubble_Boss = GameEngineImageManager::GetInst()->Find("Bubble_Boss.bmp");
     Bubble_Boss->CutCount(4, 1);
     GameEngineImage* Bubble_Default = GameEngineImageManager::GetInst()->Find("Bubble_Default.bmp");
     Bubble_Default->CutCount(5, 1);
-
+    //아이템 이미지
     GameEngineImage* Fluid = GameEngineImageManager::GetInst()->Find("Fluid.bmp");
     Fluid->CutCount(6, 1);
-
+    //맵 박스, 오브젝트이미지
     GameEngineImage* CampMoveBox2 = GameEngineImageManager::GetInst()->Find("CampMoveBox2.bmp");
     CampMoveBox2->CutCount(3, 1);
- 
+    GameEngineImage* TownBush = GameEngineImageManager::GetInst()->Find("TownBush.bmp");
+    TownBush->CutCount(5, 1);
 
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 

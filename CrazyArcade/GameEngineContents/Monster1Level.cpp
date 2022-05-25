@@ -69,7 +69,21 @@ void Monster1Level::Loading()
 }
 void Monster1Level::Update()
 {
+	if (Monster::TTL_MONSTER_COUNT == 0)
+	{
+		// UI 나오고
+		////if(UI 화면 끝나면)
+		//{
+		//	GameEngine::GetInst().ChangeLevel("Monster2Level");
+		//}
+	}
 
+	//else if 플레이어 수가 0이되면
+	//	UI 나오고
+	//	//if(UI 화면 끝나면)
+	//{
+	//대기실로 이동
+	//}
 }
 void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {

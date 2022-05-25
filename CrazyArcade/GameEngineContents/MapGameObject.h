@@ -17,6 +17,7 @@ public:
 		IsWaveDeathAni(false),
 		TilePos_(),
 		TileIndex_(),
+		BlockHp_(),
 		DeathTime_(),
 		Power_(),
 		CenterWaveX_(0),
@@ -37,6 +38,7 @@ public:
 	float DeathTime_;
 	float DeathAniTime_;
 	float Power_;
+	float BlockHp_;
 	bool IsWaveDeath;
 	bool IsWaveDeathAni;
 	int CenterWaveX_;
