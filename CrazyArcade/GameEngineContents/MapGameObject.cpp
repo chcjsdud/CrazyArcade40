@@ -56,25 +56,25 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	Block_->BlockType_ = BlockType::FixBlock;
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y });
-	if (_Box == "CampBox01")
+	if (_Box == "CampBox1")
 	{
-		Block_->Renderer->SetImage("CampBox01.bmp");
+		Block_->Renderer->SetImage("CampBox1.bmp");
 	}
-	else if (_Box == "CampBox02")
+	else if (_Box == "CampBox2")
 	{
-		Block_->Renderer->SetImage("CampBox02.bmp");
+		Block_->Renderer->SetImage("CampBox2.bmp");
 	}
-	else if (_Box == "CampBush01")
+	else if (_Box == "CampBush1")
 	{
-		Block_->Renderer->SetImage("CampBush01.bmp");
+		Block_->Renderer->SetImage("CampBush1.bmp");
 	}
-	else if (_Box == "CampBush02")
+	else if (_Box == "CampBush2")
 	{
-		Block_->Renderer->SetImage("CampBush02.bmp");
+		Block_->Renderer->SetImage("CampBush2.bmp");
 	}
-	else if (_Box == "CampMoveBox")
+	else if (_Box == "CampMoveBox1")
 	{
-		Block_->Renderer->SetImage("CampMoveBox.bmp");
+		Block_->Renderer->SetImage("CampMoveBox1.bmp");
 	}
 	else if (_Box == "CampMoveBox2")
 	{
