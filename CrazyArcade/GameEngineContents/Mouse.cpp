@@ -7,6 +7,8 @@
 #include <GameEngine/GameEngineCollision.h>
 
 Mouse::Mouse()
+	:MouseCol_(nullptr),
+	MouseRenderer_(nullptr)
 {
 }
 
