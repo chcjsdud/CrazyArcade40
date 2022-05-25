@@ -282,14 +282,15 @@ void Player::StagePixelCheck(float _Speed)
 	}
 }
 
-BlockType CurBlockType_ = {};
+BlockType blockType_ = {};
 
 void Player::TileCheckResultUpdate()
 {
 	
 	if (Type == PlayerType::Player1)
 	{
-		CurBlockType_ = CheckBlockTile(MainPlayer_1->GetPosition());
+		float4 Pos = MainPlayer_1->GetPosition();
+		CurBlockType_ = CheckBlockTile(Pos + float4{10.f, -10.f});
 
 		//CurBlockType_ = CurBlockPlayer1_;
 	}
@@ -359,8 +360,8 @@ void Player::Start()
 
 
 	PlayerAnimationRender_ = CreateRenderer();
-	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
-	PlayerAnimationRender_->SetPivot({ 0.f, 0.f });
+	PlayerAnimationRender_->SetPivotType(RenderPivot::CENTER);
+	PlayerAnimationRender_->SetPivot({ 0.f, 20.f });
 
 	PlayerAnimationRender_->Off();
 
