@@ -33,6 +33,8 @@ void Player::IdleStart()
 
 void Player::MoveStart()
 {
+	IsMove = true;
+
 	AnimationName_ = "Move_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
@@ -48,24 +50,40 @@ void Player::AttackStart()
 
 void Player::DamagedStart()
 {
+	IsMove = false;
+
+	MoveDir = float4::ZERO;
+
 	AnimationName_ = "Damaged_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::RevivalStart()
 {
+	IsMove = false;
+
+	MoveDir = float4::ZERO;
+
 	AnimationName_ = "Revival_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::FadeStart()
 {
+	IsMove = false;
+
+	MoveDir = float4::ZERO;
+
 	AnimationName_ = "Fade_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::DieStart()
 {
+	IsMove = false;
+
+	MoveDir = float4::ZERO;
+
 	AnimationName_ = "Die_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
@@ -106,6 +124,8 @@ void Player::ReadyUpdate()
 
 void Player::IdleUpdate()
 {
+	DirAnimationCheck();
+
 	if (true == IsMoveKey())
 	{
 		ChangeState(PlayerState::Move);
@@ -121,6 +141,8 @@ void Player::IdleUpdate()
 
 void Player::MoveUpdate()
 {
+	DirAnimationCheck();
+
 	if (false == IsMoveKey())
 	{
 		ChangeState(PlayerState::Idle);
@@ -177,17 +199,19 @@ void Player::AttackUpdate()
 
 void Player::DamagedUpdate()
 {
+	float Time = GetAccTime();
+
 	if (true == IsItemKey())
 	{
 		ChangeState(PlayerState::Revival);
 		return;
 	}
 
-	if (4.f < GetAccTime())
-	{
-		ChangeState(PlayerState::Die);
-		return;
-	}
+	//if (4.f < Time)
+	//{
+	//	ChangeState(PlayerState::Die);
+	//	return;
+	//}
 }
 
 void Player::RevivalUpdate() 

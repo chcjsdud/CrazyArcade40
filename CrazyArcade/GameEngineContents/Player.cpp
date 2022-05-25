@@ -282,14 +282,26 @@ void Player::StagePixelCheck(float _Speed)
 	}
 }
 
+BlockType CurBlockType_ = {};
+
 void Player::TileCheckResultUpdate()
 {
-
-	if (nullptr != Boom_)
+	
+	if (Type == PlayerType::Player1)
 	{
-		// 플레이어가 서있는 타일을 체크
-		CurBlockType_ = Boom_->CheckTile(MainPlayer_1->GetPosition());
+		CurBlockType_ = CheckBlockTile(MainPlayer_1->GetPosition());
+
+		//CurBlockType_ = CurBlockPlayer1_;
 	}
+	
+	//if(Type == PlayerType::Player2)
+	//{
+	//	BlockType CurBlockPlayer2_ = CheckBlockTile(MainPlayer_2->GetPosition());
+
+	//	CurBlockType_ = CurBlockPlayer2_;
+	//}
+	
+
 
 
 	switch (CurBlockType_)
@@ -348,7 +360,7 @@ void Player::Start()
 
 	PlayerAnimationRender_ = CreateRenderer();
 	PlayerAnimationRender_->SetPivotType(RenderPivot::BOT);
-	PlayerAnimationRender_->SetPivot({ 0.f, 30.f });
+	PlayerAnimationRender_->SetPivot({ 0.f, 0.f });
 
 	PlayerAnimationRender_->Off();
 
@@ -380,10 +392,10 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Up", 13, 19, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Down", 21, 28, 0.1f, true);
 
-		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.09f, false);
-		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.09f, false);
-		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 10, 0.09f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.2f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.5f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 10, 0.2f, false);
 
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.09f, true);
@@ -482,8 +494,6 @@ void Player::Update()
 	PlayerCollisionUpdate();
 
 	TileCheckResultUpdate();
-
-	DirAnimationCheck();
 
 	//PlayerInfoUpdate();
 
