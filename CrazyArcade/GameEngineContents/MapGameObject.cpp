@@ -77,7 +77,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	BlockTile* Block_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Block_->BlockType_ = BlockType::FixBlock;
 	Block_->Renderer = CreateRenderer();
-	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y });
+	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
 	
 	if (_Box == "CampBlock1")
 	{
