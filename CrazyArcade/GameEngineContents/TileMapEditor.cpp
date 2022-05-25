@@ -106,7 +106,7 @@ void TileMapEditor::Update()
 		// 마우스 위치 MousePos
 		// bmp 이름은 LevelName_ + RenderName_ + " .bmp" 로
 		//이때 타일맵이 아니거나 이미 찍혀있는 타일일떄는 그냥 return해주어 아무일도 안일어나게 하기
-		GetCurPos();
+		
 		BlockSet->CreateBlock(MousePos, LevelName_ + RenderName_);
 	}
 }

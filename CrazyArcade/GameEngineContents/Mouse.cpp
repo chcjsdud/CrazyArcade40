@@ -2,7 +2,6 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
-#include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineCollision.h>
 

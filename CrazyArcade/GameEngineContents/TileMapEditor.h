@@ -30,13 +30,9 @@ public:
 		return MapBack;
 	}
 
-	inline void GetCurPos()
+	inline void SetCurPos(float4 _Pos)
 	{
-		POINT Pos_;
-		GetCursorPos(&Pos_);
-		ScreenToClient(GameEngineWindow::GethWnd(), &Pos_);
-		MousePos.x = static_cast<float>(Pos_.x) - 20.0f;
-		MousePos.y = static_cast<float>(Pos_.y) - 40.0f;
+		MousePos = _Pos - float4{20.0f, 40.0f};
 	}
 	GameEngineRendererTileMap EditorTileMap_;
 

@@ -1,7 +1,7 @@
 #include "TileMapEditorLevel.h"
 #include "TileMapEditor.h"
 #include "ContentsEnum.h"
-
+#include "Mouse.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineInput.h>
 TileMapEditorLevel::TileMapEditorLevel() 
@@ -20,6 +20,8 @@ void TileMapEditorLevel::Loading()
     TileMapEditor::MapEditorSet->GetRenderer()->SetImage("Camp_Back.bmp");
     TileMapEditor::MapEditorSet->GetRenderer()->SetPivot({ 320,280 });
     
+    MouseSet = CreateActor<Mouse>(static_cast<int>(ORDER::UI));
+    MouseSet->RenderOff();
     if (false == GameEngineInput::GetInst()->IsKey("CampMapCreate"))
     {
         GameEngineInput::GetInst()->CreateKey("CampMapCreate", 'q');
@@ -32,7 +34,7 @@ void TileMapEditorLevel::Loading()
 }
 void TileMapEditorLevel::Update()
 {
-   
+    TileMapEditor::MapEditorSet->SetCurPos(MouseSet->ReturnPos());
     CheckStage();
 };
 
