@@ -189,7 +189,6 @@ void CrazyArcade::GameInit()
         Image = GameEngineImageManager::GetInst()->Find("StartButton.bmp");
         Image->Cut({ 200,100 });
 
-
         Image = GameEngineImageManager::GetInst()->Find("MapChoiceButton.bmp");
         Image->Cut({ 200,100 });
     }
@@ -215,6 +214,15 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("GameStartIntro.bmp");
         Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("WinText.bmp");
+        Image->Cut({ 192,192 });
+
+        Image = GameEngineImageManager::GetInst()->Find("LoseText.bmp");
+        Image->Cut({ 192,192 });
+
+        Image = GameEngineImageManager::GetInst()->Find("DrawText.bmp");
+        Image->Cut({ 192,192 });
 
     }
 

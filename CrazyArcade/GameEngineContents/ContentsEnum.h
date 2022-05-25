@@ -45,6 +45,8 @@ enum class UIType
 	PopUpButton,
 	PopScreen,
 	PopScreenButton,
+
+	PlayResultUI = 19,
 	StartIntroUI = 20,
 	Time = 21,
 	Mouse = 22,

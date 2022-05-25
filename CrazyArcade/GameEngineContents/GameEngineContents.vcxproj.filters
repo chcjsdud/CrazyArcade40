@@ -145,6 +145,9 @@
     <ClInclude Include="MonsterRoomLevel.h">
       <Filter>Level\UILevel</Filter>
     </ClInclude>
+    <ClInclude Include="PlayResultUI.h">
+      <Filter>Actor\UI\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -300,6 +303,9 @@
     </ClCompile>
     <ClCompile Include="MonsterRoomLevel.cpp">
       <Filter>Level\UILevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayResultUI.cpp">
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
