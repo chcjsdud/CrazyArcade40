@@ -1,7 +1,6 @@
 #include "TileMapEditor.h"
 #include "ContentsEnum.h"
 #include "MapGameObject.h"
-#include "Mouse.h"
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineRenderer.h>
@@ -76,11 +75,11 @@ void TileMapEditor::Update()
 		}
 		if (true == MoveBox2Col->CollisionCheck("MouseCol"))
 		{
-			RenderName_ = "MoveBox2";
+			RenderName_ = "MoveBox2_1";
 		}
 		if (true == MoveBox3Col->CollisionCheck("MouseCol"))
 		{
-			RenderName_ = "MoveBox3";
+			RenderName_ = "MoveBox2_3";
 		}
 		if (true == Block1Col->CollisionCheck("MouseCol"))
 		{
@@ -107,7 +106,7 @@ void TileMapEditor::Update()
 		// 마우스 위치 MousePos
 		// bmp 이름은 LevelName_ + RenderName_ + " .bmp" 로
 		//이때 타일맵이 아니거나 이미 찍혀있는 타일일떄는 그냥 return해주어 아무일도 안일어나게 하기
-
+		GetCurPos();
 		BlockSet->CreateBlock(MousePos, LevelName_ + RenderName_);
 	}
 }

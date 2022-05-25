@@ -1,5 +1,4 @@
 #include "TileMapEditorLevel.h"
-#include "Mouse.h"
 #include "TileMapEditor.h"
 #include "ContentsEnum.h"
 
@@ -20,7 +19,6 @@ void TileMapEditorLevel::Loading()
     
     TileMapEditor::MapEditorSet->GetRenderer()->SetImage("Camp_Back.bmp");
     TileMapEditor::MapEditorSet->GetRenderer()->SetPivot({ 320,280 });
-    MouseSet = CreateActor<Mouse>();
     
     if (false == GameEngineInput::GetInst()->IsKey("CampMapCreate"))
     {
@@ -34,7 +32,7 @@ void TileMapEditorLevel::Loading()
 }
 void TileMapEditorLevel::Update()
 {
-    TileMapEditor::MapEditorSet->SetMousePos(MouseSet->ReturnPos()); // 마우스 위치 받기
+   
     CheckStage();
 };
 

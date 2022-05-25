@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineRendererTileMap.h>
 // Ό³Έν :
 class GameEngineRenderer;
@@ -28,11 +29,15 @@ public:
 	{
 		return MapBack;
 	}
-	inline void SetMousePos(float4 _Pos)
-	{
-		MousePos = _Pos;
-	}
 
+	inline void GetCurPos()
+	{
+		POINT Pos_;
+		GetCursorPos(&Pos_);
+		ScreenToClient(GameEngineWindow::GethWnd(), &Pos_);
+		MousePos.x = static_cast<float>(Pos_.x) - 20.0f;
+		MousePos.y = static_cast<float>(Pos_.y) - 40.0f;
+	}
 	GameEngineRendererTileMap EditorTileMap_;
 
 private:

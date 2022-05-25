@@ -2,7 +2,6 @@
 #include <GameEngine/GameEngineLevel.h>
 // Ό³Έν :
 class TileMapEditor;
-class Mouse;
 class TileMapEditorLevel : public GameEngineLevel
 {
 public:
@@ -21,7 +20,6 @@ protected:
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 private:
-	Mouse* MouseSet;
 	void CheckStage();
 };
 

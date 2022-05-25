@@ -39,11 +39,11 @@ BlockType MapGameObject::CheckTile(float4 _Pos) {
 	{
 		return BlockType::NoBlock;
 	}
-	if (15 < TileIndex_.X)
+	if (14 < TileIndex_.X)
 	{
 		return BlockType::NoBlock;
 	}
-	if (13 < TileIndex_.Y)
+	if (12 < TileIndex_.Y)
 	{
 		return BlockType::NoBlock;
 	}
