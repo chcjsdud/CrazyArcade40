@@ -11,6 +11,10 @@
 #include "MapBackGround.h"
 
 
+void Player::WaitStart()
+{
+}
+
 void Player::ReadyStart()
 {
 	IsMove = false;
@@ -46,11 +50,39 @@ void Player::DamagedStart()
 {
 }
 
-void Player::LiveStart()
+void Player::RevivalStart()
+{
+}
+
+void Player::FadeStart()
 {
 }
 
 void Player::DieStart()
+{
+}
+
+void Player::IdeOwlStart()
+{
+}
+
+void Player::IdleTurtleStart()
+{
+}
+
+void Player::RidingOwlStart()
+{
+}
+
+void Player::RidingTurtleStart()
+{
+}
+
+void Player::RidingUFOStart()
+{
+}
+
+void Player::WaitUpdate()
 {
 }
 
@@ -151,10 +183,34 @@ void Player::DamagedUpdate()
 {
 }
 
-void Player::LiveUpdate()
+void Player::RevivalUpdate()
+{
+}
+
+void Player::FadeUpdate()
 {
 }
 
 void Player::DieUpdate()
+{
+}
+
+void Player::IdleOwlUpdate()
+{
+}
+
+void Player::IdleTurtleUpdate()
+{
+}
+
+void Player::RidingOwlUpdate()
+{
+}
+
+void Player::RidingTurtleUpdate()
+{
+}
+
+void Player::RidingUFOUpdate()
 {
 }

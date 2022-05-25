@@ -6,14 +6,21 @@
 
 enum class PlayerState
 {
+	Wait,
 	Ready,
 	Idle, 
 	Move,
 	Jump,
 	Attack,
-	Damaged,
-	Live,
+	Damaged,	// 물방울 갇혔을 때 1차 애니메이션
+	Revival,
+	Fade,		// 물방울 갇혔을 때 2차 애니메이션
 	Die,
+	IdleOwl,
+	IdleTurtle,
+	RidingOwl,
+	RidingTurtle,
+	RidingUFO,
 
 	Max,
 };
@@ -227,21 +234,35 @@ protected:
 	virtual void DirAnimationCheck();
 
 protected:
-	virtual void ReadyStart();
-	virtual void IdleStart();
-	virtual void MoveStart();
-	virtual void JumpStart();
-	virtual void AttackStart();
-	virtual void DamagedStart();
-	virtual void LiveStart();
-	virtual void DieStart();
+	void WaitStart();
+	void ReadyStart();
+	void IdleStart();
+	void MoveStart();
+	void JumpStart();
+	void AttackStart();
+	void DamagedStart();
+	void RevivalStart();
+	void FadeStart();
+	void DieStart();
+	void IdeOwlStart();
+	void IdleTurtleStart();
+	void RidingOwlStart();
+	void RidingTurtleStart();
+	void RidingUFOStart();
 
-	virtual void ReadyUpdate();
-	virtual void IdleUpdate();
-	virtual void MoveUpdate();
-	virtual void JumpUpdate();
-	virtual void AttackUpdate();
-	virtual void DamagedUpdate();
-	virtual void LiveUpdate();
-	virtual void DieUpdate();
+	void WaitUpdate();
+	void ReadyUpdate();
+	void IdleUpdate();
+	void MoveUpdate();
+	void JumpUpdate();
+	void AttackUpdate();
+	void DamagedUpdate();
+	void RevivalUpdate();
+	void FadeUpdate();
+	void DieUpdate();
+	void IdleOwlUpdate();
+	void IdleTurtleUpdate();
+	void RidingOwlUpdate();
+	void RidingTurtleUpdate();
+	void RidingUFOUpdate();
 };

@@ -30,6 +30,9 @@ Player::Player()
 	, CurCharacter(Character::MAX)
 	, IsDebug(false)
 	, CurrentLevel_("")
+	, IsMove(false)
+	, MapBackGround_(nullptr)
+	, MapColRenderer_(nullptr)
 {
 
 }
@@ -259,10 +262,10 @@ void Player::ColMapUpdate()
 
 void Player::StagePixelCheck(float _Speed)
 {
-	float4 LeftPos = GetPosition() + float4{ -15.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 RightPos = GetPosition() + float4{ 15.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 LeftPos = GetPosition() + float4{ -22.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightPos = GetPosition() + float4{ 22.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 	float4 UpPos = GetPosition() + float4{ 0.f, -20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 DownPos = GetPosition() + float4{ 0.f, 20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 DownPos = GetPosition() + float4{ 0.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
 	int LeftColor = MapColImage_->GetImagePixel(LeftPos);
 	int RightColor = MapColImage_->GetImagePixel(RightPos);
@@ -302,10 +305,10 @@ void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void Player::Start()
 {
-	Collision1P_ = CreateCollision("1PColl", { 80, 80 });
+	Collision1P_ = CreateCollision("1PColl", { 50.f, 50.f }, {0.f, -10.f});
 	Collision1P_->Off();
 
-	Collision2P_ = CreateCollision("2PColl", { 80, 80 });
+	Collision2P_ = CreateCollision("2PColl", { 50.f, 50.f }, { 0.f, -10.f });
 	Collision2P_->Off();
 
 
@@ -318,35 +321,50 @@ void Player::Start()
 
 	// BAZZI
 	{
-		GameEngineImage* Ready = GameEngineImageManager::GetInst()->Find("Ready.bmp");
-		Ready->CutCount(18, 1);
-		GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Left.bmp");
-		Left->CutCount(6, 1);
-		GameEngineImage* Right = GameEngineImageManager::GetInst()->Find("Right.bmp");
-		Right->CutCount(6, 1);
-		GameEngineImage* Down = GameEngineImageManager::GetInst()->Find("Down.bmp");
-		Down->CutCount(8, 1);
-		GameEngineImage* Up = GameEngineImageManager::GetInst()->Find("Up.bmp");
-		Up->CutCount(8, 1);
+		GameEngineImage* Bazzi1 = GameEngineImageManager::GetInst()->Find("Bazzi_1.bmp");
+		Bazzi1->CutCount(10, 9);
+		GameEngineImage* Bazzi2 = GameEngineImageManager::GetInst()->Find("Bazzi_2.bmp");
+		Bazzi2->CutCount(10, 2);
+		GameEngineImage* Bazzi3 = GameEngineImageManager::GetInst()->Find("Bazzi_3.bmp");
+		Bazzi3->CutCount(10, 2);
 
 		// 애니메이션
 
 		BazziRenderer_ = CreateRenderer();
 		BazziRenderer_->SetPivotType(RenderPivot::BOT);
-		BazziRenderer_->SetPivot({ 0.f, 30.f });
+		BazziRenderer_->SetPivot({ 0.f, 150.f });
 
 		// Idle
-		BazziRenderer_->CreateAnimation("Ready.bmp", "Ready_", 0, 17, 0.06f, false);
-		BazziRenderer_->CreateAnimation("Left.bmp", "Idle_Left", 0, 0, 1.f, false);
-		BazziRenderer_->CreateAnimation("Right.bmp", "Idle_Right", 0, 0, 1.f, false);
-		BazziRenderer_->CreateAnimation("Down.bmp", "Idle_Down", 0, 0, 1.f, false);
-		BazziRenderer_->CreateAnimation("Up.bmp", "Idle_Up", 0, 0, 1.f, false);
-		
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Ready_", 37, 53, 0.06f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Left", 0, 0, 1.f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Right", 6, 6, 1.f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Up", 12, 12, 1.f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Down", 20, 20, 1.f, false);
+	
 		// Move
-		BazziRenderer_->CreateAnimation("Left.bmp", "Move_Left", 0, 5, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Right.bmp", "Move_Right", 0, 5, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Down.bmp", "Move_Down", 0, 7, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Up.bmp", "Move_Up", 0, 7, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Left", 1, 5, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Right", 7, 11, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Up", 13, 19, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Down", 21, 28, 0.1f, true);
+
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.09f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.09f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 10, 0.09f, false);
+
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Down", 6, 7, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Right", 10, 11, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Up", 12, 13, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Down", 14, 15, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
+
 
 		BazziRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
@@ -510,6 +528,9 @@ void Player::ChangeState(PlayerState _State)
 	{
 		switch (_State)
 		{
+		case PlayerState::Wait:
+			WaitStart();
+			break;
 		case PlayerState::Ready:
 			ReadyStart();
 			break;
@@ -528,13 +549,32 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Damaged:
 			DamagedStart();
 			break;
-		case PlayerState::Live:
-			LiveStart();
+		case PlayerState::Revival:
+			RevivalStart();
+			break;
+		case PlayerState::Fade:
+			FadeStart();
 			break;
 		case PlayerState::Die:
 			DieStart();
 			break;
+		case PlayerState::IdleOwl:
+			IdeOwlStart();
+			break;
+		case PlayerState::IdleTurtle:
+			IdleTurtleStart();
+			break;
+		case PlayerState::RidingOwl:
+			RidingOwlStart();
+			break;
+		case PlayerState::RidingTurtle:
+			RidingTurtleStart();
+			break;
+		case PlayerState::RidingUFO:
+			RidingUFOStart();
+			break;
 		}
+
 	}
 
 	CurState_ = _State;
@@ -544,6 +584,9 @@ void Player::PlayerStateUpdate()
 {
 	switch (CurState_)
 	{
+	case PlayerState::Wait:
+		WaitUpdate();
+		break;
 	case PlayerState::Ready:
 		ReadyUpdate();
 		break;
@@ -562,11 +605,29 @@ void Player::PlayerStateUpdate()
 	case PlayerState::Damaged:
 		DamagedUpdate();
 		break;
-	case PlayerState::Live:
-		LiveUpdate();
+	case PlayerState::Revival:
+		RevivalUpdate();
+		break;
+	case PlayerState::Fade:
+		FadeUpdate();
 		break;
 	case PlayerState::Die:
 		DieUpdate();
+		break;
+	case PlayerState::IdleOwl:
+		IdleOwlUpdate();
+		break;
+	case PlayerState::IdleTurtle:
+		IdleTurtleUpdate();
+		break;
+	case PlayerState::RidingOwl:
+		RidingOwlUpdate();
+		break;
+	case PlayerState::RidingTurtle:
+		RidingTurtleUpdate();
+		break;
+	case PlayerState::RidingUFO:
+		RidingUFOUpdate();
 		break;
 	}
 }
