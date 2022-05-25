@@ -36,6 +36,7 @@ LRESULT CALLBACK GameEngineWindow::MessageProcess(HWND hWnd, UINT message, WPARA
         GameEngineInput::GetInst()->WheelValue = (SHORT)HIWORD(wParam);
         break;
     }
+    
     // 키보드 등록(채팅기능용)
     case WM_CHAR:
     {

@@ -26,6 +26,7 @@ TextArea::TextArea()
 	, curcaretpos_(0)
 	, prevcaretpos_(0)
 	, TextAreaCollision_(nullptr)
+	, MaxLen_(0)
 {
 }
 
@@ -49,7 +50,7 @@ void TextArea::Update()
 	{
 		if (true == GameEngineInput::GetInst()->IsDown("LeftMouse"))
 		{
-
+			KeyboardClass::GetInst().DeleteCharBuffer();
 			TextInputOK_ = true;
 
 			// 캐럿 생성
@@ -59,7 +60,7 @@ void TextArea::Update()
 				CreateCaret(GameEngineWindow::GetInst().GethWnd(), NULL, 2, 14);
 				ShowCaret(GameEngineWindow::GetInst().GethWnd());
 				SetCaretBlinkTime(50);
-				SetCaretPos(GetPosition().ix(), GetPosition().iy());
+				SetCaretPos(GetPosition().ix() - 56, GetPosition().iy() - 6);
 			}
 		}
 	}
@@ -80,7 +81,7 @@ void TextArea::Update()
 					caretshow_ = false;
 
 					// 캐럿 반납
-					SetCaretBlinkTime(500);
+					SetCaretBlinkTime(20);
 					HideCaret(GameEngineWindow::GetInst().GethWnd());
 					DestroyCaret();
 				}
@@ -98,14 +99,11 @@ void TextArea::Update()
 				AddText(SetStr);
 			}
 		}
-		else // 현재 입력상태가 아닌와중에도 키보드 입력이 있다면 charbuffer를 클리어한다.
-		{
-			KeyboardClass::GetInst().DeleteCharBuffer();
-		}
+		
 	}
 
 	// 입력중인 채팅 문자열 마지막부터 삭제
-	if (true == GameEngineInput::GetInst()->IsPress("Chatting_Del"))
+	if (true == GameEngineInput::GetInst()->IsDown("Chatting_Del"))
 	{
 		// 채팅 입력창 활성화 시에만 아래 처리가능
 		if (true == TextInputOK_)
@@ -117,23 +115,24 @@ void TextArea::Update()
 				curcaretpos_ = static_cast<int>(lstrlen(InputText_.c_str()));
 				SIZE CurTextSize;
 				GetTextExtentPoint(GameEngine::BackBufferDC(), InputText_.c_str(), lstrlen(InputText_.c_str()), &CurTextSize);
-				SetCaretPos(GetPosition().ix(), GetPosition().iy());
+				SetCaretPos(GetPosition().ix() - 56  + CurTextSize.cx, GetPosition().iy() - 6);
 			}
 		}
 	}
+	
 }
 void TextArea::Render()
 {
 	if (!InputText_.empty())
 	{
-		TextOut(GameEngine::BackBufferDC(), 380.0f + 10.0f, 16.0f + 475.0f, InputText_.c_str(), lstrlen(InputText_.c_str()));
+		TextOut(GameEngine::BackBufferDC(), GetPosition().ix() - 56, GetPosition().iy() - 6, InputText_.c_str(), lstrlen(InputText_.c_str()));
 
 		if (true == caretshow_)
 		{
 			curcaretpos_ = static_cast<int>(lstrlen(InputText_.c_str()));
 			SIZE CurTextSize;
 			GetTextExtentPoint(GameEngine::BackBufferDC(), InputText_.c_str(), lstrlen(InputText_.c_str()), &CurTextSize);
-			SetCaretPos(GetPosition().ix(), GetPosition().iy());
+			SetCaretPos(GetPosition().ix() - 56 + CurTextSize.cx, GetPosition().iy() - 6);
 		}
 	}
 }

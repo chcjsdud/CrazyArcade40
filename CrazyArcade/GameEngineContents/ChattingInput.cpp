@@ -156,7 +156,7 @@ void ChattingInput::Update()
 	}
 
 	// 입력중인 채팅 문자열 마지막부터 삭제
-	if (true == GameEngineInput::GetInst()->IsPress("Chatting_Del"))
+	if (true == GameEngineInput::GetInst()->IsDown("Chatting_Del"))
 	{
 		// 채팅 입력창 활성화 시에만 아래 처리가능
 		if (true == ChattingInputOK_)
