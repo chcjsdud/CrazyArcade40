@@ -154,3 +154,7 @@ void LoginBackGround::Update()
 
 
 }
+
+void LoginBackGround::Render()
+{
+}
