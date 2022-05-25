@@ -298,8 +298,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
 				if (CenterPos_ != nullptr)
 				{
-					CenterPos_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
-					CenterPos_->Renderer->ChangeAnimation("Left2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
+	//				CenterPos_->Renderer->CreateAnimation("Left2.bmp", "Left2", 0, 1, 0.1f, true);
+	//				CenterPos_->Renderer->ChangeAnimation("Left2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
 					for (int i = 0 + IndexCount_; i < CenterPos_->MyRightWave_.size(); i++)
 					{
 						CenterPos_->MyLeftWave_.erase(CenterPos_->MyRightWave_.begin() + i);
@@ -443,8 +443,8 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
 				if (CenterPos_ != nullptr)
 				{
-					CenterPos_->Renderer->CreateAnimation("Right2.bmp", "Right2", 0, 1, 0.1f, true);
-					CenterPos_->Renderer->ChangeAnimation("Right2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
+//					CenterPos_->Renderer->CreateAnimation("Right2.bmp", "Right2", 0, 1, 0.1f, true);
+//					CenterPos_->Renderer->ChangeAnimation("Right2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
 					for (int i = 0 + IndexCount_; i < CenterPos_->MyLeftWave_.size(); i++)
 					{
 						CenterPos_->MyLeftWave_.erase(CenterPos_->MyLeftWave_.begin() + i);
@@ -584,8 +584,8 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
 				if (CenterPos_ != nullptr)
 				{
-					CenterPos_->Renderer->CreateAnimation("Down2.bmp", "Down2", 0, 1, 0.1f, true);
-					CenterPos_->Renderer->ChangeAnimation("Down2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
+			//		CenterPos_->Renderer->CreateAnimation("Down2.bmp", "Down2", 0, 1, 0.1f, true);
+			//		CenterPos_->Renderer->ChangeAnimation("Down2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
 					for (int i = 0 + IndexCount_; i < CenterPos_->MyUpWave_.size(); i++)
 					{
 						CenterPos_->MyUpWave_.erase(CenterPos_->MyUpWave_.begin() + i);
@@ -728,8 +728,8 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 				BlockTile* CenterPos_ = MapTile_->GetTile<BlockTile>(Tiles_->CenterWaveX_, Tiles_->CenterWaveY_);
 				if (CenterPos_ != nullptr)
 				{
-					CenterPos_->Renderer->CreateAnimation("Up2.bmp", "Up2", 0, 1, 0.1f, true);
-					CenterPos_->Renderer->ChangeAnimation("Up2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
+//					CenterPos_->Renderer->CreateAnimation("Up2.bmp", "Up2", 0, 1, 0.1f, true);
+//					CenterPos_->Renderer->ChangeAnimation("Up2");//¿ÞÂÊÀÌ¶û ºÎµúÇûÀ¸¸é ¿ÞÂÊ vector¾ø¾ÖÁÖ±â
 					for (int i = 0 + IndexCount_; i < CenterPos_->MyDownWave_.size(); i++)
 					{
 						CenterPos_->MyDownWave_.erase(CenterPos_->MyDownWave_.begin() + i);
