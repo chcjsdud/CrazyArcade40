@@ -29,6 +29,18 @@ void MapGameObject::Update()
 	DestroyBoom();
 }
 
+	BlockType MapGameObject::CheckTile(float4 _Pos) {
+		TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+		if (Tiles_ == nullptr)
+		{
+			return BlockType::Max;
+		}
+		else
+		{
+			return Tiles_->BlockType_;
+		}
+	}
 
 
 void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
