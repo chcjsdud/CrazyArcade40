@@ -120,6 +120,10 @@ bool KeyboardClass::IsCharsAutoRepeat()
 
 void KeyboardClass::DeleteCharBuffer()
 {
+	if (true == CharBufferIsEmpty())
+	{
+		return;
+	}
 	while (!CharBuffer.empty())
 	{
 		CharBuffer.pop();

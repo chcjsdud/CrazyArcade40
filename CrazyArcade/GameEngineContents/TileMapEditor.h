@@ -32,13 +32,14 @@ public:
 	{
 		MousePos = _Pos;
 	}
+
 	GameEngineRendererTileMap EditorTileMap_;
 
 private:
 	std::string LevelNameReturnToString();
 	std::string TileNameReturnToString();
-	GameEngineRenderer* MapBack;
 	MapGameObject* BlockSet;
+	GameEngineRenderer* MapBack;
 	float4 MousePos;
 	std::string RenderName_;
 	std::string LevelName_;

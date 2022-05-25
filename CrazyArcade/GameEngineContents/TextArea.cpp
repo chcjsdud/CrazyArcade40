@@ -46,13 +46,12 @@ void TextArea::Start()
 void TextArea::Update()
 {
 	// 마우스와 텍스트 입력창 충돌
-	if (true == TextAreaCollision_->CollisionCheck("MouseCol"))
+	
+	if (true == GameEngineInput::GetInst()->IsDown("LeftMouse")
+		&& true == TextAreaCollision_->CollisionCheck("MouseCol"))
 	{
-		if (true == GameEngineInput::GetInst()->IsDown("LeftMouse"))
-		{
-			KeyboardClass::GetInst().DeleteCharBuffer();
-			TextInputOK_ = true;
-
+		TextInputOK_ = true;
+		KeyboardClass::GetInst().DeleteCharBuffer();
 			// 캐럿 생성
 			if (false == caretshow_)
 			{
@@ -62,9 +61,7 @@ void TextArea::Update()
 				SetCaretBlinkTime(50);
 				SetCaretPos(GetPosition().ix() - 56, GetPosition().iy() - 6);
 			}
-		}
 	}
-
 	else
 	{
 		if (true == GameEngineInput::GetInst()->IsDown("LeftMouse"))
@@ -90,14 +87,17 @@ void TextArea::Update()
 
 		if (true == TextInputOK_)
 		{
-			while (!KeyboardClass::GetInst().CharBufferIsEmpty())
+			if (false == KeyboardClass::GetInst().CharBufferIsEmpty())
 			{
-				std::string SetStr = "";
-				unsigned char ReadChar = KeyboardClass::GetInst().ReadChar();
-				SetStr += ReadChar;
+				while (!KeyboardClass::GetInst().CharBufferIsEmpty())
+				{
+					std::string SetStr = "";
+					unsigned char ReadChar = KeyboardClass::GetInst().ReadChar();
+					SetStr += ReadChar;
 
-				AddText(SetStr);
-			}
+					AddText(SetStr);
+				}
+			}		
 		}
 		
 	}
@@ -120,6 +120,10 @@ void TextArea::Update()
 		}
 	}
 	
+	else
+	{
+		
+	}
 }
 void TextArea::Render()
 {

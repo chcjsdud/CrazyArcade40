@@ -10,8 +10,9 @@ TileMapEditor* TileMapEditor::MapEditorSet=nullptr;
 
 
 TileMapEditor::TileMapEditor()
-	:EditorTileMap_(nullptr),
-	LevelName_("CampLevel")
+	:EditorTileMap_(this),
+	LevelName_("Camp"),
+	RenderName_("Block1")
 {
 
 }
@@ -41,8 +42,8 @@ void TileMapEditor::Start()
 	Bush2= CreateRenderer("CampBush2.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Bush2->SetPivot({ 700,400 });
 
-	MapGameObject* BlockSet = GetLevel()->CreateActor<MapGameObject>();
-
+	BlockSet = GetLevel()->CreateActor<MapGameObject>();
+	BlockSet->SetMapTile(&EditorTileMap_);
 	//Stone= CreateRenderer("CampBox01.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	//Stone= CreateRenderer("CampBox01.bmp", static_cast<int>(ORDER::MAPOBJECT));
 
@@ -64,7 +65,8 @@ void TileMapEditor::Start()
 
 void TileMapEditor::Update()
 {
-	
+
+
 	if (true == GameEngineInput::GetInst()->IsDown("LeftMouseEditor"))
 	{
 		
@@ -105,7 +107,7 @@ void TileMapEditor::Update()
 		// 마우스 위치 MousePos
 		// bmp 이름은 LevelName_ + RenderName_ + " .bmp" 로
 		//이때 타일맵이 아니거나 이미 찍혀있는 타일일떄는 그냥 return해주어 아무일도 안일어나게 하기
-		BlockSet->SetMapTile(&EditorTileMap_);
+
 		BlockSet->CreateBlock(MousePos, LevelName_ + RenderName_);
 	}
 }

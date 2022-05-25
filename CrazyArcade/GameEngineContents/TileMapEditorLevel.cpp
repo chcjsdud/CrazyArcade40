@@ -20,7 +20,6 @@ void TileMapEditorLevel::Loading()
     
     TileMapEditor::MapEditorSet->GetRenderer()->SetImage("Camp_Back.bmp");
     TileMapEditor::MapEditorSet->GetRenderer()->SetPivot({ 320,280 });
-
     MouseSet = CreateActor<Mouse>();
     
     if (false == GameEngineInput::GetInst()->IsKey("CampMapCreate"))
