@@ -57,19 +57,7 @@ void Monster::Start()
 		BottomCol_ = CreateCollision("BottomCol", float4(10.0f, 10.0f), float4(0.0f, 50.0f));
 	}
 	
-	if (GetLevel()->GetNameCopy() == "CampLevel")
-	{
-		SetColMapImage("Camp_ColMap.bmp");
-	}
-	else if (GetLevel()->GetNameCopy() == "VillageLevel")
-	{
-		SetColMapImage("Village_Col.bmp");
-	}
-	else if (GetLevel()->GetNameCopy() == "CemetoryLevel")
-	{
-		SetColMapImage("Cemetory_ColMap.bmp");
-	}
-	else if (GetLevel()->GetNameCopy() == "Monster1Level")
+	if (GetLevel()->GetNameCopy() == "Monster1Level")
 	{
 		SetColMapImage("MonsterStage1_ColMap.bmp");
 	}
@@ -77,14 +65,11 @@ void Monster::Start()
 	{
 		SetColMapImage("MonsterStage2_ColMap.bmp");
 	}
-	else if (GetLevel()->GetNameCopy() == "BossLevel")
-	{
-		SetColMapImage("Boss_ColMap.bmp");
-	}
 	else
 	{
 		return;
 	}
+	
 
 	for (int x = 0; x < AreaWidth_; ++x)
 	{

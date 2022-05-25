@@ -115,12 +115,12 @@ public:
 		return HP_;
 	}
 
-	void SetSpeed(int _Speed)
+	void SetSpeed(float _Speed)
 	{
 		Speed_ = _Speed;
 	}
 
-	int GetSpeed()
+	float GetSpeed()
 	{
 		return Speed_;
 	}
