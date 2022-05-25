@@ -13,6 +13,7 @@ TileMapEditor::TileMapEditor()
 	:EditorTileMap_(nullptr),
 	LevelName_("CampLevel")
 {
+
 }
 
 TileMapEditor::~TileMapEditor() 
@@ -40,6 +41,8 @@ void TileMapEditor::Start()
 	Bush2= CreateRenderer("CampBush2.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Bush2->SetPivot({ 700,400 });
 
+	MapGameObject* BlockSet = GetLevel()->CreateActor<MapGameObject>();
+
 	//Stone= CreateRenderer("CampBox01.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	//Stone= CreateRenderer("CampBox01.bmp", static_cast<int>(ORDER::MAPOBJECT));
 
@@ -64,6 +67,7 @@ void TileMapEditor::Update()
 	
 	if (true == GameEngineInput::GetInst()->IsDown("LeftMouseEditor"))
 	{
+		
 		if (true == MoveBox1Col->CollisionCheck("MouseCol"))
 		{
 			RenderName_ = "MoveBox1";
@@ -96,12 +100,13 @@ void TileMapEditor::Update()
 
 	if (true == GameEngineInput::GetInst()->IsPress("LeftMouseEditor"))
 	{
-		MapGameObject* Block_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::BlOCK), "Block");
+		//MapGameObject* Block_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::BlOCK), "Block");
 		//블럭 찍기 함수
 		// 마우스 위치 MousePos
 		// bmp 이름은 LevelName_ + RenderName_ + " .bmp" 로
 		//이때 타일맵이 아니거나 이미 찍혀있는 타일일떄는 그냥 return해주어 아무일도 안일어나게 하기
-
+		BlockSet->SetMapTile(&EditorTileMap_);
+		BlockSet->CreateBlock(MousePos, LevelName_ + RenderName_);
 	}
 }
 
