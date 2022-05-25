@@ -4,6 +4,7 @@
 // Ό³Έν :
 class GameEngineRenderer;
 class GameEngineCollision;
+class MapGameObject;
 class TileMapEditor : public GameEngineActor
 {
 public:
@@ -37,6 +38,7 @@ private:
 	std::string LevelNameReturnToString();
 	std::string TileNameReturnToString();
 	GameEngineRenderer* MapBack;
+	MapGameObject* BlockSet;
 	float4 MousePos;
 	std::string RenderName_;
 	std::string LevelName_;
