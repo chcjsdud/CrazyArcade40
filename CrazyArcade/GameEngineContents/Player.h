@@ -156,7 +156,7 @@ public:
 	}
 
 protected:
-	BlockType CurBlockType_;
+
 	MapGameObject* Boom_;
 	MapGameObject* Wave_;
 	MapBackGround* MapBackGround_;
