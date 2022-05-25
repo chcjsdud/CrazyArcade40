@@ -1,4 +1,5 @@
 #include "LoginBackGround.h"
+#include "GlobalUIName.h"
 #include "TextArea.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineInput.h>
@@ -133,6 +134,17 @@ void LoginBackGround::Update()
 		}
 		else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
+			GlobalUIName::GetInst()->SetNickName_1(NickName_One_->GetText());
+			if (false == NickName_Two_->IsUpdate())
+			{
+				GlobalUIName::GetInst()->SetNickName_2("");
+			}
+			else {
+				GlobalUIName::GetInst()->SetNickName_2(NickName_Two_->GetText());
+			}
+			
+			NickName_One_->Off();
+			NickName_Two_->Off();
 			createRoomBackGround_->On();
 		}
 		else {
@@ -173,4 +185,32 @@ void LoginBackGround::Update()
 
 void LoginBackGround::Render()
 {
+}
+
+void LoginBackGround::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+	if (GlobalUIName::GetInst()->GetNickName_2ConstRef() != "")
+	{
+		LoginBackGroundRenderer_->SetImage("LoginUI_2P.bmp");
+		NickName_One_->SetPosition(float4(298.0f + 10.0f, 16.0f + 482.0f));
+		NickName_One_->On();
+		NickName_Two_->On();
+		Change1PRenderer_->SetPivot({ -345, 173 });
+		Change2PRenderer_->SetPivot({ 345, 173 });
+		Change1PCollision_->SetPivot({ -345, 173 });
+		Change2PCollision_->SetPivot({ 345, 173 });
+	}
+	else 
+	{
+		LoginBackGroundRenderer_->SetImage("LoginUI_1P.bmp");
+		NickName_One_->SetPosition(float4(442.0f + 10.0f, 16.0f + 482.0f));
+		NickName_One_->On();
+		NickName_Two_->Off();
+		createRoomBackGround_->Off();
+		Change1PRenderer_->SetPivot({ -208,173 });
+		Change2PRenderer_->SetPivot({ 208, 173 });
+		Change1PCollision_->SetPivot({ -208, 173 });
+		Change2PCollision_->SetPivot({ 208, 173 });
+	}
+
 }

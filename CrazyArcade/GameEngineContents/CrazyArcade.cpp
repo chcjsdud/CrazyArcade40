@@ -7,8 +7,9 @@
 #include <GameEngine/GameEngineLevel.h>
 
 
-#include "CrazyArcade.h"
 
+#include "CrazyArcade.h"
+#include "GlobalUIName.h"
 #include "IntroLevel.h"
 #include "TitleLevel.h"
 #include "LoginLevel.h"
@@ -439,4 +440,5 @@ void CrazyArcade::GameLoop()
 
 void CrazyArcade::GameEnd()
 {
+    GlobalUIName::Destroy();
 }

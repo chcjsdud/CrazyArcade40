@@ -35,6 +35,11 @@ public:
 	void Update() override;
 	void Render() override;
 
+
+	std::string GetText()
+	{
+		return InputText_;
+	}
 public:
 	void AddText(const std::string& _Text);
 };

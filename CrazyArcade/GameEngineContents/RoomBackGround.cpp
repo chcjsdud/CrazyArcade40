@@ -1,5 +1,6 @@
 #include "RoomBackGround.h"
 #include "ContentsEnum.h"
+#include "GlobalUIName.h"
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngine.h>
@@ -33,6 +34,9 @@ void RoomBackGround::Start()
 
 void RoomBackGround::Update()
 {
+	
+
+
 	if (true == BackBtnCollision_->CollisionCheck("MouseCol")) {
 
 		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
@@ -49,5 +53,12 @@ void RoomBackGround::Update()
 			GameEngineWindow::GetInst().Off();
 		}
 	}
+}
+
+void RoomBackGround::Render()
+{
+	SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
+	TextOut(GameEngine::BackBufferDC(), GetPosition().ix() - 56, GetPosition().iy() - 6, GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str(), lstrlen(GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str()));
+	TextOut(GameEngine::BackBufferDC(), GetPosition().ix() - 106, GetPosition().iy() - 6, GlobalUIName::GetInst()->GetNickName_2ConstRef().c_str(), lstrlen(GlobalUIName::GetInst()->GetNickName_2ConstRef().c_str()));
 }
 

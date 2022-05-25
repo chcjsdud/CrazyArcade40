@@ -25,6 +25,7 @@ private:
 	void Update() override;
 	void Render() override;
 
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 	TextArea* NickName_One_;
 	TextArea* NickName_Two_;
 
