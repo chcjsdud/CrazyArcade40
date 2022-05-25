@@ -29,19 +29,7 @@ void MapGameObject::Update()
 	DestroyBoom();
 }
 
-// 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
-BlockType MapGameObject::CheckTile(float4 _Pos) {
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
-	if (Tiles_ == nullptr)
-	{
-		return BlockType::Max;
-	}
-	else
-	{
-		return Tiles_->BlockType_;
-	}
-}
+
 
 void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 {

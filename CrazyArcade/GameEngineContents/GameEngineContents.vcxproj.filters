@@ -103,9 +103,6 @@
     <ClInclude Include="CreateRoomBackGround.h">
       <Filter>Actor\UI\RoomCreate</Filter>
     </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClInclude>
     <ClInclude Include="StartIntroUI.h">
       <Filter>Actor\UI\Play</Filter>
     </ClInclude>
@@ -122,6 +119,15 @@
     <ClInclude Include="MonsterRoomLevel.h" />
     <ClInclude Include="GameItemObject.h">
       <Filter>Actor\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Actor\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapEditor.h">
+      <Filter>Actor\Map\TileMapEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapEditorLevel.h">
+      <Filter>Level\TileMapEditorLevel</Filter>
     </ClInclude>
     <ClInclude Include="ChattingInput.h">
       <Filter>Actor\UI\Etc</Filter>
@@ -242,9 +248,6 @@
     <ClCompile Include="CreateRoomBackGround.cpp">
       <Filter>Actor\UI\RoomCreate</Filter>
     </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClCompile>
     <ClCompile Include="StartIntroUI.cpp">
       <Filter>Actor\UI\Play</Filter>
     </ClCompile>
@@ -274,6 +277,15 @@
     </ClCompile>
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Actor\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapEditor.cpp">
+      <Filter>Actor\Map\TileMapEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapEditorLevel.cpp">
+      <Filter>Level\TileMapEditorLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,9 +334,6 @@
     <Filter Include="Actor\UI\RoomCreate">
       <UniqueIdentifier>{61c51dcf-e1e9-4d12-9c53-b93473a15c22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\UI\Etc">
-      <UniqueIdentifier>{8b350e09-c2c8-49e5-a9de-9245a0de9cf3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\UI\Play">
       <UniqueIdentifier>{1e87fa18-9799-48aa-81c6-ecb1222944e1}</UniqueIdentifier>
     </Filter>
@@ -336,6 +345,15 @@
     </Filter>
     <Filter Include="Level\IntroLevel">
       <UniqueIdentifier>{517171fe-145b-47fd-94f0-048bb38a54a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Etc">
+      <UniqueIdentifier>{8b350e09-c2c8-49e5-a9de-9245a0de9cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Map\TileMapEditor">
+      <UniqueIdentifier>{c8e5a761-0f32-4e1e-ab91-f3ca44c14aba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\TileMapEditorLevel">
+      <UniqueIdentifier>{de1c8388-a91f-46ab-b38b-099b3a10b351}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

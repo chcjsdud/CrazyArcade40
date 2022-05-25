@@ -6,6 +6,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineLevel.h>
 
+
 #include "CrazyArcade.h"
 
 #include "IntroLevel.h"
@@ -26,7 +27,7 @@
 #include "RoomLevel.h"
 #include "MonsterRoomLevel.h"
 
-
+#include "TileMapEditorLevel.h"
 
 CrazyArcade::CrazyArcade()
 {
@@ -349,10 +350,9 @@ void CrazyArcade::GameInit()
     GameEngineImage* Fluid = GameEngineImageManager::GetInst()->Find("Fluid.bmp");
     Fluid->CutCount(6, 1);
 
-    //GameEngineImage* CampMoveBox2 = GameEngineImageManager::GetInst()->Find("CampMoveBox2.bmp");
-    //CampMoveBox2->CutCount(3, 1);
-
-
+    GameEngineImage* CampMoveBox2 = GameEngineImageManager::GetInst()->Find("CampMoveBox2.bmp");
+    CampMoveBox2->CutCount(3, 1);
+ 
 
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 
@@ -371,6 +371,7 @@ void CrazyArcade::GameInit()
         GameEngineInput::GetInst()->CreateKey("CampLevel", '4');
         GameEngineInput::GetInst()->CreateKey("VillageLevel", '5');
         GameEngineInput::GetInst()->CreateKey("LoginLevel", '6');
+        GameEngineInput::GetInst()->CreateKey("TileMapEditorLevel", '0');
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
 
@@ -379,7 +380,7 @@ void CrazyArcade::GameInit()
     //////시작부분
     CreateLevel<IntroLevel>("IntroLevel");
     CreateLevel<LoginLevel>("LoginLevel");
-    CreateLevel<TitleLevel>("TitleLevel");
+    CreateLevel<TitleLevel>("TitleLevel"); 
     //////결투맵 레벨
     CreateLevel<CampLevel>("CampLevel");
     CreateLevel<VillageLevel>("VillageLevel");
@@ -396,6 +397,8 @@ void CrazyArcade::GameInit()
     CreateLevel<PlayerTeamTest>("PlayerTeamTest");
     CreateLevel<UITeamTest>("UITeamTest");
 
+    CreateLevel<TileMapEditorLevel>("TileMapEditorLevel");
+
     ChangeLevel("TitleLevel");
 
 }
@@ -406,8 +409,7 @@ void CrazyArcade::GameLoop()
     {
         GameEngineLevel::IsDebugModeSwitch();
     }
-
-
+    
     if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
     {
         GameEngine::GetInst().ChangeLevel("MapTeamTest");
@@ -427,6 +429,10 @@ void CrazyArcade::GameLoop()
     if (true == GameEngineInput::GetInst()->IsDown("LoginLevel"))
     {
         GameEngine::GetInst().ChangeLevel("LoginLevel");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("TileMapEditorLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("TileMapEditorLevel");
     }
 }
 
