@@ -282,8 +282,41 @@ void Player::StagePixelCheck(float _Speed)
 	}
 }
 
-void Player::CollisionResultUpdate()
+void Player::TileCheckResultUpdate()
 {
+
+	if (nullptr != Boom_)
+	{
+		// 플레이어가 서있는 타일을 체크
+		CurBlockType_ = Boom_->CheckTile(MainPlayer_1->GetPosition());
+	}
+
+
+	switch (CurBlockType_)
+	{
+	case BlockType::WaveBlock:
+	{
+		ChangeState(PlayerState::Damaged);
+		return;
+	}
+	break;
+	case BlockType::BubbleBlock:
+	{
+		
+	}
+	break;
+	case BlockType::BushBlock:
+	{
+
+	}
+	break;
+	case BlockType::ItemBlock:
+	{
+
+	}
+	break;
+
+	}
 
 }
 
@@ -419,18 +452,16 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("1PRight", VK_RIGHT);
 		GameEngineInput::GetInst()->CreateKey("1PUp", VK_UP);
 		GameEngineInput::GetInst()->CreateKey("1PDown", VK_DOWN);
-
-		// =============== 1P 공격 ===============
 		GameEngineInput::GetInst()->CreateKey("1PAttack", VK_SPACE);
+		GameEngineInput::GetInst()->CreateKey("1PItem", VK_HANGUL);
 
 		// =============== 2P 이동 ===============
 		GameEngineInput::GetInst()->CreateKey("2PLeft", 'A');
 		GameEngineInput::GetInst()->CreateKey("2PRight", 'D');
 		GameEngineInput::GetInst()->CreateKey("2PUp", 'W');
 		GameEngineInput::GetInst()->CreateKey("2PDown", 'S');
-
-		// =============== 2P 공격 ===============
 		GameEngineInput::GetInst()->CreateKey("2PAttack", VK_LSHIFT);
+		GameEngineInput::GetInst()->CreateKey("2PItem", VK_LCONTROL);
 
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
@@ -449,6 +480,8 @@ void Player::Update()
 
 	PlayerStateUpdate();
 	PlayerCollisionUpdate();
+
+	TileCheckResultUpdate();
 
 	DirAnimationCheck();
 
@@ -507,6 +540,26 @@ bool Player::IsAttackKey()
 	else
 	{
 		if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Player::IsItemKey()
+{
+	if (Type == PlayerType::Player1)
+	{
+		if (true == GameEngineInput::GetInst()->IsDown("1PItem"))
+		{
+			return true;
+		}
+	}
+	else
+	{
+		if (true == GameEngineInput::GetInst()->IsDown("2PItem"))
 		{
 			return true;
 		}
