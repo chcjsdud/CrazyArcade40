@@ -71,13 +71,13 @@ public:
 	}
 
 	BlockType CheckTile(float4 _Pos);
+	void CreateBlock(float4 _Pos, std::string _Box);
 	void BubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power);
 protected:
 	void Start() override;
 	void Update() override;
 private:
-
 	std::vector<BlockTile*> AllBlockTiles_;
 	std::vector<BlockTile*> WaveBlockTiles_;
 	std::vector<BlockTile*> BoomBlockTiles_;

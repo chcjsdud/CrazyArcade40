@@ -41,6 +41,7 @@ void CampLevel::Loading()
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
 	bubble_->CreateBoom({ 10,10 }, 3);
 	bubble_->CreateBoom({ 10,50 }, 3);
+	//bubble_->CreateBlock({ 200,380 },"CampBox01");
 	//bubble_->CreateBoom({ 200,380 }, 3);
 	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
 

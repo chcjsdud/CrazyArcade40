@@ -43,6 +43,48 @@ BlockType MapGameObject::CheckTile(float4 _Pos) {
 	}
 }
 
+void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Check != nullptr)
+	{
+		return;
+	}
+	BlockTile* Block_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::MAPOBJECT));
+	Block_->BlockType_ = BlockType::FixBlock;
+	Block_->Renderer = CreateRenderer();
+	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y });
+	if (_Box == "CampBox01")
+	{
+		Block_->Renderer->SetImage("CampBox01.bmp");
+	}
+	else if (_Box == "CampBox02")
+	{
+		Block_->Renderer->SetImage("CampBox02.bmp");
+	}
+	else if (_Box == "CampBush01")
+	{
+		Block_->Renderer->SetImage("CampBush01.bmp");
+	}
+	else if (_Box == "CampBush02")
+	{
+		Block_->Renderer->SetImage("CampBush02.bmp");
+	}
+	else if (_Box == "CampMoveBox")
+	{
+		Block_->Renderer->SetImage("CampMoveBox.bmp");
+	}
+	else if (_Box == "CampMoveBox2")
+	{
+		Block_->Renderer->SetImage("CampMoveBox2.bmp");
+	}
+
+	AllBlockTiles_.push_back(Block_);
+}
+
+
 void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
