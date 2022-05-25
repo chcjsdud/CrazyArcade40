@@ -90,10 +90,12 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	else if (_Box == "CampBush1")
 	{
 		Block_->Renderer->SetImage("CampBush1.bmp");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 10.0f });
 	}
 	else if (_Box == "CampBush2")
 	{
 		Block_->Renderer->SetImage("CampBush2.bmp");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y -10.0f});
 	}
 	else if (_Box == "CampMoveBox1")
 	{
@@ -117,7 +119,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_1");
 		Block_->BlockHp_ = 3; 
 	}
-	else if (_Box == "TownBush")
+	else if (_Box == "CampTownBush")
 	{
 		Block_->Renderer->CreateAnimation("TownBush.bmp", "TownBush", 0, 4, 0.1f, true);
 		Block_->Renderer->ChangeAnimation("TownBush");
