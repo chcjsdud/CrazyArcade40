@@ -1,5 +1,5 @@
 #include "ChattingHistory.h"
-
+#include "GlobalUIName.h"
 #include "ContentsEnum.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineInput.h>
@@ -51,10 +51,10 @@ ChattingHistory::ChattingHistory(ChattingHistory&& _other) noexcept :
 
 void ChattingHistory::Start()
 {
-	chattingHisBoxSpriteRender_ = CreateRenderer("Lobby_ChattingHis", static_cast<int>(UIType::Time));
+	//chattingHisBoxSpriteRender_ = CreateRenderer("Lobby_ChattingHis", static_cast<int>(UIType::Time));
 	//chattingHisBoxSpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 390.f));
 	//chattingHisBoxSpriteRender_->SetRenderSize(float4(1260.f, 250.f));
-	chattingHisBoxSpriteRender_->CameraEffectOff();
+	//chattingHisBoxSpriteRender_->CameraEffectOff();
 }
 
 
@@ -66,6 +66,7 @@ void ChattingHistory::Update()
 
 void ChattingHistory::Render()
 {
+	
 
 	size_t HistCnt = historychatt_.size();
 	if (0 < HistCnt)
@@ -75,12 +76,27 @@ void ChattingHistory::Render()
 		int Index = 0;
 		for (; StartIter != EndIter; ++StartIter)
 		{
-			std::string CurHistoryChatt = hostname_;
+			std::string CurHistoryChatt = GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str();
+			if (GlobalUIName::GetInst()->GetNickName_2ConstRef() != "")
+			{
+				CurHistoryChatt += ", ";
+				CurHistoryChatt += GlobalUIName::GetInst()->GetNickName_2ConstRef().c_str();
+			}
 			CurHistoryChatt += " : ";
 			CurHistoryChatt += (*StartIter);
-			TextOut(GameEngine::BackBufferDC(), 20, 400 + (Index * 18), CurHistoryChatt.c_str(), lstrlen(CurHistoryChatt.c_str()));
+			SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);
+
+			TextOut(GameEngine::BackBufferDC(), 20, 404 + (Index * 18), CurHistoryChatt.c_str(), lstrlen(CurHistoryChatt.c_str()));
 
 			++Index;
 		}
+	}
+}
+
+void ChattingHistory::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+	if (!historychatt_.empty())
+	{
+		historychatt_.clear();
 	}
 }

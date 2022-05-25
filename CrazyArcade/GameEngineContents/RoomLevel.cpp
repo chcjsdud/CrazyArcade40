@@ -1,4 +1,6 @@
 #include "RoomLevel.h"
+#include "ChattingInput.h"
+#include "ChattingHistory.h"
 #include "Mouse.h"
 #include "MapChoiceUI.h"
 #include "ContentsEnum.h"
@@ -23,6 +25,8 @@ void RoomLevel::Loading()
 	CreateActor<StartButton>((int)UIType::PopUpButton);
 	CreateActor<RoomCharaterSelectUI>((int)UIType::PopUpButton);
 	CreateActor<MapChoiceUI>((int)UIType::PopUpButton);
+	CreateActor<ChattingInput>((int)UIType::PopUpButton);
+	CreateActor<ChattingHistory>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 
 }
@@ -33,6 +37,7 @@ void RoomLevel::Update()
 }
 void RoomLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+	SetTextColor(GameEngine::BackBufferDC(), RGB(0, 0,0));
 	ShowCursor(false);
 }
 

@@ -109,7 +109,7 @@ void LoginBackGround::Update()
 		{
 			LoginBackGroundRenderer_->SetImage("LoginUI_2P.bmp");
 			NickName_One_->SetPosition(float4(298.0f + 10.0f, 16.0f + 482.0f));
-			NickName_One_->Off();
+			NickName_One_->On();
 			NickName_Two_->On();
 			Change1PRenderer_->SetPivot({ -345, 173 });
 			Change2PRenderer_->SetPivot({ 345, 173 });

@@ -34,4 +34,6 @@ public:
 	virtual void Start() override;
 	virtual void Update() override;
 	virtual void Render() override;
+
+	void LevelChangeStart(GameEngineLevel* _PrevLevel);
 };
