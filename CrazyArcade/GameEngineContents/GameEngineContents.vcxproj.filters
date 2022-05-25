@@ -123,6 +123,15 @@
     <ClInclude Include="GameItemObject.h">
       <Filter>Actor\Map</Filter>
     </ClInclude>
+    <ClInclude Include="ChattingInput.h">
+      <Filter>Actor\UI\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="ChattingHistory.h">
+      <Filter>Actor\UI\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="TextArea.h">
+      <Filter>Actor\UI\Etc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -253,6 +262,15 @@
     <ClCompile Include="MonsterRoomLevel.cpp" />
     <ClCompile Include="GameItemObject.cpp">
       <Filter>Actor\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingInput.cpp">
+      <Filter>Actor\UI\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
+      <Filter>Actor\UI\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="TextArea.cpp">
+      <Filter>Actor\UI\Etc</Filter>
     </ClCompile>
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play\Player</Filter>

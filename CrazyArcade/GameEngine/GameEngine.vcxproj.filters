@@ -35,6 +35,12 @@
     <ClInclude Include="GameEngineFont.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="KeyboardClass.h">
+      <Filter>KeyBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardEvent.h">
+      <Filter>KeyBoard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -68,6 +74,12 @@
     <ClCompile Include="GameEngineFont.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="KeyboardClass.cpp">
+      <Filter>KeyBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardEvent.cpp">
+      <Filter>KeyBoard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -90,6 +102,9 @@
     </Filter>
     <Filter Include="Contents">
       <UniqueIdentifier>{20b92071-b3cb-4b03-94a0-409172801c5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KeyBoard">
+      <UniqueIdentifier>{f35b143b-d5f6-42f2-980b-7a7775a16b1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

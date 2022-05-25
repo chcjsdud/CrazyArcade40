@@ -196,6 +196,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineRendererTileMap.h" />
+    <ClInclude Include="KeyboardClass.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="KeyboardEvent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -230,6 +238,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineRendererTileMap.cpp" />
+    <ClCompile Include="KeyboardClass.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KeyboardEvent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">

@@ -1,5 +1,6 @@
 #include "GameEngine.h"
 #include <GameEngineBase/GameEngineWindow.h>
+#include <GameEngine/KeyboardClass.h>
 #include "GameEngineLevel.h"
 #include "GameEngineImageManager.h"
 #include <GameEngineBase/GameEngineInput.h>
@@ -143,6 +144,7 @@ void GameEngine::EngineEnd()
 
     GameEngineSound::AllResourcesDestroy();
     GameEngineImageManager::Destroy();
+    KeyboardClass::Destory();
     GameEngineInput::Destroy();
     GameEngineTime::Destroy();
     GameEngineWindow::Destroy();

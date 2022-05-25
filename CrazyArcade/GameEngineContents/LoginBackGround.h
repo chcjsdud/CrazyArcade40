@@ -22,6 +22,7 @@ protected:
 private:
 	void Start() override;
 	void Update() override;
+	void Render() override;
 
 	GameEngineRenderer* LoginBackGroundRenderer_;
 
