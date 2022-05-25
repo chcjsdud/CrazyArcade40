@@ -99,10 +99,10 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("CampMoveBox1.bmp");
 	}
-	else if (_Box == "CampMoveBox2_1")
+	else if (_Box == "CampMoveBox2_3")
 	{
-		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_1", 2, 2, 0.0f, false);
-		Block_->Renderer->ChangeAnimation("CampMoveBox2_1");
+		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 2, 2, 0.0f, false);
+		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
 		Block_->BlockHp_ = 1;
 	}
 	else if (_Box == "CampMoveBox2_2")
@@ -111,17 +111,17 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_2");
 		Block_->BlockHp_ = 2;
 	}
-	else if (_Box == "CampMoveBox2_3")
+	else if (_Box == "CampMoveBox2_1")
 	{
-		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 0, 0, 0.0f, false);
-		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
+		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_1", 0, 0, 0.0f, false);
+		Block_->Renderer->ChangeAnimation("CampMoveBox2_1");
 		Block_->BlockHp_ = 3; 
 	}
 	else if (_Box == "TownBush")
 	{
 		Block_->Renderer->CreateAnimation("TownBush.bmp", "TownBush", 0, 4, 0.1f, true);
 		Block_->Renderer->ChangeAnimation("TownBush");
-		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
 	}
 
 
