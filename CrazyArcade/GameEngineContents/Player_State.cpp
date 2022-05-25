@@ -6,7 +6,7 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
-#include <GameEngine/GameEngineLevel.h> 
+#include <GameEngine/GameEngineLevel.h>
 #include "MapGameObject.h"
 #include "MapBackGround.h"
 
@@ -48,18 +48,26 @@ void Player::AttackStart()
 
 void Player::DamagedStart()
 {
+	AnimationName_ = "Damaged_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::RevivalStart()
 {
+	AnimationName_ = "Revival_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::FadeStart()
 {
+	AnimationName_ = "Fade_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::DieStart()
 {
+	AnimationName_ = "Die_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::IdeOwlStart()
@@ -104,18 +112,6 @@ void Player::IdleUpdate()
 		return;
 	}
 
-	//if (true == GameEngineInput::GetInst()->IsDown("1PAttack"))
-	//{
-	//	ChangeState(PlayerState::Attack);
-	//	return;
-	//}
-
-	//if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
-	//{
-	//	ChangeState(PlayerState::Attack);
-	//	return;
-	//}
-
 	if (true == IsAttackKey())
 	{
 		ChangeState(PlayerState::Attack);
@@ -152,9 +148,9 @@ void Player::AttackUpdate()
 	
 	if (Type == PlayerType::Player1)
 	{
-		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom->SetMapTile(MapTile_);
-		Boom->CreateBoom(MainPlayer_1->GetPosition() - float4({25,30}), 3);
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->SetMapTile(MapTile_);
+		Boom_->CreateBoom(MainPlayer_1->GetPosition() - float4({25,30}), 3);
 
 		//BlockType block = Boom->CheckTile(MainPlayer_1->GetPosition());
 		//체크타일이 웨이브면 -> Damaged
@@ -166,9 +162,9 @@ void Player::AttackUpdate()
 	
 	if (Type == PlayerType::Player2)
 	{
-		MapGameObject* Boom = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom->SetMapTile(MapTile_);
-		Boom->CreateBoom(MainPlayer_2->GetPosition(), 3);
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->SetMapTile(MapTile_);
+		Boom_->CreateBoom(MainPlayer_2->GetPosition(), 3);
 	}
 
 	if (true == IsMoveKey())
@@ -181,14 +177,44 @@ void Player::AttackUpdate()
 
 void Player::DamagedUpdate()
 {
+	if (true == IsItemKey())
+	{
+		ChangeState(PlayerState::Revival);
+		return;
+	}
+
+	if (4.f < GetAccTime())
+	{
+		ChangeState(PlayerState::Die);
+		return;
+	}
 }
 
-void Player::RevivalUpdate()
+void Player::RevivalUpdate() 
 {
+	if (PlayerAnimationRender_->IsEndAnimation())
+	{
+		ChangeState(PlayerState::Idle);
+		return;
+	}
 }
 
 void Player::FadeUpdate()
 {
+
+	if (true == IsItemKey())
+	{
+		ChangeState(PlayerState::Revival);
+		return;
+	}
+
+	// 1.5초 후 -> Die
+	if (1.5f < GetAccTime())
+	{
+		ChangeState(PlayerState::Die);
+		return;
+	}
+
 }
 
 void Player::DieUpdate()

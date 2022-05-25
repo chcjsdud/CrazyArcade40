@@ -139,6 +139,7 @@ protected:
 
 	bool IsMoveKey();
 	bool IsAttackKey();
+	bool IsItemKey();
 
 private:
 	//블럭 체크하는 함수
@@ -155,6 +156,7 @@ public:
 	}
 
 protected:
+	BlockType CurBlockType_;
 	MapGameObject* Boom_;
 	MapGameObject* Wave_;
 	MapBackGround* MapBackGround_;
@@ -205,7 +207,7 @@ protected:
 	void ColMapUpdate();
 	void StagePixelCheck(float _Speed);
 
-	void CollisionResultUpdate();
+	void TileCheckResultUpdate();
 
 	void PlayerCollisionUpdate();
 
