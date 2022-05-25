@@ -29,23 +29,44 @@ void MapGameObject::Update()
 	DestroyBoom();
 }
 
-	BlockType MapGameObject::CheckTile(float4 _Pos) {
-		TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-		BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
-		if (Tiles_ == nullptr)
-		{
-			return BlockType::Max;
-		}
-		else
-		{
-			return Tiles_->BlockType_;
-		}
+BlockType MapGameObject::CheckTile(float4 _Pos) {
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	if (0 > TileIndex_.X)
+	{
+		return BlockType::NoBlock;
+	}
+	if (0 > TileIndex_.Y)
+	{
+		return BlockType::NoBlock;
+	}
+	if (15 < TileIndex_.X)
+	{
+		return BlockType::NoBlock;
+	}
+	if (13 < TileIndex_.Y)
+	{
+		return BlockType::NoBlock;
+	}
+
+	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_ == nullptr)
+	{
+		return BlockType::Max;
+	}
+	else
+	{
+		return Tiles_->BlockType_;
+	}
 	}
 
 
 void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 {
-	CheckTile(_Pos);
+	if (BlockType::NoBlock == CheckTile(_Pos))
+	{
+		return;
+	}
+
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
