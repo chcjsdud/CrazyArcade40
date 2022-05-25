@@ -8,15 +8,11 @@
 #include <vector>
 
 Boss::Boss()
-    : Monster()
-    , StartMove_(false)
-    , MoveTime_(0.0f)
-    , BossState_(BossState::IDLE)
-    , Player_(nullptr)
-    , WaterTime_(0.0f)
-    , PlayerIndex_(5)
-    , SettingTime_(5.0f)
-    , RollTime_(0.0f)
+	: Monster()
+	, PlayerIndex_(4)
+	, RollTime_(0.0f)
+	, WaterTime_(0.0f)
+	, AttTime_(0.0f)
 {
 }
 
@@ -26,33 +22,62 @@ Boss::~Boss()
 
 void Boss::Start()
 {
-    AreaHeight_ = 3;
-    AreaWidth_ = 3;
-    Monster::Start();
+	// 이미지
+	Renderer_ = CreateRenderer("Monster.bmp");
+	GameEngineImage* Image = Renderer_->GetImage();
+	Image->CutCount(10, 7);
+	Renderer_->CreateAnimation("Monster.bmp", "Idle", 24, 25, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 26, 27, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 40, 41, 0.2f, true);
+	// Need to chk : MoveUp 이미지
+	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 0, 1, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 24, 25, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Die1", 35, 36, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Die2", 37, 38, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 28, 28, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "WaterAttack", 29, 30, 0.2f, true); // 물주기
+	Renderer_->CreateAnimation("Monster.bmp", "RollAttack", 31, 34, 0.2f, true); // 구르기
+	Renderer_->ChangeAnimation("MoveRight");
+	Dir_ = float4::RIGHT;
+	Direction_ = "Right";
+	CenterCol_ = CreateCollision("Monster", float4(50.0f, 50.0f), float4(0.0f, 0.0f));
+	CenterCol_->SetScale(float4(130.0, 150.0f));
+	CenterCol_->SetPivot(float4(0.0f, -50.0f));
 
-    Renderer_ = CreateRenderer("Monster.bmp");
-    GameEngineImage* Image = Renderer_->GetImage();
-    Image->CutCount(10, 7);
-    Renderer_->CreateAnimation("Monster.bmp", "Idle", 24, 25, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "WalkRight", 26, 27, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "WalkLeft", 40, 41, 0.2f, true);
-    // Need to chk : MoveUp 이미지
-    Renderer_->CreateAnimation("Monster.bmp", "WalkUp", 0, 1, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "WalkDown", 24, 25, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "Die1", 35, 36, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "Die2", 37, 38, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 28, 28, 0.2f, true);
-    Renderer_->CreateAnimation("Monster.bmp", "BubbleAttack", 29, 30, 0.2f, true); // 물주기
-    Renderer_->CreateAnimation("Monster.bmp", "RollAttack", 31, 34, 0.2f, true); // 구르기
-    Renderer_->ChangeAnimation("Idle");
-    Dir_ = float4::ZERO;
-    CenterCol_->SetScale(float4(130.0, 150.0f));
-    CenterCol_->SetPivot(float4(0.0f, -50.0f));
+	// ColMap
+	if (GetLevel()->GetNameCopy() == "BossLevel")
+	{
+		SetColMapImage("Boss_ColMap.bmp");
+	}
+	else
+	{
+		return;
+	}
 
-    Index_ = 3;
-    SetMonsterClass(MonsterClass::BOSS);
-    SetHP(150);
-    SetSpeed(50); // Need to chk : Speed
+	// 상태
+	SetMonsterClass(MonsterClass::BOSS);
+	SetHP(150);
+	SetSpeed(50); // Need to chk : Speed
+
+	// Index 설정
+	AreaHeight_ = 3;
+	AreaWidth_ = 3;
+
+	for (int x = 0; x < AreaWidth_; ++x)
+	{
+		for (int y = 0; y < AreaHeight_; ++y)
+		{
+			float StartX = (MapSizeX_ / AreaWidth_ * x) + 20;
+			float StartY = (MapSizeY_ / AreaHeight_ * y) + 40;
+			float EndX = (MapSizeX_ / AreaWidth_ * (x + 1)) + 20;
+			float EndY = (MapSizeY_ / AreaHeight_ * (y + 1)) + 40;
+
+			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
+			Areas_.push_back(area);
+		}
+	}
+
+	Index_ = 3; // 시작 Index를
 }
 
 void Boss::Render()
@@ -61,248 +86,292 @@ void Boss::Render()
 
 void Boss::Update()
 {
-    //UpdateDirection();
-    //SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
-
-    /// 연습코드
-
-    WaterTime_ += GameEngineTime::GetDeltaTime();
-    MoveTime_ += GameEngineTime::GetDeltaTime();
-    RollTime_ += GameEngineTime::GetDeltaTime();
-
-    // TODO  주석 풀기
-    UpdateState();
-    UpdateMove();
-    Die();
-    StateUpdate();
+	AttTime_ += GameEngineTime::GetDeltaTime();
+	WaterTime_ += GameEngineTime::GetDeltaTime();
+	RollTime_ += GameEngineTime::GetDeltaTime();
+	StayIdleTime_ += GameEngineTime::GetDeltaTime();
+	UpdateDirection();
+	UpdateAttack();
+	UpdateMove();
 }
 
 void Boss::UpdateMove()
 {
-    SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_); // 지정한 방향으로 움직인다.
+	SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 }
 
-void Boss::UpdateState()
+void Boss::UpdateDirection()
 {
-    //if (GetHP() > 5)
-    //{
-		SettingTime_ = 5.0f;
-        
-        if (WaterTime_ > 2.0f &&
-            BossState_ == BossState::BUBBLEATTACK)
-        {
-            SetState(BossState::IDLE);
-        }
+	int PrevIndex_ = Index_; // 이전 인덱스 저장
+	bool IsAreaChanged = false;
 
-        if (RollTime_ > 10.0f &&
-            BossState_ == BossState::ROLLATTACK)
-        {
-            Dir_ = float4::ZERO;
-            SetState(BossState::IDLE);
-        }
-        
-        if (MoveTime_ > 5.0f &&
-            (BossState_ != BossState::ROLLATTACK &&
-            BossState_ != BossState::BUBBLEATTACK)) // 5초마다 몬스터와 내 위치를 비교한다.
-        {
-            for (int i = 0; i < Areas_.size(); ++i)
-            {
-                Area& NewArea = Areas_[i];
-                if (true == NewArea.Contains(Player_->GetPosition()))
-                {
-                    PlayerIndex_ = i;
-                }
-                if (true == NewArea.Contains(GetPosition()))
-                {
-                    Index_ = i;
-                }
-            }
-        }
+	for (int i = 0; i < Areas_.size(); ++i)
+	{
+		Area& NewArea = Areas_[i];
+		if (true == NewArea.InCenter(GetPosition()))
+		{
+			if (PrevIndex_ != i)
+			{
+				Index_ = i;
+				IsAreaChanged = true;
+			}
+		}
+	}
 
-        //// 벽에 닿았을 때
-        std::vector<GameEngineCollision*> WallCollision;
-        if ((RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(-25.0f, 0.0f)) ||
-            RGB(0, 0, 0) == ColMapImage_->GetImagePixel(GetPosition() + float4(25.0f, 0.0f))) &&
-            GetState() != BossState::IDLE)
-        {
-            if (true == SameYLine())
-            {
-                PlayerPos_ = Player_->GetPosition(); // Player의 위치를 파악한다.
-                if (PlayerPos_.x - GetPosition().x > 0) // 플레이어가 나보다 오른쪽에 있으면
-                {
-                    Dir_ = float4::RIGHT;
-                    Direction_ = "Right";
-                }
-                else // 플레이어가 나보다 왼쪽에 있으면
-                {
-                    Dir_ = float4::LEFT;
-                    Direction_ = "Left";
-                }
-                SetState(BossState::ROLLATTACK);
-                RollTime_ = 0.0f;
-            }
-        }
+	if (IsAreaChanged == true)
+	{
+		if (Dir_.x == 1) // 오른쪽으로 가고 있고
+		{
+			int EastIndex = Index_ + AreaHeight_;
+			int NorthIndex = Index_ - 1;
+			if (Index_ < 6)
+			{
+				EastArea = Areas_[EastIndex];
+				if (true == EastArea.HasWall()) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 있으면 내려가라
+				{
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
+					Renderer_->ChangeAnimation("MoveDown");
+				}
 
-        if (PlayerIndex_ != Index_)
-        {
-            if (MoveTime_ > SettingTime_)
-            {
-                if (true == SameXLine()) // 같은 세로줄에 있으면
-                {
-                    PlayerPos_ = Player_->GetPosition(); // Player의 위치를 파악
-                    if (PlayerPos_.y - GetPosition().y > 0) // 플레이어가 나보다 아래에 있으면
-                    {
-                        Dir_ = float4::DOWN;
-                        Direction_ = "Down";
-                    }
-                    else // 플레이어가 나보다 위에 있으면
-                    {
-                        Dir_ = float4::UP;
-                        Direction_ = "Up";
-                    }
-                    SetState(BossState::WALK);
-                }
-                else if (true == SameYLine()) // 같은 가로줄에 있으면
-                {
-                    PlayerPos_ = Player_->GetPosition(); // Player의 위치를 파악한다.
-                    if (PlayerPos_.x - GetPosition().x > 0) // 플레이어가 나보다 오른쪽에 있으면
-                    {
-                        Dir_ = float4::RIGHT;
-                        Direction_ = "Right";
-                    }
-                    else // 플레이어가 나보다 왼쪽에 있으면
-                    {
-                        Dir_ = float4::LEFT;
-                        Direction_ = "Left";
-                    }
-                    SetState(BossState::WALK);
-                }
-                else // 같은 세로줄도 가로줄도 아니면 물풍선 공격
-                {
-					Dir_ = float4::ZERO;
-                    WaterTime_ = 0.0f;
-					SetState(BossState::BUBBLEATTACK); // 물풍선 공격
-                }
-            }
-        }
+			}
+			else // 몬스터의 위치가 맵의 제일 오른쪽이면 내려가라
+			{
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
+				Renderer_->ChangeAnimation("MoveDown");
+			}
+		}
 
-        //if (PlayerIndex_ == BossIndex_)
-        //{
-        //    Dir_ = float4::ZERO;
-        //    WaterTime_ = 0.0f;
-        //    SetState(BossState::BUBBLEATTACK); // 물풍선 공격
-        //}
+		else if (Dir_.x == -1) // 왼쪽으로 가고 있고
+		{
+			int WestIndex = Index_ - AreaHeight_;
+			int SouthIndex = Index_ + 1;
+			if (Index_ >= 3)
+			{
+				WestArea = Areas_[WestIndex];
+				if (true == WestArea.HasWall()) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
+				{
+					Dir_ = float4::UP;
+					Direction_ = "Up";
+					Renderer_->ChangeAnimation("MoveUp");
+				}
+			}
 
-    if (MoveTime_ > SettingTime_)
-    {
-        MoveTime_ = 0.0f;
-    }
+			else // 몬스터의 위치가 제일 왼쪽이면 올라가라
+			{
+				Dir_ = float4::UP;				
+				Direction_ = "Up";
+				Renderer_->ChangeAnimation("MoveUp");
+			}
+		}
+
+		else if (Dir_.y == 1) // 아래로 내려가고 있고
+		{
+			int SouthIndex = Index_ + 1;
+			int EastIndex = Index_ + AreaHeight_;
+			if (Index_ % 3 != 2) // 몬스터의 위치가 맨 아래가 아니고, 아래에 장애물이 있으면 왼쪽으로 가라
+			{
+				SouthArea = Areas_[SouthIndex];
+				if (true == SouthArea.HasWall())
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+					Renderer_->ChangeAnimation("MoveLeft");
+				}
+			}
+			else // 몬스터의 위치가 맨 아래면 왼쪽으로 가라
+			{
+				Dir_ = float4::LEFT;
+				Direction_ = "Left";
+				Renderer_->ChangeAnimation("MoveLeft");
+			}
+		}
+
+		else if (Dir_.y == -1) // 위로 가고 있고
+		{
+			int NorthIndex = Index_ - 1;
+			int WestIndex = Index_ - AreaHeight_;
+			if (Index_ % 3 != 0) // 몬스터의 위치가 맨 위가 아니고, 위에 장애물이 있으면 오른쪽으로 가라
+			{
+				NorthArea = Areas_[NorthIndex];
+				if (true == NorthArea.HasWall())
+				{
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
+					Renderer_->ChangeAnimation("MoveRight");
+				}
+			}
+			else // 몬스터의 위치가 맨 위면 오른쪽으로 가라
+			{
+				Dir_ = float4::RIGHT;
+				Direction_ = "Right";
+				Renderer_->ChangeAnimation("MoveRight");
+			}
+		}
+	}
+}
+
+void Boss::UpdateAttack()
+{
+	if ((Renderer_->IsAnimationName("RollAttack") && RollTime_ > 8) ||
+		(Renderer_->IsAnimationName("WaterAttack") && WaterTime_ > 3))
+	{
+		AttTime_ = 0.0f;
+		if (Index_ == 0 || Index_ == 3)
+		{
+			Dir_ = float4::RIGHT;
+			Direction_ = "Right";
+			Renderer_->ChangeAnimation("MoveRight");
+		}
+
+		else if (Index_ == 6 || Index_ == 7)
+		{
+			Dir_ = float4::DOWN;
+			Direction_ = "Down";
+			Renderer_->ChangeAnimation("MoveDown");
+		}
+
+		else if (Index_ == 8 || Index_ == 5)
+		{
+			Dir_ = float4::LEFT;
+			Direction_ = "Left";
+			Renderer_->ChangeAnimation("MoveLeft");
+		}
+
+		else if (Index_ == 1 || Index_ == 2 || Index_ == 4)
+		{
+			Dir_ = float4::UP;
+			Direction_ = "Up";
+			Renderer_->ChangeAnimation("MoveUp");
+		}
+	}
+
+	if (AttTime_ > 4.0f && true == Renderer_->IsAnimationName("Move" + Direction_))
+	{
+		StayIdleTime_ = 0.0f;
+		Dir_ = float4::ZERO;
+		Renderer_->ChangeAnimation("Idle");
+	}
+
+	if (StayIdleTime_ > 1.0f && Renderer_->IsAnimationName("Idle"))
+	{
+		for (int i = 0; i < Areas_.size(); ++i)
+		{
+			Area& NewArea = Areas_[i]; // 플레이어의 Index와 내 Index 비교
+			if (true == NewArea.Contains(Player_->GetPosition()))
+			{
+				PlayerIndex_ = i;
+			}
+			if (true == NewArea.Contains(GetPosition()))
+			{
+				Index_ = i;
+			}
+		}
+
+		CheckIndex_ = PlayerIndex_ - Index_;
+
+		if (true == SameYLine()) // 같은 세로줄에 있으면
+		{
+			if (CheckIndex_ > 0)
+			{
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
+				Renderer_->ChangeAnimation("MoveDown");
+			}
+			else // 플레이어가 나보다 위에 있으면
+			{
+				Dir_ = float4::UP;
+				Direction_ = "Up";
+				Renderer_->ChangeAnimation("MoveUp");
+			}
+		}
+		else if (true == SameXLine())
+		{
+			if (Index_ == 3 || Index_ == 4 || Index_ == 5)
+			{
+				if (CheckIndex_ < 0)
+				{
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
+					Renderer_->ChangeAnimation("MoveRight");
+				}
+				else // 플레이어가 나보다 왼쪽에 있으면
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+					Renderer_->ChangeAnimation("MoveLeft");
+				}
+			}
+
+			else if (Index_ != 3 || Index_ != 4 || Index_ != 5)
+			{
+				if (CheckIndex_ > 0)
+				{
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
+					Renderer_->ChangeAnimation("RollAttack");
+				}
+				else // 플레이어가 나보다 왼쪽에 있으면
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+					Renderer_->ChangeAnimation("RollAttack");
+				}
+				RollTime_ = 0.0f;
+			}
+		}
+
+		else // 같은 세로줄도 가로줄도 아니면 물풍선 공격
+		{
+			WaterTime_ = 0.0f;
+			Renderer_->ChangeAnimation("WaterAttack");
+		}
+	}
+
+}
+
+bool Boss::SameYLine() // 세로줄
+{
+	if (PlayerIndex_ < 3 && Index_ < 3)
+	{
+		return true;
+	}
+
+	else if (PlayerIndex_ >= 3 && Index_ >= 3 &&
+		PlayerIndex_ < 6 && Index_ < 6)
+	{
+		return true;
+	}
+
+	else if (PlayerIndex_ >= 6 && Index_ >= 6 &&
+		PlayerIndex_ < 9 && Index_ < 9)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+void Boss::RollAttack()
+{
+}
+
+void Boss::WaterAttack()
+{
 }
 
 
-void Boss::SetState(BossState _BossState)
+bool Boss::SameXLine() // 가로줄
 {
-    BossState_ = _BossState;
-    switch (BossState_)
-    {
-    case BossState::IDLE:
-        Renderer_->ChangeAnimation("Idle");
-        break;
-    case BossState::WALK:
-        Renderer_->ChangeAnimation("Walk" + Direction_);
-        break;
-    case BossState::BUBBLEATTACK:
-        Renderer_->ChangeAnimation("BubbleAttack");
-        break;
-    case BossState::ROLLATTACK:
-        Renderer_->ChangeAnimation("RollAttack");
-        break;
-    case BossState::TAKEDAMAGE:
-        Renderer_->ChangeAnimation("TakeDamage");
-        break;
-    }
-}
+	int Offset = PlayerIndex_ - Index_;
+	if (Offset < 0)
+	{
+		Offset = Offset * -1;
+	}
 
-void Boss::StateUpdate()
-{
-    switch (BossState_)
-    {
-    case BossState::IDLE:
-        UpdateIdle();
-        break;
-    case BossState::WALK:
-        UpdateWalk();
-        break;
-    case BossState::BUBBLEATTACK:
-        UpdateBubbleAttack();
-        break;
-    case BossState::ROLLATTACK:
-        UpdateRollAttack();
-        break;
-    case BossState::TAKEDAMAGE:
-        UpdateTakeDamage();
-        break;
-    case BossState::DIE:
-        UpdateDie();
-        break;
-    }
-}
-
-void Boss::UpdateIdle()
-{
-}
-
-void Boss::UpdateWalk()
-{
-}
-
-void Boss::UpdateBubbleAttack()
-{
-}
-
-void Boss::UpdateRollAttack()
-{
-}
-
-void Boss::UpdateTakeDamage()
-{
-   // Monster::TakeDamage();
-}
-
-void Boss::UpdateDie()
-{
-}
-
-bool Boss::SameXLine() // 세로줄
-
-{
-    if (PlayerIndex_ < 3 && Index_ < 3) 
-    {
-        return true;
-    }
-
-    else if (PlayerIndex_ >= 3 && Index_ >= 3 &&
-        PlayerIndex_ < 6 && Index_ < 6)
-    {
-        return true;
-    }
-
-    else if (PlayerIndex_ >= 6 && Index_ >= 6 &&
-        PlayerIndex_ < 9 && Index_ < 9)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-bool Boss::SameYLine() // 가로줄
-{
-    int Offset = PlayerIndex_ - Index_;
-    if (Offset < 0)
-    {
-        Offset = Offset * -1;
-    }
-    // 같은 라인에 있다.
-    return Offset % 3 == 0;
+	return Offset % 3 == 0;
 }

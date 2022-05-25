@@ -33,16 +33,16 @@
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster1.h">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Monster2.h">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
     <ClInclude Include="ContentsEnum.h" />
@@ -92,7 +92,7 @@
       <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="Area.h">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="RoomBackGround.h">
       <Filter>Actor\UI\Room</Filter>
@@ -180,16 +180,16 @@
       <Filter>Level\PlayLevel\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Boss.cpp">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster1.cpp">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Monster2.cpp">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp">
       <Filter>Level\IntroLevel</Filter>
@@ -234,7 +234,7 @@
       <Filter>Actor\UI</Filter>
     </ClCompile>
     <ClCompile Include="Area.cpp">
-      <Filter>Actor\Play\Player\Monster</Filter>
+      <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="RoomCharaterSelectUI.cpp">
       <Filter>Actor\UI\Room</Filter>
@@ -301,9 +301,6 @@
     <Filter Include="Actor">
       <UniqueIdentifier>{6f1effb0-18fa-419e-9443-cd76c33b3c95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play">
-      <UniqueIdentifier>{b7fee2e0-7ea1-40ee-9140-b6de1e23d85f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Map">
       <UniqueIdentifier>{46e09254-661a-478b-abba-f355aaaab1d5}</UniqueIdentifier>
     </Filter>
@@ -325,9 +322,6 @@
     <Filter Include="Level\TestLevel">
       <UniqueIdentifier>{15c289d0-3a3a-4d6e-8b15-a6b59ef04e03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\Player">
-      <UniqueIdentifier>{dc4135af-0179-4215-8ef7-920fd4d2c8b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level\UILevel">
       <UniqueIdentifier>{e9ee14d2-e4c2-477e-8fe6-2be990508e95}</UniqueIdentifier>
     </Filter>
@@ -346,11 +340,17 @@
     <Filter Include="Actor\UI\MapChoice">
       <UniqueIdentifier>{5df733e4-9135-47d2-91eb-49c84a202e22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\Player\Monster">
-      <UniqueIdentifier>{ea085e4f-b567-4902-b075-40eb65f5331a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level\IntroLevel">
       <UniqueIdentifier>{517171fe-145b-47fd-94f0-048bb38a54a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play">
+      <UniqueIdentifier>{b7fee2e0-7ea1-40ee-9140-b6de1e23d85f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\Player">
+      <UniqueIdentifier>{dc4135af-0179-4215-8ef7-920fd4d2c8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\Monster">
+      <UniqueIdentifier>{ea085e4f-b567-4902-b075-40eb65f5331a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Actor\Etc">
       <UniqueIdentifier>{8b350e09-c2c8-49e5-a9de-9245a0de9cf3}</UniqueIdentifier>

@@ -9,6 +9,8 @@
 #include "Player.h"
 
 BossLevel::BossLevel()
+	: ColMapImage_(nullptr)
+	, MapBackGround_(nullptr)
 {
 
 }
@@ -31,10 +33,10 @@ void BossLevel::Loading()
 		{
 			for (int y = 0; y < 3; ++y)
 			{
-				float StartX = (600 / 3 * x) + 20;
-				float StartY = (520 / 3 * y) + 40;
-				float EndX = (600 / 3 * (x + 1)) + 20;
-				float EndY = (520 / 3 * (y + 1)) + 40;
+				float StartX = float(600.0 / 3.0 * x) + float(20.0);
+				float StartY = float(520.0/ 3.0 * y) + float(40.0);
+				float EndX = float(600.0 / 3.0 * (x + 1)) + float(20.0);
+				float EndY = float(520.0 / 3.0 * (y + 1)) + float(40.0);
 
 				Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 				Areas_.push_back(area);
