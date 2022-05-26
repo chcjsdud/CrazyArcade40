@@ -141,7 +141,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		return;
 	}
 	BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
-	Boom_->BlockType_ = BlockType::BubbleBlock;
+	Boom_->BlockType_ = BlockType::CenterBubbleBlock;
 	Boom_->Renderer = CreateRenderer();
 	Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
 	Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
