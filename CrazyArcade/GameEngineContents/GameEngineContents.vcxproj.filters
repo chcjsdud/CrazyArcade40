@@ -115,8 +115,6 @@
     <ClInclude Include="ChoiceMap.h">
       <Filter>Actor\UI\MapChoice</Filter>
     </ClInclude>
-    <ClInclude Include="MapChoiceUI.h" />
-    <ClInclude Include="MonsterRoomLevel.h" />
     <ClInclude Include="GameItemObject.h">
       <Filter>Actor\Map</Filter>
     </ClInclude>
@@ -129,17 +127,26 @@
     <ClInclude Include="TileMapEditorLevel.h">
       <Filter>Level\TileMapEditorLevel</Filter>
     </ClInclude>
-    <ClInclude Include="ChattingInput.h">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClInclude>
-    <ClInclude Include="ChattingHistory.h">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClInclude>
     <ClInclude Include="TextArea.h">
-      <Filter>Actor\UI\Etc</Filter>
+      <Filter>Actor\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MapChoiceUI.h">
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="GlobalUIName.h">
-      <Filter>Actor\UI\Etc</Filter>
+      <Filter>Actor\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="ChattingHistory.h">
+      <Filter>Actor\UI\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="ChattingInput.h">
+      <Filter>Actor\UI\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterRoomLevel.h">
+      <Filter>Level\UILevel</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayResultUI.h">
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,26 +270,12 @@
     <ClCompile Include="ChoiceMap.cpp">
       <Filter>Actor\UI\MapChoice</Filter>
     </ClCompile>
-    <ClCompile Include="MapChoiceUI.cpp" />
     <ClCompile Include="CrazyArcade.cpp" />
-    <ClCompile Include="MonsterRoomLevel.cpp" />
     <ClCompile Include="GameItemObject.cpp">
       <Filter>Actor\Map</Filter>
     </ClCompile>
-    <ClCompile Include="ChattingInput.cpp">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClCompile>
-    <ClCompile Include="ChattingHistory.cpp">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClCompile>
-    <ClCompile Include="TextArea.cpp">
-      <Filter>Actor\UI\Etc</Filter>
-    </ClCompile>
     <ClCompile Include="Player_Bazzi.cpp">
       <Filter>Actor\Play\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalUIName.cpp">
-      <Filter>Actor\UI\Etc</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>Actor\Etc</Filter>
@@ -292,6 +285,27 @@
     </ClCompile>
     <ClCompile Include="TileMapEditorLevel.cpp">
       <Filter>Level\TileMapEditorLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TextArea.cpp">
+      <Filter>Actor\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="MapChoiceUI.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUIName.cpp">
+      <Filter>Actor\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingInput.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterRoomLevel.cpp">
+      <Filter>Level\UILevel</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayResultUI.cpp">
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

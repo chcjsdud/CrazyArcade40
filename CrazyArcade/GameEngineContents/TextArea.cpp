@@ -45,6 +45,7 @@ void TextArea::Start()
 
 void TextArea::Update()
 {
+	SetTextColor(GameEngine::BackBufferDC(), RGB(0, 0, 0));
 	// 마우스와 텍스트 입력창 충돌
 	
 	if (true == GameEngineInput::GetInst()->IsDown("LeftMouse")
@@ -129,6 +130,7 @@ void TextArea::Render()
 {
 	if (!InputText_.empty())
 	{
+		SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);
 		TextOut(GameEngine::BackBufferDC(), GetPosition().ix() - 56, GetPosition().iy() - 6, InputText_.c_str(), lstrlen(InputText_.c_str()));
 
 		if (true == caretshow_)

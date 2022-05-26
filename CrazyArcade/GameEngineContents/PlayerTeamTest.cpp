@@ -20,6 +20,7 @@
 #include "PlayBackGround.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
+#include "PlayResultUI.h"
 
 PlayerTeamTest::PlayerTeamTest()
 {
@@ -40,9 +41,10 @@ void PlayerTeamTest::Loading()
 	//Player::MainPlayer_1->Off();
 	//Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
-	CreateActor<StartIntroUI>(21);
-	CreateActor<TimeUI>(22);
-	CreateActor<Mouse>(23);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<Mouse>((int)UIType::Mouse);
+	//CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
 
 	{
 		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor ¸¸µé°í

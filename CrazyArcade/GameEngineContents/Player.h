@@ -144,6 +144,7 @@ protected:
 private:
 	//블럭 체크하는 함수
 	BlockType CheckBlockTile(float4 _Pos);
+	BlockType CurBlockType_;
 public:
 	MapGameObject* GetBoom()
 	{

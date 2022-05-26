@@ -18,6 +18,7 @@ ChoiceMap::~ChoiceMap()
 
 void ChoiceMap::Start()
 {
+	LevelRegist("ChoiceMap");
 	SetPosition(GameEngineWindow::GetScale().Half());
 	ChoiceMapRenderer_ = CreateRenderer((int)UIType::PopScreen);
 	ChoiceMapRenderer_1 = CreateRenderer((int)UIType::PopScreenButton, RenderPivot::CENTER, float4{ -178.0f,0.0f });

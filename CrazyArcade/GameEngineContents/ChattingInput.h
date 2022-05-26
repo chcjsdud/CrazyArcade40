@@ -39,6 +39,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
+
 public:
 	void AddText(const std::string& _Text);
 };

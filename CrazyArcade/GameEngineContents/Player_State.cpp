@@ -207,6 +207,9 @@ void Player::DamagedUpdate()
 		return;
 	}
 
+	Move();
+	StagePixelCheck(0.05f);
+
 	//if (4.f < Time)
 	//{
 	//	ChangeState(PlayerState::Die);
@@ -238,6 +241,9 @@ void Player::FadeUpdate()
 		ChangeState(PlayerState::Die);
 		return;
 	}
+
+	Move();
+	StagePixelCheck(0.05f);
 
 }
 

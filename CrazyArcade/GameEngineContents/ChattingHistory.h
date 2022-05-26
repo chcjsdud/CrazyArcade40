@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 
-#define MAX_CHATTINGHISTORY 13
+#define MAX_CHATTINGHISTORY 6
 
 
 class GameEngineRenderer;
@@ -34,4 +34,6 @@ public:
 	virtual void Start() override;
 	virtual void Update() override;
 	virtual void Render() override;
+
+	void LevelChangeStart(GameEngineLevel* _PrevLevel);
 };
