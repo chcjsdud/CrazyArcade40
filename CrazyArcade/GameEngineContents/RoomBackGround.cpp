@@ -57,8 +57,6 @@ void RoomBackGround::Update()
 
 void RoomBackGround::Render()
 {
-	SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
-	TextOut(GameEngine::BackBufferDC(), GetPosition().ix() - 56, GetPosition().iy() - 6, GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str(), lstrlen(GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str()));
-	TextOut(GameEngine::BackBufferDC(), GetPosition().ix() - 106, GetPosition().iy() - 6, GlobalUIName::GetInst()->GetNickName_2ConstRef().c_str(), lstrlen(GlobalUIName::GetInst()->GetNickName_2ConstRef().c_str()));
+	
 }
 

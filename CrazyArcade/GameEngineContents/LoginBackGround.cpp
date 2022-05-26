@@ -57,12 +57,12 @@ void LoginBackGround::Start()
 
 
 	NickName_One_ = GetLevel()->CreateActor<TextArea>((int)UIType::Time);
-	NickName_One_->TextAreaInit({ 150.0f, 23.0f }, 15);
+	NickName_One_->TextAreaInit({ 150.0f, 23.0f }, 13);
 	NickName_One_->SetPosition(float4(442.0f + 10.0f, 16.0f + 482.0f));
 	NickName_One_->On();
 
 	NickName_Two_ = GetLevel()->CreateActor<TextArea>((int)UIType::Time);
-	NickName_Two_->TextAreaInit({ 150.0f, 23.0f }, 15);
+	NickName_Two_->TextAreaInit({ 150.0f, 23.0f }, 13);
 	NickName_Two_->SetPosition(float4(582.0f + 10.0f, 16.0f + 482.0f));
 	NickName_Two_->Off();
 }
@@ -140,9 +140,13 @@ void LoginBackGround::Update()
 			if (false == NickName_Two_->IsUpdate())
 			{
 				GlobalUIName::GetInst()->SetNickName_2("");
+				GlobalUIName::GetInst()->On1P();
+				GlobalUIName::GetInst()->Off2P();
 			}
 			else {
 				GlobalUIName::GetInst()->SetNickName_2(NickName_Two_->GetText());
+				GlobalUIName::GetInst()->On1P();
+			    GlobalUIName::GetInst()->On2P();
 			}
 			
 			NickName_One_->Off();

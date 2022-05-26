@@ -181,16 +181,19 @@ void ChattingInput::Update()
 
 void ChattingInput::Render()
 {
-	if (!InputText_.empty())
+	if (false == GetLevel()->FindActor("ChoiceMap")->IsUpdate())
 	{
-		TextOut(GameEngine::BackBufferDC(), 180 + 10, 16 + 510, InputText_.c_str(), lstrlen(InputText_.c_str()));
-
-		if (true == caretshow_)
+		if (!InputText_.empty())
 		{
-			curcaretpos_ = static_cast<int>(lstrlen(InputText_.c_str()));
-			SIZE CurTextSize;
-			GetTextExtentPoint(GameEngine::BackBufferDC(), InputText_.c_str(), lstrlen(InputText_.c_str()), &CurTextSize);
-			SetCaretPos(180 + 10 + CurTextSize.cx, 510 + 16);
+			TextOut(GameEngine::BackBufferDC(), 180 + 10, 16 + 510, InputText_.c_str(), lstrlen(InputText_.c_str()));
+
+			if (true == caretshow_)
+			{
+				curcaretpos_ = static_cast<int>(lstrlen(InputText_.c_str()));
+				SIZE CurTextSize;
+				GetTextExtentPoint(GameEngine::BackBufferDC(), InputText_.c_str(), lstrlen(InputText_.c_str()), &CurTextSize);
+				SetCaretPos(180 + 10 + CurTextSize.cx, 510 + 16);
+			}
 		}
 	}
 }
