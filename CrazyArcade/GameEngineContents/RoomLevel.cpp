@@ -3,6 +3,7 @@
 #include "ChattingHistory.h"
 #include "Mouse.h"
 #include "MapChoiceUI.h"
+#include "RoomNickName.h"
 #include "ContentsEnum.h"
 #include "RoomBackGround.h"
 #include "RoomCharaterSelectUI.h"
@@ -27,6 +28,7 @@ void RoomLevel::Loading()
 	CreateActor<MapChoiceUI>((int)UIType::PopUpButton);
 	CreateActor<ChattingInput>((int)UIType::PopUpButton);
 	CreateActor<ChattingHistory>((int)UIType::PopUpButton);
+	CreateActor<RoomNickName>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 
 }

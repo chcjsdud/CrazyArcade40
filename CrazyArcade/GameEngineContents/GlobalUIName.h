@@ -6,7 +6,7 @@ private:
 	static GlobalUIName* Inst_;
 
 public:
-	static GlobalUIName* GetInst()
+	inline static GlobalUIName* GetInst()
 	{
 		return Inst_;
 	}
@@ -48,14 +48,47 @@ public:
 	{
 		RoomName_ = _Name;
 	}
+
+	bool Is1pUpdate()
+	{
+		return Is1pUpdate_;
+	}
+
+	bool Is2pUpdate()
+	{
+		return Is2pUpdate_;
+	}
+
+	void On1P()
+	{
+		Is1pUpdate_ = true;
+	}
+	
+	void Off1P()
+	{
+		Is1pUpdate_ = false;
+	}
+	
+	void On2P()
+	{
+		Is2pUpdate_ = true;
+	}
+
+	void Off2P()
+	{
+		Is2pUpdate_ = false;
+	}
+
 private:
 	std::string NickName_1;
 	std::string NickName_2;
 	std::string RoomName_;
 
-	
+	bool Is1pUpdate_;
+	bool Is2pUpdate_;
 
-public:
+
+private:
 	//construcuter destructer
 	GlobalUIName();
 	~GlobalUIName();
