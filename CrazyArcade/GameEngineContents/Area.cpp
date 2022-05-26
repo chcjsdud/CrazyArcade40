@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineContents/MapGameObject.h>
 
 Area::Area(GameEngineImage* _ColMapImage, float _StartX, float _StartY, float _EndX, float _EndY)
     : StartX_(_StartX)
@@ -43,6 +44,11 @@ bool Area::HasWall()
     return false;
 }
 
+bool Area::HasBlock(float4 _Pos)
+{
+    return GetTile(_Pos) != nullptr;
+}
+
 bool Area::InCenter(float4 _Pos)
 {
     if (CenterX_ - 1 < _Pos.x && _Pos.x < CenterX_ + 1 &&
@@ -52,4 +58,24 @@ bool Area::InCenter(float4 _Pos)
     }
 
     return false;
+}
+
+bool Area::HasWaveTile(float4 _Pos)
+{
+    BlockTile* Tile_ = GetTile(_Pos);
+
+    return Tile_ != nullptr ?
+        Tile_->BlockType_ == BlockType::WaveBlock :
+        false;
+}
+
+BlockTile* Area::GetTile(float4 _Pos)
+{
+    if (MapTile_ == nullptr)
+    {
+        return nullptr;
+    }
+
+    TileIndex_ = MapTile_->GetTileIndex(_Pos);
+    return MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 }
