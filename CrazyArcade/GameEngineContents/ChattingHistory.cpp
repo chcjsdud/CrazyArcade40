@@ -85,8 +85,14 @@ void ChattingHistory::Render()
 			CurHistoryChatt += " : ";
 			CurHistoryChatt += (*StartIter);
 			SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);
-
-			TextOut(GameEngine::BackBufferDC(), 20, 404 + (Index * 18), CurHistoryChatt.c_str(), lstrlen(CurHistoryChatt.c_str()));
+			if (true == GetLevel()->FindActor("ChoiceMap")->IsUpdate())
+			{
+				TextOut(GameEngine::BackBufferDC(), 20, 409 + (Index * 18), CurHistoryChatt.c_str(), 15/* lstrlen(CurHistoryChatt.c_str())*/);
+			}
+			else
+			{
+				TextOut(GameEngine::BackBufferDC(), 20, 409 + (Index * 18), CurHistoryChatt.c_str(), lstrlen(CurHistoryChatt.c_str()));
+			}
 
 			++Index;
 		}
