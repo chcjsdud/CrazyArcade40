@@ -86,41 +86,41 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 
 	//////////////////////////////////////////Ä· ÇÁ///////////////////////////////////////////////
 
-	if (_Box == "CampBlock1")
+	if (_Box == "CAMPBLOCK1")
 	{
-		Block_->Renderer->SetImage("CAMPBLOCK1.BMP");
+		Block_->Renderer->SetImage("CampBlock1.BMP");
 	}
 	else if (_Box == "CAMPBLOCK2")
 	{
-		Block_->Renderer->SetImage("CAMPBLOCK2.BMP");
+		Block_->Renderer->SetImage("CampBlock2.BMP");
 	}
-	else if (_Box == "CampBush1")
+	else if (_Box == "CAMPBUSH1")
 	{
 		Block_->Renderer->SetImage("CampBush1.bmp");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 10.0f });
 	}
-	else if (_Box == "CampBush2")
+	else if (_Box == "CAMPBUSH2")
 	{
 		Block_->Renderer->SetImage("CampBush2.bmp");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y -10.0f});
 	}
-	else if (_Box == "CampMoveBox1")
+	else if (_Box == "CAMPMOVEBOX1")
 	{
 		Block_->Renderer->SetImage("CampMoveBox1.bmp");
 	}
-	else if (_Box == "CampMoveBox2_3")
+	else if (_Box == "CAMPMOVEBOX2_3")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 2, 2, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
 		Block_->BlockHp_ = 1;
 	}
-	else if (_Box == "CampMoveBox2_2")
+	else if (_Box == "CAMPMOVEBOX2_2")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_2", 1, 1, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_2");
 		Block_->BlockHp_ = 2;
 	}
-	else if (_Box == "CampMoveBox2_1")
+	else if (_Box == "CAMPMOVEBOX2_1")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_1", 0, 0, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_1");
@@ -129,66 +129,66 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 
 	//////////////////////////////////////////°øµ¿ ¹¦Áö///////////////////////////////////////////////
 
-	if (_Box == "CemotoryBlock1")
+	if (_Box == "CEMOTORYBLOCK1")
 	{
 		Block_->Renderer->SetImage("CemotoryBlock1.bmp");
 	}
-	else if (_Box == "CemotoryBlock2")
+	else if (_Box == "CEMOTORYBLOCK2")
 	{
 		Block_->Renderer->SetImage("CemotoryBlock2.bmp");
 	}
-	else if (_Box == "CemotoryBlock3")
+	else if (_Box == "CEMOTORYBLOCK3")
 	{
 		Block_->Renderer->SetImage("CemotoryBlock3.bmp");
 	}
-	else if (_Box == "CemotoryBlock4")
+	else if (_Box == "CEMOTORYBLOCK4")
 	{
 		Block_->Renderer->SetImage("CemotoryBlock4.bmp");
 	}
-	else if (_Box == "CemotoryBucket")
+	else if (_Box == "CEMOTORYBUCKET")
 	{
 		Block_->Renderer->SetImage("CemotoryBucket.bmp");
 	}
-	else if (_Box == "CemotoryMoveBox")
+	else if (_Box == "CEMOTORYMOVEBOX")
 	{
 		Block_->Renderer->SetImage("CemotoryMoveBox.bmp");
 	}
-	else if (_Box == "CemotoryPoket1")
+	else if (_Box == "CEMOTORYPOKET1")
 	{
 		Block_->Renderer->SetImage("CemotoryPoket1.bmp");
 	}
-	else if (_Box == "CemotoryPoket2")
+	else if (_Box == "CEMOTORYPOKET2")
 	{
 		Block_->Renderer->SetImage("CemotoryPoket2.bmp");
 	}
-	else if (_Box == "CemotoryPoket3")
+	else if (_Box == "CEMOTORYPOKET3")
 	{
 		Block_->Renderer->SetImage("CemotoryPoket3.bmp");
 	}
-	else if (_Box == "CemotoryPumpkin1")
+	else if (_Box == "CEMOTORYPUMPKIN1")
 	{
 		Block_->Renderer->SetImage("CemotoryPumpkin1.bmp");
 	}
-	else if (_Box == "CemotoryPumpkin2")
+	else if (_Box == "CEMOTORYPUMPKIN2")
 	{
 		Block_->Renderer->SetImage("CemotoryPumpkin2.bmp");
 	}
 	 
 	////////////////////////////////////////// ºô¸®Áö ///////////////////////////////////////////////
 
-	if (_Box == "VillageBlock1")
+	if (_Box == "VILLAGEBLOCK1")
 	{
 		Block_->Renderer->SetImage("VillageBlock1.bmp");
 	}
-	else if (_Box == "VillageBlock2")
+	else if (_Box == "VILLAGEBLOCK2")
 	{
 		Block_->Renderer->SetImage("VillageBlock2.bmp");
 	}
-	else if (_Box == "VillageBox1")
+	else if (_Box == "VILLAGEBOX1")
 	{
 		Block_->Renderer->SetImage("VillageBox1.bmp");
 	}
-	else if (_Box == "VillageBush")
+	else if (_Box == "VILLAGEBUSH")
 	{
 		Block_->Renderer->CreateAnimation("VillageBush.bmp", "VillageBush", 0, 4, 0.1f, true);
 		Block_->Renderer->ChangeAnimation("VillageBush");
@@ -197,39 +197,39 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 
 	////////////////////////////////////////// ¸ó½ºÅÍ ///////////////////////////////////////////////
 
-	if (_Box == "MonsterBasket")
+	if (_Box == "MONSTERBASKET")
 	{
 		Block_->Renderer->SetImage("MonsterBasket.bmp");
 	}
-	else if (_Box == "MonsterBlock1")
+	else if (_Box == "MONSTERBLOCK1")
 	{
 		Block_->Renderer->SetImage("MonsterBlock1.bmp");
 	}
-	else if (_Box == "MonsterBlock2")
+	else if (_Box == "MONSTERBLOCK2")
 	{
 		Block_->Renderer->SetImage("MonsterBlock2.bmp");
 	}
-	else if (_Box == "MonsterFlower1")
+	else if (_Box == "MONSTERFLOWER1")
 	{
 		Block_->Renderer->SetImage("MonsterFlower1.bmp");
 	}
-	else if (_Box == "MonsterFlower2")
+	else if (_Box == "MONSTERFLOWER2")
 	{
 		Block_->Renderer->SetImage("MonsterFlower2.bmp");
 	}
-	else if (_Box == "MonsterLeaf1")
+	else if (_Box == "MONSTERLEAF1")
 	{
 		Block_->Renderer->SetImage("MonsterLeaf1.bmp");
 	}
-	else if (_Box == "MonsterLeaf2")
+	else if (_Box == "MONSTERLEAF2")
 	{
 		Block_->Renderer->SetImage("MonsterLeaf2.bmp");
 	}
-	else if (_Box == "MonsterMushroom1")
+	else if (_Box == "MONSTERMUSHROOM1")
 	{
 		Block_->Renderer->SetImage("MonsterMushroom1.bmp");
 	}
-	else if (_Box == "MonsterMushroom2")
+	else if (_Box == "MONSTERMUSHROOM2")
 	{
 		Block_->Renderer->SetImage("MonsterMushroom2.bmp");
 	}
