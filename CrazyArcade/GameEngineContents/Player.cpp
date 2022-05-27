@@ -5,22 +5,23 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include "MapGameObject.h"
 #include "MapBackGround.h"
+#include "GameEngine/GameEngine.h"
 
 Player* Player::MainPlayer_1 = nullptr;
 Player* Player::MainPlayer_2 = nullptr;
 
 Player::Player()
-    : CurSpeed_(0.f)
+	: CurSpeed_(0.f)
 	, MaxSpeed_(0.f)
-    , CurAttPower_(0.f)   
-    , CurAttCount_(0)
+	, CurAttPower_(0.f)
+	, CurAttCount_(0)
 	, MaxAttPower_(0.f)
 	, MaxAttCount_(0)
-    , MoveDir(float4::ZERO)
-    , PlayerAnimationRender_(nullptr)
-    , CurState_(PlayerState::Idle)
+	, MoveDir(float4::ZERO)
+	, PlayerAnimationRender_(nullptr)
+	, CurState_(PlayerState::Idle)
 	, PrevState_(CurState_)
-    , CurDir_(PlayerDir::Down)
+	, CurDir_(PlayerDir::Down)
 	, Collision1P_(nullptr)
 	, Collision2P_(nullptr)
 	, Type(PlayerType::Max)
@@ -48,7 +49,7 @@ void Player::DebugModeSwitch()
 		GetLevel()->IsDebugModeOff();
 		IsDebug = false;
 	}
-	else if(true == GameEngineInput::GetInst()->IsDown("DebugMode") && false == IsDebug)
+	else if (true == GameEngineInput::GetInst()->IsDown("DebugMode") && false == IsDebug)
 	{
 		GetLevel()->IsDebugModeOn();
 		IsDebug = true;
@@ -78,7 +79,7 @@ void Player::Move()
 			{
 				MoveDir.x = -MovePos;
 			}
-			
+
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
 		{
@@ -97,7 +98,7 @@ void Player::Move()
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
 		{
-			
+
 			MoveDir.y = -MovePos;
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
@@ -174,7 +175,7 @@ void Player::AttackPowerUpdate()
 
 void Player::CharTypeUpdate()
 {
-	
+
 	switch (CurCharacter)
 	{
 	case Character::BAZZI:
@@ -191,7 +192,7 @@ void Player::CharTypeUpdate()
 		SetMaxAttCount(6);
 		SetMaxAttPower(70.f);
 	}
-		break;
+	break;
 	case Character::DAO:
 	{
 		DaoRenderer_->On();
@@ -209,7 +210,7 @@ void Player::CharTypeUpdate()
 	break;
 	}
 
-	
+
 
 }
 
@@ -262,23 +263,21 @@ void Player::ColMapUpdate()
 
 void Player::StagePixelCheck(float _Speed)
 {
-	float4 Pos = PlayerAnimationRender_->GetSortingPivot();
+	float4 LeftTopPos = GetPosition() + float4{ -19.f, -5.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightTopPos = GetPosition() + float4{ 19.f, -5.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 LeftBotPos = GetPosition() + float4{ -19.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightBotPos = GetPosition() + float4{ 19.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
-	float4 LeftPos = Pos + float4{ -20.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 RightPos = Pos + float4{ 20.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 UpPos = Pos + float4{ 0.f, -30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 DownPos = Pos + float4{ 0.f, 10.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-
-	int LeftColor = MapColImage_->GetImagePixel(LeftPos);
-	int RightColor = MapColImage_->GetImagePixel(RightPos);
-	int UpColor = MapColImage_->GetImagePixel(UpPos);
-	int DownColor = MapColImage_->GetImagePixel(DownPos);
+	int LeftTopColor = MapColImage_->GetImagePixel(LeftTopPos);
+	int RightTopColor = MapColImage_->GetImagePixel(RightTopPos);
+	int LeftBotColor = MapColImage_->GetImagePixel(LeftBotPos);
+	int RightBotColor = MapColImage_->GetImagePixel(RightBotPos);
 
 
-	if (RGB(0, 0, 0) != LeftColor
-		&& RGB(0, 0, 0) != RightColor
-		&& RGB(0, 0, 0) != UpColor
-		&& RGB(0, 0, 0) != DownColor)
+	if (RGB(0, 0, 0) != LeftTopColor
+		&& RGB(0, 0, 0) != RightTopColor
+		&& RGB(0, 0, 0) != LeftBotColor
+		&& RGB(0, 0, 0) != RightBotColor)
 	{
 		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
 	}
@@ -288,22 +287,22 @@ BlockType blockType_ = {};
 
 void Player::TileCheckResultUpdate()
 {
-	
+
 	if (Type == PlayerType::Player1)
 	{
-		float4 Pos = MainPlayer_1->PlayerAnimationRender_->GetSortingPivot() - float4{ 0.0f, 40.f };
-		CurBlockType_ = CheckBlockTile(Pos);
+		float4 Pos = MainPlayer_1->GetPosition();
+		CurBlockType_ = CheckBlockTile(Pos + float4{ -20.0f,-20.0f });
 
 		//CurBlockType_ = CurBlockPlayer1_;
 	}
-	
+
 	//if(Type == PlayerType::Player2)
 	//{
 	//	BlockType CurBlockPlayer2_ = CheckBlockTile(MainPlayer_2->GetPosition());
 
 	//	CurBlockType_ = CurBlockPlayer2_;
 	//}
-	
+
 
 
 
@@ -317,7 +316,8 @@ void Player::TileCheckResultUpdate()
 	break;
 	case BlockType::BubbleBlock:
 	{
-		
+		ChangeState(PlayerState::Damaged);
+		return;
 	}
 	break;
 	case BlockType::BushBlock:
@@ -353,10 +353,10 @@ void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void Player::Start()
 {
-	Collision1P_ = CreateCollision("1PColl", { 50.f, 50.f }, {0.f, -10.f});
+	Collision1P_ = CreateCollision("1PColl", { 50.f, 50.f }, { 0.f, 0.f });
 	Collision1P_->Off();
 
-	Collision2P_ = CreateCollision("2PColl", { 50.f, 50.f }, { 0.f, -10.f });
+	Collision2P_ = CreateCollision("2PColl", { 50.f, 50.f }, { 0.f, 0.f });
 	Collision2P_->Off();
 
 
@@ -370,17 +370,15 @@ void Player::Start()
 	// BAZZI
 	{
 		GameEngineImage* Bazzi1 = GameEngineImageManager::GetInst()->Find("Bazzi_1.bmp");
-		Bazzi1->CutCount(10, 9);
+		Bazzi1->CutCount(5, 18);
 		GameEngineImage* Bazzi2 = GameEngineImageManager::GetInst()->Find("Bazzi_2.bmp");
-		Bazzi2->CutCount(10, 2);
+		Bazzi2->CutCount(5, 2);
 		GameEngineImage* Bazzi3 = GameEngineImageManager::GetInst()->Find("Bazzi_3.bmp");
-		Bazzi3->CutCount(10, 2);
+		Bazzi3->CutCount(5, 4);
 
 		// 애니메이션
 
-		BazziRenderer_ = CreateRenderer();
-		BazziRenderer_->SetPivotType(RenderPivot::CENTER);
-		BazziRenderer_->SetPivot({ 0.f, 0.f });
+		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Ready_", 37, 53, 0.06f, false);
@@ -388,7 +386,7 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Right", 6, 6, 1.f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Up", 12, 12, 1.f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Idle_Down", 20, 20, 1.f, false);
-	
+
 		// Move
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Left", 1, 5, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Right", 7, 11, 0.1f, true);
@@ -396,18 +394,18 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Down", 21, 28, 0.1f, true);
 
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.2f, false);
-		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.5f, false);
-		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 10, 0.2f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Down", 6, 7, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Right", 10, 11, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Up", 12, 13, 0.09f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Down", 14, 15, 0.09f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
@@ -428,39 +426,39 @@ void Player::Start()
 		BazziRenderer_->Off();
 	}
 
-	
-
-	///////////// 테스트
-	{
-		DaoRenderer_ = CreateRenderer();
-		DaoRenderer_->SetPivotType(RenderPivot::BOT);
-		DaoRenderer_->SetPivot({ 0.f, 30.f });
-
-		GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Monster.bmp");
-		Left->CutCount(10, 7);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Left", 0, 1, 0.2f, true);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Right", 2, 3, 0.2f, true);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Up", 4, 5, 0.2f, true);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Down", 16, 17, 0.2f, true);
-
-		// Idle
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Left", 0, 0, 1.f, false);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Right", 0, 0, 1.f, false);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Down", 0, 0, 1.f, false);
-		DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Up", 0, 0, 1.f, false);
-
-		//DaoRenderer_->ChangeAnimation("Ready_Down");
-
-		//AnimationName_ = "Idle_";
-		DaoRenderer_->ChangeAnimation("Idle_Down");
-
-		DaoRenderer_->Off();
-	}
-	
 
 
+	/////////////// 테스트
+	//{
+	//	DaoRenderer_ = CreateRenderer();
+	//	DaoRenderer_->SetPivotType(RenderPivot::BOT);
+	//	DaoRenderer_->SetPivot({ 0.f, 30.f });
 
-	if(false == GameEngineInput::GetInst()->IsKey("1PLeft"))
+	//	GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Monster.bmp");
+	//	Left->CutCount(10, 7);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Left", 0, 1, 0.2f, true);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Right", 2, 3, 0.2f, true);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Up", 4, 5, 0.2f, true);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Down", 16, 17, 0.2f, true);
+
+	//	// Idle
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Left", 0, 0, 1.f, false);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Right", 0, 0, 1.f, false);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Down", 0, 0, 1.f, false);
+	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Up", 0, 0, 1.f, false);
+
+	//	//DaoRenderer_->ChangeAnimation("Ready_Down");
+
+	//	//AnimationName_ = "Idle_";
+	//	DaoRenderer_->ChangeAnimation("Idle_Down");
+
+	//	DaoRenderer_->Off();
+	//}
+
+
+
+
+	if (false == GameEngineInput::GetInst()->IsKey("1PLeft"))
 	{
 		// =============== 1P 이동 ===============
 		GameEngineInput::GetInst()->CreateKey("1PLeft", VK_LEFT);
@@ -505,6 +503,79 @@ void Player::Update()
 
 void Player::Render()
 {
+	std::string Posx = "";
+	std::string Posy = "";
+	std::string State = "";
+
+
+	Posx = "Pos x : " + std::to_string(GetPosition().ix());
+	Posy = "Pos y : " + std::to_string(GetPosition().iy());
+
+	if (CurState_ == PlayerState::Wait)
+	{
+		State = "STATE : Wait";
+	}
+	else if (CurState_ == PlayerState::Ready)
+	{
+		State = "STATE : Ready";
+	}
+	else if (CurState_ == PlayerState::Idle)
+	{
+		State = "STATE : Idle";
+	}
+	else if (CurState_ == PlayerState::Move)
+	{
+		State = "STATE : Move";
+	}
+	else if (CurState_ == PlayerState::Jump)
+	{
+		State = "STATE : Jump";
+	}
+	else if (CurState_ == PlayerState::Attack)
+	{
+		State = "STATE : Attack";
+	}
+	else if (CurState_ == PlayerState::Damaged)
+	{
+		State = "STATE : Damaged";
+	}
+	else if (CurState_ == PlayerState::Revival)
+	{
+		State = "STATE : Revival";
+	}
+	else if (CurState_ == PlayerState::Fade)
+	{
+		State = "STATE : Fade";
+	}
+	else if (CurState_ == PlayerState::Die)
+	{
+		State = "STATE : Die";
+	}
+	else if (CurState_ == PlayerState::IdleOwl)
+	{
+		State = "STATE : IdleOwl";
+	}
+	else if (CurState_ == PlayerState::IdleTurtle)
+	{
+		State = "STATE : IdleTurtle";
+	}
+	else if (CurState_ == PlayerState::RidingOwl)
+	{
+		State = "STATE : RidingOwl";
+	}
+	else if (CurState_ == PlayerState::RidingTurtle)
+	{
+		State = "STATE : RidingTurtle";
+	}
+	else if (CurState_ == PlayerState::RidingUFO)
+	{
+		State = "STATE : RidingUFO";
+	}
+	
+
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -30, Posx.c_str(), static_cast<int>(Posx.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -10, Posy.c_str(), static_cast<int>(Posy.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() +10, State.c_str(), static_cast<int>(State.length()));
 }
 
 bool Player::IsMoveKey()
@@ -587,7 +658,7 @@ void Player::ChangeState(PlayerState _State)
 	{
 		ReadyStart();
 		IsReady = false;
-		
+
 	}
 
 	if (CurState_ != _State)
@@ -720,7 +791,7 @@ void Player::DirAnimationCheck()
 			if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
 			{
 				CheckDir_ = PlayerDir::Left;
-				ChangeDirText_ = "Left";	
+				ChangeDirText_ = "Left";
 			}
 
 			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
@@ -770,7 +841,7 @@ void Player::DirAnimationCheck()
 			CurDir_ = CheckDir_;
 		}
 	}
-	
+
 }
 
 // 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.

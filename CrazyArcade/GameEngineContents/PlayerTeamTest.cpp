@@ -92,7 +92,7 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	//NewPlayer->SetPosition({ 500.f, 300.f });
 	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 100.f, 300.f });
+	Player::MainPlayer_1->SetPosition({ 100.f, 100.f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	

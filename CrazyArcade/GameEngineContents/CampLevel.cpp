@@ -39,19 +39,11 @@ void CampLevel::Loading()
 
 	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	bubble_->CreateBoom({ 10,10 }, 3);
-	bubble_->CreateBoom({ 10,50 }, 3);
-	bubble_->CreateBlock({ 200,380 },"CampBlock1");
-	bubble_->CreateBlock({ 240,380 }, "CampBlock2");
-	bubble_->CreateBlock({ 240,420 }, "CampBush1");
-	bubble_->CreateBlock({ 320,380 }, "CampBush2");
-	bubble_->CreateBlock({ 360,380 }, "CampMoveBox1");
-	bubble_->CreateBlock({ 360,280 }, "CampMoveBox2_3");
-
-	bubble_->CreateBlock({360,340 }, "CampMoveBox2_1");
+	bubble_->CreateBoom({ 40,40 }, 3);
 
 
-	bubble_->CreateBlock({ 360,240 }, "TownBush");
+	bubble_->CreateBoom({ 200,40 }, 3);
+
 	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
 
 

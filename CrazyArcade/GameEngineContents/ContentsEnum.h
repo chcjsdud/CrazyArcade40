@@ -20,7 +20,7 @@ enum class BlockType
 	BushBlock, // 플레이어가 들어갈 수 있는 타일
 	ItemBlock, // 아이템만 있는 타일
 	BubbleBlock,
-	CenterWaveBlock,// 물풍선있는 타일
+	BoomBlock,// 물풍선있는 타일
 	WaveBlock, //물풍선 터질때 생기는 타일
 	WallBlock,//안부서지는 타일
 	NoBlock,
