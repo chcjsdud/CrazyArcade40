@@ -4,6 +4,8 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngineBase/GameEngineDirectory.h>
+#include <GameEngineBase/GameEngineFile.h>
 
 TileMapEditor* TileMapEditor::MapEditorSet=nullptr;
 
@@ -93,6 +95,8 @@ void TileMapEditor::Start()
 	if (false == GameEngineInput::GetInst()->IsKey("LeftMouseEditor"))
 	{
 		GameEngineInput::GetInst()->CreateKey("LeftMouseEditor", VK_LBUTTON);
+		GameEngineInput::GetInst()->CreateKey("Save", 'K');
+		GameEngineInput::GetInst()->CreateKey("Load", 'L');
 	}
 }
 
@@ -213,8 +217,83 @@ void TileMapEditor::Update()
 		// 마우스 위치 MousePos
 		// bmp 이름은 LevelName_ + RenderName_ + " .bmp" 로
 		//이때 타일맵이 아니거나 이미 찍혀있는 타일일떄는 그냥 return해주어 아무일도 안일어나게 하기
-		
+	
 		BlockSet->CreateBlock(MousePos, LevelNameReturnToString() + RenderName_);
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("Save"))
+	{
+		GameEngineDirectory Dir;
+
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+
+		GameEngineFile SaveFile = (Dir.GetFullPath() + "\\Map1.MapData").c_str();
+
+		SaveFile.Open(OpenMode::Write);
+
+		int Size = static_cast<int>(EditorTileMap_.Tiles_.size());
+		SaveFile.Write(&Size, sizeof(int));
+
+		for (size_t y = 0; y < EditorTileMap_.Tiles_.size(); y++)
+		{
+			int XSize = static_cast<int>(EditorTileMap_.Tiles_[y].size());
+			SaveFile.Write(&XSize, sizeof(int));
+			for (size_t x = 0; x < EditorTileMap_.Tiles_[y].size(); x++)
+			{
+				BlockTile* Tile = EditorTileMap_.GetTile<BlockTile>(x, y);
+
+				if (nullptr == Tile)
+				{
+					std::string Name = "None";
+					SaveFile.Write(Name);
+					continue;
+				}
+
+				std::string Name = Tile->Renderer->GetImage()->GetNameConstPtr();
+				Name.replace(Name.size() - 4, 4, "");
+
+				SaveFile.Write(Name);
+
+			}
+		}
+	}
+
+
+	if (true == GameEngineInput::GetInst()->IsDown("Load"))
+	{
+		GameEngineDirectory Dir;
+
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\Map1.MapData").c_str();
+
+		LoadFile.Open(OpenMode::Read);
+
+		int Size = 0;
+		LoadFile.Read(&Size, sizeof(int));
+
+		for (size_t y = 0; y < Size; y++)
+		{
+			int XSize = 0;
+			LoadFile.Read(&XSize, sizeof(int));
+			for (size_t x = 0; x < XSize; x++)
+			{
+				std::string Name;
+				LoadFile.Read(Name);
+
+				if (Name == "None")
+				{
+					continue;
+				}
+
+				//                          5 7
+				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+			}
+		}
 	}
 }
 

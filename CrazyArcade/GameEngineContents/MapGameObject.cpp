@@ -1,6 +1,7 @@
 #include"MapGameObject.h"
 #include"GameItemObject.h"
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineBase/GameEngineString.h>
 #include <GameEngine/GameEngineRenderer.h>
 
 MapGameObject::MapGameObject()
@@ -62,6 +63,8 @@ BlockType MapGameObject::CheckTile(float4 _Pos) {
 
 void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 {
+	GameEngineString::ToUpper(_Box);
+
 	if (BlockType::NoBlock == CheckTile(_Pos))
 	{
 		return;
@@ -79,13 +82,13 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
 	
-	if (_Box == "CampBlock1")
+	if (_Box == "CAMPBLOCK1")
 	{
-		Block_->Renderer->SetImage("CampBlock1.bmp");
+		Block_->Renderer->SetImage("CAMPBLOCK1.BMP");
 	}
-	else if (_Box == "CampBlock2")
+	else if (_Box == "CAMPBLOCK2")
 	{
-		Block_->Renderer->SetImage("CampBlock2.bmp");
+		Block_->Renderer->SetImage("CAMPBLOCK2.BMP");
 	}
 	else if (_Box == "CampBush1")
 	{

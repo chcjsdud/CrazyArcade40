@@ -3,7 +3,9 @@
 #include "GameEngine.h"
 #include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineBase/GameEngineString.h>
 #include <GameEngineBase/GameEngineTime.h>
+
 
 // 
 // 11111111 00000000 11111111
@@ -43,7 +45,9 @@ void GameEngineRenderer::SetImageScale()
 
 void GameEngineRenderer::SetImage(const std::string& _Name)
 {
-	GameEngineImage* FindImage = GameEngineImageManager::GetInst()->Find(_Name);
+	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+
+	GameEngineImage* FindImage = GameEngineImageManager::GetInst()->Find(UpperName);
 	if (nullptr == FindImage)
 	{
 		MsgBoxAssertString(_Name + "존재하지 않는 이미지를 랜더러에 세팅하려고 했습니다.");

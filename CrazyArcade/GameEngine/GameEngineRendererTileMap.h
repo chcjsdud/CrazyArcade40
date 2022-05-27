@@ -30,6 +30,7 @@ public:
 class GameEngineImage;
 class GameEngineRendererTileMap
 {
+public:
 	std::vector<std::vector<Tile*>> Tiles_;
 
 	float4 TileSize_;

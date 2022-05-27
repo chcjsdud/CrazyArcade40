@@ -39,6 +39,35 @@ public:
 		Close();
 	}
 
+	void Write(const std::string& _Name)
+	{
+		int Size = static_cast<int>(_Name.size());
+		Write(&Size, sizeof(int));
+
+		Write(_Name.c_str(), _Name.size());
+	}
+
+	void Write(const void* _Data, size_t _Size)
+	{
+		fwrite(_Data, _Size, 1, FilePtr);
+	}
+
+
+	void Read(std::string& _Name)
+	{
+		_Name.clear();
+		int Size = static_cast<int>(_Name.size());
+		Read(&Size, sizeof(int));
+		_Name.resize(Size);
+		Read(&_Name[0], Size);
+	}
+
+
+	void Read(void* _Data, size_t _Size)
+	{
+		fread_s(_Data, _Size, _Size, 1, FilePtr);
+	}
+
 protected:
 
 
