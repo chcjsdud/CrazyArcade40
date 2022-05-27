@@ -21,7 +21,10 @@ protected:
 	void Update() override;
 
 private:
-	int SelectCharater;
+	int ChoiceCharacter1P;
+	int ChoiceCharacter2P;
+
+	GameEngineRenderer* Choice2PRenderer;
 	GameEngineRenderer* RoomCharacterRenderer;
 	GameEngineRenderer* StatusRenderer;
 	GameEngineRenderer* BannerRenderer;
@@ -34,6 +37,11 @@ private:
 	GameEngineRenderer* MaridRenderer;
 	GameEngineCollision* MaridCollision;
 
+
+	void RendererMouseCheck();
+	void ChoiceCharacter();
+	void ChoiceCheck();
+	void PivotReset();
 	void StatusUISet(); // 스테이터스 이미지를 바꿔주는 함수
 	void BannerSet(); // 배너 이미지를 바꿔주는 함수
 };

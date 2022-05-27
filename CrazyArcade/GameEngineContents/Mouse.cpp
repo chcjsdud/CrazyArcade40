@@ -27,7 +27,7 @@ void Mouse::Start()
 	if (false == GameEngineInput::GetInst()->IsKey("LeftMouse"))
 	{
 		GameEngineInput::GetInst()->CreateKey("LeftMouse", VK_LBUTTON);
-
+		GameEngineInput::GetInst()->CreateKey("RightMouse", VK_RBUTTON);
 	}
 }
 
