@@ -168,13 +168,13 @@ void Player::JumpUpdate()
 void Player::AttackUpdate()
 {
 	
-	float4 ModifyPos = float4{ -20.f, -40.f };
+	float4 ModifyPos = float4{ -17.f, -25.f };
 
 	if (Type == PlayerType::Player1)
 	{
 		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom_->SetMapTile(MapTile_);
-		Boom_->CreateBoom(MainPlayer_1->GetPosition() + float4({-17.0f,-25.0f}), 3);
+		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, 3);
 
 		//BlockType block = Boom->CheckTile(MainPlayer_1->GetPosition());
 		//체크타일이 웨이브면 -> Damaged
