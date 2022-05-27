@@ -35,11 +35,11 @@ void PlayerTeamTest::Loading()
 	if (nullptr == Player::MainPlayer_1)
 	{
 		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-		//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
 	}
 	
-	//Player::MainPlayer_1->Off();
-	//Player::MainPlayer_2->Off();
+	Player::MainPlayer_1->Off();
+	Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<TimeUI>((int)UIType::Time);
@@ -90,13 +90,14 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	//NewPlayer->SetCharacter(Character::BAZZI);
 	//NewPlayer->SetPlayerType(PlayerType::Player1);
 	//NewPlayer->SetPosition({ 500.f, 300.f });
+	Player::MainPlayer_1->On();
 	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 100.f, 100.f });
+	Player::MainPlayer_1->SetPosition({ 80.f, 80.f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
-	
-	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
+	Player::MainPlayer_2->On();
+	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
 	Player::MainPlayer_2->SetCharacter(Character::BAZZI);
 	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
 	Player::MainPlayer_2->SetPosition({ 400.f, 300.f });

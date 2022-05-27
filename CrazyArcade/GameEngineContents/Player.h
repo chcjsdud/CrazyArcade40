@@ -146,9 +146,13 @@ private:
 	BlockType CheckBlockTile(float4 _Pos);
 	BlockType CurBlockType1_;
 	BlockType CurBlockType2_;
+	
+	BlockType LeftBlock;
 
 	void TileCheckResultUpdate(BlockType _CurBlockType);
 	void TileCheckResult();
+
+	void BoomTileCheck();
 public:
 	MapGameObject* GetBoom()
 	{

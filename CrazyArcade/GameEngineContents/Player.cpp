@@ -61,10 +61,12 @@ void Player::Move()
 {
 	MoveDir = float4::ZERO;
 
-	float MovePos = 280.f;
+	float MovePos = 250.f;
 
 	if (Type == PlayerType::Player1)
 	{
+
+
 		if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
 		{
 			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
@@ -279,7 +281,12 @@ void Player::StagePixelCheck(float _Speed)
 		&& RGB(0, 0, 0) != LeftBotColor
 		&& RGB(0, 0, 0) != RightBotColor)
 	{
-		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
+		IsMove = true;
+
+		if (true == IsMove)
+		{
+			SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
+		}
 	}
 }
 
@@ -290,12 +297,6 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	switch (_CurBlockType)
 	{
 	case BlockType::WaveBlock:
-	{
-		ChangeState(PlayerState::Damaged);
-		return;
-	}
-	break;
-	case BlockType::BubbleBlock:
 	{
 		ChangeState(PlayerState::Damaged);
 		return;
@@ -338,6 +339,27 @@ void Player::TileCheckResult()
 
 	}
 
+}
+
+void Player::BoomTileCheck()
+{
+	float4 Pos = MainPlayer_1->GetPosition();
+
+//	if(CurDir_ == )
+	TileIndex LeftIndex  = MapTile_->GetTileIndex(Pos + float4{-40.f, 0.f});
+	//BlockType BubbleRight = CheckBlockTile(Pos + float4{ -19.f, -5.f });
+	BlockTile* LeftTile = MapTile_->GetTile<BlockTile>(LeftIndex.X, LeftIndex.Y);
+	if (LeftTile != nullptr)
+	{
+		LeftBlock = LeftTile->BlockType_;
+
+	}
+	
+	if (LeftBlock == BlockType::BoomBlock)
+	{
+		IsMove = false;
+	}
+	
 }
 
 void Player::PlayerCollisionUpdate()
@@ -511,6 +533,11 @@ void Player::Render()
 	std::string Posx = "";
 	std::string Posy = "";
 	std::string State = "";
+	std::string IndexX = "";
+	std::string IndexY = "";
+
+	//IndexX = "Index X : " + std::to_string(600 / CheckBlockTile(GetPosition()));
+	//IndexY = "Index Y : " + std::to_string(560 / GetPosition().iy());
 
 
 	Posx = "Pos x : " + std::to_string(GetPosition().ix());
@@ -581,6 +608,11 @@ void Player::Render()
 	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -30, Posx.c_str(), static_cast<int>(Posx.length()));
 	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -10, Posy.c_str(), static_cast<int>(Posy.length()));
 	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() +10, State.c_str(), static_cast<int>(State.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, IndexY.c_str(), static_cast<int>(IndexY.length()));
+
+
+
 }
 
 bool Player::IsMoveKey()
@@ -850,9 +882,11 @@ void Player::DirAnimationCheck()
 }
 
 // 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
-BlockType Player::CheckBlockTile(float4 _Pos) {
+BlockType Player::CheckBlockTile(float4 _Pos)
+{
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+
 	if (Tiles_ == nullptr)
 	{
 		return BlockType::Max;

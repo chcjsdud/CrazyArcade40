@@ -157,6 +157,7 @@ void Player::MoveUpdate()
 
 
 	Move();
+	BoomTileCheck();
 
 	StagePixelCheck(CurSpeed_);
 }
