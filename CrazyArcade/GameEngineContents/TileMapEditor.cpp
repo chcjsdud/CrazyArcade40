@@ -53,7 +53,7 @@ void TileMapEditor::Start()
 	MapBack = CreateRenderer();
 
 
-	MoveBox1 = CreateRenderer("CampMoveBox.bmp",static_cast<int>(ORDER::MAPOBJECT));
+	MoveBox1 = CreateRenderer("CampMoveBox1.bmp",static_cast<int>(ORDER::MAPOBJECT));
 	MoveBox1->SetPivot({ 700,50 });
 	MoveBox2= CreateRenderer("CampMoveBox2.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	MoveBox2->SetPivot({ 700,100 });
@@ -124,10 +124,10 @@ void TileMapEditor::LevelBlockUpdate()
 
 		Bush1->On();
 		Bush1->SetImage("CampBush1.bmp");
-
+		Bush1->SetIndex(0);
 		Bush2->On();
 		Bush2->SetImage("CampBush2.bmp");
-
+		Bush2->SetIndex(0);
 
 		MoveBox1Col->On();
 		MoveBox2Col->On();

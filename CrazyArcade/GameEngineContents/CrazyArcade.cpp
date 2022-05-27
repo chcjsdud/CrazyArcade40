@@ -341,6 +341,36 @@ void CrazyArcade::GameInit()
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
     }
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("TileMap");
+        ResourcesDir.Move("Cemotory");
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("TileMap");
+        ResourcesDir.Move("MonsterStage1");
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }   
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
     //////////물풍선 터지는 animationcut
@@ -376,8 +406,10 @@ void CrazyArcade::GameInit()
     //맵 박스, 오브젝트이미지
     GameEngineImage* CampMoveBox2 = GameEngineImageManager::GetInst()->Find("CampMoveBox2.bmp");
     CampMoveBox2->CutCount(3, 1);
-    GameEngineImage* TownBush = GameEngineImageManager::GetInst()->Find("TownBush.bmp");
-    TownBush->CutCount(5, 1);
+    GameEngineImage* CampBush1 = GameEngineImageManager::GetInst()->Find("CampBush1.bmp");
+    CampBush1->CutCount(5, 1);
+    GameEngineImage* CampBush2 = GameEngineImageManager::GetInst()->Find("CampBush2.bmp");
+    CampBush2->CutCount(6, 1);
     GameEngineImage* VillageBush = GameEngineImageManager::GetInst()->Find("VillageBush.bmp");
     VillageBush->CutCount(5, 1);
    //////////////////////////////아래 게임 키 설정//////////////////////////////
