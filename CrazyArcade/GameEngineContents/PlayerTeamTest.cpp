@@ -96,10 +96,11 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	
-	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
-	//Player::MainPlayer_2->SetCharacter(Character::BAZZI);
-	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	//Player::MainPlayer_2->SetPosition({ 200.f, 300.f });
+	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
+	Player::MainPlayer_2->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	Player::MainPlayer_2->SetPosition({ 400.f, 300.f });
+	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
 	// =================== 1P 2P 키 동시 입력 시 이동 확인 완료 

@@ -283,30 +283,11 @@ void Player::StagePixelCheck(float _Speed)
 	}
 }
 
-BlockType blockType_ = {};
+//BlockType blockType_ = {};
 
-void Player::TileCheckResultUpdate()
+void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 {
-
-	if (Type == PlayerType::Player1)
-	{
-		float4 Pos = MainPlayer_1->GetPosition();
-		CurBlockType_ = CheckBlockTile(Pos + float4{ -20.0f,-20.0f });
-
-		//CurBlockType_ = CurBlockPlayer1_;
-	}
-
-	//if(Type == PlayerType::Player2)
-	//{
-	//	BlockType CurBlockPlayer2_ = CheckBlockTile(MainPlayer_2->GetPosition());
-
-	//	CurBlockType_ = CurBlockPlayer2_;
-	//}
-
-
-
-
-	switch (CurBlockType_)
+	switch (_CurBlockType)
 	{
 	case BlockType::WaveBlock:
 	{
@@ -330,6 +311,30 @@ void Player::TileCheckResultUpdate()
 
 	}
 	break;
+
+	}
+
+}
+
+void Player::TileCheckResult()
+{
+	if (Type == PlayerType::Player1)
+	{
+		float4 Pos = MainPlayer_1->GetPosition();
+		CurBlockType1_ = CheckBlockTile(Pos + float4{ -20.0f,-20.0f });
+
+		TileCheckResultUpdate(CurBlockType1_);
+	}
+
+	if (nullptr != MainPlayer_2)
+	{
+		if (Type == PlayerType::Player2)
+		{
+			float4 Pos = MainPlayer_2->GetPosition();
+			CurBlockType2_ = CheckBlockTile(Pos + float4{ -20.0f, -20.0f });
+
+			TileCheckResultUpdate(CurBlockType2_);
+		}
 
 	}
 
@@ -494,7 +499,7 @@ void Player::Update()
 	PlayerStateUpdate();
 	PlayerCollisionUpdate();
 
-	TileCheckResultUpdate();
+	TileCheckResult();
 
 	//PlayerInfoUpdate();
 

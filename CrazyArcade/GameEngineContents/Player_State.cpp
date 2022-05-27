@@ -201,7 +201,7 @@ void Player::AttackUpdate()
 
 void Player::DamagedUpdate()
 {
-	float Time = GetAccTime();
+	//float Time 
 
 	if (true == IsItemKey())
 	{

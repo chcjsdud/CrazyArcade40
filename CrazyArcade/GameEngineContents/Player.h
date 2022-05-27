@@ -144,7 +144,11 @@ protected:
 private:
 	//블럭 체크하는 함수
 	BlockType CheckBlockTile(float4 _Pos);
-	BlockType CurBlockType_;
+	BlockType CurBlockType1_;
+	BlockType CurBlockType2_;
+
+	void TileCheckResultUpdate(BlockType _CurBlockType);
+	void TileCheckResult();
 public:
 	MapGameObject* GetBoom()
 	{
@@ -208,8 +212,6 @@ private:
 protected:
 	void ColMapUpdate();
 	void StagePixelCheck(float _Speed);
-
-	void TileCheckResultUpdate();
 
 	void PlayerCollisionUpdate();
 
