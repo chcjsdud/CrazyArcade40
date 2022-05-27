@@ -184,6 +184,7 @@ protected:
 	std::string AnimationName_;
 	std::string ChangeDirText_;
 
+
 protected:
 	// Ãæµ¹
 	GameEngineCollision* Collision1P_;

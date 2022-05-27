@@ -262,10 +262,12 @@ void Player::ColMapUpdate()
 
 void Player::StagePixelCheck(float _Speed)
 {
-	float4 LeftPos = GetPosition() + float4{ -22.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 RightPos = GetPosition() + float4{ 22.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 UpPos = GetPosition() + float4{ 0.f, -20.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 DownPos = GetPosition() + float4{ 0.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 Pos = PlayerAnimationRender_->GetSortingPivot();
+
+	float4 LeftPos = Pos + float4{ -20.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightPos = Pos + float4{ 20.f, 0.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 UpPos = Pos + float4{ 0.f, -30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 DownPos = Pos + float4{ 0.f, 10.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
 	int LeftColor = MapColImage_->GetImagePixel(LeftPos);
 	int RightColor = MapColImage_->GetImagePixel(RightPos);
@@ -289,8 +291,8 @@ void Player::TileCheckResultUpdate()
 	
 	if (Type == PlayerType::Player1)
 	{
-		float4 Pos = MainPlayer_1->GetPosition();
-		CurBlockType_ = CheckBlockTile(Pos + float4{10.f, -10.f});
+		float4 Pos = MainPlayer_1->PlayerAnimationRender_->GetSortingPivot() - float4{ 0.0f, 40.f };
+		CurBlockType_ = CheckBlockTile(Pos);
 
 		//CurBlockType_ = CurBlockPlayer1_;
 	}
@@ -361,7 +363,7 @@ void Player::Start()
 
 	PlayerAnimationRender_ = CreateRenderer();
 	PlayerAnimationRender_->SetPivotType(RenderPivot::CENTER);
-	PlayerAnimationRender_->SetPivot({ 0.f, 20.f });
+	PlayerAnimationRender_->SetPivot({ 0.f, 0.f });
 
 	PlayerAnimationRender_->Off();
 
@@ -377,8 +379,8 @@ void Player::Start()
 		// 애니메이션
 
 		BazziRenderer_ = CreateRenderer();
-		BazziRenderer_->SetPivotType(RenderPivot::BOT);
-		BazziRenderer_->SetPivot({ 0.f, 150.f });
+		BazziRenderer_->SetPivotType(RenderPivot::CENTER);
+		BazziRenderer_->SetPivot({ 0.f, 0.f });
 
 		// Idle
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Ready_", 37, 53, 0.06f, false);

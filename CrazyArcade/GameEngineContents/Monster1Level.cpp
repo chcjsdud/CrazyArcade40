@@ -3,13 +3,18 @@
 #include "MapFront.h"
 #include "MapBackGround.h"
 #include <GameEngine/GameEngine.h>
+#include<GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineWindow.h>
+#include <GameEngine/GameEngineImageManager.h>
 #include "Monster1.h"
 #include "Monster2.h"
 #include "Player.h"
 #include "Area.h"
-#include <GameEngine/GameEngineImageManager.h>
+#include"ContentsEnum.h"
+#include "MapGameObject.h"
+#include"GameItemObject.h"
+#include <GameEngine/GameEngineRendererTileMap.h>
 
 Monster1Level::Monster1Level()
 {
@@ -50,6 +55,8 @@ void Monster1Level::Loading()
 
 		Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 		Mandarin1->SetPosition(Areas_[0].GetCenter());
+		Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
+
 
 		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
 		Mandarin2->SetPosition(Areas_[182].GetCenter());
@@ -65,7 +72,12 @@ void Monster1Level::Loading()
 
 		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
 		Crocodile2->SetPosition(Areas_[188].GetCenter());
+	
+
 	}
+
+	//Player* Player1 = CreateActor<Player>((int)ORDER::PLAYER);
+	//Player1->SetPosition(float4(400.0f, 400.0f));
 }
 void Monster1Level::Update()
 {

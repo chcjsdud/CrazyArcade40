@@ -121,16 +121,16 @@ void Monster::UpdateDirection()
 			if (Index_ < 182)
 			{
 				EastArea = Areas_[EastIndex];
-				if (true == EastArea.HasWall()) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 있으면 내려가라
+				if (true == EastArea.HasWall() || (true == EastArea.HasBlock(GetPosition()) && false == EastArea.HasWaveTile(GetPosition()))) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 있으면 내려가라
 				{
 					Dir_ = float4::DOWN;
 					Direction_ = "Down";
 				}
 
-				if (Index_ % 13 != 0) // 제일 위가 아니고
+				if (Index_ % 13 != 0) // 제일 위가 아니고 위에 장애물이 없으면 올라가라
 				{
 					NorthArea = Areas_[NorthIndex];
-					if (false == NorthArea.HasWall())
+					if (false == NorthArea.HasWall() && false == NorthArea.HasBlock(GetPosition()))
 					{
 						Dir_ = float4::UP;
 						Direction_ = "Up";
@@ -152,7 +152,7 @@ void Monster::UpdateDirection()
 			if (Index_ >= 13)
 			{
 				WestArea = Areas_[WestIndex];
-				if (true == WestArea.HasWall()) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
+				if (true == WestArea.HasWall() || (true == WestArea.HasBlock(GetPosition()) && false == WestArea.HasWaveTile(GetPosition()))) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
 				{
 					Dir_ = float4::UP;
 					Direction_ = "Up";
@@ -161,7 +161,7 @@ void Monster::UpdateDirection()
 				if (Index_ % 13 != 12)
 				{
 					SouthArea = Areas_[SouthIndex];
-					if (false == SouthArea.HasWall())
+					if (false == SouthArea.HasWall() && false == SouthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 제일 아래가 아니고, 아래에 장애물이 없으면 내려가라
 					{
 						Dir_ = float4::DOWN;
 						Direction_ = "Down";
@@ -183,7 +183,7 @@ void Monster::UpdateDirection()
 			if (Index_ % 13 != 12) // 몬스터의 위치가 맨 아래가 아니고, 아래에 장애물이 있으면 왼쪽으로 가라
 			{
 				SouthArea = Areas_[SouthIndex];
-				if (true == SouthArea.HasWall())
+				if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock(GetPosition()) && false == SouthArea.HasWaveTile(GetPosition())))
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
@@ -192,7 +192,7 @@ void Monster::UpdateDirection()
 				if (Index_ < 182) // 제일 오른쪽이 아니고
 				{
 					EastArea = Areas_[EastIndex];
-					if (false == EastArea.HasWall()) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 없으면 오른쪽으로 가라
+					if (false == EastArea.HasWall() && true == EastArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 없으면 오른쪽으로 가라
 					{
 						Dir_ = float4::RIGHT;
 						Direction_ = "Right";
@@ -213,7 +213,7 @@ void Monster::UpdateDirection()
 			if (Index_ % 13 != 0) // 몬스터의 위치가 맨 위가 아니고, 위에 장애물이 있으면 오른쪽으로 가라
 			{
 				NorthArea = Areas_[NorthIndex];
-				if (true == NorthArea.HasWall())
+				if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock(GetPosition()) && false == NorthArea.HasWaveTile(GetPosition())))
 				{
 					Dir_ = float4::RIGHT;
 					Direction_ = "Right";
@@ -222,7 +222,7 @@ void Monster::UpdateDirection()
 				if (Index_ >= 13) // 몬스터의 위치가 맨 위와 맨 왼쪽이 아니고, 왼쪽에 장애물이 없으면
 				{
 					WestArea = Areas_[WestIndex];
-					if (false == WestArea.HasWall())
+					if (false == WestArea.HasWall() && false == WestArea.HasBlock(GetPosition()))
 					{
 						Dir_ = float4::LEFT;
 						Direction_ = "Left";
@@ -298,72 +298,6 @@ bool Monster::IsDie()
 	else return false;
 }
 
-
-bool Monster::HasEastTile()
-{
-	std::vector<GameEngineCollision*> Collision;
-	if (RightCol_->CollisionResult("", Collision, CollisionType::Rect, CollisionType::Rect))
-	{
-		for (GameEngineCollision* ColActor : Collision)
-		{
-			if (/*타일이 맞는지*/ColActor->GetActor())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Monster::HasWestTile()
-{
-	std::vector<GameEngineCollision*> Collision;
-	if (LeftCol_->CollisionResult("", Collision, CollisionType::Rect, CollisionType::Rect))
-	{
-		for (GameEngineCollision* ColActor : Collision)
-		{
-			if (/*타일이 맞는지*/ColActor->GetActor())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Monster::HasNorthTile()
-{
-	std::vector<GameEngineCollision*> Collision;
-	if (TopCol_->CollisionResult("", Collision, CollisionType::Rect, CollisionType::Rect))
-	{
-		for (GameEngineCollision* ColActor : Collision)
-		{
-			if (/*타일이 맞는지*/ColActor->GetActor())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Monster::HasSouthTile()
-{
-	std::vector<GameEngineCollision*> Collision;
-	if (BottomCol_->CollisionResult("", Collision, CollisionType::Rect, CollisionType::Rect))
-	{
-		for (GameEngineCollision* ColActor : Collision)
-		{
-			if (/*타일이 맞는지*/ColActor->GetActor())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-
 void Monster::SetColMapImage(std::string _Name)
 {
 	ColMapImage_ = GameEngineImageManager::GetInst()->Find(_Name);
@@ -372,4 +306,14 @@ void Monster::SetColMapImage(std::string _Name)
 GameEngineImage* Monster::GetColMapImage()
 {
 	return ColMapImage_;
+}
+
+void Monster::CheckWaveTile(float4 _Pos) 
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_->BlockType_ == BlockType::WaveBlock)
+	{
+		TakeDamage();
+	}
 }

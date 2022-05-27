@@ -21,6 +21,7 @@ class GameEngineImage;
 class GameEngineRenderer;
 class BlockTile;
 class Area;
+class GameEngineRendererTileMap;
 class Monster : public GameEngineActor
 {
 	friend Area;
@@ -42,15 +43,10 @@ protected:
 	void Render();
 	void Update();
 	virtual void UpdateDirection();
-
-	// 방향별 블럭 체크 Need to chk : 구현
-	virtual bool HasEastTile();
-	virtual bool HasWestTile();
-	virtual bool HasNorthTile();
-	virtual bool HasSouthTile();
-	
 protected:
+	GameEngineRendererTileMap* MapTile_;
 	BlockTile* Tile_;
+	BlockType CurBlockType_;
 	GameEngineRenderer* Renderer_;
 	GameEngineImage* ColMapImage_;
 	MonsterClass MonsterClass_;
@@ -80,8 +76,12 @@ protected:
 	GameEngineCollision* RightCol_;
 	GameEngineCollision* BottomCol_;
 	GameEngineCollision* CenterCol_;
+	std::vector<std::vector<Tile*>> Tiles_;
+
 
 public:
+	BlockType CheckBlockTile(float4 _Pos);
+
 	void SetColMapImage(std::string _Name);
 	virtual GameEngineImage* GetColMapImage();
 
@@ -132,6 +132,20 @@ public:
 
 	void Die();
 	bool IsDie();
+	void CheckWaveTile(float4 _Pos);
+	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
+	{
+		MapTile_ = _MapTile;
+		for (Area _Area : Areas_)
+		{
+			_Area.SetMapTile(_MapTile);
+		}
+	}
+
+	GameEngineRendererTileMap* GetMapTile()
+	{
+		return MapTile_;
+	}
 };
 
 
