@@ -35,23 +35,31 @@ public:
 		MousePos = _Pos - float4{20.0f, 40.0f};
 	}
 	GameEngineRendererTileMap EditorTileMap_;
-
+	std::string NextLevelName_;
 private:
+	void LevelBlockUpdate();
+	void TileAllOff();
+
 	std::string LevelNameReturnToString();
 	std::string TileNameReturnToString();
+	
 	MapGameObject* BlockSet;
 	GameEngineRenderer* MapBack;
+	
 	float4 MousePos;
 	std::string RenderName_;
 	std::string LevelName_;
+	
 	GameEngineRenderer* MoveBox1;
 	GameEngineRenderer* MoveBox2;
 	GameEngineRenderer* MoveBox3;
 	GameEngineRenderer* Block1;
 	GameEngineRenderer* Block2;
+	GameEngineRenderer* Block3;
+	GameEngineRenderer* Block4;
 	GameEngineRenderer* Bush1;
 	GameEngineRenderer* Bush2;
-	GameEngineRenderer* Stone;
+	GameEngineRenderer* Stone1;
 	GameEngineRenderer* Stone2;
 
 	GameEngineCollision* MoveBox1Col;
@@ -59,9 +67,11 @@ private:
 	GameEngineCollision* MoveBox3Col;
 	GameEngineCollision* Block1Col;
 	GameEngineCollision* Block2Col;
+	GameEngineCollision* Block3Col;
+	GameEngineCollision* Block4Col;
 	GameEngineCollision* Bush1Col;
 	GameEngineCollision* Bush2Col;
-	GameEngineCollision* StoneCol;
+	GameEngineCollision* Stone1Col;
 	GameEngineCollision* Stone2Col;
 };
 

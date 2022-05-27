@@ -326,6 +326,21 @@ void CrazyArcade::GameInit()
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
     }
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("PlayLevel");
+        ResourcesDir.Move("TileMap");
+        ResourcesDir.Move("Village");
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+        }
+    }
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
     //////////물풍선 터지는 animationcut
@@ -363,7 +378,8 @@ void CrazyArcade::GameInit()
     CampMoveBox2->CutCount(3, 1);
     GameEngineImage* TownBush = GameEngineImageManager::GetInst()->Find("TownBush.bmp");
     TownBush->CutCount(5, 1);
-
+    GameEngineImage* VillageBush = GameEngineImageManager::GetInst()->Find("VillageBush.bmp");
+    VillageBush->CutCount(5, 1);
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 
 // 플레이어  키
