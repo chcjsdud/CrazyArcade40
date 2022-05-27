@@ -856,7 +856,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			Wave_->CenterWaveX_ = TilePos.X;
 			Wave_->CenterWaveY_ = TilePos.Y;
 			Tiles_->MyUpWave_.push_back(Wave_);//중앙타일에 벡터만들고 저장 
-	
+			Tiles_->IsWaveDeath = true;
 		}
 		else//마지막지점 아니면
 		{
