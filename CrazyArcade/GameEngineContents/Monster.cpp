@@ -7,6 +7,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineContents/MapGameObject.h>
 #include <GameEngine/GameEngineImageManager.h>
+#include "GameEngine/GameEngine.h"
 
 
 int Monster::TTL_MONSTER_COUNT = 0;
@@ -34,8 +35,7 @@ Monster::Monster()
 	, WestArea(ColMapImage_, 0, 0, 0, 0)
 	, NorthArea(ColMapImage_, 0, 0, 0, 0)
 	, SouthArea(ColMapImage_, 0, 0, 0, 0)
-	, NorthWestArea(ColMapImage_, 0, 0, 0, 0)
-	, EastSouthArea(ColMapImage_, 0, 0, 0, 0)
+	, CurArea(ColMapImage_,0,0,0,0)
 	, IndexCheck_(false)
 {
 	TTL_MONSTER_COUNT++;
@@ -65,6 +65,10 @@ void Monster::Start()
 	{
 		SetColMapImage("MonsterStage2_ColMap.bmp");
 	}
+	else if (GetLevel()->GetNameCopy() == "PlayerTeamTest")
+	{
+		SetColMapImage("Camp_ColMap.bmp");
+	}
 	else
 	{
 		return;
@@ -90,13 +94,13 @@ void Monster::Update()
 {
 	GetAttTime_ += GameEngineTime::GetDeltaTime();
 	UpdateDirection();
-	TakeDamage();
+	UpdateMove();
 	Die();
 }
 
 void Monster::UpdateDirection()
 {
-	int PrevIndex_ = Index_; // 이전 인덱스 저장
+	PrevIndex_ = Index_; // 이전 인덱스 저장
 	bool IsAreaChanged = false;
 
 	for (int i = 0; i < Areas_.size(); ++i)
@@ -110,7 +114,10 @@ void Monster::UpdateDirection()
 				IsAreaChanged = true;
 			}
 		}
+		NewArea.SetMapTile(MapTile_);
 	}
+	
+	CheckWaveTile(GetPosition());
 
 	if (IsAreaChanged == true)
 	{
@@ -118,19 +125,25 @@ void Monster::UpdateDirection()
 		{
 			int EastIndex = Index_ + AreaHeight_;
 			int NorthIndex = Index_ - 1;
-			if (Index_ < 182)
+			if (Index_ < 182) // 몬스터의 위치가 제일 오른쪽이 아니고
 			{
 				EastArea = Areas_[EastIndex];
-				if (true == EastArea.HasWall() || (true == EastArea.HasBlock(GetPosition()) && false == EastArea.HasWaveTile(GetPosition()))) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 있으면 내려가라
+				if (true == EastArea.HasBubble(GetPosition())) // 아래에 물풍선이 있으면
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+				}
+				else if (true == EastArea.HasWall() || // 오른쪽에 벽이 있거나
+					(true == EastArea.HasBlock(GetPosition()) && (false == EastArea.HasWaveTile(GetPosition())) && false == EastArea.HasBubble(GetPosition()))) // 오른쪽에 블럭이 있고, 그 블럭이 물폭탄이 아니면 내려가라
 				{
 					Dir_ = float4::DOWN;
 					Direction_ = "Down";
 				}
 
-				if (Index_ % 13 != 0) // 제일 위가 아니고 위에 장애물이 없으면 올라가라
+				else if (Index_ % 13 != 0) // 제일 위가 아니고
 				{
 					NorthArea = Areas_[NorthIndex];
-					if (false == NorthArea.HasWall() && false == NorthArea.HasBlock(GetPosition()))
+					if (false == NorthArea.HasWall() && false == NorthArea.HasBlock(GetPosition())) // 위쪽이 벽이 아니거나, 블럭이 없으면 올라가라
 					{
 						Dir_ = float4::UP;
 						Direction_ = "Up";
@@ -152,20 +165,27 @@ void Monster::UpdateDirection()
 			if (Index_ >= 13)
 			{
 				WestArea = Areas_[WestIndex];
-				if (true == WestArea.HasWall() || (true == WestArea.HasBlock(GetPosition()) && false == WestArea.HasWaveTile(GetPosition()))) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
+				if (true == WestArea.HasBubble(GetPosition())) // 아래에 물풍선이 있으면
 				{
-					Dir_ = float4::UP;
-					Direction_ = "Up";
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
 				}
 
-				if (Index_ % 13 != 12)
+				else if (true == WestArea.HasWall() ||
+					(true == WestArea.HasBlock(GetPosition()) && (false == WestArea.HasWaveTile(GetPosition())) && false == WestArea.HasBubble(GetPosition()))) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
+				{
+					Dir_ = float4::UP;
+						Direction_ = "Up";
+				}
+
+				else if (Index_ % 13 != 12)
 				{
 					SouthArea = Areas_[SouthIndex];
-					if (false == SouthArea.HasWall() && false == SouthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 제일 아래가 아니고, 아래에 장애물이 없으면 내려가라
-					{
-						Dir_ = float4::DOWN;
-						Direction_ = "Down";
-					}
+						if (false == SouthArea.HasWall() && false == SouthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 제일 아래가 아니고, 아래에 장애물이 없으면 내려가라
+						{
+							Dir_ = float4::DOWN;
+							Direction_ = "Down";
+						}
 				}
 			}
 
@@ -183,16 +203,23 @@ void Monster::UpdateDirection()
 			if (Index_ % 13 != 12) // 몬스터의 위치가 맨 아래가 아니고, 아래에 장애물이 있으면 왼쪽으로 가라
 			{
 				SouthArea = Areas_[SouthIndex];
-				if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock(GetPosition()) && false == SouthArea.HasWaveTile(GetPosition())))
+
+				if (true == SouthArea.HasBubble(GetPosition())) // 아래에 물풍선이 있으면
+				{
+					Dir_ = float4::UP;
+					Direction_ = "Up";
+				}
+
+				else if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock(GetPosition()) && false == SouthArea.HasWaveTile(GetPosition())) && false == SouthArea.HasBubble(GetPosition()))
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
 				}
 
-				if (Index_ < 182) // 제일 오른쪽이 아니고
+				else if (Index_ < 182) // 제일 오른쪽이 아니고
 				{
 					EastArea = Areas_[EastIndex];
-					if (false == EastArea.HasWall() && true == EastArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 없으면 오른쪽으로 가라
+					if (false == EastArea.HasWall() && false == EastArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 없으면 오른쪽으로 가라
 					{
 						Dir_ = float4::RIGHT;
 						Direction_ = "Right";
@@ -213,13 +240,19 @@ void Monster::UpdateDirection()
 			if (Index_ % 13 != 0) // 몬스터의 위치가 맨 위가 아니고, 위에 장애물이 있으면 오른쪽으로 가라
 			{
 				NorthArea = Areas_[NorthIndex];
-				if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock(GetPosition()) && false == NorthArea.HasWaveTile(GetPosition())))
+				if (true == NorthArea.HasBubble(GetPosition())) // 왼쪽에 물풍선이 있으면
+				{
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
+				}
+
+				else if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock(GetPosition()) && false == NorthArea.HasWaveTile(GetPosition())) && false == NorthArea.HasBubble(GetPosition()))
 				{
 					Dir_ = float4::RIGHT;
 					Direction_ = "Right";
 				}
 
-				if (Index_ >= 13) // 몬스터의 위치가 맨 위와 맨 왼쪽이 아니고, 왼쪽에 장애물이 없으면
+				else if (Index_ >= 13) // 몬스터의 위치가 맨 위와 맨 왼쪽이 아니고, 왼쪽에 장애물이 없으면
 				{
 					WestArea = Areas_[WestIndex];
 					if (false == WestArea.HasWall() && false == WestArea.HasBlock(GetPosition()))
@@ -233,14 +266,15 @@ void Monster::UpdateDirection()
 			{
 				Dir_ = float4::RIGHT;
 				Direction_ = "Right";
+
 			}
 		}
+		Renderer_->ChangeAnimation("Move" + Direction_);
 	}
-} 
+}
 
 void Monster::UpdateMove()
 {
-	Renderer_->ChangeAnimation("Move" + Direction_);
 	SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 }
 
@@ -248,26 +282,26 @@ void Monster::TakeDamage()
 {
 	if (GetAttTime_ > 2.0) // 2초 안에 다시 맞으면 DMG를 입지 않는다. (Need to chk : TIME)
 	{
-		std::vector<GameEngineCollision*> BubbleCol;
-		if (CenterCol_->CollisionResult("WaveCol", BubbleCol, CollisionType::Rect, CollisionType::Rect))
-		{
-			for (GameEngineCollision* Collision : BubbleCol)
-			{
-				GameEngineActor* ColActor = Collision->GetActor();
-				MapGameObject* Bubble = dynamic_cast<MapGameObject*>(ColActor);
 
-				if (Bubble != nullptr)
-				{
-					SetHP(GetHp() - 1);
-					GetAttTime_ = 0.0f;
-				}
-			}
-		}
+		SetHP(GetHp() - 1);
+		GetAttTime_ = 0.0f;
 	}
 }
 
 void Monster::Render()
 {
+
+	std::string IndexX = "";
+	std::string IndexY = "";
+
+
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition() - float4(20.0f, 40.0f));
+	IndexX = "Index X : " + std::to_string(TileIndex_.X);
+	IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
+
+
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 }
 
 void Monster::Die()
@@ -285,6 +319,7 @@ void Monster::Die()
 
 	if (true == IsDie()) // HP가 0이거나 0보다 작으면
 	{
+		Dir_ = float4::ZERO;
 		Renderer_->ChangeAnimation("Die");
 	}
 }
@@ -308,11 +343,22 @@ GameEngineImage* Monster::GetColMapImage()
 	return ColMapImage_;
 }
 
-void Monster::CheckWaveTile(float4 _Pos) 
+void Monster::CheckWaveTile(float4 _Pos)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	if (TileIndex_.Y >= 13)
+	{
+		return;
+
+	}
+
 	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
-	if (Tiles_->BlockType_ == BlockType::WaveBlock)
+	if (Tiles_ == nullptr)
+	{
+		return;
+	}
+
+	else if (Tiles_->BlockType_ == BlockType::WaveBlock)
 	{
 		TakeDamage();
 	}

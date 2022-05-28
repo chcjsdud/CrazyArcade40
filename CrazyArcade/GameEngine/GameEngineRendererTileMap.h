@@ -77,8 +77,8 @@ public:
 			MsgBoxAssert("0 이하의 인덱스는 존재할수 없습니다.");
 		}
 
-		if (0 > _Y)
-		{
+		if (0 > _Y) 
+		{           
 			MsgBoxAssert("0 이하의 인덱스는 존재할수 없습니다.");
 		}
 

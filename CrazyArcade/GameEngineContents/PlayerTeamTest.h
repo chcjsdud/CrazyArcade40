@@ -5,6 +5,7 @@
 class MapGameObject;
 class MapBackGround;
 class MapFront;
+class Area;
 class PlayerTeamTest : public GameEngineLevel
 {
 public:
@@ -28,5 +29,7 @@ private:
 
 	//GameEngineImage* MapColMap_;
 	GameEngineRenderer* MapColRenderer_;
+	std::vector<Area> Areas_;
+	GameEngineImage* ColMapImage_;
 
 };

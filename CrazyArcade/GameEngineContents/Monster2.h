@@ -1,6 +1,8 @@
 #pragma once
 #include "Monster.h"
 
+
+class GameEngineRenderer;
 class Monster2 : public Monster
 {
 public:
@@ -17,4 +19,8 @@ protected:
 	void Render();
 	void Update();
 	void TakeDamage() override;
+	void UpdateDirection() override;
+
+private:
+	GameEngineRenderer* MiniRenderer_;
 };

@@ -41,7 +41,7 @@ protected:
 	virtual void TakeDamage();
 	void Start();
 	void Render();
-	void Update();
+	virtual void Update();
 	virtual void UpdateDirection();
 protected:
 	GameEngineRendererTileMap* MapTile_;
@@ -58,8 +58,7 @@ protected:
 	Area WestArea;
 	Area NorthArea;
 	Area SouthArea;
-	Area NorthWestArea;
-	Area EastSouthArea;
+	Area CurArea;
 
 	int HP_;
 	int Index_;
@@ -67,6 +66,7 @@ protected:
 	int AreaHeight_;
 	float Speed_;
 	float GetAttTime_;
+	int PrevIndex_;
 	const float MapSizeX_;
 	const float MapSizeY_;
 	bool IndexCheck_;
@@ -80,6 +80,11 @@ protected:
 
 
 public:
+	float4 GetPositionRelativeToTile()
+	{
+		return GetPosition() + float4(-20.0f, -40.0f);
+	}
+
 	BlockType CheckBlockTile(float4 _Pos);
 
 	void SetColMapImage(std::string _Name);

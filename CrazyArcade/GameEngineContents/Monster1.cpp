@@ -16,7 +16,6 @@ void Monster1::Start()
 {
 	//°¨±ÖÀÌ
 	Monster::Start();
-	SetSpeed(10);
 	Renderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
 	Image->CutCount(10, 7);
@@ -26,7 +25,6 @@ void Monster1::Start()
 	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 2, 3, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "Die", 8, 10, 0.2f, true);
 	Renderer_->ChangeAnimation("MoveRight");
-	Index_ = 50;
 	SetSpeed(100);
 	Direction_ = "Right";
 	Dir_ = float4::RIGHT;
@@ -34,12 +32,10 @@ void Monster1::Start()
 
 void Monster1::Render()
 {
+	Monster::Render();
 }
 
 void Monster1::Update()
 {
-	UpdateDirection();
-	UpdateMove();
-	TakeDamage();
-	Die();
+	Monster::Update();
 }

@@ -530,89 +530,92 @@ void Player::Update()
 
 void Player::Render()
 {
-	std::string Posx = "";
-	std::string Posy = "";
-	std::string State = "";
+
 	std::string IndexX = "";
 	std::string IndexY = "";
 
-	//IndexX = "Index X : " + std::to_string(600 / CheckBlockTile(GetPosition()));
-	//IndexY = "Index Y : " + std::to_string(560 / GetPosition().iy());
+
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition());
+	IndexX = "Index X : " + std::to_string(TileIndex_.X);
+	IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
 
 
-	Posx = "Pos x : " + std::to_string(GetPosition().ix());
-	Posy = "Pos y : " + std::to_string(GetPosition().iy());
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 
-	if (CurState_ == PlayerState::Wait)
-	{
-		State = "STATE : Wait";
-	}
-	else if (CurState_ == PlayerState::Ready)
-	{
-		State = "STATE : Ready";
-	}
-	else if (CurState_ == PlayerState::Idle)
-	{
-		State = "STATE : Idle";
-	}
-	else if (CurState_ == PlayerState::Move)
-	{
-		State = "STATE : Move";
-	}
-	else if (CurState_ == PlayerState::Jump)
-	{
-		State = "STATE : Jump";
-	}
-	else if (CurState_ == PlayerState::Attack)
-	{
-		State = "STATE : Attack";
-	}
-	else if (CurState_ == PlayerState::Damaged)
-	{
-		State = "STATE : Damaged";
-	}
-	else if (CurState_ == PlayerState::Revival)
-	{
-		State = "STATE : Revival";
-	}
-	else if (CurState_ == PlayerState::Fade)
-	{
-		State = "STATE : Fade";
-	}
-	else if (CurState_ == PlayerState::Die)
-	{
-		State = "STATE : Die";
-	}
-	else if (CurState_ == PlayerState::IdleOwl)
-	{
-		State = "STATE : IdleOwl";
-	}
-	else if (CurState_ == PlayerState::IdleTurtle)
-	{
-		State = "STATE : IdleTurtle";
-	}
-	else if (CurState_ == PlayerState::RidingOwl)
-	{
-		State = "STATE : RidingOwl";
-	}
-	else if (CurState_ == PlayerState::RidingTurtle)
-	{
-		State = "STATE : RidingTurtle";
-	}
-	else if (CurState_ == PlayerState::RidingUFO)
-	{
-		State = "STATE : RidingUFO";
-	}
-	
-
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -30, Posx.c_str(), static_cast<int>(Posx.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -10, Posy.c_str(), static_cast<int>(Posy.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() +10, State.c_str(), static_cast<int>(State.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, IndexY.c_str(), static_cast<int>(IndexY.length()));
+	//std::string Posx = "";
+	//std::string Posy = "";
+	//std::string State = "";
 
 
+	//Posx = "Pos x : " + std::to_string(GetPosition().ix());
+	//Posy = "Pos y : " + std::to_string(GetPosition().iy());
 
+	//if (CurState_ == PlayerState::Wait)
+	//{
+	//	State = "STATE : Wait";
+	//}
+	//else if (CurState_ == PlayerState::Ready)
+	//{
+	//	State = "STATE : Ready";
+	//}
+	//else if (CurState_ == PlayerState::Idle)
+	//{
+	//	State = "STATE : Idle";
+	//}
+	//else if (CurState_ == PlayerState::Move)
+	//{
+	//	State = "STATE : Move";
+	//}
+	//else if (CurState_ == PlayerState::Jump)
+	//{
+	//	State = "STATE : Jump";
+	//}
+	//else if (CurState_ == PlayerState::Attack)
+	//{
+	//	State = "STATE : Attack";
+	//}
+	//else if (CurState_ == PlayerState::Damaged)
+	//{
+	//	State = "STATE : Damaged";
+	//}
+	//else if (CurState_ == PlayerState::Revival)
+	//{
+	//	State = "STATE : Revival";
+	//}
+	//else if (CurState_ == PlayerState::Fade)
+	////{
+	////	State = "STATE : Fade";
+	//}
+	//else if (CurState_ == PlayerState::Die)
+	//{
+	//	State = "STATE : Die";
+	//}
+	//else if (CurState_ == PlayerState::IdleOwl)
+	//{
+	//	State = "STATE : IdleOwl";
+	//}
+	//else if (CurState_ == PlayerState::IdleTurtle)
+	//{
+	//	State = "STATE : IdleTurtle";
+	//}
+	//else if (CurState_ == PlayerState::RidingOwl)
+	//{
+	//	State = "STATE : RidingOwl";
+	//}
+	//else if (CurState_ == PlayerState::RidingTurtle)
+	//{
+	//	State = "STATE : RidingTurtle";
+	//}
+	//else if (CurState_ == PlayerState::RidingUFO)
+	//{
+	//	State = "STATE : RidingUFO";
+	//}
+	//
+
+	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -30, Posx.c_str(), static_cast<int>(Posx.length()));
+	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -10, Posy.c_str(), static_cast<int>(Posy.length()));
+	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() +10, State.c_str(), static_cast<int>(State.length()));
 }
 
 bool Player::IsMoveKey()

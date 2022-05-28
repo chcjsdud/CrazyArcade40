@@ -60,18 +60,28 @@ void Monster1Level::Loading()
 
 		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
 		Mandarin2->SetPosition(Areas_[182].GetCenter());
+		Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
+
 
 		Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
 		Mandarin3->SetPosition(Areas_[12].GetCenter());
+		Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
+
 
 		Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
 		Mandarin4->SetPosition(Areas_[166].GetCenter());
+		Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
+
 
 		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 		Crocodile1->SetPosition(Areas_[6].GetCenter());
+		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
+
 
 		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
 		Crocodile2->SetPosition(Areas_[188].GetCenter());
+		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
+
 	
 
 	}

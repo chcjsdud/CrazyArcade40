@@ -69,6 +69,15 @@ bool Area::HasWaveTile(float4 _Pos)
         false;
 }
 
+bool Area::HasBubble(float4 _Pos)
+{
+    BlockTile* Tile_ = GetTile(_Pos);
+
+    return Tile_ != nullptr ?
+        Tile_->BlockType_ == BlockType::BoomBlock :
+        false;
+}
+
 BlockTile* Area::GetTile(float4 _Pos)
 {
     if (MapTile_ == nullptr)
@@ -76,6 +85,10 @@ BlockTile* Area::GetTile(float4 _Pos)
         return nullptr;
     }
 
-    TileIndex_ = MapTile_->GetTileIndex(_Pos);
+    TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
+    if(TileIndex_.Y>=13)
+    {
+        return nullptr;
+    }
     return MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 }

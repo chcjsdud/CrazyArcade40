@@ -40,6 +40,7 @@ public:
     bool HasWall();
     bool HasWaveTile(float4 _Pos);
     bool HasBlock(float4 _Pos);
+    bool HasBubble(float4 _Pos);
     bool InCenter(float4 _Pos);
 
     BlockTile* GetTile(float4 _Pos);
