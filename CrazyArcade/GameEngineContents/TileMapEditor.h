@@ -57,6 +57,10 @@ private:
 	GameEngineRenderer* Block2;
 	GameEngineRenderer* Block3;
 	GameEngineRenderer* Block4;
+	GameEngineRenderer* Block5;
+	GameEngineRenderer* Block6;
+	GameEngineRenderer* Block7;
+	GameEngineRenderer* Block8;
 	GameEngineRenderer* Bush1;
 	GameEngineRenderer* Bush2;
 	GameEngineRenderer* Stone1;
@@ -69,6 +73,10 @@ private:
 	GameEngineCollision* Block2Col;
 	GameEngineCollision* Block3Col;
 	GameEngineCollision* Block4Col;
+	GameEngineCollision* Block5Col;
+	GameEngineCollision* Block6Col;
+	GameEngineCollision* Block7Col;
+	GameEngineCollision* Block8Col;
 	GameEngineCollision* Bush1Col;
 	GameEngineCollision* Bush2Col;
 	GameEngineCollision* Stone1Col;

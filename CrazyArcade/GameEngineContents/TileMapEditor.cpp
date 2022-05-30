@@ -22,6 +22,10 @@ TileMapEditor::TileMapEditor()
 	Block2(nullptr),
 	Block3(nullptr),
 	Block4(nullptr),
+	Block5(nullptr),
+	Block6(nullptr),
+	Block7(nullptr),
+	Block8(nullptr),
 	Bush1(nullptr),
 	Bush2(nullptr),
 	Stone1(nullptr),
@@ -33,6 +37,10 @@ TileMapEditor::TileMapEditor()
 	Block2Col(nullptr),
 	Block3Col(nullptr),
 	Block4Col(nullptr),
+	Block5Col(nullptr),
+	Block6Col(nullptr),
+	Block7Col(nullptr),
+	Block8Col(nullptr),
 	Bush1Col(nullptr),
 	Bush2Col(nullptr),
 	Stone1Col(nullptr),
@@ -68,6 +76,16 @@ void TileMapEditor::Start()
 	Block3->SetPivot({ 700,300 });
 	Block4 = CreateRenderer("CampBlock2.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Block4->SetPivot({ 700,350 });
+
+	Block5 = CreateRenderer("CampBlock1.bmp", static_cast<int>(ORDER::MAPOBJECT));
+	Block5->SetPivot({ 750,200 });
+	Block6 = CreateRenderer("CampBlock2.bmp", static_cast<int>(ORDER::MAPOBJECT));
+	Block6->SetPivot({ 750,250 });
+	Block7 = CreateRenderer("CampBlock2.bmp", static_cast<int>(ORDER::MAPOBJECT));
+	Block7->SetPivot({ 750,300 });
+	Block8 = CreateRenderer("CampBlock2.bmp", static_cast<int>(ORDER::MAPOBJECT));
+	Block8->SetPivot({ 750,350 });
+
 	Bush1= CreateRenderer("CampBush1.bmp", static_cast<int>(ORDER::MAPOBJECT));
 	Bush1->SetPivot({ 700,400 });
 	Bush2= CreateRenderer("CampBush2.bmp", static_cast<int>(ORDER::MAPOBJECT));
@@ -87,6 +105,12 @@ void TileMapEditor::Start()
 	Block2Col = CreateCollision("Block2", { 40,46 }, { 700,250 });
 	Block3Col = CreateCollision("Block3", { 40,46 }, { 700,300 });
 	Block4Col = CreateCollision("Block4", { 40,46 }, { 700,350 });
+
+	Block5Col = CreateCollision("Block5", { 40,46 }, { 750,200 });
+	Block6Col = CreateCollision("Block6", { 40,46 }, { 750,250 });
+	Block7Col = CreateCollision("Block7", { 40,46 }, { 750,300 });
+	Block8Col = CreateCollision("Block8", { 40,46 }, { 750,350 });
+
 	Bush1Col = CreateCollision("Bush1", { 40,46 }, { 700,400 });
 	Bush2Col = CreateCollision("Bush2", { 40,46 }, { 700,460 });
 	Stone1Col = CreateCollision("Stone1", { 40,46 }, { 700,510 });;
@@ -163,10 +187,91 @@ void TileMapEditor::LevelBlockUpdate()
 	else if ("CemetoryLevel" == NextLevelName_)
 	{
 		TileAllOff();
+		MoveBox1->On();
+		MoveBox1->SetImage("CemetoryMoveBox1.bmp");
+
+		Block1->On();
+		Block1->SetImage("CemetoryBlock1.bmp");
+
+		Block2->On();
+		Block2->SetImage("CemetoryBlock2.bmp");
+
+		Block3->On();
+		Block3->SetImage("CemetoryBlock3.bmp");
+
+		Block4->On();
+		Block4->SetImage("CemetoryBlock4.bmp");
+
+		Block5->On();
+		Block5->SetImage("CemetoryBlock5.bmp");
+
+		Block6->On();
+		Block6->SetImage("CemetoryBlock6.bmp");
+
+		Block7->On();
+		Block7->SetImage("CemetoryBlock7.bmp");
+
+		Block8->On();
+		Block8->SetImage("CemetoryBlock8.bmp");
+
+
+		Stone1->On();
+		Stone1->SetImage("CemetoryStone1.bmp");
+		Stone1Col->On();
+		Stone2->On();
+		Stone2->SetImage("CemetoryStone2.bmp");
+		Stone2Col->On();
+
+		MoveBox1Col->On();
+		Block1Col->On();
+		Block2Col->On();
+		Block3Col->On();
+		Block4Col->On();
+		Block5Col->On();
+		Block6Col->On();
+		Block7Col->On();
+		Block8Col->On();
 	}
 	else 
 	{
 		TileAllOff();
+		MoveBox1->On();
+		MoveBox1->SetImage("MonsterMoveBox1.bmp");
+
+		Block1->On();
+		Block1->SetImage("MonsterBlock1.bmp");
+
+		Block2->On();
+		Block2->SetImage("MonsterBlock2.bmp");
+
+		Block3->On();
+		Block3->SetImage("MonsterBlock3.bmp");
+
+		Block4->On();
+		Block4->SetImage("MonsterBlock4.bmp");
+
+		Block5->On();
+		Block5->SetImage("MonsterBlock5.bmp");
+
+		Block6->On();
+		Block6->SetImage("MonsterBlock6.bmp");
+
+		Block7->On();
+		Block7->SetImage("MonsterBlock7.bmp");
+
+		Block8->On();
+		Block8->SetImage("MonsterBlock8.bmp");
+
+		MoveBox1Col->On();
+		Block1Col->On();
+		Block2Col->On();
+		Block3Col->On();
+		Block4Col->On();
+		Block5Col->On();
+		Block6Col->On();
+		Block7Col->On();
+		Block8Col->On();
+
 	}
 }
 void TileMapEditor::Update()
@@ -199,6 +304,30 @@ void TileMapEditor::Update()
 		if (true == Block2Col->CollisionCheck("MouseCol"))
 		{
 			RenderName_ = "Block2";
+		}
+		if (true == Block3Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Block3";
+		}
+		if (true == Block4Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Block4";
+		}
+		if (true == Block5Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Block5";
+		}
+		if (true == Block6Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Block6";
+		}
+		if (true == Block7Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Block7";
+		}
+		if (true == Block8Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Block8";
 		}
 		if (true == Bush1Col->CollisionCheck("MouseCol"))
 		{
@@ -335,6 +464,10 @@ void TileMapEditor::TileAllOff()
 	Block2->Off();
 	Block3->Off();
 	Block4->Off();
+	Block5->Off();
+	Block6->Off();
+	Block7->Off();
+	Block8->Off();
 	Bush1->Off();
 	Bush2->Off();
 	Stone1->Off();
@@ -347,6 +480,10 @@ void TileMapEditor::TileAllOff()
 	Block2Col->Off();
 	Block3Col->Off();
 	Block4Col->Off();
+	Block5Col->Off();
+	Block6Col->Off();
+	Block7Col->Off();
+	Block8Col->Off();
 	Bush1Col->Off();
 	Bush2Col->Off();
 	Stone1Col->Off();
