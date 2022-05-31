@@ -410,7 +410,7 @@ void CrazyArcade::GameInit()
     CampBush1->CutCount(5, 1);
     GameEngineImage* CampBush2 = GameEngineImageManager::GetInst()->Find("CampBush2.bmp");
     CampBush2->CutCount(6, 1);
-    GameEngineImage* VillageBush = GameEngineImageManager::GetInst()->Find("VillageBush.bmp");
+    GameEngineImage* VillageBush = GameEngineImageManager::GetInst()->Find("VillageBush1.bmp");
     VillageBush->CutCount(5, 1);
    //////////////////////////////아래 게임 키 설정//////////////////////////////
 

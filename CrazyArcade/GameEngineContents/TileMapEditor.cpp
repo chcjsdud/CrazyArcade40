@@ -169,7 +169,7 @@ void TileMapEditor::LevelBlockUpdate()
 
 		MoveBox1->On();
 		MoveBox1Col->On();
-		MoveBox1->SetImage("VillageBox1.bmp");
+		MoveBox1->SetImage("VillageMoveBox1.bmp");
 
 		Block1->On();
 		Block1Col->On();
@@ -181,7 +181,7 @@ void TileMapEditor::LevelBlockUpdate()
 
 		Bush1->On();
 		Bush1Col->On();
-		Bush1->SetImage("VillageBush.bmp");
+		Bush1->SetImage("VillageBush1.bmp");
 		Bush1->SetIndex(0);
 	}
 	else if ("CemetoryLevel" == NextLevelName_)
@@ -337,6 +337,14 @@ void TileMapEditor::Update()
 		{
 			RenderName_ = "Bush2";
 		}
+		if (true == Stone1Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Stone1";
+		}
+		if (true == Stone2Col->CollisionCheck("MouseCol"))
+		{
+			RenderName_ = "Stone2";
+		}
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress("LeftMouseEditor"))
@@ -432,25 +440,17 @@ std::string TileMapEditor::LevelNameReturnToString()
 	{
 		return "Camp";
 	}
-	if ("VillageLevel" == LevelName_)
+	else if ("VillageLevel" == LevelName_)
 	{
 		return "Village";
 	}
-	if ("CemetoryLevel" == LevelName_)
+	else if ("CemetoryLevel" == LevelName_)
 	{
 		return "Cemetory";
 	}
-	if ("Monster1Level" == LevelName_)
+	else
 	{
-		return "Monster1";
-	}
-	if ("Monster2Level" == LevelName_)
-	{
-		return "Monster2";
-	}
-	if ("BossLevel" == LevelName_)
-	{
-		return "Boss";
+		return "Monster";
 	}
 
 }
