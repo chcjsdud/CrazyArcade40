@@ -131,49 +131,49 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 
 	//////////////////////////////////////////°øµ¿ ¹¦Áö///////////////////////////////////////////////
 
-	if (_Box == "CEMOTORYBLOCK1")
+	if (_Box == "CEMETORYBLOCK1")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock1.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock1.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK2")
+	else if (_Box == "CEMETORYBLOCK2")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock2.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock2.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK3")
+	else if (_Box == "CEMETORYBLOCK3")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock3.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock3.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK4")
+	else if (_Box == "CEMETORYBLOCK4")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock4.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock4.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK5")
+	else if (_Box == "CEMETORYBLOCK5")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock5.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock5.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK6")
+	else if (_Box == "CEMETORYBLOCK6")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock6.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock6.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK7")
+	else if (_Box == "CEMETORYBLOCK7")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock7.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock7.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK8")
+	else if (_Box == "CEMETORYBLOCK8")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock8.bmp");
+		Block_->Renderer->SetImage("CemetoryBlock8.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK9")
+	else if (_Box == "CEMETORYSTONE1")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock9.bmp");
+		Block_->Renderer->SetImage("CemetoryStone1.bmp");
 	}
-	else if (_Box == "CEMOTORYBLOCK10")
+	else if (_Box == "CEMETORYSTONE2")
 	{
-		Block_->Renderer->SetImage("CemotoryBlock10.bmp");
+		Block_->Renderer->SetImage("CemetoryStone2.bmp");
 	}
-	else if (_Box == "CEMOTORYMOVEBOX1")
+	else if (_Box == "CEMETORYMOVEBOX1")
 	{
-		Block_->Renderer->SetImage("CemotoryMoveBox1.bmp");
+		Block_->Renderer->SetImage("CemetoryMoveBox1.bmp");
 	}
 	 
 	////////////////////////////////////////// ºô¸®Áö ///////////////////////////////////////////////
@@ -190,10 +190,10 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("VillageMoveBox1.bmp");
 	}
-	else if (_Box == "VILLAGEBUSH")
+	else if (_Box == "VILLAGEBUSH1")
 	{
-		Block_->Renderer->CreateAnimation("VillageBush.bmp", "VillageBush", 0, 4, 0.1f, true);
-		Block_->Renderer->ChangeAnimation("VillageBush");
+		Block_->Renderer->CreateAnimation("VillageBush1.bmp", "VillageBush1", 0, 4, 0.1f, true);
+		Block_->Renderer->ChangeAnimation("VillageBush1");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
 	}
 
