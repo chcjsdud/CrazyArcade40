@@ -301,6 +301,11 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		ChangeState(PlayerState::Damaged);
 		return;
 	}
+	case BlockType::BubbleBlock:
+	{
+		ChangeState(PlayerState::Damaged);
+		return;
+	}
 	break;
 	case BlockType::BushBlock:
 	{
