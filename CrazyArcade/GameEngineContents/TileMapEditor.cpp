@@ -300,11 +300,11 @@ void TileMapEditor::Update()
 		}
 		if (true == MoveBox2Col->CollisionCheck("MouseCol"))
 		{
-			RenderName_ = "MoveBox2_1";
+			RenderName_ = "MoveBox2";
 		}
 		if (true == MoveBox3Col->CollisionCheck("MouseCol"))
 		{
-			RenderName_ = "MoveBox2_3";
+			RenderName_ = "MoveBox3";
 		}
 		if (true == Block1Col->CollisionCheck("MouseCol"))
 		{
