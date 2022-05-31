@@ -164,6 +164,7 @@ private:
 	void TileCheckResultUpdate(BlockType _CurBlockType);
 	void TileCheckResult();
 
+	void FrontBlockCheckUpdate();
 	void FrontBlockCheck();
 public:
 	MapGameObject* GetBoom()
@@ -211,6 +212,7 @@ protected:
 	GameEngineCollision* Collision2P_;
 
 	GameEngineRenderer* BazziRenderer_;
+	GameEngineRenderer* MaridRenderer_;
 	GameEngineRenderer* DaoRenderer_;
 
 private:
