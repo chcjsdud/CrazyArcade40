@@ -543,42 +543,7 @@ void Player::FrontBlockCheck()
 				DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
 			}
 
-			if (LeftBlock == BlockType::BoomBlock)
-			{
-				IsLeftMove = false;
-			}
-			else
-			{
-				IsLeftMove = true;
-			}
-
-			if (RightBlock == BlockType::BoomBlock)
-			{
-				IsRightMove = false;
-			}
-			else
-			{
-				IsRightMove = true;
-			}
-
-			if (UpBlock == BlockType::BoomBlock)
-			{
-				IsUpMove = false;
-			}
-			else
-			{
-				IsUpMove = true;
-			}
-
-
-			if (DownBlock == BlockType::BoomBlock)
-			{
-				IsDownMove = false;
-			}
-			else
-			{
-				IsDownMove = true;
-			}
+			FrontBlockCheckUpdate();
 		}
 	}
 	
@@ -594,6 +559,39 @@ void Player::PlayerCollisionUpdate()
 	{
 		Collision2P_->On();
 	}
+}
+
+void Player::MonsterCollisionCheck()
+{
+	std::vector<GameEngineCollision*> ColList;
+
+	if (Type == PlayerType::Player1)
+	{
+		if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
+		{
+			for (size_t i = 0; i < ColList.size(); i++)
+			{
+				ChangeState(PlayerState::Die);
+				return;
+			}
+		}
+	}
+
+	if (nullptr != MainPlayer_2)
+	{
+		if (Type == PlayerType::Player2)
+		{
+			if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
+			{
+				for (size_t i = 0; i < ColList.size(); i++)
+				{
+					ChangeState(PlayerState::Die);
+					return;
+				}
+			}
+		}
+	}
+
 }
 
 void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
@@ -804,14 +802,13 @@ void Player::Update()
 	PlayerCollisionUpdate();
 
 	TileCheckResult();
+	FrontBlockCheck();
+
+	MonsterCollisionCheck();
 
 	//PlayerInfoUpdate();
 
-	FrontBlockCheck();
-	//if (true == IsMove)
-	//{
-	//	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
-	//}
+	
 
 	DebugModeSwitch();
 }

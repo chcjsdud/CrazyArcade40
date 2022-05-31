@@ -233,6 +233,8 @@ protected:
 
 	void PlayerCollisionUpdate();
 
+	void MonsterCollisionCheck();
+
 	std::string GetCurrentLevel()
 	{
 		return GetLevel()->GetNameCopy();
