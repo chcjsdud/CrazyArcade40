@@ -193,7 +193,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	}
 	else if (_Box == "VILLAGEBUSH1")
 	{
-		Block_->Renderer->CreateAnimation("VillageBush1.bmp", "VillageBush1", 0, 4, 0.1f, true);
+		Block_->Renderer->CreateAnimation("VillageBush1.bmp", "VillageBush1", 0, 4, 0.1f, false);
 		Block_->Renderer->ChangeAnimation("VillageBush1");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
 	}
