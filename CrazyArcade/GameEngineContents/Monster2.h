@@ -18,9 +18,14 @@ protected:
 	void Start();
 	void Render();
 	void Update();
-	void TakeDamage() override;
-	void UpdateDirection() override;
+	void TakeDamage();
+	void UpdateMove();
+	void UpdateGetBack();
+	bool IsDie();
+	void Die();
 
 private:
 	GameEngineRenderer* MiniRenderer_;
+	bool MiniRendererOn_;
+	float GetBackTime_;
 };

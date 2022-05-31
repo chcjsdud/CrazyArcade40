@@ -43,6 +43,9 @@ protected:
 	void Render();
 	virtual void Update();
 	virtual void UpdateDirection();
+	virtual void Die();
+	virtual bool IsDie();
+
 protected:
 	GameEngineRendererTileMap* MapTile_;
 	BlockTile* Tile_;
@@ -135,8 +138,7 @@ public:
 		return HP_;
 	}
 
-	void Die();
-	bool IsDie();
+
 	void CheckWaveTile(float4 _Pos);
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{

@@ -19,6 +19,7 @@
 #include <GameEngine/GameEngineRendererTileMap.h>
 
 Monster1Level::Monster1Level()
+	:ColMapImage_(nullptr)
 {
 
 }
@@ -80,10 +81,10 @@ void Monster1Level::Loading()
 		{
 			for (int y = 0; y < 13; ++y)
 			{
-				float StartX = (600 / 15 * x) + 20;
-				float StartY = (520 / 13 * y) + 40;
-				float EndX = (600 / 15 * (x + 1)) + 20;
-				float EndY = (520 / 13 * (y + 1)) + 40;
+				float StartX = static_cast<float>((600 / 15 * x) + 20);
+				float StartY = static_cast<float>((520 / 13 * y) + 40);
+				float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
+				float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
 
 				Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 				Areas_.push_back(area);
@@ -96,7 +97,7 @@ void Monster1Level::Loading()
 
 
 		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		Mandarin2->SetPosition(Areas_[182].GetCenter());
+		Mandarin2->SetPosition(Areas_[169].GetCenter());
 		Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
@@ -116,10 +117,8 @@ void Monster1Level::Loading()
 
 
 		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
-		Crocodile2->SetPosition(Areas_[188].GetCenter());
+		Crocodile2->SetPosition(Areas_[175].GetCenter());
 		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
-
-	
 
 	}
 

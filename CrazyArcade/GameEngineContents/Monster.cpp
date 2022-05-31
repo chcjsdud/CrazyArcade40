@@ -37,6 +37,9 @@ Monster::Monster()
 	, SouthArea(ColMapImage_, 0, 0, 0, 0)
 	, CurArea(ColMapImage_,0,0,0,0)
 	, IndexCheck_(false)
+	, PrevIndex_(0)
+	, MapTile_(nullptr)
+	, CurBlockType_(BlockType::Max)
 {
 	TTL_MONSTER_COUNT++;
 }
@@ -137,16 +140,17 @@ void Monster::UpdateDirection()
 		{
 			int EastIndex = Index_ + AreaHeight_;
 			int NorthIndex = Index_ - 1;
+			int SouthIndex = Index_ + 1;
 			if (Index_ < 182) // 몬스터의 위치가 제일 오른쪽이 아니고
 			{
 				EastArea = Areas_[EastIndex];
-				if (true == EastArea.HasBubble(GetPosition())) // 오른쪽에 물풍선이 있으면
+				if (true == EastArea.HasBubble()) // 오른쪽에 물풍선이 있으면
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
 				}
 				else if (true == EastArea.HasWall() || // 오른쪽에 벽이 있거나
-					(true == EastArea.HasBlock(GetPosition()) && (false == EastArea.HasWaveTile(GetPosition())) && false == EastArea.HasBubble(GetPosition()))) // 오른쪽에 블럭이 있고, 그 블럭이 물폭탄이 아니면 내려가라
+					(true == EastArea.HasBlock(GetPosition()) && (false == EastArea.HasWaveTile() && false == EastArea.HasBubble())))// 오른쪽에 블럭이 있고, 그 블럭이 물폭탄이 아니면 내려가라
 				{
 					Dir_ = float4::DOWN;
 					Direction_ = "Down";
@@ -165,6 +169,12 @@ void Monster::UpdateDirection()
 			}
 			else // 몬스터의 위치가 맵의 제일 오른쪽이면 내려가라
 			{
+				SouthArea = Areas_[SouthIndex];
+				if (true == SouthArea.HasBubble()) // 오른쪽에 물풍선이 있으면
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+				}
 				Dir_ = float4::DOWN;
 				Direction_ = "Down";
 			}
@@ -178,14 +188,14 @@ void Monster::UpdateDirection()
 			if (Index_ >= 13)
 			{
 				WestArea = Areas_[WestIndex];
-				if (true == WestArea.HasBubble(GetPosition())) // 아래에 물풍선이 있으면
+				if (true == WestArea.HasBubble()) // 아래에 물풍선이 있으면
 				{
 					Dir_ = float4::RIGHT;
 					Direction_ = "Right";
 				}
 
 				else if (true == WestArea.HasWall() ||
-					(true == WestArea.HasBlock(GetPosition()) && (false == WestArea.HasWaveTile(GetPosition())) && false == WestArea.HasBubble(GetPosition())) &&
+					(true == WestArea.HasBlock(GetPosition()) && (false == WestArea.HasWaveTile()) && false == WestArea.HasBubble()) &&
 					false == NorthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
 				{
 					Dir_ = float4::UP;
@@ -205,8 +215,16 @@ void Monster::UpdateDirection()
 
 			else // 몬스터의 위치가 제일 왼쪽이면 올라가라
 			{
+				if (Index_ != 0)
+				{
 				Dir_ = float4::UP;
 				Direction_ = "Up";
+				}
+				else
+				{
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
+				}
 			}
 		}
 
@@ -218,13 +236,13 @@ void Monster::UpdateDirection()
 			{
 				SouthArea = Areas_[SouthIndex];
 
-				if (true == SouthArea.HasBubble(GetPosition())) // 아래에 물풍선이 있으면
+				if (true == SouthArea.HasBubble()) // 아래에 물풍선이 있으면
 				{
 					Dir_ = float4::UP;
 					Direction_ = "Up";
 				}
 
-				else if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock(GetPosition()) && false == SouthArea.HasWaveTile(GetPosition())) && false == SouthArea.HasBubble(GetPosition()))
+				else if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock(GetPosition()) && false == SouthArea.HasWaveTile()) && false == SouthArea.HasBubble())
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
@@ -249,46 +267,64 @@ void Monster::UpdateDirection()
 
 		else if (Dir_.y == -1) // 위로 가고 있고
 		{
-			int NorthIndex = Index_ - 1;
-			int WestIndex = Index_ - AreaHeight_;
-			if (Index_ % 13 != 0) // 몬스터의 위치가 맨 위가 아니고, 위에 장애물이 있으면 오른쪽으로 가라
+		int NorthIndex = Index_ - 1;
+		int WestIndex = Index_ - AreaHeight_;
+		int EastIndex = Index_ + AreaHeight_;
+		if (Index_ % 13 != 0) // 몬스터의 위치가 맨 위가 아니고, 위에 장애물이 있으면 오른쪽으로 가라
+		{
+			NorthArea = Areas_[NorthIndex];
+			if (true == NorthArea.HasBubble()) // 왼쪽에 물풍선이 있으면
 			{
-				NorthArea = Areas_[NorthIndex];
-				if (true == NorthArea.HasBubble(GetPosition())) // 왼쪽에 물풍선이 있으면
-				{
-					Dir_ = float4::DOWN;
-					Direction_ = "Down";
-				}
-
-				else if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock(GetPosition()) && false == NorthArea.HasWaveTile(GetPosition())) && false == NorthArea.HasBubble(GetPosition()))
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-				}
-
-				else if (Index_ >= 13) // 몬스터의 위치가 맨 위와 맨 왼쪽이 아니고, 왼쪽에 장애물이 없으면
-				{
-					WestArea = Areas_[WestIndex];
-					if (false == WestArea.HasWall() && false == WestArea.HasBlock(GetPosition()))
-					{
-						Dir_ = float4::LEFT;
-						Direction_ = "Left";
-					}
-				}
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
 			}
-			else // 몬스터의 위치가 맨 위면 오른쪽으로 가라
+
+			else if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock(GetPosition()) && false == NorthArea.HasWaveTile()) && false == NorthArea.HasBubble())
 			{
 				Dir_ = float4::RIGHT;
 				Direction_ = "Right";
+			}
 
+			else if (Index_ >= 13) // 몬스터의 위치가 맨 위와 맨 왼쪽이 아니고, 왼쪽에 장애물이 없으면
+			{
+				WestArea = Areas_[WestIndex];
+				if (false == WestArea.HasWall() && false == WestArea.HasBlock(GetPosition()))
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+				}
 			}
 		}
-		Renderer_->ChangeAnimation("Move" + Direction_);
+		else // 몬스터의 위치가 맨 위면 오른쪽으로 가라
+		{
+			EastArea = Areas_[EastIndex];
+			if (true == EastArea.HasBubble() && Index_ == 0)
+			{
+
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
+			}
+
+			else if (true == EastArea.HasBubble() && Index_ != 0)
+			{
+				Dir_ = float4::LEFT;
+				Direction_ = "Left";
+			}
+
+			else
+			{
+				Dir_ = float4::RIGHT;
+				Direction_ = "Right";
+			}
+
+		}
+		}
 	}
 }
 
 void Monster::UpdateMove()
 {
+	Renderer_->ChangeAnimation("Move" + Direction_);
 	SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 }
 
@@ -296,7 +332,6 @@ void Monster::TakeDamage()
 {
 	if (GetAttTime_ > 2.0) // 2초 안에 다시 맞으면 DMG를 입지 않는다. (Need to chk : TIME)
 	{
-
 		SetHP(GetHp() - 1);
 		GetAttTime_ = 0.0f;
 	}
@@ -320,22 +355,26 @@ void Monster::Render()
 
 void Monster::Die()
 {
-	if (true == Renderer_->IsAnimationName("Die") && true == Renderer_->IsEndAnimation())
+	if (true == IsDie()) // HP가 0이거나 0보다 작으면
 	{
-		CenterCol_->Off();
-		Death();
-		TTL_MONSTER_COUNT--; // total 몬스터 수가 줄어든다.
-		if (TTL_MONSTER_COUNT == 1) // 만약 몬스터가 한마리 남으면
+		if (true != Renderer_->IsAnimationName("Die"))
 		{
-			SetSpeed(Speed_ + 20); // 속도가 빨라져라
+		Dir_ = float4::ZERO;
+		Renderer_->ChangeAnimation("Die");
+		}
+
+		if (true == Renderer_->IsAnimationName("Die") && true == Renderer_->IsEndAnimation())
+		{
+			CenterCol_->Off();
+			Death();
+			TTL_MONSTER_COUNT--; // total 몬스터 수가 줄어든다.
+			if (TTL_MONSTER_COUNT == 1) // 만약 몬스터가 한마리 남으면
+			{
+				SetSpeed(Speed_ + 20); // 속도가 빨라져라
+			}
 		}
 	}
 
-	if (true == IsDie()) // HP가 0이거나 0보다 작으면
-	{
-		Dir_ = float4::ZERO;
-		Renderer_->ChangeAnimation("Die");
-	}
 }
 
 bool Monster::IsDie()

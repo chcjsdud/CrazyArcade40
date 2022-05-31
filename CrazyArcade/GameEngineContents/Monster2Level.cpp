@@ -12,6 +12,7 @@
 #include "Area.h"
 #include <GameEngine/GameEngineImageManager.h>
 Monster2Level::Monster2Level()
+	:ColMapImage_(nullptr)
 {
 
 }
@@ -72,10 +73,10 @@ void Monster2Level::Loading()
 	{
 		for (int y = 0; y < 13; ++y)
 		{
-			float StartX = (600 / 15 * x) + 20;
-			float StartY = (520 / 13 * y) + 40;
-			float EndX = (600 / 15 * (x + 1)) + 20;
-			float EndY = (520 / 13 * (y + 1)) + 40;
+			float StartX = static_cast<float>((600 / 15 * x) + 20);
+			float StartY = static_cast<float>((520 / 13 * y) + 40);
+			float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
+			float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
 
 			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 			Areas_.push_back(area);

@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineImage.h>
 #include "Area.h"
+#include "GameEngine/GameEngineCollision.h"
 
 Monster1::Monster1()
 	:Monster()
@@ -28,6 +29,7 @@ void Monster1::Start()
 	SetSpeed(100);
 	Direction_ = "Right";
 	Dir_ = float4::RIGHT;
+	SetHP(1);
 }
 
 void Monster1::Render()

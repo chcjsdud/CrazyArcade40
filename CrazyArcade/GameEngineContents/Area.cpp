@@ -60,18 +60,18 @@ bool Area::InCenter(float4 _Pos)
     return false;
 }
 
-bool Area::HasWaveTile(float4 _Pos)
+bool Area::HasWaveTile()
 {
-    BlockTile* Tile_ = GetTile(_Pos);
+    BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
 
     return Tile_ != nullptr ?
         Tile_->BlockType_ == BlockType::WaveBlock :
         false;
 }
 
-bool Area::HasBubble(float4 _Pos)
+bool Area::HasBubble()
 {
-    BlockTile* Tile_ = GetTile(_Pos);
+    BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
 
     return Tile_ != nullptr ?
         Tile_->BlockType_ == BlockType::BoomBlock :
