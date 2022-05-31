@@ -366,7 +366,7 @@ void TileMapEditor::Update()
 		Dir.Move("Resources");
 		Dir.Move("Data");
 
-		GameEngineFile SaveFile = (Dir.GetFullPath() + "\\"+ LevelNameReturnToString()+".MapData").c_str();
+		GameEngineFile SaveFile = (Dir.GetFullPath() + "\\"+ LevelName_ +".MapData").c_str();
 
 		SaveFile.Open(OpenMode::Write);
 
@@ -406,7 +406,7 @@ void TileMapEditor::Update()
 		Dir.Move("Resources");
 		Dir.Move("Data");
 
-		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\" + LevelNameReturnToString() + ".MapData").c_str();
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\" + LevelName_ + ".MapData").c_str();
 
 		LoadFile.Open(OpenMode::Read);
 
