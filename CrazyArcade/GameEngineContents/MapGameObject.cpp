@@ -110,17 +110,11 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("CampMoveBox1.bmp");
 	}
-	else if (_Box == "CAMPMOVEBOX2")
+	else if (_Box == "CAMPMOVEBOX2_3")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 2, 2, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
 		Block_->BlockHp_ = 1;
-	}
-	else if (_Box == "CAMPMOVEBOX3")
-	{
-		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_2", 1, 1, 0.0f, false);
-		Block_->Renderer->ChangeAnimation("CampMoveBox2_2");
-		Block_->BlockHp_ = 2;
 	}
 	else if (_Box == "CAMPMOVEBOX2_1")
 	{
@@ -155,14 +149,6 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("CemetoryBlock6.bmp");
 	}
-	else if (_Box == "CEMETORYBLOCK7")
-	{
-		Block_->Renderer->SetImage("CemetoryBlock7.bmp");
-	}
-	else if (_Box == "CEMETORYBLOCK8")
-	{
-		Block_->Renderer->SetImage("CemetoryBlock8.bmp");
-	}
 	else if (_Box == "CEMETORYSTONE1")
 	{
 		Block_->Renderer->SetImage("CemetoryStone1.bmp");
@@ -175,7 +161,14 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("CemetoryMoveBox1.bmp");
 	}
-	 
+	else if (_Box == "CEMETORYMOVEBOX2_1")
+	{
+		Block_->Renderer->SetImage("CemetoryMoveBox2.bmp");
+	}
+	else if (_Box == "CEMETORYMOVEBOX2-3")
+	{
+		Block_->Renderer->SetImage("CemetoryMoveBox3.bmp");
+	}
 	////////////////////////////////////////// ºô¸®Áö ///////////////////////////////////////////////
 
 	if (_Box == "VILLAGEBLOCK1")

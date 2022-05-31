@@ -190,6 +190,12 @@ void TileMapEditor::LevelBlockUpdate()
 		MoveBox1->On();
 		MoveBox1->SetImage("CemetoryMoveBox1.bmp");
 
+		MoveBox2->On();
+		MoveBox2->SetImage("CemetoryMoveBox2.bmp");
+
+		MoveBox3->On();
+		MoveBox3->SetImage("CemetoryMoveBox3.bmp");
+
 		Block1->On();
 		Block1->SetImage("CemetoryBlock1.bmp");
 
@@ -208,12 +214,6 @@ void TileMapEditor::LevelBlockUpdate()
 		Block6->On();
 		Block6->SetImage("CemetoryBlock6.bmp");
 
-		Block7->On();
-		Block7->SetImage("CemetoryBlock7.bmp");
-
-		Block8->On();
-		Block8->SetImage("CemetoryBlock8.bmp");
-
 
 		Stone1->On();
 		Stone1->SetImage("CemetoryStone1.bmp");
@@ -222,7 +222,11 @@ void TileMapEditor::LevelBlockUpdate()
 		Stone2->SetImage("CemetoryStone2.bmp");
 		Stone2Col->On();
 
+
+
 		MoveBox1Col->On();
+		MoveBox2Col->On();
+		MoveBox3Col->On();
 		Block1Col->On();
 		Block2Col->On();
 		Block3Col->On();
@@ -256,11 +260,6 @@ void TileMapEditor::LevelBlockUpdate()
 		Block6->On();
 		Block6->SetImage("MonsterBlock6.bmp");
 
-		Block7->On();
-		Block7->SetImage("MonsterBlock7.bmp");
-
-		Block8->On();
-		Block8->SetImage("MonsterBlock8.bmp");
 
 		MoveBox1Col->On();
 		Block1Col->On();
