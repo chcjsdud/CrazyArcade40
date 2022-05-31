@@ -110,13 +110,13 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("CampMoveBox1.bmp");
 	}
-	else if (_Box == "CAMPMOVEBOX2_3")
+	else if (_Box == "CAMPMOVEBOX2")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 2, 2, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
 		Block_->BlockHp_ = 1;
 	}
-	else if (_Box == "CAMPMOVEBOX2_2")
+	else if (_Box == "CAMPMOVEBOX3")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_2", 1, 1, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_2");
