@@ -10,7 +10,11 @@ class ItemBlockTile : public Tile
 public:
 	ItemBlockTile()
 		: BlockType_(BlockType::Max),
-		ItemType_(ItemType::Max)
+		ItemType_(ItemType::Max),
+		Renderer(nullptr),
+		BlockCol(nullptr),
+		TilePos_(float4::ZERO),
+		TileIndex_()
 	{
 
 	}
