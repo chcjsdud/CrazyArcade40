@@ -61,7 +61,7 @@ void Monster2::Start()
 	//MiniRenderer_->CreateAnimation("Monster.bmp", "MoveDown", 27, 28, 0.2f, true);
 	//MiniRenderer_->CreateAnimation("Monster.bmp", "Die", 31, 33, 0.2f, true);
 
-	CenterCol_->SetScale(float4(50.0f, 80.0f));
+	CenterCol_->SetScale(float4(50.0f, 70.0f));
 	CenterCol_->SetPivot(float4(0.0f, -40.0f));
 	SetHP(2);
 	SetSpeed(100);
@@ -73,9 +73,6 @@ void Monster2::Start()
 	MiniRendererOn_ = false;
 }
 
-void Monster2::Render()
-{
-}
 
 void Monster2::Update()
 {
@@ -161,4 +158,10 @@ bool Monster2::IsDie()
 		return true;
 	}
 	else return false;
+}
+
+
+void Monster2::Render()
+{
+	Monster::Render();
 }

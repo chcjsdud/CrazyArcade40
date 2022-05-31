@@ -6,6 +6,8 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineContents/ContentsEnum.h>
+#include <GameEngineBase/GameEngineDirectory.h>
+#include <GameEngineBase/GameEngineFile.h>
 #include "Player.h"
 #include"ContentsEnum.h"
 #include"MapBackGround.h."
@@ -25,6 +27,7 @@
 #include <vector>
 
 PlayerTeamTest::PlayerTeamTest()
+	:ColMapImage_(nullptr)
 {
 
 }
@@ -34,14 +37,14 @@ PlayerTeamTest::~PlayerTeamTest()
 }
 void PlayerTeamTest::Loading()
 {
-	if (nullptr == Player::MainPlayer_1)
-	{
-		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	}
-	
-	Player::MainPlayer_1->Off();
-	Player::MainPlayer_2->Off();
+	//if (nullptr == Player::MainPlayer_1)
+	//{
+	//	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	//	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	//}
+	//
+	//Player::MainPlayer_1->Off();
+	//Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<TimeUI>((int)UIType::Time);
@@ -75,10 +78,10 @@ void PlayerTeamTest::Loading()
 	{
 		for (int y = 0; y < 13; ++y)
 		{
-			float StartX = (600 / 15 * x) + 20;
-			float StartY = (520 / 13 * y) + 40;
-			float EndX = (600 / 15 * (x + 1)) + 20;
-			float EndY = (520 / 13 * (y + 1)) + 40;
+			float StartX = static_cast<float>((600 / 15 * x) + 20);
+			float StartY = static_cast<float>((520 / 13 * y) + 40);
+			float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
+			float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
 
 			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 			Areas_.push_back(area);
@@ -92,7 +95,41 @@ void PlayerTeamTest::Loading()
 	Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	Crocodile1->SetPosition(Areas_[6].GetCenter());
 	Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
+	{
+		MapGameObject* BlockSet = CreateActor<MapGameObject>();
+		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+		GameEngineDirectory Dir;
 
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
+
+		LoadFile.Open(OpenMode::Read);
+
+		int Size = 0;
+		LoadFile.Read(&Size, sizeof(int));
+
+		for (size_t y = 0; y < Size; y++)
+		{
+			int XSize = 0;
+			LoadFile.Read(&XSize, sizeof(int));
+			for (size_t x = 0; x < XSize; x++)
+			{
+				std::string Name;
+				LoadFile.Read(Name);
+
+				if (Name == "None")
+				{
+					continue;
+				}
+
+				//                          5 7
+				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+			}
+		}
+	}
 }
 void PlayerTeamTest::Update()
 {
@@ -103,15 +140,14 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 
 
-	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin1->SetPosition(float4(100.0f, 100.0f));
+	////Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	////Mandarin1->SetPosition(float4(100.0f, 100.0f));
 
-	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	//Crocodile1->SetPosition(float4(150.0f, 150.0f));
+	////Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+	////Crocodile1->SetPosition(float4(150.0f, 150.0f));
 
-	//Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
-	//Seal->SetPosition(float4(200.0f, 200.0f));
-
+	////Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
+	////Seal->SetPosition(float4(200.0f, 200.0f));
 
 	//Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 	//NewPlayer->SetCharacter(Character::BAZZI);
@@ -120,19 +156,24 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1->On();
 	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 100.f, 300.f });
+	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	Player::MainPlayer_2->On();
 	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
 	Player::MainPlayer_2->SetCharacter(Character::BAZZI);
 	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition({ 400.f, 300.f });
+	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
 	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
+	//Player::MainPlayer_2->On();
+	////Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
+	//Player::MainPlayer_2->SetCharacter(Character::BAZZI);
+	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	//Player::MainPlayer_2->SetPosition({ 400.f, 300.f });
+	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	// =================== 1P 2P 키 동시 입력 시 이동 확인 완료 
-
 
 	//윈도우 마우스 숨김
 	ShowCursor(false);

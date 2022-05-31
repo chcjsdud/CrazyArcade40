@@ -30,6 +30,8 @@ void Monster1::Start()
 	Direction_ = "Right";
 	Dir_ = float4::RIGHT;
 	SetHP(1);
+
+	CenterCol_->SetPivot(float4(0.0f, -18.0f));
 }
 
 void Monster1::Render()

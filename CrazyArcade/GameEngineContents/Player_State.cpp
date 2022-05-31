@@ -212,7 +212,6 @@ void Player::AttackUpdate()
 
 void Player::DamagedUpdate()
 {
-
 	if (true == IsItemKey())
 	{
 		ChangeState(PlayerState::Revival);
@@ -227,6 +226,7 @@ void Player::DamagedUpdate()
 		ChangeState(PlayerState::Fade);
 		return;
 	}
+
 }
 
 void Player::RevivalUpdate() 
@@ -248,7 +248,7 @@ void Player::FadeUpdate()
 	}
 
 	// 1.5ÃÊ ÈÄ -> Die
-	if (1.5f < GetAccTime())
+	if (2.f < GetAccTime())
 	{
 		ChangeState(PlayerState::Die);
 		return;
