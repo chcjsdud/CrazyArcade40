@@ -165,7 +165,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		Block_->Renderer->SetImage("CemetoryMoveBox2.bmp");
 	}
-	else if (_Box == "CEMETORYMOVEBOX2-3")
+	else if (_Box == "CEMETORYMOVEBOX2_3")
 	{
 		Block_->Renderer->SetImage("CemetoryMoveBox3.bmp");
 	}
