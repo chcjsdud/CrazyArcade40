@@ -432,7 +432,7 @@ void CrazyArcade::GameInit()
         GameEngineInput::GetInst()->CreateKey("TileMapEditorLevel", '0');
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
-
+        GameEngineInput::GetInst()->CreateKey("MonsterLevel", '9');
         GameEngineInput::GetInst()->CreateKey("Debug_Col", VK_OEM_6); // ]키
     }
     //////시작부분
@@ -491,6 +491,10 @@ void CrazyArcade::GameLoop()
     if (true == GameEngineInput::GetInst()->IsDown("TileMapEditorLevel"))
     {
         GameEngine::GetInst().ChangeLevel("TileMapEditorLevel");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("MonsterLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("Monster1Level");
     }
 }
 
