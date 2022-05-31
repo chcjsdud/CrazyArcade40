@@ -5,7 +5,7 @@
 class GameEngineImage;
 enum class BlockType;
 class Monster;
-class TileIndex;
+struct TileIndex;
 class BlockTile;
 class Area
 {

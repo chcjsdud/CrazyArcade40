@@ -21,7 +21,8 @@ public:
 		DeathTime_(),
 		Power_(),
 		CenterWaveX_(0),
-		CenterWaveY_(0)
+		CenterWaveY_(0),
+		DeathAniTime_(0.0f)
 	{
 
 	}
