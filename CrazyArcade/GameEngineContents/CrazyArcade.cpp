@@ -347,7 +347,7 @@ void CrazyArcade::GameInit()
         ResourcesDir.Move("Resources");
         ResourcesDir.Move("PlayLevel");
         ResourcesDir.Move("TileMap");
-        ResourcesDir.Move("Cemotory");
+        ResourcesDir.Move("Cemetory");
 
         std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
 
