@@ -34,6 +34,10 @@ Player::Player()
 	, IsMove(false)
 	, MapBackGround_(nullptr)
 	, MapColRenderer_(nullptr)
+	, IsLeftMove(true)
+	, IsRightMove(true)
+	, IsUpMove(true)
+	, IsDownMove(true)
 {
 
 }
@@ -65,88 +69,114 @@ void Player::Move()
 
 	if (Type == PlayerType::Player1)
 	{
-
-
 		if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
 		{
-			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+			if (true == IsLeftMove)
 			{
-				MoveDir.y = -MovePos;
-			}
-			else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
-			{
-				MoveDir.y = MovePos;
-			}
-			else
-			{
-				MoveDir.x = -MovePos;
+				if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+				{
+					MoveDir.y = -MovePos;
+				}
+				else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
+				{
+					MoveDir.y = MovePos;
+				}
+				else
+				{
+					MoveDir.x = -MovePos;
+				}
 			}
 
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
 		{
-			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+			if (true == IsRightMove)
 			{
-				MoveDir.y = -MovePos;
+				if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+				{
+					MoveDir.y = -MovePos;
+				}
+				else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
+				{
+					MoveDir.y = MovePos;
+				}
+				else
+				{
+					MoveDir.x = MovePos;
+				}
 			}
-			else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
-			{
-				MoveDir.y = MovePos;
-			}
-			else
-			{
-				MoveDir.x = MovePos;
-			}
+		
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
 		{
-
-			MoveDir.y = -MovePos;
+			if (true == IsUpMove)
+			{
+				MoveDir.y = -MovePos;
+			}
+		
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
 		{
-			MoveDir.y = MovePos;
+			if (true == IsDownMove)
+			{
+				MoveDir.y = MovePos;
+			}
 		}
 	}
 	else
 	{
 		if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
 		{
-			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+			if (true == IsLeftMove)
 			{
-				MoveDir.y = -MovePos;
+				if (true == GameEngineInput::GetInst()->IsPress("2PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+				{
+					MoveDir.y = -MovePos;
+				}
+				else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
+				{
+					MoveDir.y = MovePos;
+				}
+				else
+				{
+					MoveDir.x = -MovePos;
+				}
 			}
-			else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
-			{
-				MoveDir.y = MovePos;
-			}
-			else
-			{
-				MoveDir.x = -MovePos;
-			}
+			
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
 		{
-			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+			if (true == IsRightMove)
 			{
-				MoveDir.y = -MovePos;
+				if (true == GameEngineInput::GetInst()->IsPress("2PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+				{
+					MoveDir.y = -MovePos;
+				}
+				else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
+				{
+					MoveDir.y = MovePos;
+				}
+				else
+				{
+					MoveDir.x = MovePos;
+				}
 			}
-			else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
-			{
-				MoveDir.y = MovePos;
-			}
-			else
-			{
-				MoveDir.x = MovePos;
-			}
+	
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
 		{
-			MoveDir.y = -MovePos;
+			if (true == IsUpMove)
+			{
+				MoveDir.y = -MovePos;
+			}
+			
 		}
 		else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
 		{
-			MoveDir.y = MovePos;
+			if (true == IsDownMove)
+			{
+				MoveDir.y = MovePos;
+			}
 		}
 	}
 
@@ -282,11 +312,12 @@ void Player::StagePixelCheck(float _Speed)
 		&& RGB(0, 0, 0) != RightBotColor)
 	{
 		IsMove = true;
+		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
 
-		if (true == IsMove)
+	/*	if (true == IsMove)
 		{
 			SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
-		}
+		}*/
 	}
 }
 
@@ -346,23 +377,130 @@ void Player::TileCheckResult()
 
 }
 
-void Player::BoomTileCheck()
+void Player::FrontBlockCheck()
 {
-	float4 Pos = MainPlayer_1->GetPosition();
-
-//	if(CurDir_ == )
-	TileIndex LeftIndex  = MapTile_->GetTileIndex(Pos + float4{-40.f, 0.f});
-	//BlockType BubbleRight = CheckBlockTile(Pos + float4{ -19.f, -5.f });
-	BlockTile* LeftTile = MapTile_->GetTile<BlockTile>(LeftIndex.X, LeftIndex.Y);
-	if (LeftTile != nullptr)
+	if (0.5f > AttMoveTime_)
 	{
-		LeftBlock = LeftTile->BlockType_;
+		if (Type == PlayerType::Player1)
+		{
+			float4 Pos = MainPlayer_1->GetPosition();
+			//TileIndex LeftIndex = MapTile_->GetTileIndex(Pos + float4{ -20.f, 0.f });
+			//TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 20.f, 0.f });
+			//TileIndex UpIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, -20.f });
 
-	}
-	
-	if (LeftBlock == BlockType::BoomBlock)
-	{
-		IsMove = false;
+			TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
+			TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
+
+			LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
+			UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
+
+			if (RightIndex.X != 15)
+			{
+				RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+			}
+			if (DownIndex.Y != 13)
+			{
+				DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+			}
+
+			if (LeftBlock == BlockType::BoomBlock)
+			{
+				IsLeftMove = false;
+			}
+			else
+			{
+				IsLeftMove = true;
+			}
+
+			if (RightBlock == BlockType::BoomBlock)
+			{
+				IsRightMove = false;
+			}
+			else
+			{
+				IsRightMove = true;
+			}
+
+			if (UpBlock == BlockType::BoomBlock)
+			{
+				IsUpMove = false;
+			}
+			else
+			{
+				IsUpMove = true;
+			}
+
+
+			if (DownBlock == BlockType::BoomBlock)
+			{
+				IsDownMove = false;
+			}
+			else
+			{
+				IsDownMove = true;
+			}
+		}
+
+		if (nullptr != MainPlayer_2)
+		{
+			if (Type == PlayerType::Player2)
+			{
+				float4 Pos = MainPlayer_2->GetPosition();
+
+				TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
+				TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
+
+				LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
+				UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
+
+				if (RightIndex.X != 15)
+				{
+					RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+				}
+				if (DownIndex.Y != 13)
+				{
+					DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+				}
+
+				if (LeftBlock == BlockType::BoomBlock)
+				{
+					IsLeftMove = false;
+				}
+				else
+				{
+					IsLeftMove = true;
+				}
+
+				if (RightBlock == BlockType::BoomBlock)
+				{
+					IsRightMove = false;
+				}
+				else
+				{
+					IsRightMove = true;
+				}
+
+				if (UpBlock == BlockType::BoomBlock)
+				{
+					IsUpMove = false;
+				}
+				else
+				{
+					IsUpMove = true;
+				}
+
+
+				if (DownBlock == BlockType::BoomBlock)
+				{
+					IsDownMove = false;
+				}
+				else
+				{
+					IsDownMove = true;
+				}
+			}
+		}
+
 	}
 	
 }
@@ -427,6 +565,7 @@ void Player::Start()
 
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Fade_", 72, 79, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -529,6 +668,12 @@ void Player::Update()
 	TileCheckResult();
 
 	//PlayerInfoUpdate();
+
+	FrontBlockCheck();
+	//if (true == IsMove)
+	//{
+	//	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
+	//}
 
 	DebugModeSwitch();
 }

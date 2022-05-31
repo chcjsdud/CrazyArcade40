@@ -26,6 +26,8 @@ void Player::ReadyStart()
 void Player::IdleStart()
 {
 	IsMove = true;
+	
+	ReSetAccTime();
 
 	AnimationName_ = "Idle_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
@@ -46,13 +48,15 @@ void Player::JumpStart()
 
 void Player::AttackStart()
 {
+	AttMoveTime_ += GameEngineTime::GetDeltaTime();
 }
 
 void Player::DamagedStart()
 {
 	IsMove = false;
-
 	MoveDir = float4::ZERO;
+
+	AddAccTime(Time_);
 
 	AnimationName_ = "Damaged_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
@@ -61,7 +65,6 @@ void Player::DamagedStart()
 void Player::RevivalStart()
 {
 	IsMove = false;
-
 	MoveDir = float4::ZERO;
 
 	AnimationName_ = "Revival_";
@@ -71,18 +74,23 @@ void Player::RevivalStart()
 void Player::FadeStart()
 {
 	IsMove = false;
-
 	MoveDir = float4::ZERO;
+
+	ReSetAccTime();
+	AddAccTime(Time_);
 
 	AnimationName_ = "Fade_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
+
 void Player::DieStart()
 {
 	IsMove = false;
-
 	MoveDir = float4::ZERO;
+
+	ReSetAccTime();
+	AddAccTime(Time_);
 
 	AnimationName_ = "Die_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
@@ -155,9 +163,12 @@ void Player::MoveUpdate()
 		return;
 	}
 
-
 	Move();
-	BoomTileCheck();
+	//if (true == IsMove)
+	//{
+	//	
+	//}
+	
 
 	StagePixelCheck(CurSpeed_);
 }
@@ -168,7 +179,6 @@ void Player::JumpUpdate()
 
 void Player::AttackUpdate()
 {
-	
 	float4 ModifyPos = float4{ -17.f, -25.f };
 
 	if (Type == PlayerType::Player1)
@@ -202,7 +212,6 @@ void Player::AttackUpdate()
 
 void Player::DamagedUpdate()
 {
-	//float Time 
 
 	if (true == IsItemKey())
 	{
@@ -213,11 +222,11 @@ void Player::DamagedUpdate()
 	Move();
 	StagePixelCheck(0.05f);
 
-	//if (4.f < Time)
-	//{
-	//	ChangeState(PlayerState::Die);
-	//	return;
-	//}
+	if (5.f < GetAccTime())
+	{
+		ChangeState(PlayerState::Fade);
+		return;
+	}
 }
 
 void Player::RevivalUpdate() 
@@ -252,6 +261,11 @@ void Player::FadeUpdate()
 
 void Player::DieUpdate()
 {
+	if (PlayerAnimationRender_->IsEndAnimation()
+		&& 4.f < GetAccTime())
+	{
+		Death();
+	}
 }
 
 void Player::IdleOwlUpdate()

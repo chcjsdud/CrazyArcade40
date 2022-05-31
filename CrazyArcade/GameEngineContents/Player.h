@@ -87,6 +87,9 @@ protected:
 	float MaxAttPower_;		// 최대 물줄기 길이
 	int CurAttCount_;			// 물풍선 개수 
 	int MaxAttCount_;			// 최대 물풍선 개수
+
+	float Time_;
+	float AttMoveTime_;
 	
 	// 플레이어 정보 세팅
 protected:
@@ -137,6 +140,11 @@ protected:
 	bool IsMove;
 	void Move();
 
+	bool IsLeftMove;
+	bool IsRightMove;
+	bool IsUpMove;
+	bool IsDownMove;
+
 	bool IsMoveKey();
 	bool IsAttackKey();
 	bool IsItemKey();
@@ -148,11 +156,15 @@ private:
 	BlockType CurBlockType2_;
 	
 	BlockType LeftBlock;
+	BlockType RightBlock;
+	BlockType UpBlock;
+	BlockType DownBlock;
+
 
 	void TileCheckResultUpdate(BlockType _CurBlockType);
 	void TileCheckResult();
 
-	void BoomTileCheck();
+	void FrontBlockCheck();
 public:
 	MapGameObject* GetBoom()
 	{
