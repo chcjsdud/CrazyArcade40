@@ -121,6 +121,18 @@ void Monster::UpdateDirection()
 
 	if (IsAreaChanged == true)
 	{
+		//int EastIndex = Index_ + AreaHeight_;
+		//int NorthIndex = Index_ - 1;
+		//int WestIndex = Index_ - AreaHeight_;
+		//int SouthIndex = Index_ + 1;
+		////if (EastIndex >= 0 && EastIndex < Areas.size())
+		////{
+		////	Area& EastArea = Areas[EastIndex];
+		////}
+		////if (WestIndex >= 0 && WestIndex < Areas.size())
+		////{
+		////	Area& EastArea = Areas[EastIndex];
+		////}
 		if (Dir_.x == 1) // 오른쪽으로 가고 있고
 		{
 			int EastIndex = Index_ + AreaHeight_;
@@ -128,7 +140,7 @@ void Monster::UpdateDirection()
 			if (Index_ < 182) // 몬스터의 위치가 제일 오른쪽이 아니고
 			{
 				EastArea = Areas_[EastIndex];
-				if (true == EastArea.HasBubble(GetPosition())) // 아래에 물풍선이 있으면
+				if (true == EastArea.HasBubble(GetPosition())) // 오른쪽에 물풍선이 있으면
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
@@ -162,6 +174,7 @@ void Monster::UpdateDirection()
 		{
 			int WestIndex = Index_ - AreaHeight_;
 			int SouthIndex = Index_ + 1;
+			int NorthIndex = Index_ - 1;
 			if (Index_ >= 13)
 			{
 				WestArea = Areas_[WestIndex];
@@ -172,10 +185,11 @@ void Monster::UpdateDirection()
 				}
 
 				else if (true == WestArea.HasWall() ||
-					(true == WestArea.HasBlock(GetPosition()) && (false == WestArea.HasWaveTile(GetPosition())) && false == WestArea.HasBubble(GetPosition()))) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
+					(true == WestArea.HasBlock(GetPosition()) && (false == WestArea.HasWaveTile(GetPosition())) && false == WestArea.HasBubble(GetPosition())) &&
+					false == NorthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
 				{
 					Dir_ = float4::UP;
-						Direction_ = "Up";
+					Direction_ = "Up";
 				}
 
 				else if (Index_ % 13 != 12)
