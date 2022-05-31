@@ -377,16 +377,156 @@ void Player::TileCheckResult()
 
 }
 
+void Player::FrontBlockCheckUpdate()
+{
+	// 왼쪽 블럭
+	switch (LeftBlock)
+	{
+	case BlockType::BoomBlock:
+	{
+		IsLeftMove = false;
+	}
+	break;
+	case BlockType::FixBlock:
+	{
+		IsLeftMove = false;
+	}
+	break;
+	default:
+	{
+		IsLeftMove = true;
+	}
+	break;
+	}
+
+	// 오른쪽 블럭
+	switch (RightBlock)
+	{
+	case BlockType::BoomBlock:
+	{
+		IsRightMove = false;
+	}
+	break;
+	case BlockType::FixBlock:
+	{
+		IsRightMove = false;
+	}
+	break;
+	default:
+	{
+		IsRightMove = true;
+	}
+	break;
+	}
+
+	// 위쪽 블럭
+	switch (UpBlock)
+	{
+	case BlockType::BoomBlock:
+	{
+		IsUpMove = false;
+	}
+	break;
+	case BlockType::FixBlock:
+	{
+		IsUpMove = false;
+	}
+	break;
+	default:
+	{
+		IsUpMove = true;
+	}
+	break;
+	}
+
+
+	// 아래쪽 블럭
+	switch (DownBlock)
+	{
+	case BlockType::BoomBlock:
+	{
+		IsDownMove = false;
+	}
+	break;
+	case BlockType::FixBlock:
+	{
+		IsDownMove = false;
+	}
+	break;
+	default:
+	{
+		IsDownMove = true;
+	}
+	break;
+	}
+}
+
 void Player::FrontBlockCheck()
 {
-	if (0.5f > AttMoveTime_)
+	if (Type == PlayerType::Player1)
 	{
-		if (Type == PlayerType::Player1)
+		float4 Pos = MainPlayer_1->GetPosition();
+
+		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
+		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
+
+		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
+		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
+
+		if (RightIndex.X != 15)
 		{
-			float4 Pos = MainPlayer_1->GetPosition();
-			//TileIndex LeftIndex = MapTile_->GetTileIndex(Pos + float4{ -20.f, 0.f });
-			//TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 20.f, 0.f });
-			//TileIndex UpIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, -20.f });
+			RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+		}
+		if (DownIndex.Y != 13)
+		{
+			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+		}
+	
+
+		FrontBlockCheckUpdate();
+	/*
+		if (LeftBlock == BlockType::BoomBlock)
+		{
+			IsLeftMove = false;
+		}
+		else
+		{
+			IsLeftMove = true;
+		}
+
+		if (RightBlock == BlockType::BoomBlock)
+		{
+			IsRightMove = false;
+		}
+		else
+		{
+			IsRightMove = true;
+		}
+
+		if (UpBlock == BlockType::BoomBlock)
+		{
+			IsUpMove = false;
+		}
+		else
+		{
+			IsUpMove = true;
+		}
+
+		if (DownBlock == BlockType::BoomBlock)
+		{
+			IsDownMove = false;
+		}
+		else
+		{
+			IsDownMove = true;
+		}*/
+	}
+
+	if (nullptr != MainPlayer_2)
+	{
+		if (Type == PlayerType::Player2)
+		{
+			float4 Pos = MainPlayer_2->GetPosition();
 
 			TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
 			TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
@@ -440,67 +580,6 @@ void Player::FrontBlockCheck()
 				IsDownMove = true;
 			}
 		}
-
-		if (nullptr != MainPlayer_2)
-		{
-			if (Type == PlayerType::Player2)
-			{
-				float4 Pos = MainPlayer_2->GetPosition();
-
-				TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
-				TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
-
-				LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
-				UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
-
-				if (RightIndex.X != 15)
-				{
-					RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
-				}
-				if (DownIndex.Y != 13)
-				{
-					DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
-				}
-
-				if (LeftBlock == BlockType::BoomBlock)
-				{
-					IsLeftMove = false;
-				}
-				else
-				{
-					IsLeftMove = true;
-				}
-
-				if (RightBlock == BlockType::BoomBlock)
-				{
-					IsRightMove = false;
-				}
-				else
-				{
-					IsRightMove = true;
-				}
-
-				if (UpBlock == BlockType::BoomBlock)
-				{
-					IsUpMove = false;
-				}
-				else
-				{
-					IsUpMove = true;
-				}
-
-
-				if (DownBlock == BlockType::BoomBlock)
-				{
-					IsDownMove = false;
-				}
-				else
-				{
-					IsDownMove = true;
-				}
-			}
-		}
-
 	}
 	
 }
@@ -545,6 +624,8 @@ void Player::Start()
 		Bazzi2->CutCount(5, 2);
 		GameEngineImage* Bazzi3 = GameEngineImageManager::GetInst()->Find("Bazzi_3.bmp");
 		Bazzi3->CutCount(5, 4);
+		GameEngineImage* Bazzi = GameEngineImageManager::GetInst()->Find("Bazzi_1a.bmp");
+		Bazzi->CutCount(5, 18);
 
 		// 애니메이션
 
@@ -564,8 +645,8 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Down", 21, 28, 0.1f, true);
 
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Damaged_", 60, 71, 0.2f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Fade_", 72, 79, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Damaged_", 60, 71, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Fade_", 72, 79, 0.2f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -595,6 +676,63 @@ void Player::Start()
 
 
 		BazziRenderer_->Off();
+	}
+
+	// Lux Marid
+	{
+		GameEngineImage* Marid1 = GameEngineImageManager::GetInst()->Find("luxMarid_1.bmp");
+		Marid1->CutCount(5, 12);
+		GameEngineImage* Marid2 = GameEngineImageManager::GetInst()->Find("luxMarid_2.bmp");
+		Marid2->CutCount(5, 2);
+
+		// 애니메이션
+		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
+
+		// Idle
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Ready_", 37, 53, 0.06f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Left", 0, 0, 1.f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Right", 6, 6, 1.f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Up", 12, 12, 1.f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Down", 20, 20, 1.f, false);
+
+		// Move
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Left", 1, 5, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Right", 7, 11, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Up", 13, 19, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Down", 21, 28, 0.1f, true);
+
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Win_", 29, 36, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Damaged_", 60, 71, 0.2f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Fade_", 72, 79, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Die_", 0, 5, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Revival_", 6, 9, 0.15f, false);
+
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
+		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
+
+
+		MaridRenderer_->ChangeAnimation("Ready_");
+		CurState_ = PlayerState::Ready;
+		AnimationName_ = "Ready_";
+		ChangeDirText_ = "Down";
+
+		//BazziRenderer_->ChangeAnimation("Idle_Down");
+		//AnimationName_ = "Idle_";
+		//ChangeDirText_ = "Down";
+		//ChangeState(PlayerState::Idle);
+
+
+		MaridRenderer_->Off();
 	}
 
 
