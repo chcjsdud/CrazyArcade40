@@ -6,6 +6,8 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineContents/ContentsEnum.h>
+#include <GameEngineBase/GameEngineDirectory.h>
+#include <GameEngineBase/GameEngineFile.h>
 #include "Player.h"
 #include"ContentsEnum.h"
 #include"MapBackGround.h."
@@ -34,6 +36,8 @@ PlayerTeamTest::~PlayerTeamTest()
 }
 void PlayerTeamTest::Loading()
 {
+
+
 	if (nullptr == Player::MainPlayer_1)
 	{
 		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
@@ -92,7 +96,41 @@ void PlayerTeamTest::Loading()
 	Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	Crocodile1->SetPosition(Areas_[6].GetCenter());
 	Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
+	{
+		MapGameObject* BlockSet = CreateActor<MapGameObject>();
+		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+		GameEngineDirectory Dir;
 
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
+
+		LoadFile.Open(OpenMode::Read);
+
+		int Size = 0;
+		LoadFile.Read(&Size, sizeof(int));
+
+		for (size_t y = 0; y < Size; y++)
+		{
+			int XSize = 0;
+			LoadFile.Read(&XSize, sizeof(int));
+			for (size_t x = 0; x < XSize; x++)
+			{
+				std::string Name;
+				LoadFile.Read(Name);
+
+				if (Name == "None")
+				{
+					continue;
+				}
+
+				//                          5 7
+				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+			}
+		}
+	}
 }
 void PlayerTeamTest::Update()
 {
