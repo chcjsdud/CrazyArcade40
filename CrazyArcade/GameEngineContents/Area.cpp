@@ -13,6 +13,9 @@ Area::Area(GameEngineImage* _ColMapImage, float _StartX, float _StartY, float _E
     , EndX_(_EndX)
     , EndY_(_EndY)
     , ColMapImage_(_ColMapImage)
+    , Monster_(nullptr)
+    , MapTile_(nullptr)
+    , BlockType_(nullptr)
 {
     CenterX_ = StartX_ + (EndX_ - StartX_) * float(0.5);
     //CenterY_ = StartY_ + (EndY_ - StartY_) * 0.5;
@@ -44,9 +47,9 @@ bool Area::HasWall()
     return false;
 }
 
-bool Area::HasBlock(float4 _Pos)
+bool Area::HasBlock()
 {
-    return GetTile(_Pos) != nullptr;
+    return GetTile(float4(CenterX_, CenterY_)) != nullptr;
 }
 
 bool Area::InCenter(float4 _Pos)
@@ -73,22 +76,22 @@ bool Area::HasBubble()
 {
     BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
 
-    return Tile_ != nullptr ?
-        Tile_->BlockType_ == BlockType::BoomBlock :
-        false;
+	return Tile_ != nullptr ?
+		Tile_->BlockType_ == BlockType::BoomBlock :
+		false;
 }
 
 BlockTile* Area::GetTile(float4 _Pos)
 {
-    if (MapTile_ == nullptr)
-    {
-        return nullptr;
-    }
+	if (MapTile_ == nullptr)
+	{
+		return nullptr;
+	}
 
-    TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
-    if(TileIndex_.Y>=13)
-    {
-        return nullptr;
-    }
-    return MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
+	if (TileIndex_.Y >= 13 || TileIndex_.X >= 15)
+	{
+		return nullptr;
+	}
+	return MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 }

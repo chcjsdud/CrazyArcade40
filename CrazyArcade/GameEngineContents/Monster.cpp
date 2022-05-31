@@ -51,14 +51,7 @@ Monster::~Monster()
 
 void Monster::Start()
 {
-	CenterCol_ = CreateCollision("Monster", float4(50.0f, 50.0f), float4(0.0f, 0.0f));
-	
-	{	// Tile Chk Col
-		LeftCol_ = CreateCollision("LeftCol", float4(10.0f, 10.0f), float4(-50.0f, 0.0f));
-		TopCol_ = CreateCollision("TopCol", float4(10.0f, 10.0f), float4(0.0f, -50.0f));
-		RightCol_ = CreateCollision("RightCol", float4(10.0f, 10.0f), float4(50.0f, 0.0f));
-		BottomCol_ = CreateCollision("BottomCol", float4(10.0f, 10.0f), float4(0.0f, 50.0f));
-	}
+	CenterCol_ = CreateCollision("Monster", float4(30.0f, 35.0f), float4(0.0f, 0.0f));
 	
 	if (GetLevel()->GetNameCopy() == "Monster1Level")
 	{
@@ -82,10 +75,10 @@ void Monster::Start()
 	{
 		for (int y = 0; y < AreaHeight_; ++y)
 		{
-			float StartX = (MapSizeX_ / AreaWidth_ * x) + 20;
-			float StartY = (MapSizeY_ / AreaHeight_ * y) + 40;
-			float EndX = (MapSizeX_ / AreaWidth_ * (x + 1)) + 20;
-			float EndY = (MapSizeY_ / AreaHeight_ * (y + 1)) + 40;
+			float StartX = static_cast<float>((MapSizeX_ / AreaWidth_ * x) + 20);
+			float StartY = static_cast<float>((MapSizeY_ / AreaHeight_ * y) + 40);
+			float EndX = static_cast<float>((MapSizeX_ / AreaWidth_ * (x + 1)) + 20);
+			float EndY = static_cast<float>((MapSizeY_ / AreaHeight_ * (y + 1)) + 40);
 
 			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 			Areas_.push_back(area);
@@ -150,7 +143,7 @@ void Monster::UpdateDirection()
 					Direction_ = "Left";
 				}
 				else if (true == EastArea.HasWall() || // 오른쪽에 벽이 있거나
-					(true == EastArea.HasBlock(GetPosition()) && (false == EastArea.HasWaveTile() && false == EastArea.HasBubble())))// 오른쪽에 블럭이 있고, 그 블럭이 물폭탄이 아니면 내려가라
+					(true == EastArea.HasBlock() && (false == EastArea.HasWaveTile() && false == EastArea.HasBubble())))// 오른쪽에 블럭이 있고, 그 블럭이 물폭탄이 아니면 내려가라
 				{
 					Dir_ = float4::DOWN;
 					Direction_ = "Down";
@@ -159,7 +152,7 @@ void Monster::UpdateDirection()
 				else if (Index_ % 13 != 0) // 제일 위가 아니고
 				{
 					NorthArea = Areas_[NorthIndex];
-					if (false == NorthArea.HasWall() && false == NorthArea.HasBlock(GetPosition())) // 위쪽이 벽이 아니거나, 블럭이 없으면 올라가라
+					if (false == NorthArea.HasWall() && false == NorthArea.HasBlock()) // 위쪽이 벽이 아니거나, 블럭이 없으면 올라가라
 					{
 						Dir_ = float4::UP;
 						Direction_ = "Up";
@@ -195,8 +188,8 @@ void Monster::UpdateDirection()
 				}
 
 				else if (true == WestArea.HasWall() ||
-					(true == WestArea.HasBlock(GetPosition()) && (false == WestArea.HasWaveTile()) && false == WestArea.HasBubble()) &&
-					false == NorthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
+					(true == WestArea.HasBlock() && (false == WestArea.HasWaveTile()) && false == WestArea.HasBubble()) &&
+					false == NorthArea.HasBlock()) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
 				{
 					Dir_ = float4::UP;
 					Direction_ = "Up";
@@ -205,7 +198,7 @@ void Monster::UpdateDirection()
 				else if (Index_ % 13 != 12)
 				{
 					SouthArea = Areas_[SouthIndex];
-						if (false == SouthArea.HasWall() && false == SouthArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 왼쪽이 아니고, 제일 아래가 아니고, 아래에 장애물이 없으면 내려가라
+						if (false == SouthArea.HasWall() && false == SouthArea.HasBlock()) // 몬스터의 위치가 제일 왼쪽이 아니고, 제일 아래가 아니고, 아래에 장애물이 없으면 내려가라
 						{
 							Dir_ = float4::DOWN;
 							Direction_ = "Down";
@@ -242,7 +235,7 @@ void Monster::UpdateDirection()
 					Direction_ = "Up";
 				}
 
-				else if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock(GetPosition()) && false == SouthArea.HasWaveTile()) && false == SouthArea.HasBubble())
+				else if (true == SouthArea.HasWall() || (true == SouthArea.HasBlock() && false == SouthArea.HasWaveTile()) && false == SouthArea.HasBubble())
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
@@ -251,7 +244,7 @@ void Monster::UpdateDirection()
 				else if (Index_ < 182) // 제일 오른쪽이 아니고
 				{
 					EastArea = Areas_[EastIndex];
-					if (false == EastArea.HasWall() && false == EastArea.HasBlock(GetPosition())) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 없으면 오른쪽으로 가라
+					if (false == EastArea.HasWall() && false == EastArea.HasBlock()) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 없으면 오른쪽으로 가라
 					{
 						Dir_ = float4::RIGHT;
 						Direction_ = "Right";
@@ -279,7 +272,7 @@ void Monster::UpdateDirection()
 				Direction_ = "Down";
 			}
 
-			else if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock(GetPosition()) && false == NorthArea.HasWaveTile()) && false == NorthArea.HasBubble())
+			else if (true == NorthArea.HasWall() || (true == NorthArea.HasBlock() && false == NorthArea.HasWaveTile()) && false == NorthArea.HasBubble())
 			{
 				Dir_ = float4::RIGHT;
 				Direction_ = "Right";
@@ -288,7 +281,7 @@ void Monster::UpdateDirection()
 			else if (Index_ >= 13) // 몬스터의 위치가 맨 위와 맨 왼쪽이 아니고, 왼쪽에 장애물이 없으면
 			{
 				WestArea = Areas_[WestIndex];
-				if (false == WestArea.HasWall() && false == WestArea.HasBlock(GetPosition()))
+				if (false == WestArea.HasWall() && false == WestArea.HasBlock())
 				{
 					Dir_ = float4::LEFT;
 					Direction_ = "Left";
@@ -399,7 +392,7 @@ GameEngineImage* Monster::GetColMapImage()
 void Monster::CheckWaveTile(float4 _Pos)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	if (TileIndex_.Y >= 13)
+	if (TileIndex_.Y >= 13 || TileIndex_.X >= 15)
 	{
 		return;
 

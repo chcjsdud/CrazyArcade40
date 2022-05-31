@@ -39,7 +39,7 @@ public:
     // ColMap이 검은색
     bool HasWall();
     bool HasWaveTile();
-    bool HasBlock(float4 _Pos);
+    bool HasBlock();
     bool HasBubble();
     bool InCenter(float4 _Pos);
 
