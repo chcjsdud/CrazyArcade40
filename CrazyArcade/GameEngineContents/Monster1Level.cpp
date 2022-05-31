@@ -127,12 +127,12 @@ void Monster1Level::Loading()
 	//	
 	//}
 
-	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	//Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
-	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	//Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
+	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 	//Player::MainPlayer_1->On();
 }
 void Monster1Level::Update()

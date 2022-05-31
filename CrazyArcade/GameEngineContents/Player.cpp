@@ -73,18 +73,19 @@ void Player::Move()
 		{
 			if (true == IsLeftMove)
 			{
-				if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
-				{
-					MoveDir.y = -MovePos;
-				}
-				else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
-				{
-					MoveDir.y = MovePos;
-				}
-				else
-				{
-					MoveDir.x = -MovePos;
-				}
+				MoveDir.x = -MovePos;
+				//if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
+				//{
+				//	MoveDir.y = -MovePos;
+				//}
+				//else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
+				//{
+				//	MoveDir.y = MovePos;
+				//}
+				//else
+				//{
+				//	MoveDir.x = -MovePos;
+				//}
 			}
 
 		}
@@ -92,18 +93,19 @@ void Player::Move()
 		{
 			if (true == IsRightMove)
 			{
-				if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
-				{
-					MoveDir.y = -MovePos;
-				}
-				else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
-				{
-					MoveDir.y = MovePos;
-				}
-				else
-				{
-					MoveDir.x = MovePos;
-				}
+				MoveDir.x = MovePos;
+				//if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
+				//{
+				//	MoveDir.y = -MovePos;
+				//}
+				//else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
+				//{
+				//	MoveDir.y = MovePos;
+				//}
+				//else
+				//{
+				//	MoveDir.x = MovePos;
+				//}
 			}
 		
 		}
@@ -468,7 +470,7 @@ void Player::FrontBlockCheck()
 		float4 Pos = MainPlayer_1->GetPosition();
 
 		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
-		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
+		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
 
 		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
 		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
