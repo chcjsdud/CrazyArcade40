@@ -822,7 +822,7 @@ void Player::Render()
 	std::string IndexY = "";
 
 
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition());
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition() - float4{20,40});
 	IndexX = "Index X : " + std::to_string(TileIndex_.X);
 	IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
 

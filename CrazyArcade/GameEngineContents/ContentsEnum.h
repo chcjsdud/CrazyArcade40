@@ -24,6 +24,7 @@ enum class BlockType
 	WaveBlock, //물풍선 터질때 생기는 타일
 	WallBlock,//안부서지는 타일
 	NoBlock,
+	NiddleBlock,//가시있는 블록
 	Max
 };
 
