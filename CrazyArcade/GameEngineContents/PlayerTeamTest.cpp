@@ -47,9 +47,8 @@ void PlayerTeamTest::Loading()
 	//Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
-	CreateActor<TimeUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
-	CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+	//CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
 
 	{
 		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor ¸¸µé°í
