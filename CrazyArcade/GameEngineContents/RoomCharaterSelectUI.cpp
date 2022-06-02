@@ -1,4 +1,5 @@
 #include "RoomCharaterSelectUI.h"
+#include "GlobalUIName.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineWindow.h>
@@ -88,12 +89,16 @@ void RoomCharaterSelectUI::Start()
 
 	ChoiceCharacter1P = 0;
 	ChoiceCharacter2P = 0;
+
+	
 }
 
 void RoomCharaterSelectUI::Update()
 {
 	RendererMouseCheck();
 	ChoiceCharacter();
+
+	
 	ChoiceCheck();
 	PivotReset();
 	StatusUISet(); 
@@ -255,41 +260,46 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 		}
 	}
 
-	if (ChoiceCharacter2P != 0)
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
-		if (true == RandomCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsUp("RightMouse"))
+		if (ChoiceCharacter2P != 0)
 		{
-			ChoiceCharacter2P = 0;
+			if (true == RandomCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
+			{
+				ChoiceCharacter2P = 0;
+			}
+		}
+
+		if (ChoiceCharacter2P != 1)
+		{
+			if (true == BazziCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
+			{
+				ChoiceCharacter2P = 1;
+			}
+		}
+
+		if (ChoiceCharacter2P != 2)
+		{
+			if (true == DaoCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
+			{
+				ChoiceCharacter2P = 2;
+			}
+		}
+
+		if (ChoiceCharacter2P != 3)
+		{
+			if (true == MaridCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
+			{
+				ChoiceCharacter2P = 3;
+			}
 		}
 	}
 
-	if (ChoiceCharacter2P != 1)
-	{
-		if (true == BazziCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsUp("RightMouse"))
-		{
-			ChoiceCharacter2P = 1;
-		}
-	}
-
-	if (ChoiceCharacter2P != 2)
-	{
-		if (true == DaoCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsUp("RightMouse"))
-		{
-			ChoiceCharacter2P = 2;
-		}
-	}
-
-	if (ChoiceCharacter2P != 3)
-	{
-		if (true == MaridCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsUp("RightMouse"))
-		{
-			ChoiceCharacter2P = 3;
-		}
-	}
 }
 
 void RoomCharaterSelectUI::ChoiceCheck()
@@ -313,15 +323,7 @@ void RoomCharaterSelectUI::ChoiceCheck()
 		}
 	}
 
-	else if(ChoiceCharacter2P == 0)
-	{
-		RandomRenderer->SetPivot({ -146.0f, -19.0f });
-		RandomRenderer->SetImageAnimationReset("2P_RandomChoice.bmp");
-	}
-
-
-
-	if (ChoiceCharacter1P == 1)
+	else if (ChoiceCharacter1P == 1)
 	{
 		BazziRenderer->ChangeAnimation("BazziCharSelecter_CilckUp");
 		if (ChoiceCharacter1P == ChoiceCharacter2P)
@@ -330,14 +332,8 @@ void RoomCharaterSelectUI::ChoiceCheck()
 			BazziRenderer->SetPivot({ -72.0f, -7.0f });
 		}
 	}
-	else if (ChoiceCharacter2P == 1)
-	{
-		BazziRenderer->SetPivot({ -75.0f, -22.0f });
-		BazziRenderer->SetImageAnimationReset("2P_BazziChoice.bmp");
-	}
-
-
-	if (ChoiceCharacter1P == 2)
+	
+	else if (ChoiceCharacter1P == 2)
 	{
 		DaoRenderer->ChangeAnimation("DaoCharSelecter_CilckUp");
 		if (ChoiceCharacter1P == ChoiceCharacter2P)
@@ -346,14 +342,8 @@ void RoomCharaterSelectUI::ChoiceCheck()
 			DaoRenderer->SetPivot({ -3.0f,0 });
 		}
 	}
-	else if (ChoiceCharacter2P == 2)
-	{
-		DaoRenderer->SetPivot({ -2.0f,-23.0f });
-		DaoRenderer->SetImageAnimationReset("2P_DaoChoice.bmp");
-	}
 
-
-	if (ChoiceCharacter1P == 3)
+	else if (ChoiceCharacter1P == 3)
 	{
 		MaridRenderer->ChangeAnimation("MaridCharSelecter_CilckUp");
 		if (ChoiceCharacter1P == ChoiceCharacter2P)
@@ -362,10 +352,37 @@ void RoomCharaterSelectUI::ChoiceCheck()
 			MaridRenderer->SetPivot({ 68.0f, -5.0f });
 		}
 	}
-	else if (ChoiceCharacter2P == 3)
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
-		MaridRenderer->SetPivot({ 73.0f, -27.0f });
-		MaridRenderer->SetImageAnimationReset("2P_MaridChoice.bmp");
+		if (ChoiceCharacter1P == ChoiceCharacter2P)
+		{
+			if (ChoiceCharacter2P == 0)
+			{
+				RandomRenderer->SetPivot({ -146.0f, -19.0f });
+				RandomRenderer->SetImageAnimationReset("2P_RandomChoice.bmp");
+			}
+
+			else if (ChoiceCharacter2P == 1)
+			{
+				BazziRenderer->SetPivot({ -75.0f, -22.0f });
+				BazziRenderer->SetImageAnimationReset("2P_BazziChoice.bmp");
+			}
+
+
+			else if (ChoiceCharacter2P == 2)
+			{
+				DaoRenderer->SetPivot({ -2.0f,-23.0f });
+				DaoRenderer->SetImageAnimationReset("2P_DaoChoice.bmp");
+			}
+
+
+			else if (ChoiceCharacter2P == 3)
+			{
+				MaridRenderer->SetPivot({ 73.0f, -27.0f });
+				MaridRenderer->SetImageAnimationReset("2P_MaridChoice.bmp");
+			}
+		}
 	}
 }
 
@@ -466,5 +483,15 @@ void RoomCharaterSelectUI::BannerSet()
 		break;
 	default:
 		break;
+	}
+}
+
+void RoomCharaterSelectUI::LevelChangeStart(GameEngineLevel * _PrevLevel)
+{
+	ChoiceCharacter1P = 0;
+	ChoiceCharacter2P = 0;
+	if (false == GlobalUIName::GetInst()->Is2pUpdate())
+	{
+		ChoiceCharacter2P = 5;
 	}
 }
