@@ -80,6 +80,7 @@ protected:
 	GameEngineCollision* BottomCol_;
 	GameEngineCollision* CenterCol_;
 	std::vector<std::vector<Tile*>> Tiles_;
+	std::map<int, Area> MovableAreas;
 
 
 public:

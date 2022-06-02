@@ -54,8 +54,8 @@ bool Area::HasBlock()
 
 bool Area::InCenter(float4 _Pos)
 {
-    if (CenterX_ - 1 < _Pos.x && _Pos.x < CenterX_ + 1 &&
-        CenterY_ - 1 < _Pos.y && _Pos.y < CenterY_ + 1)
+    if (CenterX_ - 2 < _Pos.x && _Pos.x < CenterX_ + 2 &&
+        CenterY_ - 2 < _Pos.y && _Pos.y < CenterY_ + 2)
     {
         return true;
     }

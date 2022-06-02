@@ -95,45 +95,45 @@ void Monster1Level::Loading()
 		Mandarin1->SetPosition(Areas_[0].GetCenter());
 		Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
 
-
-		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		Mandarin2->SetPosition(Areas_[169].GetCenter());
-		Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
-
-
-		Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		Mandarin3->SetPosition(Areas_[12].GetCenter());
-		Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
+		//Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		//Mandarin2->SetPosition(Areas_[169].GetCenter());
+		//Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
-		Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		Mandarin4->SetPosition(Areas_[166].GetCenter());
-		Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
+		//Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		//Mandarin3->SetPosition(Areas_[12].GetCenter());
+		//Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
-		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-		Crocodile1->SetPosition(Areas_[6].GetCenter());
-		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
+		//Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		//Mandarin4->SetPosition(Areas_[166].GetCenter());
+		//Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
-		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
-		Crocodile2->SetPosition(Areas_[175].GetCenter());
-		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
+		//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		//Crocodile1->SetPosition(Areas_[6].GetCenter());
+		//Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+
+		//Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		//Crocodile2->SetPosition(Areas_[175].GetCenter());
+		//Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	}
 
-	//if (nullptr == Player::MainPlayer_1)
-	//{
-	//	
-	//}
+	if (nullptr == Player::MainPlayer_1)
+	{
+		//	
+		//}
 
-	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
-	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-	//Player::MainPlayer_1->On();
+		Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+		Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+		Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
+		Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+		Player::MainPlayer_1->On();
+	}
 }
 void Monster1Level::Update()
 {

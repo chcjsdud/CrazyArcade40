@@ -13,8 +13,8 @@ public:
 	Monster1& operator=(Monster1&& _Other) noexcept = delete;
 
 protected:
-	void Start();
-	void Render();
-	void Update();
+	void Start() override;
+	void Render() override;
+	void Update() override;
 
 };
