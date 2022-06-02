@@ -19,7 +19,9 @@
 #include <GameEngine/GameEngineRendererTileMap.h>
 
 Monster1Level::Monster1Level()
-	:ColMapImage_(nullptr)
+	: ColMapImage_(nullptr)
+	, MapBackGround_(nullptr)
+	, MapFrontBackGround_(nullptr)
 {
 
 }
@@ -37,7 +39,7 @@ void Monster1Level::Loading()
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
 	MapFrontBackGround_->GetRenderer()->SetImage("MonsterStage1_Front.bmp");//Actor에 이미지 세팅해주고
 	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
-	
+
 	{
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
 		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
@@ -92,48 +94,42 @@ void Monster1Level::Loading()
 		}
 
 		Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		Mandarin1->SetPosition(Areas_[0].GetCenter());
+		Mandarin1->SetPosition(Areas_[55].GetCenter());
 		Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		//Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		//Mandarin2->SetPosition(Areas_[169].GetCenter());
-		//Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
+		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Mandarin2->SetPosition(Areas_[57].GetCenter());
+		Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
 
+		Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Mandarin3->SetPosition(Areas_[102].GetCenter());
+		Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		//Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		//Mandarin3->SetPosition(Areas_[12].GetCenter());
-		//Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
+		Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Mandarin4->SetPosition(Areas_[118].GetCenter());
+		Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
 
+		Monster1* Mandarin5 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Mandarin5->SetPosition(Areas_[125].GetCenter());
+		Mandarin5->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		//Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
-		//Mandarin4->SetPosition(Areas_[166].GetCenter());
-		//Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
+		Monster1* Mandarin6 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Mandarin6->SetPosition(Areas_[88].GetCenter());
+		Mandarin6->SetMapTile(&MapBackGround_->MapTileMap_);
 
+		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile1->SetPosition(Areas_[7].GetCenter());
+		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-		//Crocodile1->SetPosition(Areas_[6].GetCenter());
-		//Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-
-
-		//Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
-		//Crocodile2->SetPosition(Areas_[175].GetCenter());
-		//Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
+		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile2->SetPosition(Areas_[174].GetCenter());
+		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	}
 
-	if (nullptr == Player::MainPlayer_1)
-	{
-		//	
-		//}
 
-	//Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-
-	//Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	//Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
-	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-	//Player::MainPlayer_1->On();
 }
+
 void Monster1Level::Update()
 {
 	if (Monster::TTL_MONSTER_COUNT == 0)

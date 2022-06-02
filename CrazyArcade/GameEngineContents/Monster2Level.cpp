@@ -67,39 +67,61 @@ void Monster2Level::Loading()
 	MapFrontBackGround_->GetRenderer()->SetImage("MonsterStage2_Front.bmp");//Actor에 이미지 세팅해주고
 	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 
-	ColMapImage_ = GameEngineImageManager::GetInst()->Find("MonsterStage2_ColMap.bmp");
+	{// 몬스터
 
-	for (int x = 0; x < 15; ++x)
-	{
-		for (int y = 0; y < 13; ++y)
+		ColMapImage_ = GameEngineImageManager::GetInst()->Find("MonsterStage2_ColMap.bmp");
+
+		for (int x = 0; x < 15; ++x)
 		{
-			float StartX = static_cast<float>((600 / 15 * x) + 20);
-			float StartY = static_cast<float>((520 / 13 * y) + 40);
-			float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
-			float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
+			for (int y = 0; y < 13; ++y)
+			{
+				float StartX = static_cast<float>((600 / 15 * x) + 20);
+				float StartY = static_cast<float>((520 / 13 * y) + 40);
+				float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
+				float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
 
-			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
-			Areas_.push_back(area);
+				Area area(ColMapImage_, StartX, StartY, EndX, EndY);
+				Areas_.push_back(area);
+			}
 		}
+
+		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile1->SetPosition(Areas_[12].GetCenter());
+		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile2->SetPosition(Areas_[13].GetCenter());
+		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
+
+		Monster2* Crocodile3 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile3->SetPosition(Areas_[48].GetCenter());
+		Crocodile3->SetMapTile(&MapBackGround_->MapTileMap_);
+
+		Monster2* Crocodile4 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile4->SetPosition(Areas_[89].GetCenter());
+		Crocodile4->SetMapTile(&MapBackGround_->MapTileMap_);
+
+		Monster2* Crocodile5 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile5->SetPosition(Areas_[131].GetCenter());
+		Crocodile5->SetMapTile(&MapBackGround_->MapTileMap_);
+
+		Monster2* Crocodile6 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Crocodile6->SetPosition(Areas_[179].GetCenter());
+		Crocodile6->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
-	
-	Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	Crocodile1->SetPosition(Areas_[23].GetCenter());
 
-	Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	Crocodile2->SetPosition(Areas_[14].GetCenter());
+	if (nullptr == Player::MainPlayer_1)
+	{
 
-	Monster2* Crocodile3 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	Crocodile3->SetPosition(Areas_[50].GetCenter());
+		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 
-	Monster2* Crocodile4 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	Crocodile4->SetPosition(Areas_[89].GetCenter());
+		Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+		Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+		Player::MainPlayer_1->SetPosition({ 450.f, 360.f });
+		Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+		Player::MainPlayer_1->On();
+	}
 
-	Monster2* Crocodile5 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	Crocodile5->SetPosition(Areas_[131].GetCenter());
-
-	Monster2* Crocodile6 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	Crocodile6->SetPosition(Areas_[170].GetCenter());
 }
 void Monster2Level::Update()
 {

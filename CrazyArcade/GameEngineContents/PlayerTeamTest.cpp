@@ -37,14 +37,14 @@ PlayerTeamTest::~PlayerTeamTest()
 }
 void PlayerTeamTest::Loading()
 {
-	if (nullptr == Player::MainPlayer_1)
-	{
-		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	}
+	//if (nullptr == Player::MainPlayer_1)
+	//{
+	//	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	//	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	//}
 	
-	Player::MainPlayer_1->Off();
-	Player::MainPlayer_2->Off();
+	//Player::MainPlayer_1->Off();
+	//Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<TimeUI>((int)UIType::Time);

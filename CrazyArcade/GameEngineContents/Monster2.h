@@ -23,6 +23,7 @@ protected:
 	void UpdateGetBack();
 	bool IsDie();
 	void Die();
+	void UpdateDirection() override;
 
 private:
 	GameEngineRenderer* MiniRenderer_;
