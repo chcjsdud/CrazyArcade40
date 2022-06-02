@@ -67,10 +67,10 @@ void Boss::Start()
 	{
 		for (int y = 0; y < AreaHeight_; ++y)
 		{
-			float StartX = (MapSizeX_ / AreaWidth_ * x) + 20;
-			float StartY = (MapSizeY_ / AreaHeight_ * y) + 40;
-			float EndX = (MapSizeX_ / AreaWidth_ * (x + 1)) + 20;
-			float EndY = (MapSizeY_ / AreaHeight_ * (y + 1)) + 40;
+			float StartX = static_cast<float>((MapSizeX_ / AreaWidth_ * x) + 20);
+			float StartY = static_cast<float>((MapSizeY_ / AreaHeight_ * y) + 40);
+			float EndX = static_cast<float>((MapSizeX_ / AreaWidth_ * (x + 1)) + 20);
+			float EndY = static_cast<float>((MapSizeY_ / AreaHeight_ * (y + 1)) + 40);
 
 			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 			Areas_.push_back(area);
@@ -102,114 +102,7 @@ void Boss::UpdateMove()
 
 void Boss::UpdateDirection()
 {
-	int PrevIndex_ = Index_; // 이전 인덱스 저장
-	bool IsAreaChanged = false;
-
-	for (int i = 0; i < Areas_.size(); ++i)
-	{
-		Area& NewArea = Areas_[i];
-		if (true == NewArea.InCenter(GetPosition()))
-		{
-			if (PrevIndex_ != i)
-			{
-				Index_ = i;
-				IsAreaChanged = true;
-			}
-		}
-	}
-
-	if (IsAreaChanged == true)
-	{
-		if (Dir_.x == 1) // 오른쪽으로 가고 있고
-		{
-			int EastIndex = Index_ + AreaHeight_;
-			int NorthIndex = Index_ - 1;
-			if (Index_ < 6)
-			{
-				EastArea = Areas_[EastIndex];
-				if (true == EastArea.HasWall()) // 몬스터의 위치가 제일 오른쪽이 아니고, 오른쪽에 장애물이 있으면 내려가라
-				{
-					Dir_ = float4::DOWN;
-					Direction_ = "Down";
-					Renderer_->ChangeAnimation("MoveDown");
-				}
-
-			}
-			else // 몬스터의 위치가 맵의 제일 오른쪽이면 내려가라
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
-				Renderer_->ChangeAnimation("MoveDown");
-			}
-		}
-
-		else if (Dir_.x == -1) // 왼쪽으로 가고 있고
-		{
-			int WestIndex = Index_ - AreaHeight_;
-			int SouthIndex = Index_ + 1;
-			if (Index_ >= 3)
-			{
-				WestArea = Areas_[WestIndex];
-				if (true == WestArea.HasWall()) // 몬스터의 위치가 제일 왼쪽이 아니고, 왼쪽에 장애물이 있으면 올라가라
-				{
-					Dir_ = float4::UP;
-					Direction_ = "Up";
-					Renderer_->ChangeAnimation("MoveUp");
-				}
-			}
-
-			else // 몬스터의 위치가 제일 왼쪽이면 올라가라
-			{
-				Dir_ = float4::UP;				
-				Direction_ = "Up";
-				Renderer_->ChangeAnimation("MoveUp");
-			}
-		}
-
-		else if (Dir_.y == 1) // 아래로 내려가고 있고
-		{
-			int SouthIndex = Index_ + 1;
-			int EastIndex = Index_ + AreaHeight_;
-			if (Index_ % 3 != 2) // 몬스터의 위치가 맨 아래가 아니고, 아래에 장애물이 있으면 왼쪽으로 가라
-			{
-				SouthArea = Areas_[SouthIndex];
-				if (true == SouthArea.HasWall())
-				{
-					Dir_ = float4::LEFT;
-					Direction_ = "Left";
-					Renderer_->ChangeAnimation("MoveLeft");
-				}
-			}
-			else // 몬스터의 위치가 맨 아래면 왼쪽으로 가라
-			{
-				Dir_ = float4::LEFT;
-				Direction_ = "Left";
-				Renderer_->ChangeAnimation("MoveLeft");
-			}
-		}
-
-		else if (Dir_.y == -1) // 위로 가고 있고
-		{
-			int NorthIndex = Index_ - 1;
-			int WestIndex = Index_ - AreaHeight_;
-			if (Index_ % 3 != 0) // 몬스터의 위치가 맨 위가 아니고, 위에 장애물이 있으면 오른쪽으로 가라
-			{
-				NorthArea = Areas_[NorthIndex];
-				if (true == NorthArea.HasWall())
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-					Renderer_->ChangeAnimation("MoveRight");
-				}
-			}
-			else // 몬스터의 위치가 맨 위면 오른쪽으로 가라
-			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
-				Renderer_->ChangeAnimation("MoveRight");
-			}
-		}
-	}
+	Monster::UpdateDirection();
 }
 
 void Boss::UpdateAttack()

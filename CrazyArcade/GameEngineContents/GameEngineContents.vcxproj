@@ -234,6 +234,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PlayerFaceIconUI.h" />
     <ClInclude Include="PlayerTeamTest.h">
       <SubType>
       </SubType>
@@ -369,6 +370,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PlayerFaceIconUI.cpp" />
     <ClCompile Include="PlayerTeamTest.cpp">
       <SubType>
       </SubType>

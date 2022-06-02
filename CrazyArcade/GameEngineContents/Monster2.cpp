@@ -5,7 +5,7 @@
 #include <GameEngineContents/MapGameObject.h>
 
 Monster2::Monster2()
-	:Monster()
+	: Monster()
 	, MiniRenderer_(nullptr)
 	, MiniRendererOn_(false)
 	, GetBackTime_(0.0f)
@@ -61,7 +61,7 @@ void Monster2::Start()
 	//MiniRenderer_->CreateAnimation("Monster.bmp", "MoveDown", 27, 28, 0.2f, true);
 	//MiniRenderer_->CreateAnimation("Monster.bmp", "Die", 31, 33, 0.2f, true);
 
-	CenterCol_->SetScale(float4(50.0f, 70.0f));
+	CenterCol_->SetScale(float4(40.0f, 40.0f));
 	CenterCol_->SetPivot(float4(0.0f, -40.0f));
 	SetHP(2);
 	SetSpeed(100);
@@ -80,8 +80,8 @@ void Monster2::Update()
 	GetAttTime_ += GameEngineTime::GetDeltaTime();
 	UpdateDirection();
 	UpdateMove();
-	Die();
 	UpdateGetBack();
+	Die();
 }
 
 void Monster2::TakeDamage()
@@ -124,6 +124,7 @@ void Monster2::UpdateGetBack()
 		MiniRenderer_->Off();
 		Renderer_->On();
 		SetSpeed(100);
+		SetHP(2);
 		//Renderer_->ChangeAnimation("");
 	}
 }
@@ -148,7 +149,11 @@ void Monster2::Die()
 			SetSpeed(Speed_ + 20); // 속도가 빨라져라
 		}
 	}
+}
 
+void Monster2::UpdateDirection()
+{
+	Monster::UpdateDirection();
 }
 
 bool Monster2::IsDie()

@@ -224,6 +224,8 @@ void CrazyArcade::GameInit()
         Image = GameEngineImageManager::GetInst()->Find("DrawText.bmp");
         Image->Cut({ 192,192 });
 
+        Image = GameEngineImageManager::GetInst()->Find("BazziFace_Icon.bmp");
+        Image->Cut({ 64,64 });
     }
 
     ////// UI 리소스 ChoiceMap에서 사용되는 리소스
@@ -457,7 +459,7 @@ void CrazyArcade::GameInit()
 
     CreateLevel<TileMapEditorLevel>("TileMapEditorLevel");
 
-    ChangeLevel("Monster1Level");
+    ChangeLevel("Monster2Level");
 
 }
 
