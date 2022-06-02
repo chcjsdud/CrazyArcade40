@@ -91,45 +91,45 @@ void PlayerTeamTest::Loading()
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(Areas_[0].GetCenter());
 	//Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
-
+	
 	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	//Crocodile1->SetPosition(Areas_[6].GetCenter());
 	//Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-	//{
-	//	MapGameObject* BlockSet = CreateActor<MapGameObject>();
-	//	BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
-	//	GameEngineDirectory Dir;
-
-	//	Dir.MoveParent("CrazyArcade");
-	//	Dir.Move("Resources");
-	//	Dir.Move("Data");
-
-	//	GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
-
-	//	LoadFile.Open(OpenMode::Read);
-
-	//	int Size = 0;
-	//	LoadFile.Read(&Size, sizeof(int));
-
-	//	for (size_t y = 0; y < Size; y++)
-	//	{
-	//		int XSize = 0;
-	//		LoadFile.Read(&XSize, sizeof(int));
-	//		for (size_t x = 0; x < XSize; x++)
-	//		{
-	//			std::string Name;
-	//			LoadFile.Read(Name);
-
-	//			if (Name == "None")
-	//			{
-	//				continue;
-	//			}
-
-	//			//                          5 7
-	//			BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
-	//		}
-	//	}
-	//}
+	{
+		MapGameObject* BlockSet = CreateActor<MapGameObject>();
+		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+		GameEngineDirectory Dir;
+	
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+	
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
+	
+		LoadFile.Open(OpenMode::Read);
+	
+		int Size = 0;
+		LoadFile.Read(&Size, sizeof(int));
+	
+		for (size_t y = 0; y < Size; y++)
+		{
+			int XSize = 0;
+			LoadFile.Read(&XSize, sizeof(int));
+			for (size_t x = 0; x < XSize; x++)
+			{
+				std::string Name;
+				LoadFile.Read(Name);
+	
+				if (Name == "None")
+				{
+					continue;
+				}
+	
+				//                          5 7
+				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+			}
+		}
+	}
 }
 void PlayerTeamTest::Update()
 {

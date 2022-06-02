@@ -444,9 +444,14 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
-			else if (Tiles_ != nullptr &&
-				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
-				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
+
+			{
+				IndexCount_ = i - 1;//이만큼 가면된다.
+				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
+				//여기서 해당 오브젝트부숴주면됨
+			}
+			else if (Tiles_ != nullptr&& Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
@@ -584,13 +589,17 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
 
-			else if (Tiles_ != nullptr &&
-				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
-				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock)//------------------------------------------------부서지는벽
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
+			}
+			else if (Tiles_ != nullptr&& Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+			{
+				IndexCount_ = i - 1;//이만큼 가면된다.
+					i = static_cast<int>(_Power) + 1;//여기서 for문 종료
+					//여기서 해당 오브젝트부숴주면됨
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
@@ -723,12 +732,18 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 				i = PowerCount_ + 1;
 			}
 			else if (Tiles_ != nullptr &&
-				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
-				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+				Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
+
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+			{
+				IndexCount_ = i - 1;
+				i = static_cast<int>(_Power) + 1;
+
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
@@ -860,10 +875,13 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = PowerCount_ + 1;//여기서 for문 종료
 			}
-
-			else if (Tiles_ != nullptr &&
-				Tiles_->BlockType_ == BlockType::FixBlock && //------------------------------------------------부서지는벽
-				Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
+			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽//밀리는상자
+			{
+				IndexCount_ = i - 1;//이만큼 가면된다.
+				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
+				//여기서 해당 오브젝트부숴주면됨
+			}
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::PullBlock)
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
