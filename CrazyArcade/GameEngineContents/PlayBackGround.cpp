@@ -6,6 +6,8 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngine.h>
 #include "ContentsEnum.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
 
 PlayBackGround::PlayBackGround()
 	: PlayBackGroundRenderer_(nullptr)
@@ -24,6 +26,8 @@ void PlayBackGround::Start()
 
 	ExitBtnCollision_ = CreateCollision("Exit", { 120 ,40 }, { 320.0f,274.0f });
 
+	GetLevel()->CreateActor<TimeUI>((int)UIType::Time);
+	GetLevel()->CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 }
 
 void PlayBackGround::Update()

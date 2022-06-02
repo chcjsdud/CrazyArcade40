@@ -37,7 +37,7 @@ void Monster1Level::Loading()
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
 	MapFrontBackGround_->GetRenderer()->SetImage("MonsterStage1_Front.bmp");//Actor에 이미지 세팅해주고
 	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
-	
+
 	{
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
 		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
@@ -133,6 +133,7 @@ void Monster1Level::Loading()
 	//Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
 	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 	//Player::MainPlayer_1->On();
+	}
 }
 void Monster1Level::Update()
 {
