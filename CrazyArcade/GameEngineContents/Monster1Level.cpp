@@ -134,7 +134,7 @@ void Monster1Level::Loading()
 	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 	//Player::MainPlayer_1->On();
 	}
-}
+
 void Monster1Level::Update()
 {
 	if (Monster::TTL_MONSTER_COUNT == 0)
