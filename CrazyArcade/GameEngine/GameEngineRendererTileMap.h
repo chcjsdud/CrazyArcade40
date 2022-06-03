@@ -125,7 +125,6 @@ public:
 		FindTile->Renderer->SetPivot(GetWorldPostion(_X, _Y));
 
 		Tiles_[_Y][_X] = FindTile;
-		Master_->GetLevel()->YSortOn(4);
 		return reinterpret_cast<TileType*>(FindTile);
 	}
 

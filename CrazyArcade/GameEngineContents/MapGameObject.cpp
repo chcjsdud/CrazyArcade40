@@ -77,10 +77,10 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	{
 		return;
 	}
-	BlockTile* Block_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::MAPOBJECT));
+	BlockTile* Block_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
-	
+	Block_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
 
 
 	//////////////////////////////////////////д╥ га///////////////////////////////////////////////

@@ -32,6 +32,7 @@ void TileMapEditorLevel::Loading()
         GameEngineInput::GetInst()->CreateKey("MosterMap2Create", 't');
         GameEngineInput::GetInst()->CreateKey("BossMapCreate", 'y');
     }
+    YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 void TileMapEditorLevel::Update()
 {

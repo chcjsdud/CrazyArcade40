@@ -121,7 +121,7 @@ void Monster2Level::Loading()
 		Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 		Player::MainPlayer_1->On();
 	}
-
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 void Monster2Level::Update()
 {
