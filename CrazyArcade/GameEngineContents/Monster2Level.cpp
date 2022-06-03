@@ -13,6 +13,8 @@
 #include <GameEngine/GameEngineImageManager.h>
 Monster2Level::Monster2Level()
 	:ColMapImage_(nullptr)
+	, MapBackGround_(nullptr)
+	, MapFrontBackGround_(nullptr)
 {
 
 }
@@ -58,7 +60,7 @@ void Monster2Level::Loading()
 				}
 
 				//                          5 7
-				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+				BlockSet->CreateBlock(float4(static_cast<float>(x * 40),static_cast<float>( y * 40)), Name);
 			}
 		}
 	}
