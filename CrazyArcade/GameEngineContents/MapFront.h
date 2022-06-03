@@ -13,16 +13,14 @@ public:
 	MapFront(MapFront&& _Other) noexcept = delete;
 	MapFront& operator=(const MapFront& _Other) = delete;
 	MapFront& operator=(MapFront&& _Other) noexcept = delete;
+
 protected:
 
 private:
 	void Start();
 	void Render();
 	void Update();
-	GameEngineRenderer* MapFrontRender_;
-public:
-	GameEngineRenderer* GetRenderer()
-	{
-		return	MapFrontRender_;
-	}
+	void GetNameCopy();
+
+
 };

@@ -59,8 +59,6 @@ void VillageLevel::Loading()
 		}
 	}
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
-	MapFrontBackGround_->GetRenderer()->SetImage("Village_Front.bmp");//Actor에 이미지 세팅해주고
-	MapFrontBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 }
 
 void VillageLevel::Update()
