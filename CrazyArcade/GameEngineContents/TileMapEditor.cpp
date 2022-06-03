@@ -12,6 +12,8 @@ TileMapEditor* TileMapEditor::MapEditorSet=nullptr;
 
 TileMapEditor::TileMapEditor()
 	:EditorTileMap_(this),
+	BlockSet(nullptr),
+	MapBack(nullptr),
 	LevelName_(""),
 	RenderName_("Block1"),
 	NextLevelName_("CampLevel"),
@@ -388,7 +390,7 @@ void TileMapEditor::Update()
 			SaveFile.Write(&XSize, sizeof(int));
 			for (size_t x = 0; x < EditorTileMap_.Tiles_[y].size(); x++)
 			{
-				BlockTile* Tile = EditorTileMap_.GetTile<BlockTile>(x, y);
+				BlockTile* Tile = EditorTileMap_.GetTile<BlockTile>(static_cast<int>(x), static_cast<int>(y));
 
 				if (nullptr == Tile)
 				{
@@ -437,7 +439,7 @@ void TileMapEditor::Update()
 				}
 
 				//                          5 7
-				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
 			}
 		}
 	}
