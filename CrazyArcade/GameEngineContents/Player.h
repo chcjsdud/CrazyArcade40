@@ -46,6 +46,7 @@ enum class PlayerType
 enum class Character
 {
 	BAZZI,
+	LUXMARID,
 	DAO,
 
 	MAX,

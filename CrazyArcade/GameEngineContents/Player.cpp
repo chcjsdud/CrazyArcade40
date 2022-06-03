@@ -282,6 +282,21 @@ void Player::CharTypeUpdate()
 		SetMaxAttPower(70.f);
 	}
 	break;
+	case Character::LUXMARID:
+	{
+		MaridRenderer_->On();
+		PlayerAnimationRender_ = MaridRenderer_;
+		PlayerAnimationRender_->On();
+
+		SetSpeed(1.f);
+		SetAttCount(1);
+		SetAttPower(10.f);			// 일단 10배
+
+		SetMaxSpeed(90.f);
+		SetMaxAttCount(6);
+		SetMaxAttPower(70.f);
+	}
+	break;
 	case Character::DAO:
 	{
 		DaoRenderer_->On();
@@ -298,9 +313,6 @@ void Player::CharTypeUpdate()
 	}
 	break;
 	}
-
-
-
 }
 
 void Player::ColMapUpdate()
@@ -378,27 +390,24 @@ void Player::StagePixelCheck(float _Speed)
 	}
 }
 
-//BlockType blockType_ = {};
 
 void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 {
 	switch (_CurBlockType)
 	{
-		case BlockType::WaveBlock:
-		{
-			ChangeState(PlayerState::Damaged);
-			return;
-			break;
-		}
-		case BlockType::BubbleBlock:
-		{
-			ChangeState(PlayerState::Damaged);
-			return;
-			break;
-		}
-		case BlockType::BushBlock:
-		{
-			break;
+	case BlockType::WaveBlock:
+	{
+		ChangeState(PlayerState::Damaged);
+		return;
+	}
+	case BlockType::BubbleBlock:
+	{
+		ChangeState(PlayerState::Damaged);
+		return;
+	}
+	break;
+	case BlockType::BushBlock:
+	{
 
 		}
 		case BlockType::ItemBlock:
@@ -442,6 +451,7 @@ void Player::TileCheckResult()
 
 }
 
+// 앞 뒤 양옆 블럭을 체크한 뒤 할 일
 void Player::FrontBlockCheckUpdate()
 {
 	// 왼쪽 블럭
@@ -449,9 +459,7 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (isBoomblock == false) {
-			IsLeftMove = false;
-		}
+		IsLeftMove = false;
 	}
 	break;
 	case BlockType::FixBlock:
@@ -556,45 +564,45 @@ void Player::FrontBlockCheck()
 		{
 			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
 		}
-
+	
 
 		FrontBlockCheckUpdate();
-		/*
-			if (LeftBlock == BlockType::BoomBlock)
-			{
-				IsLeftMove = false;
-			}
-			else
-			{
-				IsLeftMove = true;
-			}
+	/*
+		if (LeftBlock == BlockType::BoomBlock)
+		{
+			IsLeftMove = false;
+		}
+		else
+		{
+			IsLeftMove = true;
+		}
 
-			if (RightBlock == BlockType::BoomBlock)
-			{
-				IsRightMove = false;
-			}
-			else
-			{
-				IsRightMove = true;
-			}
+		if (RightBlock == BlockType::BoomBlock)
+		{
+			IsRightMove = false;
+		}
+		else
+		{
+			IsRightMove = true;
+		}
 
-			if (UpBlock == BlockType::BoomBlock)
-			{
-				IsUpMove = false;
-			}
-			else
-			{
-				IsUpMove = true;
-			}
+		if (UpBlock == BlockType::BoomBlock)
+		{
+			IsUpMove = false;
+		}
+		else
+		{
+			IsUpMove = true;
+		}
 
-			if (DownBlock == BlockType::BoomBlock)
-			{
-				IsDownMove = false;
-			}
-			else
-			{
-				IsDownMove = true;
-			}*/
+		if (DownBlock == BlockType::BoomBlock)
+		{
+			IsDownMove = false;
+		}
+		else
+		{
+			IsDownMove = true;
+		}*/
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -679,10 +687,10 @@ void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void Player::Start()
 {
-	Collision1P_ = CreateCollision("1PColl", { 50.f, 50.f }, { 0.f, 0.f });
+	Collision1P_ = CreateCollision("1PColl", { 40.f, 40.f }, { 0.f, 0.f });
 	Collision1P_->Off();
 
-	Collision2P_ = CreateCollision("2PColl", { 50.f, 50.f }, { 0.f, 0.f });
+	Collision2P_ = CreateCollision("2PColl", { 40.f, 40.f }, { 0.f, 0.f });
 	Collision2P_->Off();
 
 
@@ -723,7 +731,7 @@ void Player::Start()
 
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Damaged_", 60, 71, 0.2f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Fade_", 72, 79, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Fade_", 72, 79, 0.25f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -761,47 +769,57 @@ void Player::Start()
 		Marid1->CutCount(5, 12);
 		GameEngineImage* Marid2 = GameEngineImageManager::GetInst()->Find("luxMarid_2.bmp");
 		Marid2->CutCount(5, 2);
+		GameEngineImage* Marid3 = GameEngineImageManager::GetInst()->Find("luxMarid_3.bmp");
+		Marid3->CutCount(5, 4);
+		GameEngineImage* Marid4 = GameEngineImageManager::GetInst()->Find("luxMarid_4.bmp");
+		Marid4->CutCount(5, 4);
 
 		// 애니메이션
 		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Ready_", 37, 53, 0.06f, false);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Left", 0, 0, 1.f, false);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Right", 6, 6, 1.f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_4.bmp", "Ready_", 0, 17, 0.06f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Right", 0, 0, 1.f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Left", 6, 6, 1.f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Up", 12, 12, 1.f, false);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Down", 20, 20, 1.f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Idle_Down", 18, 18, 1.f, false);
 
 		// Move
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Left", 1, 5, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Right", 7, 11, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Up", 13, 19, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Down", 21, 28, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Right", 1, 5, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Left", 7, 11, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Up", 13, 17, 0.09f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Down", 19, 23, 0.09f, true);
 
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Win_", 29, 36, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Damaged_", 60, 71, 0.2f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Fade_", 72, 79, 0.15f, false);
+		//MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Win_", 29, 36, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Damaged_", 39, 52, 0.2f, true); // 0.2   0.25
+		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Fade_", 53, 59, 0.25f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Die_", 0, 5, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
-		//MaridRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
 
 
 		MaridRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
 		AnimationName_ = "Ready_";
 		ChangeDirText_ = "Down";
+
+
+		//MaridRenderer_->ChangeAnimation("Damaged_");
+		//CurState_ = PlayerState::Damaged;
+		//AnimationName_ = "Damaged_";
+		//ChangeDirText_ = "Down";
 
 		//BazziRenderer_->ChangeAnimation("Idle_Down");
 		//AnimationName_ = "Idle_";
@@ -813,35 +831,66 @@ void Player::Start()
 	}
 
 
+	// Dao
+	{
+		GameEngineImage* Dao1 = GameEngineImageManager::GetInst()->Find("Dao_1.bmp");
+		Dao1->CutCount(5, 12);
+		GameEngineImage* Dao2 = GameEngineImageManager::GetInst()->Find("Dao_2.bmp");
+		Dao2->CutCount(5, 2);
+		GameEngineImage* Dao3 = GameEngineImageManager::GetInst()->Find("Dao_3.bmp");
+		Dao3->CutCount(5, 4);
+		GameEngineImage* Dao4 = GameEngineImageManager::GetInst()->Find("Dao_4.bmp");
+		Dao4->CutCount(5, 4);
 
-	/////////////// 테스트
-	//{
-	//	DaoRenderer_ = CreateRenderer();
-	//	DaoRenderer_->SetPivotType(RenderPivot::BOT);
-	//	DaoRenderer_->SetPivot({ 0.f, 30.f });
+		// 애니메이션
+		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
-	//	GameEngineImage* Left = GameEngineImageManager::GetInst()->Find("Monster.bmp");
-	//	Left->CutCount(10, 7);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Left", 0, 1, 0.2f, true);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Right", 2, 3, 0.2f, true);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Up", 4, 5, 0.2f, true);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Move_Down", 16, 17, 0.2f, true);
+		// Idle
+		DaoRenderer_->CreateAnimation("Dao_4.bmp", "Ready_", 0, 17, 0.06f, false);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Idle_Right", 0, 0, 1.f, false);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Idle_Left", 6, 6, 1.f, false);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Idle_Up", 12, 12, 1.f, false);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Idle_Down", 18, 18, 1.f, false);
 
-	//	// Idle
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Left", 0, 0, 1.f, false);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Right", 0, 0, 1.f, false);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Down", 0, 0, 1.f, false);
-	//	DaoRenderer_->CreateAnimation("Monster.bmp", "Idle_Up", 0, 0, 1.f, false);
+		// Move
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Move_Right", 1, 5, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Move_Left", 7, 11, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Move_Up", 13, 17, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Move_Down", 19, 23, 0.09f, true);
 
-	//	//DaoRenderer_->ChangeAnimation("Ready_Down");
+		//MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Win_", 29, 36, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Damaged_", 39, 52, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Fade_", 53, 59, 0.25f, false);
+		DaoRenderer_->CreateAnimation("Dao_2.bmp", "Die_", 0, 5, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
-	//	//AnimationName_ = "Idle_";
-	//	DaoRenderer_->ChangeAnimation("Idle_Down");
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
 
-	//	DaoRenderer_->Off();
-	//}
 
 
+		DaoRenderer_->ChangeAnimation("Ready_");
+		CurState_ = PlayerState::Ready;
+		AnimationName_ = "Ready_";
+		ChangeDirText_ = "Down";
+
+		//DaoRenderer_->ChangeAnimation("Damaged_");
+		//CurState_ = PlayerState::Damaged;
+		//AnimationName_ = "Damaged_";
+		//ChangeDirText_ = "Down";
+
+		DaoRenderer_->Off();
+	}
 
 
 	if (false == GameEngineInput::GetInst()->IsKey("1PLeft"))

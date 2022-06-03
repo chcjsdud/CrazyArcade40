@@ -228,7 +228,13 @@ void Player::DamagedUpdate()
 	Move();
 	StagePixelCheck(0.05f);
 
-	if (5.f < GetAccTime())
+	//if (5.f < GetAccTime())
+	//{
+	//	ChangeState(PlayerState::Fade);
+	//	return;
+	//}
+
+	if (PlayerAnimationRender_->IsEndAnimation())
 	{
 		ChangeState(PlayerState::Fade);
 		return;
@@ -255,11 +261,14 @@ void Player::FadeUpdate()
 	}
 
 	// 1.5ÃÊ ÈÄ -> Die
-	if (2.f < GetAccTime())
-	{
-		ChangeState(PlayerState::Die);
-		return;
-	}
+	//if (2.f < GetAccTime())
+	//{
+	//	ChangeState(PlayerState::Die);
+	//	return;
+	//}
+
+
+
 
 	Move();
 	StagePixelCheck(0.05f);
