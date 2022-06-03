@@ -78,7 +78,6 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 		return;
 	}
 	BlockTile* Block_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::MAPOBJECT));
-	Block_->BlockType_ = BlockType::FixBlock;
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
 	
@@ -89,38 +88,45 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	if (_Box == "CAMPBLOCK1")
 	{
 		Block_->Renderer->SetImage("CampBlock1.BMP");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CAMPBLOCK2")
 	{
 		Block_->Renderer->SetImage("CampBlock2.BMP");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CAMPBUSH1")
 	{
 		Block_->Renderer->CreateAnimation("CampBush1.bmp", "CampBush1", 0, 4, 0.1f, false);
 		Block_->Renderer->ChangeAnimation("CampBush1");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 13.0f });
+		Block_->BlockType_ = BlockType::BushBlock;
 	}
 	else if (_Box == "CAMPBUSH2")
 	{
 		Block_->Renderer->CreateAnimation("CampBush2.bmp", "CampBush2", 0, 5, 0.1f, false);
 		Block_->Renderer->ChangeAnimation("CampBush2");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y -10.0f});
+		Block_->BlockType_ = BlockType::BushBlock;
 	}
 	else if (_Box == "CAMPMOVEBOX1")
 	{
 		Block_->Renderer->SetImage("CampMoveBox1.bmp");
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 	else if (_Box == "CAMPMOVEBOX2")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_1", 0, 0, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_1");
 		Block_->BlockHp_ = 3; 
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 	else if (_Box == "CAMPMOVEBOX3")
 	{
 		Block_->Renderer->CreateAnimation("CampMoveBox2.bmp", "CampMoveBox2_3", 2, 2, 0.0f, false);
 		Block_->Renderer->ChangeAnimation("CampMoveBox2_3");
 		Block_->BlockHp_ = 1;
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 
 	//////////////////////////////////////////°øµ¿ ¹¦Áö///////////////////////////////////////////////
@@ -128,54 +134,67 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	if (_Box == "CEMETORYBLOCK1")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock1.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK2")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock2.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK3")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock3.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK4")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock4.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK5")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock5.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK6")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock6.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK7")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock7.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYBLOCK8")
 	{
 		Block_->Renderer->SetImage("CemetoryBlock8.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYSTONE1")
 	{
 		Block_->Renderer->SetImage("CemetoryStone1.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYSTONE2")
 	{
 		Block_->Renderer->SetImage("CemetoryStone2.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "CEMETORYMOVEBOX1")
 	{
 		Block_->Renderer->SetImage("CemetoryMoveBox1.bmp");
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 	else if (_Box == "CEMETORYMOVEBOX2")
 	{
 		Block_->Renderer->SetImage("CemetoryMoveBox2.bmp");
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 	else if (_Box == "CEMETORYMOVEBOX2")
 	{
 		Block_->Renderer->SetImage("CemetoryMoveBox3.bmp");
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 
 	////////////////////////////////////////// ºô¸®Áö ///////////////////////////////////////////////
@@ -183,20 +202,24 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	if (_Box == "VILLAGEBLOCK1")
 	{
 		Block_->Renderer->SetImage("VillageBlock1.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "VILLAGEBLOCK2")
 	{
 		Block_->Renderer->SetImage("VillageBlock2.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "VILLAGEMOVEBOX1")
 	{
 		Block_->Renderer->SetImage("VillageMoveBox1.bmp");
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 	else if (_Box == "VILLAGEBUSH1")
 	{
 		Block_->Renderer->CreateAnimation("VillageBush1.bmp", "VillageBush1", 0, 4, 0.1f, false);
 		Block_->Renderer->ChangeAnimation("VillageBush1");
 		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
+		Block_->BlockType_ = BlockType::BushBlock;
 	}
 
 	////////////////////////////////////////// ¸ó½ºÅÍ ///////////////////////////////////////////////
@@ -204,38 +227,47 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	if (_Box == "MONSTERBLOCK1")
 	{
 		Block_->Renderer->SetImage("MonsterBlock1.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK2")
 	{
 		Block_->Renderer->SetImage("MonsterBlock2.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK3")
 	{
 		Block_->Renderer->SetImage("MonsterBlock3.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK4")
 	{
 		Block_->Renderer->SetImage("MonsterBlock4.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK5")
 	{
 		Block_->Renderer->SetImage("MonsterBlock5.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK6")
 	{
 		Block_->Renderer->SetImage("MonsterBlock6.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK7")
 	{
 		Block_->Renderer->SetImage("MonsterBlock7.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK8")
 	{
 		Block_->Renderer->SetImage("MonsterBlock8.bmp");
+		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERMOVEBOX1")
 	{
 		Block_->Renderer->SetImage("MonsterMoveBox1.bmp");
+		Block_->BlockType_ = BlockType::PullBlock;
 	}
 	AllBlockTiles_.push_back(Block_);
 }
