@@ -22,6 +22,8 @@ RoomCharaterSelectUI::RoomCharaterSelectUI()
 	, MaridCollision(nullptr)
 	, ChoiceCharacter1P(0)
 	, ChoiceCharacter2P(0)
+	, RoomCharacterRenderer1P(nullptr)
+	, RoomCharacterRenderer2P(nullptr)
 {
 }
 
@@ -33,15 +35,18 @@ void RoomCharaterSelectUI::Start()
 {
 	if (GetLevel()->GetNameConstRef() == "RoomLevel")
 	{
-		RoomCharacterRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 48.0f });
+		RoomCharacterRenderer1P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 48.0f });
+		RoomCharacterRenderer2P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -488.0f, 48.0f });
 	}
 	else if (GetLevel()->GetNameConstRef() == "MonsterRoomLevel")
 	{
-		RoomCharacterRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 67.0f });
+		RoomCharacterRenderer1P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 67.0f });
+		RoomCharacterRenderer2P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -488.0f, 67.0f });
 	}
 	SetPosition({ 670, 95 });
 	
-	RoomCharacterRenderer->SetImage("RandomCharacter.bmp");
+	RoomCharacterRenderer1P->SetImage("RandomCharacter.bmp");
+	RoomCharacterRenderer2P->SetImage("RandomCharacter.bmp");
 	StatusRenderer = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -294.0f, 22.0f });
 	StatusRenderer->SetImage("RandomStatusUI.bmp");
 	StatusRenderer->Off();
@@ -86,6 +91,7 @@ void RoomCharaterSelectUI::Start()
 	Choice2PRenderer = CreateRenderer("2P_Check.bmp");
 	Choice2PRenderer->SetPivot({ 4.0f, 10.0f });
 	Choice2PRenderer->Off();
+	RoomCharacterRenderer2P->Off();
 
 	ChoiceCharacter1P = 0;
 	ChoiceCharacter2P = 0;
@@ -355,7 +361,7 @@ void RoomCharaterSelectUI::ChoiceCheck()
 
 	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
-		if (ChoiceCharacter1P == ChoiceCharacter2P)
+		if (ChoiceCharacter1P != ChoiceCharacter2P)
 		{
 			if (ChoiceCharacter2P == 0)
 			{
@@ -466,23 +472,47 @@ void RoomCharaterSelectUI::BannerSet()
 	case 0:
 		BannerRenderer->SetPivot({ -40.0f, -50.0f });
 		BannerRenderer->SetImage("RandomSelect_Image.bmp");
-		RoomCharacterRenderer->SetImage("RandomCharacter.bmp");
+		RoomCharacterRenderer1P->SetImage("RandomCharacter.bmp");
 		break;
 	case 1:
 		BannerRenderer->SetPivot({ -42.0f, -49.0f });
 		BannerRenderer->SetImage("BazziSelect_Image.bmp");
-		RoomCharacterRenderer->SetImage("BazziCharacter.bmp");
+		RoomCharacterRenderer1P->SetImage("BazziCharacter.bmp");
 		break;
 	case 2:
 		BannerRenderer->SetPivot({ -42.0f, -49.0f });
 		BannerRenderer->SetImage("DaoSelect_Image.bmp");
+		RoomCharacterRenderer1P->SetImage("DaoCharacter.bmp");
 		break;
 	case 3:
 		BannerRenderer->SetPivot({ -42.0f, -49.0f });
 		BannerRenderer->SetImage("MaridSelect_Image.bmp");
+		RoomCharacterRenderer1P->SetImage("luxMaridCharacter.bmp");
 		break;
 	default:
 		break;
+	}
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
+	{
+		RoomCharacterRenderer2P->On();
+		switch (ChoiceCharacter2P)
+		{
+		case 0:
+			RoomCharacterRenderer2P->SetImage("RandomCharacter.bmp");
+			break;
+		case 1:
+			RoomCharacterRenderer2P->SetImage("BazziCharacter.bmp");
+			break;
+		case 2:
+			RoomCharacterRenderer2P->SetImage("DaoCharacter.bmp");
+			break;
+		case 3:
+			RoomCharacterRenderer2P->SetImage("luxMaridCharacter.bmp");
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -493,5 +523,7 @@ void RoomCharaterSelectUI::LevelChangeStart(GameEngineLevel * _PrevLevel)
 	if (false == GlobalUIName::GetInst()->Is2pUpdate())
 	{
 		ChoiceCharacter2P = 5;
+		//Choice2PRenderer->Off();
+		RoomCharacterRenderer2P->Off();
 	}
 }

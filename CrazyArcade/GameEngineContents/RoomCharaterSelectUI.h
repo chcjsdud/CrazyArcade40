@@ -26,7 +26,8 @@ private:
 	int ChoiceCharacter2P;
 
 	GameEngineRenderer* Choice2PRenderer;
-	GameEngineRenderer* RoomCharacterRenderer;
+	GameEngineRenderer* RoomCharacterRenderer1P;
+	GameEngineRenderer* RoomCharacterRenderer2P;
 	GameEngineRenderer* StatusRenderer;
 	GameEngineRenderer* BannerRenderer;
 	GameEngineRenderer* RandomRenderer;
