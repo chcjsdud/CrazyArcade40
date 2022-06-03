@@ -139,28 +139,29 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 
 
-	////Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	////Mandarin1->SetPosition(float4(100.0f, 100.0f));
+	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	//Mandarin1->SetPosition(float4(100.0f, 100.0f));
 
 	////Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	////Crocodile1->SetPosition(float4(150.0f, 150.0f));
 
 	////Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
 	////Seal->SetPosition(float4(200.0f, 200.0f));
+	//if (nullptr == Player::MainPlayer_1)
 
 
-	Player::MainPlayer_1->On();
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
-	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
-	Player::MainPlayer_2->On();
+//Player::MainPlayer_1->On();
+//Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+//Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
+//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+//
+	//Player::MainPlayer_2->On();
 	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
-	Player::MainPlayer_2->SetCharacter(Character::BAZZI);
-	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
-	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Player::MainPlayer_2->SetCharacter(Character::BAZZI);
+	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	//Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
+	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	//À©µµ¿ì ¸¶¿ì½º ¼û±è
 	ShowCursor(false);

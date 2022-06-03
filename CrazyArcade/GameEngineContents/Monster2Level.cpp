@@ -110,18 +110,18 @@ void Monster2Level::Loading()
 		Crocodile6->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 
-	if (nullptr == Player::MainPlayer_1)
-	{
+//if (nullptr == Player::MainPlayer_1)
+//{
+//
+//	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+//
+//	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+//	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+//	Player::MainPlayer_1->SetPosition({ 450.f, 360.f });
+//	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+//	Player::MainPlayer_1->On();
+//}
 
-		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-
-		Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-		Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-		Player::MainPlayer_1->SetPosition({ 450.f, 360.f });
-		Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-		Player::MainPlayer_1->On();
-	}
-	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 void Monster2Level::Update()
 {
