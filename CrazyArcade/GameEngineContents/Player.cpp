@@ -395,25 +395,25 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 {
 	switch (_CurBlockType)
 	{
-	case BlockType::WaveBlock:
-	{
-		ChangeState(PlayerState::Damaged);
-		return;
-	}
-	case BlockType::BubbleBlock:
-	{
-		ChangeState(PlayerState::Damaged);
-		return;
-	}
-	break;
-	case BlockType::BushBlock:
-	{
+		case BlockType::WaveBlock:
+		{
+			ChangeState(PlayerState::Damaged);
+			return;
+		}
+		case BlockType::BubbleBlock:
+		{
+			ChangeState(PlayerState::Damaged);
+			return;
+		}
+		break;
+		case BlockType::BushBlock:
+		{
 
 		}
 		case BlockType::ItemBlock:
 		{
 			break;
-
+		
 		}
 		case BlockType::BoomBlock:
 		{
@@ -460,7 +460,7 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::BoomBlock:
 	{
 		if (isBoomblock == false) {
-			IsRightMove = false;
+			IsLeftMove = false;
 		}
 	}
 	break;
