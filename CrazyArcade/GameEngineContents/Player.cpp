@@ -459,7 +459,9 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		IsLeftMove = false;
+		if (isBoomblock == false) {
+			IsRightMove = false;
+		}
 	}
 	break;
 	case BlockType::FixBlock:
