@@ -96,43 +96,41 @@ void PlayerTeamTest::Loading()
 	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	//Crocodile1->SetPosition(Areas_[6].GetCenter());
 	//Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-	{
-		MapGameObject* BlockSet = CreateActor<MapGameObject>();
-		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
-		GameEngineDirectory Dir;
-	
-		Dir.MoveParent("CrazyArcade");
-		Dir.Move("Resources");
-		Dir.Move("Data");
-	
-		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
-	
-		LoadFile.Open(OpenMode::Read);
-	
-		int Size = 0;
-		LoadFile.Read(&Size, sizeof(int));
-	
-		for (size_t y = 0; y < Size; y++)
-		{
-			int XSize = 0;
-			LoadFile.Read(&XSize, sizeof(int));
-			for (size_t x = 0; x < XSize; x++)
-			{
-				std::string Name;
-				LoadFile.Read(Name);
-	
-				if (Name == "None")
-				{
-					continue;
-				}
-	
-				//                          5 7
-				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
-			}
-		}
-	}
-
-	YSortOn(static_cast<int>(ORDER::PLAYER));
+	//{
+	//	MapGameObject* BlockSet = CreateActor<MapGameObject>();
+	//	BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+	//	GameEngineDirectory Dir;
+	//
+	//	Dir.MoveParent("CrazyArcade");
+	//	Dir.Move("Resources");
+	//	Dir.Move("Data");
+	//
+	//	GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
+	//
+	//	LoadFile.Open(OpenMode::Read);
+	//
+	//	int Size = 0;
+	//	LoadFile.Read(&Size, sizeof(int));
+	//
+	//	for (size_t y = 0; y < Size; y++)
+	//	{
+	//		int XSize = 0;
+	//		LoadFile.Read(&XSize, sizeof(int));
+	//		for (size_t x = 0; x < XSize; x++)
+	//		{
+	//			std::string Name;
+	//			LoadFile.Read(Name);
+	//
+	//			if (Name == "None")
+	//			{
+	//				continue;
+	//			}
+	//
+	//			//                          5 7
+	//			BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+	//		}
+	//	}
+	//}
 }
 void PlayerTeamTest::Update()
 {
@@ -155,13 +153,14 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 
 	Player::MainPlayer_1->On();
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetCharacter(Character::DAO);
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 	
 	Player::MainPlayer_2->On();
-	Player::MainPlayer_2->SetCharacter(Character::BAZZI);
+	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
+	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
 	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
 	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
 	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
