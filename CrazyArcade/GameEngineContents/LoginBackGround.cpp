@@ -128,39 +128,46 @@ void LoginBackGround::Update()
 
 	
 	//로그인 버튼
-	if (true == LoginBtnCollision_->CollisionCheck("MouseCol")) {
-
-		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
-		{
-			LoginBtnRenderer_->ChangeAnimation("LoginBtn_Click");
-		}
-		else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
-		{
-			GlobalUIName::GetInst()->SetNickName_1(NickName_One_->GetText());
-			if (false == NickName_Two_->IsUpdate())
-			{
-				GlobalUIName::GetInst()->SetNickName_2("");
-				GlobalUIName::GetInst()->On1P();
-				GlobalUIName::GetInst()->Off2P();
-			}
-			else {
-				GlobalUIName::GetInst()->SetNickName_2(NickName_Two_->GetText());
-				GlobalUIName::GetInst()->On1P();
-			    GlobalUIName::GetInst()->On2P();
-			}
-			
-			NickName_One_->Off();
-			NickName_Two_->Off();
-			createRoomBackGround_->On();
-		}
-		else {
-			LoginBtnRenderer_->ChangeAnimation("LoginBtn_Select");
-		}
-	}
-	else
+	if (false == (NickName_One_->GetText() == "" && NickName_Two_->GetText() == ""))
 	{
-		LoginBtnRenderer_->ChangeAnimation("LoginBtn_Idle");
+		if (false == (NickName_Two_->IsUpdate() == true && NickName_Two_->GetText() == ""))
+		{
+			if (true == LoginBtnCollision_->CollisionCheck("MouseCol")) {
+
+				if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
+				{
+					LoginBtnRenderer_->ChangeAnimation("LoginBtn_Click");
+				}
+				else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
+				{
+					GlobalUIName::GetInst()->SetNickName_1(NickName_One_->GetText());
+					if (false == NickName_Two_->IsUpdate())
+					{
+						GlobalUIName::GetInst()->SetNickName_2("");
+						GlobalUIName::GetInst()->On1P();
+						GlobalUIName::GetInst()->Off2P();
+					}
+					else {
+						GlobalUIName::GetInst()->SetNickName_2(NickName_Two_->GetText());
+						GlobalUIName::GetInst()->On1P();
+						GlobalUIName::GetInst()->On2P();
+					}
+
+					NickName_One_->Off();
+					NickName_Two_->Off();
+					createRoomBackGround_->On();
+				}
+				else {
+					LoginBtnRenderer_->ChangeAnimation("LoginBtn_Select");
+				}
+			}
+			else
+			{
+				LoginBtnRenderer_->ChangeAnimation("LoginBtn_Idle");
+			}
+		}	
 	}
+	
 	
 
 
