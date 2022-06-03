@@ -91,35 +91,35 @@ void Monster1Level::Loading()
 			}
 		}
 
-		Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin1->SetPosition(Areas_[55].GetCenter());
 		Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin2->SetPosition(Areas_[57].GetCenter());
 		Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin3->SetPosition(Areas_[102].GetCenter());
 		Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin4->SetPosition(Areas_[118].GetCenter());
 		Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster1* Mandarin5 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Monster1* Mandarin5 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin5->SetPosition(Areas_[125].GetCenter());
 		Mandarin5->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster1* Mandarin6 = CreateActor<Monster1>((int)ORDER::MONSTER);
+		Monster1* Mandarin6 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin6->SetPosition(Areas_[88].GetCenter());
 		Mandarin6->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile1->SetPosition(Areas_[7].GetCenter());
 		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
 
-		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::MONSTER);
+		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile2->SetPosition(Areas_[174].GetCenter());
 		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
 
@@ -131,6 +131,8 @@ void Monster1Level::Loading()
 	//Player::MainPlayer_1->SetPosition({ 300.f, 360.f });
 	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 	//Player::MainPlayer_1->On();
+
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 	}
 
 void Monster1Level::Update()

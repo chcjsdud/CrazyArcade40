@@ -85,6 +85,8 @@ void CampLevel::Loading()
 	{
 		GameEngineInput::GetInst()->CreateKey("CreatBoom", VK_SPACE);
 	}
+
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 
 void CampLevel::Update()

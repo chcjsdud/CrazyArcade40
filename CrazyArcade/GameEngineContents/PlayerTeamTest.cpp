@@ -127,6 +127,8 @@ void PlayerTeamTest::Loading()
 			}
 		}
 	}
+
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 void PlayerTeamTest::Update()
 {

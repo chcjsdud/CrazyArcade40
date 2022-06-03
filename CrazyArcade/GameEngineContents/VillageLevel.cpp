@@ -59,6 +59,8 @@ void VillageLevel::Loading()
 		}
 	}
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor ¸¸µé°í
+
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 
 void VillageLevel::Update()

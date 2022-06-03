@@ -62,6 +62,7 @@ void CemetoryLevel::Loading()
 		}
 	}
 
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 
 void CemetoryLevel::Update()
