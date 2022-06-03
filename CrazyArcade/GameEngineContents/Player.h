@@ -8,7 +8,7 @@ enum class PlayerState
 {
 	Wait,
 	Ready,
-	Idle, 
+	Idle,
 	Move,
 	Jump,
 	Attack,
@@ -31,6 +31,7 @@ enum class PlayerDir
 	Right,
 	Down,
 	Up,
+	None,
 	Max,
 };
 
@@ -38,7 +39,7 @@ enum class PlayerType
 {
 	Player1,
 	Player2,
-	
+
 	Max,
 };
 
@@ -90,8 +91,13 @@ protected:
 
 	float Time_;
 	float AttMoveTime_;
-	
+
 	// 플레이어 정보 세팅
+
+private:
+	PlayerDir CheckDir_;
+	bool isBoomblock;
+
 protected:
 	void SetSpeed(float _CurSpeed)
 	{
@@ -154,7 +160,7 @@ private:
 	BlockType CheckBlockTile(float4 _Pos);
 	BlockType CurBlockType1_;
 	BlockType CurBlockType2_;
-	
+
 	BlockType LeftBlock;
 	BlockType RightBlock;
 	BlockType UpBlock;
@@ -218,7 +224,7 @@ protected:
 private:
 	GameEngineRendererTileMap* MapTile_;
 
-////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////
 private:
 	// 맵 관련
 	GameEngineImage* MapColImage_;

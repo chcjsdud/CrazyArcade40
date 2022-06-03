@@ -26,7 +26,7 @@ void Player::ReadyStart()
 void Player::IdleStart()
 {
 	IsMove = true;
-	
+
 	ReSetAccTime();
 
 	AnimationName_ = "Idle_";
@@ -69,6 +69,8 @@ void Player::RevivalStart()
 
 	AnimationName_ = "Revival_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+
+	CheckDir_ = PlayerDir::None;
 }
 
 void Player::FadeStart()
@@ -124,7 +126,7 @@ void Player::ReadyUpdate()
 {
 	if (true == PlayerAnimationRender_->IsEndAnimation())
 	{
-		
+
 		ChangeState(PlayerState::Idle);
 		return;
 	}
@@ -145,6 +147,8 @@ void Player::IdleUpdate()
 		ChangeState(PlayerState::Attack);
 		return;
 	}
+
+	Move();
 }
 
 void Player::MoveUpdate()
@@ -168,7 +172,7 @@ void Player::MoveUpdate()
 	//{
 	//	
 	//}
-	
+
 
 	StagePixelCheck(CurSpeed_);
 }
@@ -179,7 +183,7 @@ void Player::JumpUpdate()
 
 void Player::AttackUpdate()
 {
-	float4 ModifyPos = float4{ -17.f, -25.f };
+	float4 ModifyPos = float4{ -20.f, -20.f };
 
 	if (Type == PlayerType::Player1)
 	{
@@ -192,14 +196,17 @@ void Player::AttackUpdate()
 
 		ChangeState(PlayerState::Move);
 		return;
-	
+
 	}
-	
+
 	if (Type == PlayerType::Player2)
 	{
 		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom_->SetMapTile(MapTile_);
 		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, 3);
+
+		ChangeState(PlayerState::Move);
+		return;
 	}
 
 	if (true == IsMoveKey())
@@ -229,7 +236,7 @@ void Player::DamagedUpdate()
 
 }
 
-void Player::RevivalUpdate() 
+void Player::RevivalUpdate()
 {
 	if (PlayerAnimationRender_->IsEndAnimation())
 	{

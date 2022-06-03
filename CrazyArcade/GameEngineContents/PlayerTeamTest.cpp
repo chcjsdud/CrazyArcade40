@@ -41,14 +41,14 @@ PlayerTeamTest::~PlayerTeamTest()
 }
 void PlayerTeamTest::Loading()
 {
-	//if (nullptr == Player::MainPlayer_1)
-	//{
-	//	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	//	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	//}
+	if (nullptr == Player::MainPlayer_1)
+	{
+		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	}
 	
-	//Player::MainPlayer_1->Off();
-	//Player::MainPlayer_2->Off();
+	Player::MainPlayer_1->Off();
+	Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<Mouse>((int)UIType::Mouse);
@@ -154,18 +154,17 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	//if (nullptr == Player::MainPlayer_1)
 
 
-//Player::MainPlayer_1->On();
-//Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-//Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
-//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-//
-	//Player::MainPlayer_2->On();
-	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
-	//Player::MainPlayer_2->SetCharacter(Character::BAZZI);
-	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	//Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
-	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	Player::MainPlayer_1->On();
+	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
+	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+	
+	Player::MainPlayer_2->On();
+	Player::MainPlayer_2->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
+	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	//À©µµ¿ì ¸¶¿ì½º ¼û±è
 	ShowCursor(false);

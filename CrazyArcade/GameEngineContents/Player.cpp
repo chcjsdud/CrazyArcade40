@@ -38,6 +38,8 @@ Player::Player()
 	, IsRightMove(true)
 	, IsUpMove(true)
 	, IsDownMove(true)
+	, CheckDir_(PlayerDir::None)
+	, isBoomblock(false)
 {
 
 }
@@ -67,9 +69,46 @@ void Player::Move()
 
 	float MovePos = 250.f;
 
+
+	
 	if (Type == PlayerType::Player1)
 	{
-		if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
+		if (CurState_ != PlayerState::Ready)
+		{
+			if (true == GameEngineInput::GetInst()->IsDown("1PRight"))
+			{
+				CheckDir_ = PlayerDir::Right;
+				ChangeDirText_ = "Right";
+			}
+			if (true == GameEngineInput::GetInst()->IsDown("1PLeft"))
+			{
+				CheckDir_ = PlayerDir::Left;
+				ChangeDirText_ = "Left";
+			}
+			if (true == GameEngineInput::GetInst()->IsDown("1PUp"))
+			{
+				CheckDir_ = PlayerDir::Up;
+				ChangeDirText_ = "Up";
+			}
+			if (true == GameEngineInput::GetInst()->IsDown("1PDown"))
+			{
+				CheckDir_ = PlayerDir::Down;
+				ChangeDirText_ = "Down";
+			}
+
+
+			if ( (true == GameEngineInput::GetInst()->IsUp("1PRight") && CheckDir_ == PlayerDir::Right) 
+				|| ((true == GameEngineInput::GetInst()->IsUp("1PLeft") && CheckDir_ == PlayerDir::Left))
+				|| ((true == GameEngineInput::GetInst()->IsUp("1PUp") && CheckDir_ == PlayerDir::Up))
+				|| ((true == GameEngineInput::GetInst()->IsUp("1PDown")&& CheckDir_ == PlayerDir::Down)))
+			{
+				CheckDir_ = PlayerDir::None;
+			}
+		}
+
+		///////////////////////////////////////////////////////////
+
+		if (CheckDir_ == PlayerDir::Left)
 		{
 			if (true == IsLeftMove)
 			{
@@ -89,7 +128,7 @@ void Player::Move()
 			}
 
 		}
-		else if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
+		else if (CheckDir_ == PlayerDir::Right)
 		{
 			if (true == IsRightMove)
 			{
@@ -107,73 +146,17 @@ void Player::Move()
 				//	MoveDir.x = MovePos;
 				//}
 			}
-		
+
 		}
-		else if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
+		else if (CheckDir_ == PlayerDir::Up)
 		{
 			if (true == IsUpMove)
 			{
 				MoveDir.y = -MovePos;
 			}
-		
+
 		}
-		else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
-		{
-			if (true == IsDownMove)
-			{
-				MoveDir.y = MovePos;
-			}
-		}
-	}
-	else
-	{
-		if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
-		{
-			if (true == IsLeftMove)
-			{
-				if (true == GameEngineInput::GetInst()->IsPress("2PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
-				{
-					MoveDir.y = -MovePos;
-				}
-				else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
-				{
-					MoveDir.y = MovePos;
-				}
-				else
-				{
-					MoveDir.x = -MovePos;
-				}
-			}
-			
-		}
-		else if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
-		{
-			if (true == IsRightMove)
-			{
-				if (true == GameEngineInput::GetInst()->IsPress("2PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
-				{
-					MoveDir.y = -MovePos;
-				}
-				else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
-				{
-					MoveDir.y = MovePos;
-				}
-				else
-				{
-					MoveDir.x = MovePos;
-				}
-			}
-	
-		}
-		else if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
-		{
-			if (true == IsUpMove)
-			{
-				MoveDir.y = -MovePos;
-			}
-			
-		}
-		else if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
+		else if (CheckDir_ == PlayerDir::Down)
 		{
 			if (true == IsDownMove)
 			{
@@ -182,6 +165,78 @@ void Player::Move()
 		}
 	}
 
+	else if (Type == PlayerType::Player2)
+	{
+		if (CurState_ != PlayerState::Ready)
+		{
+
+			if (true == GameEngineInput::GetInst()->IsDown("2PRight"))
+			{
+				CheckDir_ = PlayerDir::Right;
+				ChangeDirText_ = "Right";
+			}
+			if (true == GameEngineInput::GetInst()->IsDown("2PLeft"))
+			{
+				CheckDir_ = PlayerDir::Left;
+				ChangeDirText_ = "Left";
+			}
+			if (true == GameEngineInput::GetInst()->IsDown("2PUp"))
+			{
+				CheckDir_ = PlayerDir::Up;
+				ChangeDirText_ = "Up";
+			}
+			if (true == GameEngineInput::GetInst()->IsDown("2PDown"))
+			{
+				CheckDir_ = PlayerDir::Down;
+				ChangeDirText_ = "Down";
+			}
+
+
+			if ((true == GameEngineInput::GetInst()->IsUp("2PRight") && CheckDir_ == PlayerDir::Right)
+				|| ((true == GameEngineInput::GetInst()->IsUp("2PLeft") && CheckDir_ == PlayerDir::Left))
+				|| ((true == GameEngineInput::GetInst()->IsUp("2PUp") && CheckDir_ == PlayerDir::Up))
+				|| ((true == GameEngineInput::GetInst()->IsUp("2PDown") && CheckDir_ == PlayerDir::Down)))
+			{
+				CheckDir_ = PlayerDir::None;
+			}
+
+
+			///////////////////////////////////////////////////////////
+
+			if (CheckDir_ == PlayerDir::Left)
+			{
+				if (true == IsLeftMove)
+				{
+					MoveDir.x = -MovePos;
+				}
+
+			}
+			else if (CheckDir_ == PlayerDir::Right)
+			{
+				if (true == IsRightMove)
+				{
+					MoveDir.x = MovePos;
+				}
+
+			}
+			else if (CheckDir_ == PlayerDir::Up)
+			{
+				if (true == IsUpMove)
+				{
+					MoveDir.y = -MovePos;
+				}
+
+			}
+			else if (CheckDir_ == PlayerDir::Down)
+			{
+				if (true == IsDownMove)
+				{
+					MoveDir.y = MovePos;
+				}
+			}
+		}
+
+	}
 
 
 	//SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
@@ -316,10 +371,10 @@ void Player::StagePixelCheck(float _Speed)
 		IsMove = true;
 		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
 
-	/*	if (true == IsMove)
-		{
-			SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
-		}*/
+		/*	if (true == IsMove)
+			{
+				SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
+			}*/
 	}
 }
 
@@ -329,30 +384,38 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 {
 	switch (_CurBlockType)
 	{
-	case BlockType::WaveBlock:
-	{
-		ChangeState(PlayerState::Damaged);
-		return;
-	}
-	case BlockType::BubbleBlock:
-	{
-		ChangeState(PlayerState::Damaged);
-		return;
-	}
-	break;
-	case BlockType::BushBlock:
-	{
+		case BlockType::WaveBlock:
+		{
+			ChangeState(PlayerState::Damaged);
+			return;
+			break;
+		}
+		case BlockType::BubbleBlock:
+		{
+			ChangeState(PlayerState::Damaged);
+			return;
+			break;
+		}
+		case BlockType::BushBlock:
+		{
+			break;
 
-	}
-	break;
-	case BlockType::ItemBlock:
-	{
+		}
+		case BlockType::ItemBlock:
+		{
+			break;
 
+		}
+		case BlockType::BoomBlock:
+		{
+			isBoomblock = true;
+			break;
+		}
+		default:
+		{
+			isBoomblock = false;
+		}
 	}
-	break;
-
-	}
-
 }
 
 void Player::TileCheckResult()
@@ -386,7 +449,9 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		IsLeftMove = false;
+		if (isBoomblock == false) {
+			IsLeftMove = false;
+		}
 	}
 	break;
 	case BlockType::FixBlock:
@@ -406,7 +471,9 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		IsRightMove = false;
+		if (isBoomblock == false) {
+			IsRightMove = false;
+		}
 	}
 	break;
 	case BlockType::FixBlock:
@@ -426,7 +493,9 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		IsUpMove = false;
+		if (isBoomblock == false) {
+			IsUpMove = false;
+		}
 	}
 	break;
 	case BlockType::FixBlock:
@@ -447,7 +516,9 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		IsDownMove = false;
+		if (isBoomblock == false) {
+			IsDownMove = false;
+		}
 	}
 	break;
 	case BlockType::FixBlock:
@@ -472,6 +543,8 @@ void Player::FrontBlockCheck()
 		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
 		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
 
+
+
 		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
 		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
 
@@ -483,45 +556,45 @@ void Player::FrontBlockCheck()
 		{
 			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
 		}
-	
+
 
 		FrontBlockCheckUpdate();
-	/*
-		if (LeftBlock == BlockType::BoomBlock)
-		{
-			IsLeftMove = false;
-		}
-		else
-		{
-			IsLeftMove = true;
-		}
+		/*
+			if (LeftBlock == BlockType::BoomBlock)
+			{
+				IsLeftMove = false;
+			}
+			else
+			{
+				IsLeftMove = true;
+			}
 
-		if (RightBlock == BlockType::BoomBlock)
-		{
-			IsRightMove = false;
-		}
-		else
-		{
-			IsRightMove = true;
-		}
+			if (RightBlock == BlockType::BoomBlock)
+			{
+				IsRightMove = false;
+			}
+			else
+			{
+				IsRightMove = true;
+			}
 
-		if (UpBlock == BlockType::BoomBlock)
-		{
-			IsUpMove = false;
-		}
-		else
-		{
-			IsUpMove = true;
-		}
+			if (UpBlock == BlockType::BoomBlock)
+			{
+				IsUpMove = false;
+			}
+			else
+			{
+				IsUpMove = true;
+			}
 
-		if (DownBlock == BlockType::BoomBlock)
-		{
-			IsDownMove = false;
-		}
-		else
-		{
-			IsDownMove = true;
-		}*/
+			if (DownBlock == BlockType::BoomBlock)
+			{
+				IsDownMove = false;
+			}
+			else
+			{
+				IsDownMove = true;
+			}*/
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -530,25 +603,29 @@ void Player::FrontBlockCheck()
 		{
 			float4 Pos = MainPlayer_2->GetPosition();
 
-			TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
-			TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 20.f });
+			
+		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
+		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
 
-			LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
-			UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
 
-			if (RightIndex.X != 15)
-			{
-				RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
-			}
-			if (DownIndex.Y != 13)
-			{
-				DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
-			}
 
-			FrontBlockCheckUpdate();
+		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
+		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
+
+		if (RightIndex.X != 15)
+		{
+			RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+		}
+		if (DownIndex.Y != 13)
+		{
+			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+		}
+
+
+		FrontBlockCheckUpdate();
 		}
 	}
-	
+
 }
 
 void Player::PlayerCollisionUpdate()
@@ -583,7 +660,7 @@ void Player::MonsterCollisionCheck()
 	{
 		if (Type == PlayerType::Player2)
 		{
-			if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
+			if (true == Collision2P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 			{
 				for (size_t i = 0; i < ColList.size(); i++)
 				{
@@ -810,7 +887,7 @@ void Player::Update()
 
 	//PlayerInfoUpdate();
 
-	
+
 
 	DebugModeSwitch();
 }
@@ -822,7 +899,7 @@ void Player::Render()
 	std::string IndexY = "";
 
 
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition() - float4{20,40});
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition() - float4{ 20,20 });
 	IndexX = "Index X : " + std::to_string(TileIndex_.X);
 	IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
 
@@ -830,79 +907,79 @@ void Player::Render()
 	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
 	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 
-	//std::string Posx = "";
-	//std::string Posy = "";
-	//std::string State = "";
+	/*std::string Posx = "";
+	std::string Posy = "";
+	std::string State = "";
 
 
-	//Posx = "Pos x : " + std::to_string(GetPosition().ix());
-	//Posy = "Pos y : " + std::to_string(GetPosition().iy());
+	Posx = "Pos x : " + std::to_string(GetPosition().ix());
+	Posy = "Pos y : " + std::to_string(GetPosition().iy());
 
-	//if (CurState_ == PlayerState::Wait)
-	//{
-	//	State = "STATE : Wait";
-	//}
-	//else if (CurState_ == PlayerState::Ready)
-	//{
-	//	State = "STATE : Ready";
-	//}
-	//else if (CurState_ == PlayerState::Idle)
-	//{
-	//	State = "STATE : Idle";
-	//}
-	//else if (CurState_ == PlayerState::Move)
-	//{
-	//	State = "STATE : Move";
-	//}
-	//else if (CurState_ == PlayerState::Jump)
-	//{
-	//	State = "STATE : Jump";
-	//}
-	//else if (CurState_ == PlayerState::Attack)
-	//{
-	//	State = "STATE : Attack";
-	//}
-	//else if (CurState_ == PlayerState::Damaged)
-	//{
-	//	State = "STATE : Damaged";
-	//}
-	//else if (CurState_ == PlayerState::Revival)
-	//{
-	//	State = "STATE : Revival";
-	//}
-	//else if (CurState_ == PlayerState::Fade)
-	////{
-	////	State = "STATE : Fade";
-	//}
-	//else if (CurState_ == PlayerState::Die)
-	//{
-	//	State = "STATE : Die";
-	//}
-	//else if (CurState_ == PlayerState::IdleOwl)
-	//{
-	//	State = "STATE : IdleOwl";
-	//}
-	//else if (CurState_ == PlayerState::IdleTurtle)
-	//{
-	//	State = "STATE : IdleTurtle";
-	//}
-	//else if (CurState_ == PlayerState::RidingOwl)
-	//{
-	//	State = "STATE : RidingOwl";
-	//}
-	//else if (CurState_ == PlayerState::RidingTurtle)
-	//{
-	//	State = "STATE : RidingTurtle";
-	//}
-	//else if (CurState_ == PlayerState::RidingUFO)
-	//{
-	//	State = "STATE : RidingUFO";
-	//}
-	//
+	if (CurState_ == PlayerState::Wait)
+	{
+		State = "STATE : Wait";
+	}
+	else if (CurState_ == PlayerState::Ready)
+	{
+		State = "STATE : Ready";
+	}
+	else if (CurState_ == PlayerState::Idle)
+	{
+		State = "STATE : Idle";
+	}
+	else if (CurState_ == PlayerState::Move)
+	{
+		State = "STATE : Move";
+	}
+	else if (CurState_ == PlayerState::Jump)
+	{
+		State = "STATE : Jump";
+	}
+	else if (CurState_ == PlayerState::Attack)
+	{
+		State = "STATE : Attack";
+	}
+	else if (CurState_ == PlayerState::Damaged)
+	{
+		State = "STATE : Damaged";
+	}
+	else if (CurState_ == PlayerState::Revival)
+	{
+		State = "STATE : Revival";
+	}
+	else if (CurState_ == PlayerState::Fade)
+	{
+		State = "STATE : Fade";
+	}
+	else if (CurState_ == PlayerState::Die)
+	{
+		State = "STATE : Die";
+	}
+	else if (CurState_ == PlayerState::IdleOwl)
+	{
+		State = "STATE : IdleOwl";
+	}
+	else if (CurState_ == PlayerState::IdleTurtle)
+	{
+		State = "STATE : IdleTurtle";
+	}
+	else if (CurState_ == PlayerState::RidingOwl)
+	{
+		State = "STATE : RidingOwl";
+	}
+	else if (CurState_ == PlayerState::RidingTurtle)
+	{
+		State = "STATE : RidingTurtle";
+	}
+	else if (CurState_ == PlayerState::RidingUFO)
+	{
+		State = "STATE : RidingUFO";
+	}
 
-	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -30, Posx.c_str(), static_cast<int>(Posx.length()));
-	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() -10, Posy.c_str(), static_cast<int>(Posy.length()));
-	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() +10, State.c_str(), static_cast<int>(State.length()));
+
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, Posx.c_str(), static_cast<int>(Posx.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, Posy.c_str(), static_cast<int>(Posy.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, State.c_str(), static_cast<int>(State.length()));*/
 }
 
 bool Player::IsMoveKey()
@@ -911,22 +988,14 @@ bool Player::IsMoveKey()
 	{
 		if (Type == PlayerType::Player1)
 		{
-			if (false == GameEngineInput::GetInst()->IsPress("1PLeft")
-				&& false == GameEngineInput::GetInst()->IsPress("1PRight")
-				&& false == GameEngineInput::GetInst()->IsPress("1PUp")
-				&& false == GameEngineInput::GetInst()->IsPress("1PDown")
-				)
+			if (CheckDir_ == PlayerDir::None)
 			{
 				return false;
 			}
 		}
-		else
+		else if(Type == PlayerType::Player2)
 		{
-			if (false == GameEngineInput::GetInst()->IsPress("2PLeft")
-				&& false == GameEngineInput::GetInst()->IsPress("2PRight")
-				&& false == GameEngineInput::GetInst()->IsPress("2PUp")
-				&& false == GameEngineInput::GetInst()->IsPress("2PDown")
-				)
+			if (CheckDir_ == PlayerDir::None)
 			{
 				return false;
 			}
@@ -1098,77 +1167,11 @@ void Player::PlayerStateUpdate()
 
 void Player::DirAnimationCheck()
 {
-
-	std::string ChangeName;
-
-	PlayerDir CheckDir_ = CurDir_;
-
-	if (CurState_ != PlayerState::Ready)
+	if (CheckDir_ != CurDir_)
 	{
-		if (Type == PlayerType::Player1)
-		{
-
-			if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
-			{
-
-				CheckDir_ = PlayerDir::Right;
-				ChangeDirText_ = "Right";
-			}
-
-			if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
-			{
-				CheckDir_ = PlayerDir::Left;
-				ChangeDirText_ = "Left";
-			}
-
-			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
-			{
-				CheckDir_ = PlayerDir::Up;
-				ChangeDirText_ = "Up";
-			}
-
-			if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
-			{
-				CheckDir_ = PlayerDir::Down;
-				ChangeDirText_ = "Down";
-			}
-
-		}
-		else if (Type == PlayerType::Player2)
-		{
-			if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
-			{
-				CheckDir_ = PlayerDir::Right;
-				ChangeDirText_ = "Right";
-			}
-
-			if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
-			{
-				CheckDir_ = PlayerDir::Left;
-				ChangeDirText_ = "Left";
-			}
-
-			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
-			{
-				CheckDir_ = PlayerDir::Up;
-				ChangeDirText_ = "Up";
-			}
-
-			if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
-			{
-				CheckDir_ = PlayerDir::Down;
-				ChangeDirText_ = "Down";
-			}
-		}
-
-
-		if (CheckDir_ != CurDir_)
-		{
-			PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
-			CurDir_ = CheckDir_;
-		}
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+		CurDir_ = CheckDir_;
 	}
-
 }
 
 // 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.

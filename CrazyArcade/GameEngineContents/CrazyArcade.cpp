@@ -446,8 +446,8 @@ void CrazyArcade::GameInit()
     CreateLevel<VillageLevel>("VillageLevel");
     CreateLevel<CemetoryLevel>("CemetoryLevel");
     //////몬스터 맵 레벨
-    CreateLevel<Monster1Level>("Monster1Level");
-    CreateLevel<Monster2Level>("Monster2Level");
+   /* CreateLevel<Monster1Level>("Monster1Level");
+    CreateLevel<Monster2Level>("Monster2Level");*/
     CreateLevel<BossLevel>("BossLevel");
     //////UI 레벨
     CreateLevel<RoomLevel>("RoomLevel");
@@ -459,7 +459,7 @@ void CrazyArcade::GameInit()
 
     CreateLevel<TileMapEditorLevel>("TileMapEditorLevel");
 
-    ChangeLevel("Monster2Level");
+    ChangeLevel("TitleLevel");
 
 }
 
