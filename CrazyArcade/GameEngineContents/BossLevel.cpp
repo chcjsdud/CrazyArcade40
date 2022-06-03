@@ -92,6 +92,8 @@ void BossLevel::Loading()
 
 		Seal->SetPlayer(NewPlayer);
 	}
+
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 
 void BossLevel::Update()
