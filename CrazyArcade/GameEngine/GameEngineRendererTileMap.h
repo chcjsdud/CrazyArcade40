@@ -116,14 +116,16 @@ public:
 		{
 			FindTile = new TileType();
 			FindTile->Renderer = Master_->CreateRenderer(_Image, _Order);
+			FindTile->Renderer->SetOrder(_Order);
 		}
 		else {
 			FindTile->Renderer->SetImage(_Image);
+			FindTile->Renderer->SetOrder(_Order);
 		}
 		FindTile->Renderer->SetPivot(GetWorldPostion(_X, _Y));
 
 		Tiles_[_Y][_X] = FindTile;
-
+		Master_->GetLevel()->YSortOn(4);
 		return reinterpret_cast<TileType*>(FindTile);
 	}
 
@@ -134,6 +136,7 @@ public:
 		TileType* Tile = CreateTile(_X, _Y, _Image);
 		Tile->Renderer->SetIndex(Index);
 		Tile->Renderer->SetPivot(GetWorldPostion(_X, _Y));
+		Tile->Renderer->SetOrder(_Order);
 		return reinterpret_cast<TileType*>(Tile);
 	}
 
