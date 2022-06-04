@@ -97,14 +97,14 @@ protected:
 
 private:
 	PlayerDir CheckDir_;
-	bool isBoomblock;
+	bool IsBoomblock;
 
 protected:
 	void SetSpeed(float _CurSpeed)
 	{
 		CurSpeed_ = _CurSpeed;
 	}
-
+	 
 	void SetAttPower(float _CurAttPower)
 	{
 		CurAttPower_ = _CurAttPower;
@@ -174,20 +174,14 @@ private:
 	void FrontBlockCheckUpdate();
 	void FrontBlockCheck();
 public:
-	MapGameObject* GetBoom()
-	{
-		return Boom_;
-	}
-
 	MapBackGround* GetMapBackGround()
 	{
 		return MapBackGround_;
 	}
 
 protected:
-
 	MapGameObject* Boom_;
-	MapGameObject* Wave_;
+
 	MapBackGround* MapBackGround_;
 
 public:

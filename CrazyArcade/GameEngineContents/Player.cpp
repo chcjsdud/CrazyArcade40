@@ -27,6 +27,7 @@ Player::Player()
 	, Type(PlayerType::Max)
 	, BazziRenderer_(nullptr)
 	, DaoRenderer_(nullptr)
+	, MaridRenderer_(nullptr)
 	, MapColImage_(nullptr)
 	, CurCharacter(Character::MAX)
 	, IsDebug(false)
@@ -39,7 +40,18 @@ Player::Player()
 	, IsUpMove(true)
 	, IsDownMove(true)
 	, CheckDir_(PlayerDir::None)
-	, isBoomblock(false)
+	, IsBoomblock(false)
+	, Time_(0.0f)
+	, CurBlockType1_(BlockType::NoBlock)
+	, CurBlockType2_(BlockType::NoBlock)
+	, LeftBlock(BlockType::Max)
+	, RightBlock(BlockType::Max)
+	, UpBlock(BlockType::Max)
+	, DownBlock(BlockType::Max)
+	, Boom_(nullptr)
+	, IsReady(true)
+	, AttMoveTime_(0.0f)
+	, MapTile_(nullptr)
 {
 
 }
@@ -382,11 +394,6 @@ void Player::StagePixelCheck(float _Speed)
 	{
 		IsMove = true;
 		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
-
-		/*	if (true == IsMove)
-			{
-				SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
-			}*/
 	}
 }
 
@@ -417,12 +424,12 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		}
 		case BlockType::BoomBlock:
 		{
-			isBoomblock = true;
+			IsBoomblock = true;
 			break;
 		}
 		default:
 		{
-			isBoomblock = false;
+			IsBoomblock = false;
 		}
 	}
 }
@@ -459,7 +466,7 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (isBoomblock == false) {
+		if (IsBoomblock == false) {
 			IsLeftMove = false;
 		}
 	}
@@ -481,7 +488,7 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (isBoomblock == false) {
+		if (IsBoomblock == false) {
 			IsRightMove = false;
 		}
 	}
@@ -503,7 +510,7 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (isBoomblock == false) {
+		if (IsBoomblock == false) {
 			IsUpMove = false;
 		}
 	}
@@ -526,7 +533,7 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (isBoomblock == false) {
+		if (IsBoomblock == false) {
 			IsDownMove = false;
 		}
 	}
@@ -946,17 +953,17 @@ void Player::Update()
 void Player::Render()
 {
 
-	std::string IndexX = "";
-	std::string IndexY = "";
+	//std::string IndexX = "";
+	//std::string IndexY = "";
 
 
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition() - float4{ 20,20 });
-	IndexX = "Index X : " + std::to_string(TileIndex_.X);
-	IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
+	//TileIndex TileIndex_ = MapTile_->GetTileIndex(GetPosition() - float4{ 20,20 });
+	//IndexX = "Index X : " + std::to_string(TileIndex_.X);
+	//IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
 
 
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
+	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
+	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 
 	/*std::string Posx = "";
 	std::string Posy = "";
