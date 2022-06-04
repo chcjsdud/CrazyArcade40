@@ -1,11 +1,13 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+#include <GameEngine/GameEngineRenderer.h>
 
 class MapGameObject;
 class GameItemObject;
 class MapBackGround;
 class Player;
 class MapFront;
+class Area;
 class CampLevel : public GameEngineLevel
 {
 private:
@@ -29,5 +31,8 @@ protected:
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
+private:
+	std::vector<Area> Areas_;
+	GameEngineImage* ColMapImage_;
 
 };

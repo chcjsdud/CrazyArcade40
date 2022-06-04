@@ -446,8 +446,8 @@ void CrazyArcade::GameInit()
     CreateLevel<VillageLevel>("VillageLevel");
     CreateLevel<CemetoryLevel>("CemetoryLevel");
     //////몬스터 맵 레벨
-   /* CreateLevel<Monster1Level>("Monster1Level");
-    CreateLevel<Monster2Level>("Monster2Level");*/
+    CreateLevel<Monster1Level>("Monster1Level");
+    CreateLevel<Monster2Level>("Monster2Level");
     CreateLevel<BossLevel>("BossLevel");
     //////UI 레벨
     CreateLevel<RoomLevel>("RoomLevel");
@@ -496,7 +496,7 @@ void CrazyArcade::GameLoop()
     }
     if (true == GameEngineInput::GetInst()->IsDown("MonsterLevel"))
     {
-        GameEngine::GetInst().ChangeLevel("Monster1Level");
+        GameEngine::GetInst().ChangeLevel("Monster2Level");         // MonsterL1Level -> Monster2Level로 잠시 수정
     }
 }
 

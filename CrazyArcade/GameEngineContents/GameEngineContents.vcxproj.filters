@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="CrazyArcade.h" />
-    <ClInclude Include="Player_Bazzi.h">
-      <Filter>Actor\Play</Filter>
-    </ClInclude>
     <ClInclude Include="MapBackGround.h">
       <Filter>Actor\Map</Filter>
     </ClInclude>
@@ -68,12 +65,6 @@
       <Filter>Actor\Map</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Actor\Play\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player_1P.h">
-      <Filter>Actor\Play\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player_2P.h">
       <Filter>Actor\Play\Player</Filter>
     </ClInclude>
     <ClInclude Include="LoginLevel.h">
@@ -228,12 +219,6 @@
     <ClCompile Include="Player_State.cpp">
       <Filter>Actor\Play\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Player_1P.cpp">
-      <Filter>Actor\Play\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_2P.cpp">
-      <Filter>Actor\Play\Player</Filter>
-    </ClCompile>
     <ClCompile Include="MapFront.cpp">
       <Filter>Actor\Map</Filter>
     </ClCompile>
@@ -279,9 +264,6 @@
     <ClCompile Include="CrazyArcade.cpp" />
     <ClCompile Include="GameItemObject.cpp">
       <Filter>Actor\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_Bazzi.cpp">
-      <Filter>Actor\Play\Player</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>Actor\Etc</Filter>

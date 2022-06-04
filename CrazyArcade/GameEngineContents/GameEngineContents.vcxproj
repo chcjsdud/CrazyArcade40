@@ -239,18 +239,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Player_1P.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Player_2P.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Player_Bazzi.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PlayResultUI.h" />
     <ClInclude Include="RoomBackGround.h">
       <SubType>
@@ -372,18 +360,6 @@
     </ClCompile>
     <ClCompile Include="PlayerFaceIconUI.cpp" />
     <ClCompile Include="PlayerTeamTest.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Player_1P.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Player_2P.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Player_Bazzi.cpp">
       <SubType>
       </SubType>
     </ClCompile>

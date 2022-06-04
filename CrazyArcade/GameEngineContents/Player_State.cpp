@@ -234,11 +234,11 @@ void Player::DamagedUpdate()
 	//	return;
 	//}
 
-	if (PlayerAnimationRender_->IsEndAnimation())
-	{
-		ChangeState(PlayerState::Fade);
-		return;
-	}
+	//if (PlayerAnimationRender_->IsEndAnimation())
+	//{
+	//	ChangeState(PlayerState::Fade);
+	//	return;
+	//}
 
 }
 

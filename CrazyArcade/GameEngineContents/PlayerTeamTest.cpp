@@ -41,14 +41,7 @@ PlayerTeamTest::~PlayerTeamTest()
 }
 void PlayerTeamTest::Loading()
 {
-	if (nullptr == Player::MainPlayer_1)
-	{
-		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	}
 	
-	Player::MainPlayer_1->Off();
-	Player::MainPlayer_2->Off();
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<Mouse>((int)UIType::Mouse);
@@ -75,6 +68,44 @@ void PlayerTeamTest::Loading()
 
 	//ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 
+	{
+		MapGameObject* BlockSet = CreateActor<MapGameObject>();
+		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+		GameEngineDirectory Dir;
+	
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+	
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
+	
+		LoadFile.Open(OpenMode::Read);
+	
+		int Size = 0;
+		LoadFile.Read(&Size, sizeof(int));
+	
+		for (size_t y = 0; y < Size; y++)
+		{
+			int XSize = 0;
+			LoadFile.Read(&XSize, sizeof(int));
+			for (size_t x = 0; x < XSize; x++)
+			{
+				std::string Name;
+				LoadFile.Read(Name);
+	
+				if (Name == "None")
+				{
+					continue;
+				}
+	
+				//                          5 7
+				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+			}
+		}
+	}
+
+	// =========================================== 다른 레벨에서 플레이어 생성 시 필요한 구문
+	// 플레이어 포지션 세팅 시, 단순 값이 아닌 타일 기준으로 세팅할 경우(Area사용) 레벨 내에서 ColMapImage_세팅이 필요합니다 
 	for (int x = 0; x < 15; ++x)
 	{
 		for (int y = 0; y < 13; ++y)
@@ -89,48 +120,38 @@ void PlayerTeamTest::Loading()
 		}
 	}
 
+
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1 = nullptr;
+	}
+
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2 = nullptr;
+	}
+
+	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
+	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
+	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
+	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+
+
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(Areas_[0].GetCenter());
 	//Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
-	
+
 	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	//Crocodile1->SetPosition(Areas_[6].GetCenter());
 	//Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-	//{
-	//	MapGameObject* BlockSet = CreateActor<MapGameObject>();
-	//	BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
-	//	GameEngineDirectory Dir;
-	//
-	//	Dir.MoveParent("CrazyArcade");
-	//	Dir.Move("Resources");
-	//	Dir.Move("Data");
-	//
-	//	GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
-	//
-	//	LoadFile.Open(OpenMode::Read);
-	//
-	//	int Size = 0;
-	//	LoadFile.Read(&Size, sizeof(int));
-	//
-	//	for (size_t y = 0; y < Size; y++)
-	//	{
-	//		int XSize = 0;
-	//		LoadFile.Read(&XSize, sizeof(int));
-	//		for (size_t x = 0; x < XSize; x++)
-	//		{
-	//			std::string Name;
-	//			LoadFile.Read(Name);
-	//
-	//			if (Name == "None")
-	//			{
-	//				continue;
-	//			}
-	//
-	//			//                          5 7
-	//			BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
-	//		}
-	//	}
-	//}
+
 }
 void PlayerTeamTest::Update()
 {
@@ -138,9 +159,6 @@ void PlayerTeamTest::Update()
 }
 void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-
-
-
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(float4(100.0f, 100.0f));
 
@@ -152,19 +170,8 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	//if (nullptr == Player::MainPlayer_1)
 
 
-	Player::MainPlayer_1->On();
-	Player::MainPlayer_1->SetCharacter(Character::DAO);
-	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
-	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-	
-	Player::MainPlayer_2->On();
-	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER);
-	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
-	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
-	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
+	
 	//윈도우 마우스 숨김
 	ShowCursor(false);
 }
@@ -173,4 +180,5 @@ void PlayerTeamTest::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
 	//윈도우 마우스 보이기
 	ShowCursor(true);
+
 }

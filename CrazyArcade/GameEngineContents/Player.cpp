@@ -397,7 +397,7 @@ void Player::StagePixelCheck(float _Speed)
 	}
 }
 
-
+// 플레이어의 현재 타일 체크 
 void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 {
 	switch (_CurBlockType)
@@ -415,8 +415,9 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		break;
 		case BlockType::BushBlock:
 		{
-
+			PlayerAnimationRender_->SetAlpha(0);
 		}
+		break;
 		case BlockType::ItemBlock:
 		{
 			break;
@@ -430,7 +431,9 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		default:
 		{
 			IsBoomblock = false;
+			PlayerAnimationRender_->SetAlpha(255);
 		}
+		break;
 	}
 }
 
