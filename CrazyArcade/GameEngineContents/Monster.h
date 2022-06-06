@@ -70,8 +70,8 @@ protected:
 	float Speed_;
 	float GetAttTime_;
 	int PrevIndex_;
-	const float MapSizeX_;
-	const float MapSizeY_;
+	float MapSizeX_;
+	float MapSizeY_;
 	bool IndexCheck_;
 
 	GameEngineCollision* TopCol_;
@@ -83,6 +83,16 @@ protected:
 	std::map<int, Area> MovableAreas;
 
 public:
+	void SetMapSizeY(float _MapSizeY)
+	{
+		MapSizeY_ = _MapSizeY;
+	}
+
+	void SetMapSizeX(float _MapSizeX)
+	{
+		MapSizeX_ = _MapSizeX;
+	}
+
 	float4 GetPositionRelativeToTile()
 	{
 		return GetPosition() + float4(-20.0f, -40.0f);

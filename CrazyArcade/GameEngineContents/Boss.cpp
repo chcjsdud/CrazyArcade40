@@ -14,9 +14,7 @@
 Boss::Boss()
 	: Monster()
 	, PlayerIndex_(4)
-	, RollTime_(0.0f)
 	, WaterTime_(0.0f)
-	, AttTime_(0.0f)
 	, AreaChangeCount_(0)
 {
 }
@@ -30,18 +28,20 @@ void Boss::Start()
 	// 이미지
 	Renderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
-	Image->CutCount(10, 7);
-	Renderer_->CreateAnimation("Monster.bmp", "Idle", 24, 25, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 26, 27, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 40, 41, 0.2f, true);
+	Image->CutCount(10, 8);
+	Renderer_->CreateAnimation("Monster.bmp", "Idle", 37, 38, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 39, 40, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 41, 42, 0.2f, true);
 	// Need to chk : MoveUp 이미지
-	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 0, 1, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 24, 25, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "Die1", 35, 36, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "Die2", 37, 38, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 28, 28, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "WaterAttack", 29, 30, 0.2f, true); // 물주기
-	Renderer_->CreateAnimation("Monster.bmp", "RollAttack", 31, 34, 0.2f, true); // 구르기
+	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 43, 44, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 37, 38, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Die", 64, 73, 0.3f, true); // Need to chk : 속도
+	Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 50, 51, 0.2f, true); // 아래
+	//Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 52, 53, 0.2f, true); // 오른쪽
+	//Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 54, 55, 0.2f, true); // 왼쪽
+	Renderer_->CreateAnimation("Monster.bmp", "WaterAttack", 61, 63, 0.2f, false); // 물주기
+	Renderer_->CreateAnimation("Monster.bmp", "RollAttackRight", 45, 49, 0.2f, true); // 구르기
+	Renderer_->CreateAnimation("Monster.bmp", "RollAttackLeft", 56, 60, 0.2f, true); // 구르기
 	Renderer_->ChangeAnimation("MoveRight");
 	Dir_ = float4::RIGHT;
 	Direction_ = "Right";
@@ -65,6 +65,8 @@ void Boss::Start()
 	SetSpeed(50); // Need to chk : Speed
 
 	// Index 설정
+	SetMapSizeX(440);
+	SetMapSizeY(360);
 	AreaHeight_ = 9;
 	AreaWidth_ = 11;
 
@@ -93,10 +95,7 @@ void Boss::Render()
 
 void Boss::Update()
 {
-	AttTime_ += GameEngineTime::GetDeltaTime();
-	WaterTime_ += GameEngineTime::GetDeltaTime();
-	RollTime_ += GameEngineTime::GetDeltaTime();
-	StayIdleTime_ += GameEngineTime::GetDeltaTime();
+	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	UpdateDirection();
 	UpdateAttack();
 	UpdateMove();
@@ -113,12 +112,15 @@ void Boss::UpdateMove()
 		if (Renderer_->IsAnimationName("WaterAttack") &&
 			Renderer_->IsEndAnimation())
 		{
-			EndAttack_ = true;
+			if (WaterTime_ > 2.0f)
+			{
+				EndAttack_ = true;
+			}
 		}
 	}
 	else if (RandomAction_ == 4)
 	{
-		if (Renderer_->IsAnimationName("RollAttack")/*("RollAttackRight")*/)
+		if (Renderer_->IsAnimationName("RollAttackRight"))
 		{
 			if (Index_ < (AreaWidth_ - 1) * AreaHeight_)
 			{
@@ -130,7 +132,7 @@ void Boss::UpdateMove()
 				Dir_ = float4::ZERO;
 			}
 		}
-		else if (Renderer_->IsAnimationName("RollAttack")/*("RollAttackLeft")*/)
+		else if (Renderer_->IsAnimationName("RollAttackLeft"))
 		{
 			if (Index_ > AreaHeight_)
 			{
@@ -515,63 +517,69 @@ void Boss::UpdateDirection()
 
 void Boss::UpdateAttack()
 {
-}
-
-bool Boss::SameYLine() // 세로줄
-{
-	if (PlayerIndex_ < 3 && Index_ < 3)
+	if (WaterTime_ > 3)
 	{
-		return true;
-	}
-
-	else if (PlayerIndex_ >= 3 && Index_ >= 3 &&
-		PlayerIndex_ < 6 && Index_ < 6)
-	{
-		return true;
-	}
-
-	else if (PlayerIndex_ >= 6 && Index_ >= 6 &&
-		PlayerIndex_ < 9 && Index_ < 9)
-	{
-		return true;
-	}
-
-	else
-	{
-		return false;
+		WaterTime_ = 0.0f;
 	}
 }
+
 
 void Boss::RollAttack()
 {
 	EndAttack_ = false;
-	if (Index_ < AreaHeight_)
+	if (Index_ < AreaHeight_) 
 	{
-		Renderer_->ChangeAnimation("RollAttack")/*("RollAttackRight")*/;
+		Renderer_->ChangeAnimation("RollAttackRight");
 
 	} 
 	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_)
 	{
-		Renderer_->ChangeAnimation("RollAttack")/*("RollAttackLeft")*/;
+		Renderer_->ChangeAnimation("RollAttackLeft");
 	}
 
 }
 
 void Boss::WaterAttack()
 {
+	UpdateAttack();
 	EndAttack_ = false;
 	Renderer_->ChangeAnimation("WaterAttack");
 	Dir_ = float4::ZERO;
 }
 
+//
+//bool Boss::SameXLine() // 가로줄
+//{
+//	int Offset = PlayerIndex_ - Index_;
+//	if (Offset < 0)
+//	{
+//		Offset = Offset * -1;
+//	}
+//
+//	return Offset % 3 == 0;
+//}
 
-bool Boss::SameXLine() // 가로줄
-{
-	int Offset = PlayerIndex_ - Index_;
-	if (Offset < 0)
-	{
-		Offset = Offset * -1;
-	}
-
-	return Offset % 3 == 0;
-}
+//bool Boss::SameYLine() // 세로줄
+//{
+//	if (PlayerIndex_ < 3 && Index_ < 3)
+//	{
+//		return true;
+//	}
+//
+//	else if (PlayerIndex_ >= 3 && Index_ >= 3 &&
+//		PlayerIndex_ < 6 && Index_ < 6)
+//	{
+//		return true;
+//	}
+//
+//	else if (PlayerIndex_ >= 6 && Index_ >= 6 &&
+//		PlayerIndex_ < 9 && Index_ < 9)
+//	{
+//		return true;
+//	}
+//
+//	else
+//	{
+//		return false;
+//	}
+//}

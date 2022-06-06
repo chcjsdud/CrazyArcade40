@@ -23,22 +23,22 @@ void Monster2::Start()
 	//¾Ç¾î
 	Renderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
-	Image->CutCount(10, 7);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 16, 17, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 22, 23, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 12, 13, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 14, 15, 0.2f, true);
+	Image->CutCount(10, 8);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 19, 20, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 21, 22, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 15, 16, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 17, 18, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Start", 33, 36, 0.2, true);
 	Renderer_->ChangeAnimation("MoveLeft");
-	
 	// ¹Ì´Ï ¾Ç¾î
 	MiniRenderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* MiniImage = MiniRenderer_->GetImage();
-	MiniImage->CutCount(10, 7);
-	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveRight", 16, 17, 0.2f, true);
-	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveLeft", 22, 23, 0.2f, true);
-	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveUp", 12, 13, 0.2f, true);
-	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveDown", 14, 15, 0.2f, true);
-	MiniRenderer_->CreateAnimation("Monster.bmp", "Die", 18, 20, 0.2f, true);
+	MiniImage->CutCount(10, 8);
+	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveRight", 25, 26, 0.2f, true);
+	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveLeft", 29, 30, 0.2f, true);
+	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveUp", 23, 24, 0.2f, true);
+	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveDown", 27, 28, 0.2f, true);
+	MiniRenderer_->CreateAnimation("Monster.bmp", "Die", 31, 33, 0.2f, true);
 	MiniRenderer_->ChangeAnimation("MoveLeft");
 
 	//Renderer_ = CreateRenderer("Monster.bmp");

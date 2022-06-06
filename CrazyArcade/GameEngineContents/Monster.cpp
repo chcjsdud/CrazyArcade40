@@ -33,8 +33,8 @@ Monster::Monster()
 	, GetAttTime_(0.0f)
 	, AreaWidth_(15)
 	, AreaHeight_(13)
-	, MapSizeX_(440)
-	, MapSizeY_(360)
+	, MapSizeX_(600)
+	, MapSizeY_(520)
 	, Index_(0)
 	, EastArea(ColMapImage_, 0, 0, 0, 0)
 	, WestArea(ColMapImage_, 0, 0, 0, 0)
@@ -203,20 +203,20 @@ void Monster::UpdateDirection()
 
 		if (Dir_.x == 1) // 오른쪽으로 갈때
 		{
-			//if (East != MovableAreas.end())
-			//{
-			//	Dir_ = float4::RIGHT;
-			//	Direction_ = "Right";
-			//}
-
-			//else
+			if (East != MovableAreas.end())
 			{
-				if (MovableAreas.size() == 0)
-				{
-					Dir_ = float4::ZERO;
-					//Direction_ = "Zero";
-				}
-				else
+				Dir_ = float4::RIGHT;
+				Direction_ = "Right";
+			}
+
+			else
+			{
+				//if (MovableAreas.size() == 0)
+				//{
+				//	Dir_ = float4::ZERO;
+				//	//Direction_ = "Zero";
+				//}
+				//else
 				{
 					int RandomDir = (rand() % 4);
 					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
@@ -317,20 +317,20 @@ void Monster::UpdateDirection()
 
 		else if (Dir_.y == -1)
 		{
-			//if (North != MovableAreas.end())
-			//{
-			//	Dir_ = float4::UP;
-			//	Direction_ = "Up";
-			//}
-
-			//else
+			if (North != MovableAreas.end())
 			{
-				if (MovableAreas.size() == 0)
-				{
-					Dir_ = float4::ZERO;
-					//Direction_ = "Zero";
-				}
-				else
+				Dir_ = float4::UP;
+				Direction_ = "Up";
+			}
+
+			else
+			{
+				//if (MovableAreas.size() == 0)
+				//{
+				//	Dir_ = float4::ZERO;
+				//	//Direction_ = "Zero";
+				//}
+				//else
 				{
 					int RandomDir = (rand() % 4);
 					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
@@ -374,20 +374,20 @@ void Monster::UpdateDirection()
 
 		else if (Dir_.y == 1)
 		{
-			//if (South != MovableAreas.end())
-			//{
-			//	Dir_ = float4::DOWN;
-			//	Direction_ = "Down";
-			//}
-
-			//else
+			if (South != MovableAreas.end())
 			{
-				if (MovableAreas.size() == 0)
-				{
-					Dir_ = float4::ZERO;
-					//Direction_ = "Zero";
-				}
-				else
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
+			}
+
+			else
+			{
+				//if (MovableAreas.size() == 0)
+				//{
+				//	Dir_ = float4::ZERO;
+				//	//Direction_ = "Zero";
+				//}
+				//else
 				{
 					int RandomDir = (rand() % 4);
 					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
