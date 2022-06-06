@@ -96,12 +96,13 @@ void Monster::Start()
 
 void Monster::Update()
 {
-	GetAttTime_ += GameEngineTime::GetDeltaTime();
-	UpdateDirection();
-	UpdateMove();
-	Die();
-
-
+	if (false == Renderer_->IsAnimationName("Start"))
+	{
+		GetAttTime_ += GameEngineTime::GetDeltaTime();
+		UpdateDirection();
+		UpdateMove();
+		Die();
+	}
 }
 
 void Monster::UpdateDirection()
