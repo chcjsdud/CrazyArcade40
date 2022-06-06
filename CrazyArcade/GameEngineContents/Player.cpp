@@ -404,13 +404,25 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	{
 		case BlockType::WaveBlock:
 		{
-			ChangeState(PlayerState::Damaged);
-			return;
+			if (CurState_ != PlayerState::Die
+				&& CurState_ != PlayerState::Damaged
+				&& CurState_ != PlayerState::Fade)
+			{
+				ChangeState(PlayerState::Damaged);
+				return;
+			}
+	
 		}
+		break;
 		case BlockType::BubbleBlock:
 		{
-			ChangeState(PlayerState::Damaged);
-			return;
+			if (CurState_ != PlayerState::Die
+				&& CurState_ != PlayerState::Damaged
+				&& CurState_ != PlayerState::Fade)
+			{
+				ChangeState(PlayerState::Damaged);
+				return;
+			}
 		}
 		break;
 		case BlockType::BushBlock:
@@ -428,6 +440,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			IsBoomblock = true;
 			break;
 		}
+		break;
 		default:
 		{
 			IsBoomblock = false;
@@ -479,6 +492,11 @@ void Player::FrontBlockCheckUpdate()
 		IsLeftMove = false;
 	}
 	break;
+	case BlockType::PullBlock:
+	{
+		IsLeftMove = false;
+	}
+	break;
 	default:
 	{
 		IsLeftMove = true;
@@ -497,6 +515,11 @@ void Player::FrontBlockCheckUpdate()
 	}
 	break;
 	case BlockType::FixBlock:
+	{
+		IsRightMove = false;
+	}
+	break;
+	case BlockType::PullBlock:
 	{
 		IsRightMove = false;
 	}
@@ -523,6 +546,11 @@ void Player::FrontBlockCheckUpdate()
 		IsUpMove = false;
 	}
 	break;
+	case BlockType::PullBlock:
+	{
+		IsUpMove = false;
+	}
+	break;
 	default:
 	{
 		IsUpMove = true;
@@ -542,6 +570,11 @@ void Player::FrontBlockCheckUpdate()
 	}
 	break;
 	case BlockType::FixBlock:
+	{
+		IsDownMove = false;
+	}
+	break;
+	case BlockType::PullBlock:
 	{
 		IsDownMove = false;
 	}
@@ -579,42 +612,7 @@ void Player::FrontBlockCheck()
 	
 
 		FrontBlockCheckUpdate();
-	/*
-		if (LeftBlock == BlockType::BoomBlock)
-		{
-			IsLeftMove = false;
-		}
-		else
-		{
-			IsLeftMove = true;
-		}
 
-		if (RightBlock == BlockType::BoomBlock)
-		{
-			IsRightMove = false;
-		}
-		else
-		{
-			IsRightMove = true;
-		}
-
-		if (UpBlock == BlockType::BoomBlock)
-		{
-			IsUpMove = false;
-		}
-		else
-		{
-			IsUpMove = true;
-		}
-
-		if (DownBlock == BlockType::BoomBlock)
-		{
-			IsDownMove = false;
-		}
-		else
-		{
-			IsDownMove = true;
-		}*/
 	}
 
 	if (nullptr != MainPlayer_2)

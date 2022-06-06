@@ -104,44 +104,6 @@ void PlayerTeamTest::Loading()
 		}
 	}
 
-	// =========================================== 다른 레벨에서 플레이어 생성 시 필요한 구문
-	// 플레이어 포지션 세팅 시, 단순 값이 아닌 타일 기준으로 세팅할 경우(Area사용) 레벨 내에서 ColMapImage_세팅이 필요합니다 
-	for (int x = 0; x < 15; ++x)
-	{
-		for (int y = 0; y < 13; ++y)
-		{
-			float StartX = static_cast<float>((600 / 15 * x) + 20);
-			float StartY = static_cast<float>((520 / 13 * y) + 40);
-			float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
-			float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
-
-			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
-			Areas_.push_back(area);
-		}
-	}
-
-
-	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
-	{
-		Player::MainPlayer_1 = nullptr;
-	}
-
-	if (nullptr != Player::MainPlayer_2)
-	{
-		Player::MainPlayer_2 = nullptr;
-	}
-
-	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
-	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
-	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
-	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[130].GetCenter());
-	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
@@ -167,9 +129,47 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 	////Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
 	////Seal->SetPosition(float4(200.0f, 200.0f));
-	//if (nullptr == Player::MainPlayer_1)
+
+	// =========================================== 다른 레벨에서 플레이어 생성 시 필요한 구문
+	// 플레이어 포지션 세팅 시, 단순 값이 아닌 타일 기준으로 세팅할 경우(Area사용) 레벨 내에서 ColMapImage_세팅이 필요합니다 
+	for (int x = 0; x < 15; ++x)
+	{
+		for (int y = 0; y < 13; ++y)
+		{
+			float StartX = static_cast<float>((600 / 15 * x) + 20);
+			float StartY = static_cast<float>((520 / 13 * y) + 40);
+			float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
+			float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
+
+			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
+			Areas_.push_back(area);
+		}
+	}
 
 
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1 = nullptr;
+
+		Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+		Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+		Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+		Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
+		Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+	}
+
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2 = nullptr;
+	}
+
+
+	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
+	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	Player::MainPlayer_2->SetPosition(Areas_[170].GetCenter());
+	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	
 	//윈도우 마우스 숨김

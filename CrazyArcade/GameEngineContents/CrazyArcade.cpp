@@ -496,7 +496,7 @@ void CrazyArcade::GameLoop()
     }
     if (true == GameEngineInput::GetInst()->IsDown("MonsterLevel"))
     {
-        GameEngine::GetInst().ChangeLevel("Monster2Level");         // MonsterL1Level -> Monster2Level로 잠시 수정
+        GameEngine::GetInst().ChangeLevel("Monster1Level");         // MonsterL1Level -> Monster2Level로 잠시 수정
     }
 }
 
