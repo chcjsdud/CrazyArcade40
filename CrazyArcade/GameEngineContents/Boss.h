@@ -52,6 +52,9 @@ private:
     float WaterTime_;
     float4 PlayerPos_;
     int CheckIndex_;
+    int AreaChangeCount_;
+    int RandomAction_;
+    bool EndAttack_;
 
 private:
     void UpdateAttack();

@@ -82,7 +82,6 @@ protected:
 	std::vector<std::vector<Tile*>> Tiles_;
 	std::map<int, Area> MovableAreas;
 
-
 public:
 	float4 GetPositionRelativeToTile()
 	{

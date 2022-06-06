@@ -68,29 +68,15 @@ void BossLevel::Loading()
 		////// ¸ó½ºÅÍ //////
 		ColMapImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 
-		for (int x = 0; x < 3; ++x)
-		{
-			for (int y = 0; y < 3; ++y)
-			{
-				float StartX = float(600.0 / 3.0 * x) + float(20.0);
-				float StartY = float(520.0/ 3.0 * y) + float(40.0);
-				float EndX = float(600.0 / 3.0 * (x + 1)) + float(20.0);
-				float EndY = float(520.0 / 3.0 * (y + 1)) + float(40.0);
+		Boss* Seal = CreateActor<Boss>((int)ORDER::PLAYER);
+		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
 
-				Area area(ColMapImage_, StartX, StartY, EndX, EndY);
-				Areas_.push_back(area);
-			}
-		}
+		//Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+		//NewPlayer->SetCharacter(Character::BAZZI);
+		//NewPlayer->SetPlayerType(PlayerType::Player1);
+		//NewPlayer->SetPosition({ 500.f, 300.f });
 
-		Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
-		Seal->SetPosition(Areas_[3].GetCenter());
-
-		Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-		NewPlayer->SetCharacter(Character::BAZZI);
-		NewPlayer->SetPlayerType(PlayerType::Player1);
-		NewPlayer->SetPosition({ 500.f, 300.f });
-
-		Seal->SetPlayer(NewPlayer);
+		//Seal->SetPlayer(NewPlayer);
 	}
 
 	YSortOn(static_cast<int>(ORDER::PLAYER));

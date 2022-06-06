@@ -9,6 +9,10 @@
 #include <GameEngineContents/MapGameObject.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include "GameEngine/GameEngine.h"
+#include <random>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 int Monster::TTL_MONSTER_COUNT = 0;
@@ -29,8 +33,8 @@ Monster::Monster()
 	, GetAttTime_(0.0f)
 	, AreaWidth_(15)
 	, AreaHeight_(13)
-	, MapSizeX_(600)
-	, MapSizeY_(520)
+	, MapSizeX_(440)
+	, MapSizeY_(360)
 	, Index_(0)
 	, EastArea(ColMapImage_, 0, 0, 0, 0)
 	, WestArea(ColMapImage_, 0, 0, 0, 0)
@@ -85,6 +89,9 @@ void Monster::Start()
 			Areas_.push_back(area);
 		}
 	}
+
+	srand(time(NULL));
+
 }
 
 void Monster::Update()
@@ -93,6 +100,8 @@ void Monster::Update()
 	UpdateDirection();
 	UpdateMove();
 	Die();
+
+
 }
 
 void Monster::UpdateDirection()
@@ -190,139 +199,232 @@ void Monster::UpdateDirection()
 		std::map<int, Area>::const_iterator West = MovableAreas.find(1);
 		std::map<int, Area>::const_iterator South = MovableAreas.find(2);
 		std::map<int, Area>::const_iterator North = MovableAreas.find(3);
+		Area PrevArea = Areas_[PrevIndex_];
 
 		if (Dir_.x == 1) // 오른쪽으로 갈때
 		{
-			if (North != MovableAreas.end())
-			{
-				Dir_ = float4::UP;
-				Direction_ = "Up";
-			}
+			//if (East != MovableAreas.end())
+			//{
+			//	Dir_ = float4::RIGHT;
+			//	Direction_ = "Right";
+			//}
 
-			else if (East != MovableAreas.end())
+			//else
 			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
-			}
+				if (MovableAreas.size() == 0)
+				{
+					Dir_ = float4::ZERO;
+					//Direction_ = "Zero";
+				}
+				else
+				{
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+					if (MovableAreas.size() > 1)
+					{
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 0*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
+					}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
 
-			else if (South != MovableAreas.end())
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
-			}
+					if (FoundArea == West)
+					{
+						Dir_ = float4::LEFT;
+						Direction_ = "Left";
+					}
 
-			else if (West != MovableAreas.end())
-			{
-				Dir_ = float4::LEFT;
-				Direction_ = "Left";
-			}
+					else if (FoundArea == South)
+					{
+						Dir_ = float4::DOWN;
+						Direction_ = "Down";
+					}
 
-			else
-			{
-				Dir_ = float4::ZERO;
-				//Direction_ = "Zero"; // 애니메이션 만들때 Zero 만들기
+					else if (FoundArea == North)
+					{
+						Dir_ = float4::UP;
+						Direction_ = "Up";
+					}
+				}
 			}
 		}
 
 		else if (Dir_.x == -1)
 
 		{
-			if (South != MovableAreas.end())
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
-			}
+			//if (West != MovableAreas.end())
+			//{
+			//	Dir_ = float4::LEFT;
+			//	Direction_ = "Left";
+			//}
 
-			else if (West != MovableAreas.end())
+			//else
 			{
-				Dir_ = float4::LEFT;
-				Direction_ = "Left";
-			}
+				if (MovableAreas.size() == 0)
+				{
+					Dir_ = float4::ZERO;
+					//Direction_ = "Zero";
+				}
+				else
+				{
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
 
-			else if (North != MovableAreas.end())
-			{
-				Dir_ = float4::UP;
-				Direction_ = "Up";
-			}
+					if (MovableAreas.size() > 1)
+					{
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 1*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
+					}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
 
-			else if (East != MovableAreas.end())
-			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
-			}
+					if (FoundArea == East)
+					{
+						Dir_ = float4::RIGHT;
+						Direction_ = "Right";
+					}
 
-			else
-			{
-				Dir_ = float4::ZERO;
-				//Direction_ = "Zero"; // 애니메이션 만들때 Zero 만들기
+					else if (FoundArea == South)
+					{
+						Dir_ = float4::DOWN;
+						Direction_ = "Down";
+					}
+
+					else if (FoundArea == North)
+					{
+						Dir_ = float4::UP;
+						Direction_ = "Up";
+					}
+				}
 			}
 		}
 
 		else if (Dir_.y == -1)
 		{
+			//if (North != MovableAreas.end())
+			//{
+			//	Dir_ = float4::UP;
+			//	Direction_ = "Up";
+			//}
 
-			if (West != MovableAreas.end())
+			//else
 			{
-				Dir_ = float4::LEFT;
-				Direction_ = "Left";
-			}
+				if (MovableAreas.size() == 0)
+				{
+					Dir_ = float4::ZERO;
+					//Direction_ = "Zero";
+				}
+				else
+				{
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+					if (MovableAreas.size() > 1)
+					{
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 3*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
+					}
 
-			else if (North != MovableAreas.end())
-			{
-				Dir_ = float4::UP;
-				Direction_ = "Up";
-			}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
 
-			else if (East != MovableAreas.end())
-			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
-			}
+					if (FoundArea == East)
+					{
+						Dir_ = float4::RIGHT;
+						Direction_ = "Right";
+					}
 
-			else if (South != MovableAreas.end())
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
-			}
+					else if (FoundArea == South)
+					{
+						Dir_ = float4::DOWN;
+						Direction_ = "Down";
+					}
 
-			else
-			{
-				Dir_ = float4::ZERO;
-				//Direction_ = "Zero"; // 애니메이션 만들때 Zero 만들기
+					else if (FoundArea == West)
+					{
+						Dir_ = float4::LEFT;
+						Direction_ = "Left";
+					}
+				}
 			}
 		}
 
 		else if (Dir_.y == 1)
 		{
+			//if (South != MovableAreas.end())
+			//{
+			//	Dir_ = float4::DOWN;
+			//	Direction_ = "Down";
+			//}
 
-			if (East != MovableAreas.end())
+			//else
 			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
-			}
+				if (MovableAreas.size() == 0)
+				{
+					Dir_ = float4::ZERO;
+					//Direction_ = "Zero";
+				}
+				else
+				{
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+					if (MovableAreas.size() > 1)
+					{
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 2*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
+					}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
 
-			else if (South != MovableAreas.end())
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
-			}
+					if (FoundArea == East)
+					{
+						Dir_ = float4::RIGHT;
+						Direction_ = "Right";
+					}
 
-			else if (West != MovableAreas.end())
-			{
-				Dir_ = float4::LEFT;
-				Direction_ = "Left";
-			}
+					else if (FoundArea == North)
+					{
+						Dir_ = float4::UP;
+						Direction_ = "Up";
+					}
 
-			else if (North != MovableAreas.end())
-			{
-				Dir_ = float4::UP;
-				Direction_ = "Up";
-			}
-
-			else
-			{
-				Dir_ = float4::ZERO;
-				//Direction_ = "Zero"; // 애니메이션 만들때 Zero 만들기
+					else if (FoundArea == West)
+					{
+						Dir_ = float4::LEFT;
+						Direction_ = "Left";
+					}
+				}
 			}
 		}
 	}
@@ -332,7 +434,6 @@ void Monster::UpdateMove()
 {
 	if (true != IsDie())
 	{
-
 		Renderer_->ChangeAnimation("Move" + Direction_);
 		SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 	}

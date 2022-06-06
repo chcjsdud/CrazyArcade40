@@ -6,6 +6,10 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <random>
 
 Boss::Boss()
 	: Monster()
@@ -13,6 +17,7 @@ Boss::Boss()
 	, RollTime_(0.0f)
 	, WaterTime_(0.0f)
 	, AttTime_(0.0f)
+	, AreaChangeCount_(0)
 {
 }
 
@@ -60,24 +65,26 @@ void Boss::Start()
 	SetSpeed(50); // Need to chk : Speed
 
 	// Index 설정
-	AreaHeight_ = 3;
-	AreaWidth_ = 3;
+	AreaHeight_ = 9;
+	AreaWidth_ = 11;
 
 	for (int x = 0; x < AreaWidth_; ++x)
 	{
 		for (int y = 0; y < AreaHeight_; ++y)
 		{
-			float StartX = static_cast<float>((MapSizeX_ / AreaWidth_ * x) + 20);
-			float StartY = static_cast<float>((MapSizeY_ / AreaHeight_ * y) + 40);
-			float EndX = static_cast<float>((MapSizeX_ / AreaWidth_ * (x + 1)) + 20);
-			float EndY = static_cast<float>((MapSizeY_ / AreaHeight_ * (y + 1)) + 40);
+			float StartX = static_cast<float>((MapSizeX_ / AreaWidth_ * x) + 100);
+			float StartY = static_cast<float>((MapSizeY_ / AreaHeight_ * y) + 120);
+			float EndX = static_cast<float>((MapSizeX_ / AreaWidth_ * (x + 1)) + 100);
+			float EndY = static_cast<float>((MapSizeY_ / AreaHeight_ * (y + 1)) + 120);
 
 			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
 			Areas_.push_back(area);
 		}
 	}
 
-	Index_ = 3; // 시작 Index를
+	Index_ = 49; // 시작 Index를
+	SetPosition(Areas_[49].GetCenter());
+	srand(time(NULL));
 }
 
 void Boss::Render()
@@ -97,131 +104,417 @@ void Boss::Update()
 
 void Boss::UpdateMove()
 {
-	SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
+	if (RandomAction_ < 3)
+	{
+		Monster::UpdateMove();
+	}
+	else if (RandomAction_ == 3)
+	{
+		if (Renderer_->IsAnimationName("WaterAttack") &&
+			Renderer_->IsEndAnimation())
+		{
+			EndAttack_ = true;
+		}
+	}
+	else if (RandomAction_ == 4)
+	{
+		if (Renderer_->IsAnimationName("RollAttack")/*("RollAttackRight")*/)
+		{
+			if (Index_ < (AreaWidth_ - 1) * AreaHeight_)
+			{
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * Speed_);
+			}
+			else
+			{
+				EndAttack_ = true;
+				Dir_ = float4::ZERO;
+			}
+		}
+		else if (Renderer_->IsAnimationName("RollAttack")/*("RollAttackLeft")*/)
+		{
+			if (Index_ > AreaHeight_)
+			{
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * Speed_);
+			}
+			else
+			{
+				EndAttack_ = true;
+				Dir_ = float4::ZERO;
+			}
+		}
+	}
 }
 
 void Boss::UpdateDirection()
 {
-	Monster::UpdateDirection();
+	PrevIndex_ = Index_; // 이전 인덱스 저장
+	bool IsAreaChanged = false;
+
+	if (false == Renderer_->IsAnimationName("WaterAttack") &&
+		false == Renderer_->IsAnimationName("RollAttack"))
+	{
+		for (int i = 0; i < Areas_.size(); ++i)
+		{
+			Area& NewArea = Areas_[i];
+			if (true == NewArea.InCenter(GetPosition()))
+			{
+				if (PrevIndex_ != i)
+				{
+					Index_ = i;
+					AreaChangeCount_++;
+					if (AreaChangeCount_ == 3 ||
+						Index_ < AreaHeight_ ||
+						Index_ % AreaHeight_ == 0 ||
+						Index_ % AreaHeight_ == AreaHeight_ - 1 ||
+						Index_ >= (AreaWidth_ - 1) * AreaHeight_)
+					{
+						if (Index_ < AreaHeight_ ||
+							Index_ >= (AreaWidth_ - 1) * AreaHeight_)
+						{
+							RandomAction_ = 4;
+							IsAreaChanged = true;
+							AreaChangeCount_ = 0;
+						}
+						else
+						{
+							RandomAction_ = (rand() % 4);
+							IsAreaChanged = true;
+							AreaChangeCount_ = 0;
+						}
+					}
+					SetPosition(NewArea.GetCenter());
+				}
+			}
+			NewArea.SetMapTile(MapTile_);
+		}
+	}
+	CheckWaveTile(GetPosition());
+
+	if (Dir_.x == 0 && Dir_.y == 0)
+	{
+		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
+			(Renderer_->IsAnimationName("RollAttack") && EndAttack_ == true))
+		{
+			RandomAction_ = 0;
+			IsAreaChanged = true;
+
+		}
+	}
+
+	if (true == IsAreaChanged && RandomAction_ < 3)
+	{
+		MovableAreas.clear();
+		int EastIndex = Index_ + AreaHeight_;
+		int WestIndex = Index_ - AreaHeight_;
+		int NorthIndex = Index_ - 1;
+		int SouthIndex = Index_ + 1;
+
+		if (EastIndex >= 0 &&
+			EastIndex < Areas_.size() &&
+			Index_ < Areas_.size() - AreaHeight_)
+		{
+			// 동쪽이 벽이 아니고, 물풍선이 아니면
+			EastArea = Areas_[EastIndex];
+			if (false == EastArea.HasWall())
+			{
+				Area& EastArea = Areas_[EastIndex];
+				MovableAreas.insert(std::make_pair(0, EastArea));
+			}
+		}
+
+		if (WestIndex >= 0 &&
+			WestIndex < Areas_.size() &&
+			Index_ >= AreaHeight_)
+		{
+			// 서쪽이 벽이 아니고, Wave 타일이 아니면
+			WestArea = Areas_[WestIndex];
+			if (false == WestArea.HasWall())
+			{
+				Area& WestArea = Areas_[WestIndex];
+				MovableAreas.insert(std::make_pair(1, WestArea));
+
+			}
+		}
+
+		if (SouthIndex >= 0 &&
+			SouthIndex < Areas_.size() &&
+			Index_ % AreaHeight_ != AreaHeight_ - 1)
+		{
+			// 남쪽이 벽이 아니고, Wave 타일이 아니면
+			Area& SouthArea = Areas_[SouthIndex];
+			if (false == SouthArea.HasWall())
+			{
+				Area& SouthArea = Areas_[SouthIndex];
+				MovableAreas.insert(std::make_pair(2, SouthArea));
+			}
+		}
+
+		if (NorthIndex >= 0 &&
+			NorthIndex < Areas_.size() && // 맵 크기 안에 들어와야하고,
+			Index_ % AreaHeight_ != 0) // 맵의 제일 위쪽이 아닐 때
+		{
+			Area& NorthArea = Areas_[NorthIndex];
+			if (false == NorthArea.HasWall())
+			{
+				Area& NorthArea = Areas_[NorthIndex];
+				MovableAreas.insert(std::make_pair(3, NorthArea));
+			}
+		}
+
+		std::map<int, Area>::const_iterator East = MovableAreas.find(0);
+		std::map<int, Area>::const_iterator West = MovableAreas.find(1);
+		std::map<int, Area>::const_iterator South = MovableAreas.find(2);
+		std::map<int, Area>::const_iterator North = MovableAreas.find(3);
+		Area PrevArea = Areas_[PrevIndex_];
+
+		if (Dir_.x == 1) // 오른쪽으로 갈때
+		{
+			if (MovableAreas.size() == 0)
+			{
+				Dir_ = float4::ZERO;
+				//Direction_ = "Zero";
+			}
+			else
+			{
+				int RandomDir = (rand() % 4);
+				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+				if (MovableAreas.size() > 1)
+				{
+					while (FoundArea == MovableAreas.end() ||
+						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+						/* || RandomDir == 0*/)
+					{
+						RandomDir = (rand() % 4);
+						FoundArea = MovableAreas.find(RandomDir);
+					}
+				}
+				else
+				{
+					FoundArea = MovableAreas.begin();
+				}
+
+				if (FoundArea == West)
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+				}
+
+				else if (FoundArea == South)
+				{
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
+				}
+
+				else if (FoundArea == North)
+				{
+					Dir_ = float4::UP;
+					Direction_ = "Up";
+				}
+			}
+		}
+
+		else if (Dir_.x == -1)
+
+		{
+			if (MovableAreas.size() == 0)
+			{
+				Dir_ = float4::ZERO;
+				//Direction_ = "Zero";
+			}
+			else
+			{
+				int RandomDir = (rand() % 4);
+				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+
+				if (MovableAreas.size() > 1)
+				{
+					while (FoundArea == MovableAreas.end() ||
+						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+						/* || RandomDir == 1*/)
+					{
+						RandomDir = (rand() % 4);
+						FoundArea = MovableAreas.find(RandomDir);
+					}
+				}
+				else
+				{
+					FoundArea = MovableAreas.begin();
+				}
+
+				if (FoundArea == East)
+				{
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
+				}
+
+				else if (FoundArea == South)
+				{
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
+				}
+
+				else if (FoundArea == North)
+				{
+					Dir_ = float4::UP;
+					Direction_ = "Up";
+				}
+			}
+		}
+
+		else if (Dir_.y == -1)
+		{
+			if (MovableAreas.size() == 0)
+			{
+				Dir_ = float4::ZERO;
+				//Direction_ = "Zero";
+			}
+			else
+			{
+				int RandomDir = (rand() % 4);
+				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+				if (MovableAreas.size() > 1)
+				{
+					while (FoundArea == MovableAreas.end() ||
+						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+						/* || RandomDir == 3*/)
+					{
+						RandomDir = (rand() % 4);
+						FoundArea = MovableAreas.find(RandomDir);
+					}
+				}
+
+				else
+				{
+					FoundArea = MovableAreas.begin();
+				}
+
+				if (FoundArea == East)
+				{
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
+				}
+
+				else if (FoundArea == South)
+				{
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
+				}
+
+				else if (FoundArea == West)
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+				}
+			}
+		}
+
+		else if (Dir_.y == 1)
+		{
+			if (MovableAreas.size() == 0)
+			{
+				Dir_ = float4::ZERO;
+				//Direction_ = "Zero";
+			}
+			else
+			{
+				int RandomDir = (rand() % 4);
+				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+				if (MovableAreas.size() > 1)
+				{
+					while (FoundArea == MovableAreas.end() ||
+						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+						/* || RandomDir == 2*/)
+					{
+						RandomDir = (rand() % 4);
+						FoundArea = MovableAreas.find(RandomDir);
+					}
+				}
+				else
+				{
+					FoundArea = MovableAreas.begin();
+				}
+
+				if (FoundArea == East)
+				{
+					Dir_ = float4::RIGHT;
+					Direction_ = "Right";
+				}
+
+				else if (FoundArea == North)
+				{
+					Dir_ = float4::UP;
+					Direction_ = "Up";
+				}
+
+				else if (FoundArea == West)
+				{
+					Dir_ = float4::LEFT;
+					Direction_ = "Left";
+				}
+			}
+		}
+
+		else
+		{
+			int RandomDir = (rand() % 4);
+			std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+			if (MovableAreas.size() > 1)
+			{
+				while (FoundArea == MovableAreas.end() ||
+					(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+						FoundArea->second.GetCenter().y == PrevArea.GetCenter().y))
+				{
+					RandomDir = (rand() % 4);
+					FoundArea = MovableAreas.find(RandomDir);
+				}
+			}
+			else
+			{
+				FoundArea = MovableAreas.begin();
+			}
+
+			if (FoundArea == East)
+			{
+				Dir_ = float4::RIGHT;
+				Direction_ = "Right";
+			}
+
+			else if (FoundArea == North)
+			{
+				Dir_ = float4::UP;
+				Direction_ = "Up";
+			}
+
+			else if (FoundArea == West)
+			{
+				Dir_ = float4::LEFT;
+				Direction_ = "Left";
+			}
+
+			else if (FoundArea == South)
+			{
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
+			}
+		}
+	}
+
+	else if (RandomAction_ == 3)
+	{
+		WaterAttack();
+	}
+	else if (RandomAction_ == 4)
+	{
+		RollAttack();
+	}
 }
 
 void Boss::UpdateAttack()
 {
-	if ((Renderer_->IsAnimationName("RollAttack") && RollTime_ > 8) ||
-		(Renderer_->IsAnimationName("WaterAttack") && WaterTime_ > 3))
-	{
-		AttTime_ = 0.0f;
-		if (Index_ == 0 || Index_ == 3)
-		{
-			Dir_ = float4::RIGHT;
-			Direction_ = "Right";
-			Renderer_->ChangeAnimation("MoveRight");
-		}
-
-		else if (Index_ == 6 || Index_ == 7)
-		{
-			Dir_ = float4::DOWN;
-			Direction_ = "Down";
-			Renderer_->ChangeAnimation("MoveDown");
-		}
-
-		else if (Index_ == 8 || Index_ == 5)
-		{
-			Dir_ = float4::LEFT;
-			Direction_ = "Left";
-			Renderer_->ChangeAnimation("MoveLeft");
-		}
-
-		else if (Index_ == 1 || Index_ == 2 || Index_ == 4)
-		{
-			Dir_ = float4::UP;
-			Direction_ = "Up";
-			Renderer_->ChangeAnimation("MoveUp");
-		}
-	}
-
-	if (AttTime_ > 4.0f && true == Renderer_->IsAnimationName("Move" + Direction_))
-	{
-		StayIdleTime_ = 0.0f;
-		Dir_ = float4::ZERO;
-		Renderer_->ChangeAnimation("Idle");
-	}
-
-	if (StayIdleTime_ > 1.0f && Renderer_->IsAnimationName("Idle"))
-	{
-		for (int i = 0; i < Areas_.size(); ++i)
-		{
-			Area& NewArea = Areas_[i]; // 플레이어의 Index와 내 Index 비교
-			if (true == NewArea.Contains(Player_->GetPosition()))
-			{
-				PlayerIndex_ = i;
-			}
-			if (true == NewArea.Contains(GetPosition()))
-			{
-				Index_ = i;
-			}
-		}
-
-		CheckIndex_ = PlayerIndex_ - Index_;
-
-		if (true == SameYLine()) // 같은 세로줄에 있으면
-		{
-			if (CheckIndex_ > 0)
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
-				Renderer_->ChangeAnimation("MoveDown");
-			}
-			else // 플레이어가 나보다 위에 있으면
-			{
-				Dir_ = float4::UP;
-				Direction_ = "Up";
-				Renderer_->ChangeAnimation("MoveUp");
-			}
-		}
-		else if (true == SameXLine())
-		{
-			if (Index_ == 3 || Index_ == 4 || Index_ == 5)
-			{
-				if (CheckIndex_ < 0)
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-					Renderer_->ChangeAnimation("MoveRight");
-				}
-				else // 플레이어가 나보다 왼쪽에 있으면
-				{
-					Dir_ = float4::LEFT;
-					Direction_ = "Left";
-					Renderer_->ChangeAnimation("MoveLeft");
-				}
-			}
-
-			else if (Index_ != 3 || Index_ != 4 || Index_ != 5)
-			{
-				if (CheckIndex_ > 0)
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-					Renderer_->ChangeAnimation("RollAttack");
-				}
-				else // 플레이어가 나보다 왼쪽에 있으면
-				{
-					Dir_ = float4::LEFT;
-					Direction_ = "Left";
-					Renderer_->ChangeAnimation("RollAttack");
-				}
-				RollTime_ = 0.0f;
-			}
-		}
-
-		else // 같은 세로줄도 가로줄도 아니면 물풍선 공격
-		{
-			WaterTime_ = 0.0f;
-			Renderer_->ChangeAnimation("WaterAttack");
-		}
-	}
-
 }
 
 bool Boss::SameYLine() // 세로줄
@@ -251,10 +544,24 @@ bool Boss::SameYLine() // 세로줄
 
 void Boss::RollAttack()
 {
+	EndAttack_ = false;
+	if (Index_ < AreaHeight_)
+	{
+		Renderer_->ChangeAnimation("RollAttack")/*("RollAttackRight")*/;
+
+	} 
+	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_)
+	{
+		Renderer_->ChangeAnimation("RollAttack")/*("RollAttackLeft")*/;
+	}
+
 }
 
 void Boss::WaterAttack()
 {
+	EndAttack_ = false;
+	Renderer_->ChangeAnimation("WaterAttack");
+	Dir_ = float4::ZERO;
 }
 
 

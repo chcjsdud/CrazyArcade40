@@ -32,7 +32,7 @@ private:
     TileIndex TileIndex_;
 
 public:
-    float4 GetCenter() { return float4(CenterX_, CenterY_); }
+    float4 GetCenter() const { return float4(CenterX_, CenterY_); }
 
     // 해당위치가 Area 안에 있는지
     bool Contains(float4 _Pos);
