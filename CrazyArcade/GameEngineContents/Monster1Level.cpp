@@ -127,7 +127,7 @@ void Monster1Level::Loading()
 
 
 	YSortOn(static_cast<int>(ORDER::PLAYER));
-	}
+}
 
 void Monster1Level::Update()
 {

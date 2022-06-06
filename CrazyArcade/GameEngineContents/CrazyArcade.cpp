@@ -434,7 +434,9 @@ void CrazyArcade::GameInit()
         GameEngineInput::GetInst()->CreateKey("TileMapEditorLevel", '0');
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
-        GameEngineInput::GetInst()->CreateKey("MonsterLevel", '9');
+        GameEngineInput::GetInst()->CreateKey("Monster1Level", '7');
+        GameEngineInput::GetInst()->CreateKey("Monster2Level", '8');
+        GameEngineInput::GetInst()->CreateKey("BossLevel", '9');
         GameEngineInput::GetInst()->CreateKey("Debug_Col", VK_OEM_6); // ]키
     }
     //////시작부분
@@ -494,9 +496,17 @@ void CrazyArcade::GameLoop()
     {
         GameEngine::GetInst().ChangeLevel("TileMapEditorLevel");
     }
-    if (true == GameEngineInput::GetInst()->IsDown("MonsterLevel"))
+    if (true == GameEngineInput::GetInst()->IsDown("Monster1Level"))
     {
-        GameEngine::GetInst().ChangeLevel("Monster1Level");         // MonsterL1Level -> Monster2Level로 잠시 수정
+        GameEngine::GetInst().ChangeLevel("Monster1Level");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("Monster2Level"))
+    {
+        GameEngine::GetInst().ChangeLevel("Monster2Level");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("BossLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("BossLevel");
     }
 }
 
