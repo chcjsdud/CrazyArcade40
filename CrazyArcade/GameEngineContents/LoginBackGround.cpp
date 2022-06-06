@@ -31,6 +31,7 @@ void LoginBackGround::Start()
 	LoginBtnRenderer_->CreateAnimation("LoginBtn.bmp", "LoginBtn_Idle", 0, 0, 0.1f, false);
 	LoginBtnRenderer_->CreateAnimation("LoginBtn.bmp", "LoginBtn_Select", 1, 1, 0.1f, false);
 	LoginBtnRenderer_->CreateAnimation("LoginBtn.bmp", "LoginBtn_Click", 2, 2, 0.1f, false);
+	LoginBtnRenderer_->CreateAnimation("LoginBtn.bmp", "LoginBtn_Unuse", 3, 3, 0.1f, false);
 	ExitBtnRenderer_->CreateAnimation("ExitBtn.bmp", "ExitBtn_Idle", 0, 0, 0.1f, false);
 	ExitBtnRenderer_->CreateAnimation("ExitBtn.bmp", "ExitBtn_Select", 1, 1, 0.1f, false);
 	ExitBtnRenderer_->CreateAnimation("ExitBtn.bmp", "ExitBtn_Click", 2, 2, 0.1f, false);
@@ -41,7 +42,7 @@ void LoginBackGround::Start()
 	Change2PRenderer_->CreateAnimation("2pBtn.bmp", "2pBtn_Select", 1, 1, 0.1f, false);
 	Change2PRenderer_->CreateAnimation("2pBtn.bmp", "2pBtn_Click", 2, 2, 0.1f, false);
 
-	LoginBtnRenderer_->ChangeAnimation("LoginBtn_Idle");
+	LoginBtnRenderer_->ChangeAnimation("LoginBtn_Unuse");
 	ExitBtnRenderer_->ChangeAnimation("ExitBtn_Idle");
 	Change1PRenderer_->ChangeAnimation("1pBtn_Idle");
 	Change2PRenderer_->ChangeAnimation("2pBtn_Idle");
@@ -166,6 +167,10 @@ void LoginBackGround::Update()
 				LoginBtnRenderer_->ChangeAnimation("LoginBtn_Idle");
 			}
 		}	
+	}
+	else
+	{
+		LoginBtnRenderer_->ChangeAnimation("LoginBtn_Unuse");
 	}
 	
 	
