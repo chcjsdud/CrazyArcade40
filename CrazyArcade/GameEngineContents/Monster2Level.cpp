@@ -110,25 +110,6 @@ void Monster2Level::Loading()
 		Crocodile6->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 
-
-	if (nullptr != Player::MainPlayer_1)
-	{
-		Player::MainPlayer_1 = nullptr;
-	}
-
-	if (nullptr != Player::MainPlayer_2)
-	{
-		Player::MainPlayer_2 = nullptr;
-	}
-
-
-	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition(Areas_[135].GetCenter());
-	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 void Monster2Level::Update()
@@ -151,7 +132,22 @@ void Monster2Level::Update()
 }
 void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
+	if (nullptr != Player::MainPlayer_1)
+	{
+		Player::MainPlayer_1 = nullptr;
+	}
 
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2 = nullptr;
+	}
+
+
+	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	Player::MainPlayer_1->SetPosition(Areas_[135].GetCenter());
+	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 }
 void Monster2Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
