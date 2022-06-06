@@ -26,7 +26,10 @@ class Monster : public GameEngineActor
 {
 	friend Area;
 public:
-	static int TTL_MONSTER_COUNT;
+	static int LV1_MON_COUNT;
+	static int LV2_MON_COUNT;
+	static int BOSS_COUNT;
+
 
 public:
 	Monster();

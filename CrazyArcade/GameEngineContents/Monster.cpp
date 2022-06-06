@@ -14,8 +14,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-
-int Monster::TTL_MONSTER_COUNT = 0;
+int Monster::LV1_MON_COUNT = 0;
+int Monster::LV2_MON_COUNT = 0;
+int Monster::BOSS_COUNT = 0;
 
 Monster::Monster()
 	: Renderer_(nullptr)
@@ -46,7 +47,6 @@ Monster::Monster()
 	, MapTile_(nullptr)
 	, CurBlockType_(BlockType::Max)
 {
-	TTL_MONSTER_COUNT++;
 }
 
 Monster::~Monster()
@@ -56,7 +56,7 @@ Monster::~Monster()
 
 void Monster::Start()
 {
-	CenterCol_ = CreateCollision("Monster", float4(30.0f, 35.0f), float4(0.0f, 0.0f));
+	CenterCol_ = CreateCollision("Monster", float4(25.0f, 35.0f), float4(0.0f, 0.0f));
 
 	if (GetLevel()->GetNameCopy() == "Monster1Level")
 	{
@@ -474,8 +474,17 @@ void Monster::Die()
 		{
 			CenterCol_->Off();
 			Death();
-			TTL_MONSTER_COUNT--; // total 몬스터 수가 줄어든다.
-			if (TTL_MONSTER_COUNT == 1) // 만약 몬스터가 한마리 남으면
+			if (GetLevel()->GetNameCopy() == "Monster1Level")
+			{
+				LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.
+			}
+
+			else if (GetLevel()->GetNameCopy() == "Monster2Level") // 만약 몬스터가 한마리 남으면
+			{
+				LV2_MON_COUNT--; // total 몬스터 수가 줄어든다.
+			}
+
+			if (LV1_MON_COUNT == 1 || LV2_MON_COUNT == 1)
 			{
 				SetSpeed(Speed_ + 20); // 속도가 빨라져라
 			}

@@ -583,3 +583,5 @@ void Boss::WaterAttack()
 //		return false;
 //	}
 //}
+
+//Todo chowon: BOSS_COUNT--; -> boss ав╬Зю╩ ╤╖ 

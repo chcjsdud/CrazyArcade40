@@ -70,6 +70,7 @@ void BossLevel::Loading()
 
 		Boss* Seal = CreateActor<Boss>((int)ORDER::PLAYER);
 		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
+		Monster::BOSS_COUNT++;
 
 		//Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 		//NewPlayer->SetCharacter(Character::BAZZI);

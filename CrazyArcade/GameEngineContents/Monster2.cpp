@@ -19,8 +19,6 @@ Monster2::~Monster2()
 void Monster2::Start()
 {
 	Monster::Start();
-
-	//악어
 	// 미니 악어
 	MiniRenderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* MiniImage = MiniRenderer_->GetImage();
@@ -29,9 +27,10 @@ void Monster2::Start()
 	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveLeft", 29, 30, 0.2f, true);
 	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveUp", 23, 24, 0.2f, true);
 	MiniRenderer_->CreateAnimation("Monster.bmp", "MoveDown", 27, 28, 0.2f, true);
-	MiniRenderer_->CreateAnimation("Monster.bmp", "Die", 31, 33, 0.2f, true);
+	MiniRenderer_->CreateAnimation("Monster.bmp", "Die", 31, 33, 0.2f, false);
 	MiniRenderer_->ChangeAnimation("MoveLeft");
 
+	//악어
 	Renderer_ = CreateRenderer("Monster.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
 	Image->CutCount(10, 8);
@@ -40,10 +39,11 @@ void Monster2::Start()
 	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 15, 16, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 17, 18, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "Start", 33, 36, 0.1f, false);
+	Renderer_->CreateAnimation("Monster.bmp", "Die", 31, 33, 0.2f, false);
 	Renderer_->ChangeAnimation("Start");
 	Dir_ = float4::ZERO;
-	CenterCol_->SetScale(float4(40.0f, 40.0f));
-	CenterCol_->SetPivot(float4(0.0f, -40.0f));
+	CenterCol_->SetScale(float4(30.0f, 30.0f));
+	CenterCol_->SetPivot(float4(0.0f, -30.0f));
 	SetHP(2);
 	SetSpeed(100);
 	MiniRenderer_->SetAlpha(0);
@@ -71,8 +71,9 @@ void Monster2::TakeDamage()
 		{
 			MiniRendererOn_ = true;
 			MiniRenderer_->On();
+			MiniRenderer_->SetAlpha(255);
 			Renderer_->Off();
-			SetSpeed(70); // Need to chk : Speed_
+			SetSpeed(50); // Need to chk : Speed_
 			GetBackTime_ = 0.0f;
 			GetAttTime_ = 0.0f;
 		}
@@ -91,7 +92,7 @@ void Monster2::UpdateMove()
 			Dir_ = float4::RIGHT;
 		}
 	}
-	else
+	else if(false == Renderer_->IsAnimationName("Die"))
 	{
 		if (MiniRendererOn_ == true)
 		{
@@ -108,35 +109,50 @@ void Monster2::UpdateMove()
 
 void Monster2::UpdateGetBack()
 {
-	if (GetBackTime_ > 5.0f)
+	if (GetHP() >= 1 &&
+		GetBackTime_ > 7.0f)
 	{
 		MiniRendererOn_ = false;
 		MiniRenderer_->Off();
 		Renderer_->On();
 		SetSpeed(100);
 		SetHP(2);
-		//Renderer_->ChangeAnimation("");
 	}
 }
 
 
 void Monster2::Die()
 {
-	if (true == IsDie() && true != MiniRenderer_->IsAnimationName("Die")) // HP가 0이거나 0보다 작으면
+	if (true == IsDie()) // HP가 0이거나 0보다 작으면
 	{
-		Dir_ = float4::ZERO;
-		MiniRenderer_->ChangeAnimation("Die");
-	}
-
-	if (true == MiniRenderer_->IsAnimationName("Die") && true == MiniRenderer_->IsEndAnimation())
-	{
-		CenterCol_->Off();
-		Renderer_->Death();
-		MiniRenderer_->Death();
-		TTL_MONSTER_COUNT--; // total 몬스터 수가 줄어든다.
-		if (TTL_MONSTER_COUNT == 1) // 만약 몬스터가 한마리 남으면
+		if (true == MiniRenderer_->IsAnimationName("Die"))
 		{
-			SetSpeed(Speed_ + 20); // 속도가 빨라져라
+			if (true == MiniRenderer_->IsEndAnimation())
+			{
+				CenterCol_->Off();
+				Death();
+				if (GetLevel()->GetNameCopy() == "Monster1Level")
+				{
+					LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.
+				}
+
+				else if (GetLevel()->GetNameCopy() == "Monster2Level") // 만약 몬스터가 한마리 남으면
+				{
+					LV2_MON_COUNT--; // total 몬스터 수가 줄어든다.
+				}
+
+				if (LV1_MON_COUNT == 1 || LV2_MON_COUNT == 1)
+				{
+					SetSpeed(Speed_ + 20); // 속도가 빨라져라
+				}
+			}
+		}
+
+		if (true != MiniRenderer_->IsAnimationName("Die"))
+		{
+			Dir_ = float4::ZERO;
+			MiniRenderer_->ChangeAnimation("Die");
+			Renderer_->ChangeAnimation("Die");
 		}
 	}
 }
