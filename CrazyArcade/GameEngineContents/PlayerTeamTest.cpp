@@ -102,6 +102,12 @@ void PlayerTeamTest::Loading()
 				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
 			}
 		}
+		BlockSet->CreateBlock(float4(static_cast<float>(3* 40), (static_cast<float>(0 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(11	* 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(12 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 	}
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 
