@@ -205,11 +205,10 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetCharacter(Character::DAO);
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
 }
 void Monster1Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {

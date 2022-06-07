@@ -171,12 +171,13 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 
 	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
+	Player::MainPlayer_2->SetCharacter(Character::DAO);
 	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[170].GetCenter());
+	Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
 	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
-	
+	Character Char1 = Player::MainPlayer_1->GetCharacter();
+	Character Char = Player::MainPlayer_2->GetCharacter();
 	//À©µµ¿ì ¸¶¿ì½º ¼û±è
 	ShowCursor(false);
 }

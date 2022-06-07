@@ -147,8 +147,8 @@ void Player::IdleUpdate()
 		ChangeState(PlayerState::Attack);
 		return;
 	}
-
-	Move();
+	
+	Move(CurSpeed_);
 }
 
 void Player::MoveUpdate()
@@ -167,7 +167,7 @@ void Player::MoveUpdate()
 		return;
 	}
 
-	Move();
+	Move(CurSpeed_);
 	//if (true == IsMove)
 	//{
 	//	
@@ -225,7 +225,7 @@ void Player::DamagedUpdate()
 		return;
 	}
 
-	Move();
+	Move(CurSpeed_);
 	StagePixelCheck(0.05f);
 
 	//if (5.f < GetAccTime())
@@ -268,9 +268,7 @@ void Player::FadeUpdate()
 	//}
 
 
-
-
-	Move();
+	
 	StagePixelCheck(0.05f);
 
 }

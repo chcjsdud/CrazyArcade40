@@ -53,7 +53,6 @@ Player::Player()
 	, AttMoveTime_(0.0f)
 	, MapTile_(nullptr)
 {
-
 }
 Player::~Player()
 {
@@ -75,16 +74,16 @@ void Player::DebugModeSwitch()
 
 }
 
-void Player::Move()
+void Player::Move(float _CurSpeed)
 {
+
 	MoveDir = float4::ZERO;
 
-	float MovePos = 250.f;
-
-
-	
 	if (Type == PlayerType::Player1)
 	{
+		_CurSpeed = MainPlayer_1->CurSpeed_;
+		MovePos_ = _CurSpeed * 7.f;
+
 		if (CurState_ != PlayerState::Ready)
 		{
 			if (true == GameEngineInput::GetInst()->IsDown("1PRight"))
@@ -124,7 +123,7 @@ void Player::Move()
 		{
 			if (true == IsLeftMove)
 			{
-				MoveDir.x = -MovePos;
+				MoveDir.x = -MovePos_;
 				//if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
 				//{
 				//	MoveDir.y = -MovePos;
@@ -144,7 +143,7 @@ void Player::Move()
 		{
 			if (true == IsRightMove)
 			{
-				MoveDir.x = MovePos;
+				MoveDir.x = MovePos_;
 				//if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
 				//{
 				//	MoveDir.y = -MovePos;
@@ -164,7 +163,7 @@ void Player::Move()
 		{
 			if (true == IsUpMove)
 			{
-				MoveDir.y = -MovePos;
+				MoveDir.y = -MovePos_;
 			}
 
 		}
@@ -172,13 +171,16 @@ void Player::Move()
 		{
 			if (true == IsDownMove)
 			{
-				MoveDir.y = MovePos;
+				MoveDir.y = MovePos_;
 			}
 		}
 	}
 
 	else if (Type == PlayerType::Player2)
 	{
+		_CurSpeed = MainPlayer_2->CurSpeed_;
+		MovePos_ = _CurSpeed * 7.f;
+
 		if (CurState_ != PlayerState::Ready)
 		{
 
@@ -219,7 +221,7 @@ void Player::Move()
 			{
 				if (true == IsLeftMove)
 				{
-					MoveDir.x = -MovePos;
+					MoveDir.x = -MovePos_;
 				}
 
 			}
@@ -227,7 +229,7 @@ void Player::Move()
 			{
 				if (true == IsRightMove)
 				{
-					MoveDir.x = MovePos;
+					MoveDir.x = MovePos_;
 				}
 
 			}
@@ -235,7 +237,7 @@ void Player::Move()
 			{
 				if (true == IsUpMove)
 				{
-					MoveDir.y = -MovePos;
+					MoveDir.y = -MovePos_;
 				}
 
 			}
@@ -243,7 +245,7 @@ void Player::Move()
 			{
 				if (true == IsDownMove)
 				{
-					MoveDir.y = MovePos;
+					MoveDir.y = MovePos_;
 				}
 			}
 		}
@@ -285,13 +287,13 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_ = BazziRenderer_;
 		PlayerAnimationRender_->On();
 
-		SetSpeed(1.f);
 		SetAttCount(1);
-		SetAttPower(10.f);			// 일단 10배
+		SetAttPower(1.f);			// 일단 10배
+		SetSpeed(5.f);
 
-		SetMaxSpeed(90.f);
 		SetMaxAttCount(6);
-		SetMaxAttPower(70.f);
+		SetMaxAttPower(7.f);
+		SetMaxSpeed(9.f);
 	}
 	break;
 	case Character::LUXMARID:
@@ -300,13 +302,13 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_ = MaridRenderer_;
 		PlayerAnimationRender_->On();
 
-		SetSpeed(1.f);
-		SetAttCount(1);
-		SetAttPower(10.f);			// 일단 10배
+		SetAttCount(2);
+		SetAttPower(1.f);			// 일단 10배
+		SetSpeed(5.f);
 
-		SetMaxSpeed(90.f);
-		SetMaxAttCount(6);
-		SetMaxAttPower(70.f);
+		SetMaxAttCount(9);
+		SetMaxAttPower(6.f);
+		SetMaxSpeed(8.f);
 	}
 	break;
 	case Character::DAO:
@@ -315,13 +317,13 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_ = DaoRenderer_;
 		PlayerAnimationRender_->On();
 
-		SetSpeed(1.f);
 		SetAttCount(1);
-		SetAttPower(10.f);			// 일단 10배
+		SetAttPower(1.f);			// 일단 10배
+		SetSpeed(5.f);
 
-		SetMaxSpeed(90.f);
-		SetMaxAttCount(6);
-		SetMaxAttPower(70.f);
+		SetMaxAttCount(10);
+		SetMaxAttPower(7.f);
+		SetMaxSpeed(7.f);
 	}
 	break;
 	}

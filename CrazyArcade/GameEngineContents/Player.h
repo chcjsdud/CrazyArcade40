@@ -93,6 +93,7 @@ protected:
 	float Time_;
 	float AttMoveTime_;
 
+	float MovePos_;
 	// 플레이어 정보 세팅
 
 private:
@@ -145,7 +146,7 @@ protected:
 
 	bool IsReady;
 	bool IsMove;
-	void Move();
+	void Move(float _CurSpeed);
 
 	bool IsLeftMove;
 	bool IsRightMove;
@@ -185,6 +186,16 @@ protected:
 	MapBackGround* MapBackGround_;
 
 public:
+	inline Character GetCharacter()
+	{
+		return CurCharacter;
+	}
+
+	inline PlayerType GetPlayerType()
+	{
+		return Type;
+	}
+
 	void SetCharacter(Character _CurCharacter)
 	{
 		CurCharacter = _CurCharacter;
