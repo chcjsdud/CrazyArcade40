@@ -66,6 +66,12 @@ void CampLevel::Loading()
 				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
 			}
 		}
+		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(11 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(12 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 	}
 
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor ¸¸µé°í
@@ -73,15 +79,14 @@ void CampLevel::Loading()
 	bubble_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
 
-
 	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	bubble_->CreateBoom({ 40,40 }, 3);
+//	bubble_->CreateBoom({ 40,40 }, 3);
 
 
-	bubble_->CreateBoom({ 200,40 }, 3);
+//	bubble_->CreateBoom({ 200,40 }, 3);
 
-	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
+//	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
 
 
 
