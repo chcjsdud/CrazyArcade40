@@ -10,12 +10,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <random>
+#include "MapGameObject.h"
 
 Boss::Boss()
 	: Monster()
 	, PlayerIndex_(4)
 	, WaterTime_(0.0f)
+	, RollTime_(0.0f)
 	, AreaChangeCount_(0)
+	, BossHP_(nullptr)
+	, Boss_(nullptr)
+	, BossBoom_(nullptr)
+	, CheckIndex_()
 {
 }
 
@@ -32,13 +38,13 @@ void Boss::Start()
 	Renderer_->CreateAnimation("Monster.bmp", "Idle", 37, 38, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 39, 40, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 41, 42, 0.2f, true);
-	// Need to chk : MoveUp 이미지
 	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 43, 44, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 37, 38, 0.2f, true);
 	Renderer_->CreateAnimation("Monster.bmp", "Die", 64, 73, 0.3f, true); // Need to chk : 속도
-	Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 50, 51, 0.2f, true); // 아래
-	//Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 52, 53, 0.2f, true); // 오른쪽
-	//Renderer_->CreateAnimation("Monster.bmp", "TakeDamage", 54, 55, 0.2f, true); // 왼쪽
+	Renderer_->CreateAnimation("Monster.bmp", "TakeDamageDown", 50, 51, 0.2f, true); // 아래
+	Renderer_->CreateAnimation("Monster.bmp", "TakeDamageRight", 52, 53, 0.2f, true); // 오른쪽
+	Renderer_->CreateAnimation("Monster.bmp", "TakeDamageLeft", 54, 55, 0.2f, true); // 왼쪽
+	// Need to chk : TakeDamageUp 필요
 	Renderer_->CreateAnimation("Monster.bmp", "WaterAttack", 61, 63, 0.2f, false); // 물주기
 	Renderer_->CreateAnimation("Monster.bmp", "RollAttackRight", 45, 49, 0.2f, true); // 구르기
 	Renderer_->CreateAnimation("Monster.bmp", "RollAttackLeft", 56, 60, 0.2f, true); // 구르기
@@ -49,54 +55,66 @@ void Boss::Start()
 	CenterCol_->SetScale(float4(130.0, 150.0f));
 	CenterCol_->SetPivot(float4(0.0f, -50.0f));
 
+	{
+		//Boss UI
+		HPUI_ = CreateRenderer("HPUI.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, float4(0.0f, -180.0f));
+		GameEngineImage* HPImage14 = GameEngineImageManager::GetInst()->Find("HP14.bmp");
+		HPImage14->CutCount(1, 1);
+		GameEngineImage* HPImage13 = GameEngineImageManager::GetInst()->Find("HP13.bmp");
+		HPImage13->CutCount(1, 1);
+		GameEngineImage* HPImage12 = GameEngineImageManager::GetInst()->Find("HP12.bmp");
+		HPImage12->CutCount(1, 1);
+		GameEngineImage* HPImage11 = GameEngineImageManager::GetInst()->Find("HP11.bmp");
+		HPImage11->CutCount(1, 1);
+		GameEngineImage* HPImage10 = GameEngineImageManager::GetInst()->Find("HP10.bmp");
+		HPImage10->CutCount(1, 1);
+		GameEngineImage* HPImage9 = GameEngineImageManager::GetInst()->Find("HP9.bmp");
+		HPImage9->CutCount(1, 1);
+		GameEngineImage* HPImage8 = GameEngineImageManager::GetInst()->Find("HP8.bmp");
+		HPImage8->CutCount(1, 1);
+		GameEngineImage* HPImage7 = GameEngineImageManager::GetInst()->Find("HP7.bmp");
+		HPImage7->CutCount(1, 1);
+		GameEngineImage* HPImage6 = GameEngineImageManager::GetInst()->Find("HP6.bmp");
+		HPImage6->CutCount(1, 1);
+		GameEngineImage* HPImage5 = GameEngineImageManager::GetInst()->Find("HP5.bmp");
+		HPImage5->CutCount(1, 1);
+		GameEngineImage* HPImage4 = GameEngineImageManager::GetInst()->Find("HP4.bmp");
+		HPImage4->CutCount(1, 1);
+		GameEngineImage* HPImage3 = GameEngineImageManager::GetInst()->Find("HP3.bmp");
+		HPImage3->CutCount(1, 1);
+		GameEngineImage* HPImage2 = GameEngineImageManager::GetInst()->Find("HP2.bmp");
+		HPImage2->CutCount(1, 1);
+		GameEngineImage* HPImage1 = GameEngineImageManager::GetInst()->Find("HP1.bmp");
+		HPImage1->CutCount(1, 1);
 
-	HPUI_ = CreateRenderer("HPUI.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, float4(0.0f, -180.0f));
-	GameEngineImage* HPImage14 = GameEngineImageManager::GetInst()->Find("HP14.bmp");
-	HPImage14->CutCount(1, 1);
-	GameEngineImage* HPImage13 = GameEngineImageManager::GetInst()->Find("HP13.bmp");
-	HPImage13->CutCount(1, 1);
-	GameEngineImage* HPImage12 = GameEngineImageManager::GetInst()->Find("HP12.bmp");
-	HPImage12->CutCount(1, 1);
-	GameEngineImage* HPImage11 = GameEngineImageManager::GetInst()->Find("HP11.bmp");
-	HPImage11->CutCount(1, 1);
-	GameEngineImage* HPImage10 = GameEngineImageManager::GetInst()->Find("HP10.bmp");
-	HPImage10->CutCount(1, 1);
-	GameEngineImage* HPImage9 = GameEngineImageManager::GetInst()->Find("HP9.bmp");
-	HPImage9->CutCount(1, 1);
-	GameEngineImage* HPImage8 = GameEngineImageManager::GetInst()->Find("HP8.bmp");
-	HPImage8->CutCount(1, 1);
-	GameEngineImage* HPImage7 = GameEngineImageManager::GetInst()->Find("HP7.bmp");
-	HPImage7->CutCount(1, 1);
-	GameEngineImage* HPImage6 = GameEngineImageManager::GetInst()->Find("HP6.bmp");
-	HPImage6->CutCount(1, 1);
-	GameEngineImage* HPImage5 = GameEngineImageManager::GetInst()->Find("HP5.bmp");
-	HPImage5->CutCount(1, 1);
-	GameEngineImage* HPImage4 = GameEngineImageManager::GetInst()->Find("HP4.bmp");
-	HPImage4->CutCount(1, 1);
-	GameEngineImage* HPImage3 = GameEngineImageManager::GetInst()->Find("HP3.bmp");
-	HPImage3->CutCount(1, 1);
-	GameEngineImage* HPImage2 = GameEngineImageManager::GetInst()->Find("HP2.bmp");
-	HPImage2->CutCount(1, 1);
-	GameEngineImage* HPImage1 = GameEngineImageManager::GetInst()->Find("HP1.bmp");
-	HPImage1->CutCount(1, 1);
+		BossHP_ = CreateRenderer((int)ORDER::BOSS, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
+		BossHP_->CreateAnimation("HP14.bmp", "HP14", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP13.bmp", "HP13", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP12.bmp", "HP12", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP11.bmp", "HP11", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP10.bmp", "HP10", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP9.bmp", "HP9", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP8.bmp", "HP8", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP7.bmp", "HP7", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP6.bmp", "HP6", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP5.bmp", "HP5", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP4.bmp", "HP4", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP3.bmp", "HP3", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP2.bmp", "HP2", 0, 0, 1.0f, false);
+		BossHP_->CreateAnimation("HP1.bmp", "HP1", 0, 0, 1.0f, false);
+		BossHP_->ChangeAnimation("HP14");
+	}
 
-	BossHP_ = CreateRenderer((int)ORDER::BOSS, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
-	BossHP_->CreateAnimation("HP14.bmp", "HP14", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP13.bmp", "HP13", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP12.bmp", "HP12", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP11.bmp", "HP11", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP10.bmp", "HP10", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP9.bmp", "HP9", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP8.bmp", "HP8", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP7.bmp", "HP7", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP6.bmp", "HP6", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP5.bmp", "HP5", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP4.bmp", "HP4", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP3.bmp", "HP3", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP2.bmp", "HP2", 0, 0, 1.0f, false);
-	BossHP_->CreateAnimation("HP1.bmp", "HP1", 0, 0, 1.0f, false);
-	BossHP_->ChangeAnimation("HP14");
+	{
+		// WaterAttack
+		//WaterAttack_ = CreateRenderer("WaterAttack.bmp");
+		//GameEngineImage* WaterAttackImage = WaterAttack_->GetImage();
+		//WaterAttackImage->CutCount(10, 5); // Todo chowon : need to chk
+		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "WaterAttack", 0, 0, 0.1f);
+		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "Idle", 0, 0, 0.1f);
+		//WaterAttack_->ChangeAnimation("Idle");
 
+	}
 	// ColMap
 	if (GetLevel()->GetNameCopy() == "BossLevel")
 	{
@@ -144,8 +162,8 @@ void Boss::Render()
 void Boss::Update()
 {
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	UpdateDirection();
-	UpdateAttack();
 	UpdateMove();
 	UpdateHP();
 }
@@ -221,14 +239,18 @@ void Boss::UpdateMove()
 {
 	if (RandomAction_ < 3)
 	{
-		Monster::UpdateMove();
+		if (true != IsDie())
+		{
+			Renderer_->ChangeAnimation("Move" + Direction_);
+			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
+		}
 	}
 	else if (RandomAction_ == 3)
 	{
 		if (Renderer_->IsAnimationName("WaterAttack") &&
 			Renderer_->IsEndAnimation())
 		{
-			if (WaterTime_ > 2.0f)
+			if (WaterTime_ > 3.0f)
 			{
 				EndAttack_ = true;
 			}
@@ -238,28 +260,29 @@ void Boss::UpdateMove()
 	{
 		if (Renderer_->IsAnimationName("RollAttackRight"))
 		{
-			if (Index_ < (AreaWidth_ - 1) * AreaHeight_)
+			if (RollTime_ < 8.0f)
 			{
-				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * Speed_);
+				SetMove(float4::RIGHT * GameEngineTime::GetInst()->GetDeltaTime() * Speed_);
 			}
 			else
 			{
-				EndAttack_ = true;
 				Dir_ = float4::ZERO;
+				EndAttack_ = true;
 			}
 		}
 		else if (Renderer_->IsAnimationName("RollAttackLeft"))
 		{
-			if (Index_ > AreaHeight_)
+			if (RollTime_ < 8.0f)
 			{
-				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * Speed_);
+				SetMove(float4::LEFT * GameEngineTime::GetInst()->GetDeltaTime() * Speed_);
 			}
 			else
 			{
-				EndAttack_ = true;
 				Dir_ = float4::ZERO;
+				EndAttack_ = true;
 			}
 		}
+
 	}
 }
 
@@ -269,7 +292,7 @@ void Boss::UpdateDirection()
 	bool IsAreaChanged = false;
 
 	if (false == Renderer_->IsAnimationName("WaterAttack") &&
-		false == Renderer_->IsAnimationName("RollAttack"))
+		false == Renderer_->IsAnimationName("RollAttack" + Direction_))
 	{
 		for (int i = 0; i < Areas_.size(); ++i)
 		{
@@ -286,8 +309,9 @@ void Boss::UpdateDirection()
 						Index_ % AreaHeight_ == AreaHeight_ - 1 ||
 						Index_ >= (AreaWidth_ - 1) * AreaHeight_)
 					{
-						if (Index_ < AreaHeight_ ||
-							Index_ >= (AreaWidth_ - 1) * AreaHeight_)
+						if ((Index_ < AreaHeight_ ||
+							Index_ >= (AreaWidth_ - 1) * AreaHeight_) &&
+							RandomAction_ != 0)
 						{
 							RandomAction_ = 4;
 							IsAreaChanged = true;
@@ -311,11 +335,10 @@ void Boss::UpdateDirection()
 	if (Dir_.x == 0 && Dir_.y == 0)
 	{
 		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
-			(Renderer_->IsAnimationName("RollAttack") && EndAttack_ == true))
+			(Renderer_->IsAnimationName("RollAttack"+Direction_) && EndAttack_ == true))
 		{
 			RandomAction_ = 0;
 			IsAreaChanged = true;
-
 		}
 	}
 
@@ -631,36 +654,66 @@ void Boss::UpdateDirection()
 	}
 }
 
+void Boss::TakeDamage()
+{
+	if (GetAttTime_ > 2.0) // 2초 안에 다시 맞으면 DMG를 입지 않는다. (Need to chk : TIME)
+	{
+		SetHP(GetHp() - 1);
+		GetAttTime_ = 0.0f;
+		Renderer_->ChangeAnimation("TakeDamage" + Direction_);
+		Dir_ = float4::ZERO;
+	}
+}
+
 void Boss::UpdateAttack()
 {
-	if (WaterTime_ > 3)
+	if (false == Renderer_->IsAnimationName("WaterAttack") &&
+		false == Renderer_->IsAnimationName("RollAttack" + Direction_))
 	{
 		WaterTime_ = 0.0f;
+		RollTime_ = 0.0f;
+		EndAttack_ = false;
 	}
+
 }
 
 
 void Boss::RollAttack()
 {
-	EndAttack_ = false;
-	if (Index_ < AreaHeight_) 
+	UpdateAttack();
+	if (Index_ < AreaHeight_ &&
+		false == Renderer_->IsAnimationName("RollAttackRight") &&
+		false == Renderer_->IsAnimationName("RollAttackLeft"))
 	{
+		Direction_ = "Right";
 		Renderer_->ChangeAnimation("RollAttackRight");
-
 	} 
-	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_)
+	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_ &&
+		false == Renderer_->IsAnimationName("RollAttackLeft") &&
+		false == Renderer_->IsAnimationName("RollAttackRight"))
 	{
+		Direction_ = "Left";
 		Renderer_->ChangeAnimation("RollAttackLeft");
 	}
-
+	
 }
 
 void Boss::WaterAttack()
 {
 	UpdateAttack();
-	EndAttack_ = false;
 	Renderer_->ChangeAnimation("WaterAttack");
 	Dir_ = float4::ZERO;
+
+	if (GetHP() >= 5)
+	{
+		//BossBoom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		//BossBoom_->SetMapTile(MapTile_);
+		//BossBoom_->CreateBoom(float4(GetPosition().x-280.0f,GetPosition().y), 1);
+	}
+	else
+	{
+
+	}
 }
 
 //
