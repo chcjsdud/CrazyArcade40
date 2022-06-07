@@ -82,7 +82,11 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
 	Block_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
 
-
+	if (_Box == "WALLBLOCK")
+	{
+		Block_->Renderer->SetImage("TIleBase.BMP");
+		Block_->BlockType_ = BlockType::WallBlock;
+	}
 	//////////////////////////////////////////д╥ га///////////////////////////////////////////////
 
 	if (_Box == "CAMPBLOCK1")

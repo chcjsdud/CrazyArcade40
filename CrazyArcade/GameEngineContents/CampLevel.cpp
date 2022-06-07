@@ -68,6 +68,12 @@ void CampLevel::Loading()
 				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
 			}
 		}
+		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(11 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(12 * 40))), "WallBlock");
+		BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 	}
 
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor ¸¸µé°í
