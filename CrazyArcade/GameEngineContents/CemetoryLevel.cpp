@@ -61,6 +61,63 @@ void CemetoryLevel::Loading()
 				//                          5 7
 				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
 			}
+			BlockSet->CreateBlock(float4(static_cast<float>(5 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(6 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(8 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(9 * 40), (static_cast<float>(0 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(2 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(5 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(6 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(8 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(9 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(12 * 40), (static_cast<float>(1 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(5 * 40), (static_cast<float>(2 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(6 * 40), (static_cast<float>(2 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(7 * 40), (static_cast<float>(2 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(8 * 40), (static_cast<float>(2 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(9 * 40), (static_cast<float>(2 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(0 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(1 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(5 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(9 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(13 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(14 * 40), (static_cast<float>(4 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(1 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(2 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(7 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(12 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(13 * 40), (static_cast<float>(6 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(0 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(1 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(13 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(14 * 40), (static_cast<float>(8 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(9 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(6 * 40), (static_cast<float>(9 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(8 * 40), (static_cast<float>(9 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(9 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(11 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(6 * 40), (static_cast<float>(11 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(8 * 40), (static_cast<float>(11 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(11 * 40))), "WallBlock");
+
+			BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(12 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
+
 		}
 	}
 
