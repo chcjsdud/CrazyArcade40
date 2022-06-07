@@ -49,6 +49,54 @@ void Boss::Start()
 	CenterCol_->SetScale(float4(130.0, 150.0f));
 	CenterCol_->SetPivot(float4(0.0f, -50.0f));
 
+
+	HPUI_ = CreateRenderer("HPUI.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, float4(0.0f, -180.0f));
+	GameEngineImage* HPImage14 = GameEngineImageManager::GetInst()->Find("HP14.bmp");
+	HPImage14->CutCount(1, 1);
+	GameEngineImage* HPImage13 = GameEngineImageManager::GetInst()->Find("HP13.bmp");
+	HPImage13->CutCount(1, 1);
+	GameEngineImage* HPImage12 = GameEngineImageManager::GetInst()->Find("HP12.bmp");
+	HPImage12->CutCount(1, 1);
+	GameEngineImage* HPImage11 = GameEngineImageManager::GetInst()->Find("HP11.bmp");
+	HPImage11->CutCount(1, 1);
+	GameEngineImage* HPImage10 = GameEngineImageManager::GetInst()->Find("HP10.bmp");
+	HPImage10->CutCount(1, 1);
+	GameEngineImage* HPImage9 = GameEngineImageManager::GetInst()->Find("HP9.bmp");
+	HPImage9->CutCount(1, 1);
+	GameEngineImage* HPImage8 = GameEngineImageManager::GetInst()->Find("HP8.bmp");
+	HPImage8->CutCount(1, 1);
+	GameEngineImage* HPImage7 = GameEngineImageManager::GetInst()->Find("HP7.bmp");
+	HPImage7->CutCount(1, 1);
+	GameEngineImage* HPImage6 = GameEngineImageManager::GetInst()->Find("HP6.bmp");
+	HPImage6->CutCount(1, 1);
+	GameEngineImage* HPImage5 = GameEngineImageManager::GetInst()->Find("HP5.bmp");
+	HPImage5->CutCount(1, 1);
+	GameEngineImage* HPImage4 = GameEngineImageManager::GetInst()->Find("HP4.bmp");
+	HPImage4->CutCount(1, 1);
+	GameEngineImage* HPImage3 = GameEngineImageManager::GetInst()->Find("HP3.bmp");
+	HPImage3->CutCount(1, 1);
+	GameEngineImage* HPImage2 = GameEngineImageManager::GetInst()->Find("HP2.bmp");
+	HPImage2->CutCount(1, 1);
+	GameEngineImage* HPImage1 = GameEngineImageManager::GetInst()->Find("HP1.bmp");
+	HPImage1->CutCount(1, 1);
+
+	BossHP_ = CreateRenderer((int)ORDER::BOSS, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
+	BossHP_->CreateAnimation("HP14.bmp", "HP14", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP13.bmp", "HP13", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP12.bmp", "HP12", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP11.bmp", "HP11", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP10.bmp", "HP10", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP9.bmp", "HP9", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP8.bmp", "HP8", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP7.bmp", "HP7", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP6.bmp", "HP6", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP5.bmp", "HP5", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP4.bmp", "HP4", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP3.bmp", "HP3", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP2.bmp", "HP2", 0, 0, 1.0f, false);
+	BossHP_->CreateAnimation("HP1.bmp", "HP1", 0, 0, 1.0f, false);
+	BossHP_->ChangeAnimation("HP14");
+
 	// ColMap
 	if (GetLevel()->GetNameCopy() == "BossLevel")
 	{
@@ -61,7 +109,7 @@ void Boss::Start()
 
 	// 상태
 	SetMonsterClass(MonsterClass::BOSS);
-	SetHP(150);
+	SetHP(14);
 	SetSpeed(50); // Need to chk : Speed
 
 	// Index 설정
@@ -99,6 +147,74 @@ void Boss::Update()
 	UpdateDirection();
 	UpdateAttack();
 	UpdateMove();
+	UpdateHP();
+}
+
+void Boss::UpdateHP()
+{
+	switch (GetHP())
+	{
+	case 0:
+		BossHP_->SetAlpha(0);
+		HPUI_->SetAlpha(0);
+		break;
+	case 1:
+		BossHP_->ChangeAnimation("HP1");
+		BossHP_->SetPivot(float4(-50.5f, -176.0f));
+		break;
+	case 2:
+		BossHP_->ChangeAnimation("HP2");
+		BossHP_->SetPivot(float4(-46.0f, -176.0f));
+		break;
+	case 3:
+		BossHP_->ChangeAnimation("HP3");
+		BossHP_->SetPivot(float4(-42.5f, -176.0f));
+		break;
+	case 4:
+		BossHP_->ChangeAnimation("HP4");
+		BossHP_->SetPivot(float4(-38.5f, -176.0f));
+		break;
+	case 5:
+		BossHP_->ChangeAnimation("HP5");
+		BossHP_->SetPivot(float4(-35.0f, -176.0f));
+		break;
+	case 6:
+		BossHP_->ChangeAnimation("HP6");
+		BossHP_->SetPivot(float4(-31.0f, -176.0f));
+		break;
+	case 7:
+		BossHP_->ChangeAnimation("HP7");
+		BossHP_->SetPivot(float4(-27.0f, -176.0f));
+		break;
+	case 8:
+		BossHP_->ChangeAnimation("HP8");
+		BossHP_->SetPivot(float4(-23.5f, -176.0f));
+		break;
+	case 9:
+		BossHP_->ChangeAnimation("HP9");
+		BossHP_->SetPivot(float4(-20.0f, -176.0f));
+		break;
+	case 10:
+		BossHP_->ChangeAnimation("HP10");
+		BossHP_->SetPivot(float4(-16.0f, -176.0f));
+		break;
+	case 11:
+		BossHP_->ChangeAnimation("HP11");		
+		BossHP_->SetPivot(float4(-12.5f, -176.0f));
+		break;
+	case 12:
+		BossHP_->ChangeAnimation("HP12");
+		BossHP_->SetPivot(float4(-8.5f, -176.0f));
+		break;
+	case 13:
+		BossHP_->ChangeAnimation("HP13");
+		BossHP_->SetPivot(float4(-5.0f, -176.0f));
+		break;
+	case 14:
+		BossHP_->ChangeAnimation("HP14");
+		BossHP_->SetPivot(float4(0.0f, -176.0f));
+		break;
+	}
 }
 
 void Boss::UpdateMove()

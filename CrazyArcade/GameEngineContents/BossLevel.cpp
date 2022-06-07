@@ -68,7 +68,7 @@ void BossLevel::Loading()
 		////// ¸ó½ºÅÍ //////
 		ColMapImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 
-		Boss* Seal = CreateActor<Boss>((int)ORDER::PLAYER);
+		Boss* Seal = CreateActor<Boss>((int)ORDER::BOSS);
 		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
 		Monster::BOSS_COUNT++;
 

@@ -166,7 +166,7 @@ void Monster1Level::Loading()
 		Crocodile2->SetPosition(Areas_[175].GetCenter());
 		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
 		Monster::LV1_MON_COUNT++;
-
+		// LV1_MON_COUNT를 ++ 할지 아니면 한번에 세팅하고 줄일지 고민
 	}
 
 

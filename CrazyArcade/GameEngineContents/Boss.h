@@ -54,7 +54,10 @@ private:
     int CheckIndex_;
     int AreaChangeCount_;
     int RandomAction_;
-    bool EndAttack_;
+    bool EndAttack_;	
+    GameEngineRenderer* BossHP_;
+    GameEngineRenderer* HPUI_;
+    Boss* Boss_;
 
 private:
     void UpdateAttack();
@@ -64,4 +67,5 @@ private:
     bool SameYLine();
     void RollAttack();
     void WaterAttack();
+    void UpdateHP();
 };
