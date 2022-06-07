@@ -85,7 +85,7 @@ void MapFront::Start()
 		GameEngineRenderer* Y4 = CreateRenderer("Monster1Y4.bmp", static_cast<int>(ORDER::PLAYER));
 		Y4->SetPivot({ 0,-120 });
 		GameEngineRenderer* Y6 = CreateRenderer("Monster1Y6.bmp", static_cast<int>(ORDER::PLAYER));
-		Y6->SetPivot({ 0,0 });
+		Y6->SetPivot({ 0,-40 });
 		GameEngineRenderer* Y8 = CreateRenderer("Monster1Y8.bmp", static_cast<int>(ORDER::PLAYER));
 		Y8->SetPivot({ 0,40 });
 		GameEngineRenderer* Y9 = CreateRenderer("Monster1Y9.bmp", static_cast<int>(ORDER::PLAYER));
