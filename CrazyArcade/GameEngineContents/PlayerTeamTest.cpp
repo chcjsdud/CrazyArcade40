@@ -103,7 +103,7 @@ void PlayerTeamTest::Loading()
 			}
 		}
 	}
-
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
