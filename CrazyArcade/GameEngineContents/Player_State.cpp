@@ -189,7 +189,8 @@ void Player::AttackUpdate()
 	{
 		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom_->SetMapTile(MapTile_);
-		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, 3);
+
+		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_);
 
 		//BlockType block = Boom->CheckTile(MainPlayer_1->GetPosition());
 		//체크타일이 웨이브면 -> Damaged
@@ -203,7 +204,7 @@ void Player::AttackUpdate()
 	{
 		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom_->SetMapTile(MapTile_);
-		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, 3);
+		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_);
 
 		ChangeState(PlayerState::Move);
 		return;

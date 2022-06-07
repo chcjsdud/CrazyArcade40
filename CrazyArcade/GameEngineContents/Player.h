@@ -58,6 +58,7 @@ class GameEngineCollision;
 class MapGameObject;
 class MapBackGround;
 class BlockTile;
+class ItemBlockTile;
 class Player : public GameEngineActor
 {
 public:
@@ -101,6 +102,7 @@ private:
 	bool IsBoomblock;
 
 protected:
+
 	void SetSpeed(float _CurSpeed)
 	{
 		CurSpeed_ = _CurSpeed;
@@ -132,6 +134,7 @@ protected:
 	}
 
 	void PlayerInfoUpdate();
+	void ItemCheck(Player* _Player, ItemType _ItemType);
 
 	void SpeedUpdate();
 	void AttackCountUpdate();
@@ -160,6 +163,8 @@ protected:
 private:
 	//블럭 체크하는 함수
 	BlockType CheckBlockTile(float4 _Pos);
+	ItemType CheckItem(float4 _Pos);
+
 	BlockType CurBlockType1_;
 	BlockType CurBlockType2_;
 
@@ -168,6 +173,8 @@ private:
 	BlockType UpBlock;
 	BlockType DownBlock;
 
+	ItemType CurItemType1_;
+	ItemType CurItemType2_;
 
 	void TileCheckResultUpdate(BlockType _CurBlockType);
 	void TileCheckResult();

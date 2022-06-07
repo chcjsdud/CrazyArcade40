@@ -86,7 +86,7 @@ void CampLevel::Loading()
 
 //	bubble_->CreateBoom({ 200,40 }, 3);
 
-//	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
+	Item_->CreateItem({ 100,380 }, (ItemType::Fluid));
 
 
 
@@ -95,27 +95,6 @@ void CampLevel::Loading()
 		GameEngineInput::GetInst()->CreateKey("CreatBoom", VK_SPACE);
 	}
 
-	//if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
-	//{
-	//	Player::MainPlayer_1 = nullptr;
-	//}
-
-	//if (nullptr != Player::MainPlayer_2)
-	//{
-	//	Player::MainPlayer_2 = nullptr;
-	//}
-
-	//Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	//Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	//Player::MainPlayer_1->SetPosition({560.f, 500.f});
-	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
-	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	//Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
-	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	//Player::MainPlayer_2->SetPosition({200.f, 200.f});
-	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
@@ -130,6 +109,22 @@ void CampLevel::Update()
 
 void CampLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1 = nullptr;
+	}
+
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2 = nullptr;
+	}
+
+	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	Player::MainPlayer_1->SetPosition({ 100.f, 340.f });
+	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 }
 

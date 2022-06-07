@@ -6,6 +6,7 @@
 #include "MapGameObject.h"
 #include "MapBackGround.h"
 #include "GameEngine/GameEngine.h"
+#include "GameItemObject.h"
 
 Player* Player::MainPlayer_1 = nullptr;
 Player* Player::MainPlayer_2 = nullptr;
@@ -258,14 +259,200 @@ void Player::Move(float _CurSpeed)
 }
 
 void Player::PlayerInfoUpdate()
+{	
+	if (Type == PlayerType::Player1)
+	{
+		float4 Pos = MainPlayer_1->GetPosition();
+		CurItemType1_ = CheckItem(Pos + float4{ -20.0f,-20.0f });
+
+		ItemCheck(MainPlayer_1, CurItemType1_);
+	}
+
+	if (nullptr != MainPlayer_2)
+	{
+		if (Type == PlayerType::Player2)
+		{
+			float4 Pos = MainPlayer_2->GetPosition();
+			CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
+
+			ItemCheck(MainPlayer_2, CurItemType2_);
+		}
+	}
+}
+
+void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 {
-	//SpeedUpdate();
-	//AttackCountUpdate();
-	//AttackPowerUpdate();
+	CurCharacter = GetCharacter();
+
+	switch (_ItemType)
+	{
+	case ItemType::Roller:
+	{
+		switch (CurCharacter)
+		{
+		case Character::BAZZI:
+		{
+			MaxSpeed_ = 9.f;
+
+			if (CurSpeed_ >= MaxSpeed_)
+			{
+				return;
+			}
+		}
+		break;
+		case Character::LUXMARID:
+		{
+			MaxSpeed_ = 9.f;
+
+			if (CurSpeed_ >= MaxSpeed_)
+			{
+				return;
+			}
+		}
+		break;
+		case Character::DAO:
+		{
+			MaxSpeed_ = 7.f;
+
+			if (CurSpeed_ >= MaxSpeed_)
+			{
+				return;
+			}
+		}
+		default:
+			break;
+		}
+
+		_Player->CurSpeed_ += 1;
+	}
+	break;
+	case ItemType::Bubble:
+	{
+		switch (CurCharacter)
+		{
+		case Character::BAZZI:
+		{
+			MaxAttCount_ = 6;
+
+			if (CurAttCount_ >= MaxAttCount_)
+			{
+				return;
+			}
+		}
+		break;
+		case Character::LUXMARID:
+		{
+			MaxAttCount_ = 9;
+
+			if (CurAttCount_ >= MaxAttCount_)
+			{
+				return;
+			}
+		}
+		break;
+		case Character::DAO:
+		{
+			MaxAttCount_ = 10;
+
+			if (CurAttCount_ >= MaxAttCount_)
+			{
+				return;
+			}
+		}
+		default:
+			break;
+		}
+
+		_Player->CurAttCount_ += 1;
+	}
+	break;
+	case ItemType::Fluid:
+	{
+		switch (CurCharacter)
+		{
+		case Character::BAZZI:
+		{
+			MaxAttPower_ = 7;
+
+			if (CurAttPower_ >= MaxAttPower_)
+			{
+				return;
+			}
+		}
+		break;
+		case Character::LUXMARID:
+		{
+			MaxAttPower_ = 6;
+
+			if (CurAttPower_ >= MaxAttPower_)
+			{
+				return;
+			}
+		}
+		break;
+		case Character::DAO:
+		{
+			MaxAttPower_ = 7;
+
+			if (CurAttPower_ >= MaxAttPower_)
+			{
+				return;
+			}
+		}
+		default:
+			break;
+		}
+
+		_Player->CurAttCount_ += 1;
+	}
+	break;
+	case ItemType::RedDevil:
+	{
+		switch (CurCharacter)
+		{
+		case Character::BAZZI:
+		{
+			MaxSpeed_ = 9;
+
+			CurSpeed_ = MaxSpeed_;
+		}
+		break;
+		case Character::LUXMARID:
+		{
+			MaxSpeed_ = 9;
+
+			CurSpeed_ = MaxSpeed_;
+		}
+		break;
+		case Character::DAO:
+		{
+			MaxSpeed_ = 7;
+
+			CurSpeed_ = MaxSpeed_;
+		}
+		default:
+			break;
+		}
+	}
+	break;
+	case ItemType::Glove:
+	{
+
+	}
+	break;
+	case ItemType::Shoes:
+	{
+
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 void Player::SpeedUpdate()
 {
+
 }
 
 void Player::AttackCountUpdate()
@@ -432,11 +619,11 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			PlayerAnimationRender_->SetAlpha(0);
 		}
 		break;
-		case BlockType::ItemBlock:
-		{
-			break;
-		
-		}
+		//case BlockType::ItemBlock:		// 아이템 체크하는 부분 
+		//{
+		//	PlayerInfoUpdate();
+		//}
+		//break;
 		case BlockType::BoomBlock:
 		{
 			IsBoomblock = true;
@@ -946,9 +1133,6 @@ void Player::Update()
 
 	MonsterCollisionCheck();
 
-	//PlayerInfoUpdate();
-
-
 
 	DebugModeSwitch();
 }
@@ -1249,4 +1433,20 @@ BlockType Player::CheckBlockTile(float4 _Pos)
 	{
 		return Tiles_->BlockType_;
 	}
+}
+
+ItemType Player::CheckItem(float4 _Pos)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	ItemBlockTile* Tiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_ == nullptr)
+	{
+		return ItemType::Max;
+	}
+	else
+	{
+		return Tiles_->ItemType_;
+	}
+
+	return ItemType();
 }
