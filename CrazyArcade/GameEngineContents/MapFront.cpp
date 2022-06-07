@@ -23,6 +23,7 @@ void MapFront::Start()
 		Y12->SetPivot({ 0,200 });
 		GameEngineRenderer* Y13 = CreateRenderer("CampY13.bmp", static_cast<int>(ORDER::PLAYER));
 		Y13->SetPivot({ 0,240 });
+		MapFrontImg_ = CreateRenderer("Camp_FrontCenter.bmp", static_cast<int>(ORDER::PLAYER));
 	}	
 	else if ("CemetoryLevel" == GetLevel()->GetNameCopy())
 	{

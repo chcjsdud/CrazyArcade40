@@ -14,6 +14,7 @@ public:
 	MapFront& operator=(const MapFront& _Other) = delete;
 	MapFront& operator=(MapFront&& _Other) noexcept = delete;
 
+	GameEngineRenderer* MapFrontImg_;
 protected:
 
 private:

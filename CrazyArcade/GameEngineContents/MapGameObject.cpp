@@ -251,11 +251,13 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	else if (_Box == "MONSTERBLOCK5")
 	{
 		Block_->Renderer->SetImage("MonsterBlock5.bmp");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
 		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK6")
 	{
 		Block_->Renderer->SetImage("MonsterBlock6.bmp");
+		Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 20 });
 		Block_->BlockType_ = BlockType::FixBlock;
 	}
 	else if (_Box == "MONSTERBLOCK7")
@@ -286,7 +288,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 	{
 		return;
 	}
-	BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::EFFECT));
+	BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 	Boom_->BlockType_ = BlockType::BoomBlock;
 	Boom_->Renderer = CreateRenderer();
 	Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });

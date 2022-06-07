@@ -109,7 +109,7 @@ void PlayerTeamTest::Loading()
 		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 		BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 	}
-
+	YSortOn(static_cast<int>(ORDER::PLAYER));
 
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
