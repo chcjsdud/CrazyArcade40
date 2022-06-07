@@ -476,6 +476,10 @@ void CrazyArcade::GameLoop()
     {
         GameEngine::GetInst().ChangeLevel("MapTeamTest");
     }
+    if (true == GameEngineInput::GetInst()->IsDown("VillageLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("VillageLevel");
+    }
     if (true == GameEngineInput::GetInst()->IsDown("PlayerTeamTest"))
     {
         GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
