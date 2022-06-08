@@ -38,13 +38,27 @@ enum class BlockType
 
 enum class ItemType
 {
-	Roller,
-	Bubble,
-	Fluid,
-	RedDevil,
-	Glove,
-	Shoes,
-	Max
+	Max,
+	Roller,//스피드+1
+	Bubble,//풍선갯수+1
+	Fluid,//물줄기+1
+	UltraBubble,//물줄기Max
+	RedDevil,//스피드MAx
+	Devil,//입출력 반전
+	Shoes,//물풍선 킥
+
+	Niddle,//탈출
+	Shield,//쉴드동안무적
+	SuperJump,//한칸 점프
+
+	Turtle,
+	SpaceShip,
+	Owl,
+
+	Bubble_Dark,
+	Bubble_Boss,
+	Bubble_Default
+
 };
 enum class UIType
 {

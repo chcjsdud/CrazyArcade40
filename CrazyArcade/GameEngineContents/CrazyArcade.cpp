@@ -427,6 +427,31 @@ void CrazyArcade::GameInit()
     //아이템 이미지
     GameEngineImage* Fluid = GameEngineImageManager::GetInst()->Find("Fluid.bmp");
     Fluid->CutCount(6, 1);
+    GameEngineImage* Roller = GameEngineImageManager::GetInst()->Find("Roller.bmp");
+    Roller->CutCount(6, 1);
+    GameEngineImage* Bubble = GameEngineImageManager::GetInst()->Find("Bubble.bmp");
+    Bubble->CutCount(6, 1);
+    GameEngineImage* UltraBubble = GameEngineImageManager::GetInst()->Find("UltraBubble.bmp");
+    UltraBubble->CutCount(6, 1);
+    GameEngineImage* RedDevil = GameEngineImageManager::GetInst()->Find("RedDevil.bmp");
+    RedDevil->CutCount(6, 1);
+    GameEngineImage* Devil = GameEngineImageManager::GetInst()->Find("Devil.bmp");
+    Devil->CutCount(6, 1);
+    GameEngineImage* Shoes = GameEngineImageManager::GetInst()->Find("Shoes.bmp");
+    Shoes->CutCount(6, 1);
+    GameEngineImage* Niddle = GameEngineImageManager::GetInst()->Find("Niddle.bmp");
+    Niddle->CutCount(6, 1);
+    GameEngineImage* Shield = GameEngineImageManager::GetInst()->Find("Shield.bmp");
+    Shield->CutCount(6, 1);
+    GameEngineImage* SuperJump = GameEngineImageManager::GetInst()->Find("SuperJump.bmp");
+    SuperJump->CutCount(6, 1);
+    GameEngineImage* Turtle = GameEngineImageManager::GetInst()->Find("Turtle.bmp");
+    Turtle->CutCount(6, 1);
+    GameEngineImage* SpaceShip = GameEngineImageManager::GetInst()->Find("SpaceShip.bmp");
+    SpaceShip->CutCount(6, 1);
+    GameEngineImage* Owl = GameEngineImageManager::GetInst()->Find("Owl.bmp");
+    Owl->CutCount(6, 1);
+
     //맵 박스, 오브젝트이미지
     GameEngineImage* CampMoveBox2 = GameEngineImageManager::GetInst()->Find("CampMoveBox2.bmp");
     CampMoveBox2->CutCount(3, 1);

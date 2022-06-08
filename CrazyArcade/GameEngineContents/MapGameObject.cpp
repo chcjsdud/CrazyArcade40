@@ -620,7 +620,7 @@ void MapGameObject::SetGameItem()
 			{
 				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock)
 				{
-					ItemValue_ = static_cast<ItemType>(ItemRandom.RandomInt(0, 5));
+					ItemValue_ = static_cast<ItemType>(ItemRandom.RandomInt(1, 7));
 					MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
 				}
 			}
