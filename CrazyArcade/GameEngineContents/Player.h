@@ -126,6 +126,8 @@ protected:
 		MaxAttCount_ = _MaxAttCount;
 	}
 
+	void SetCollision(GameEngineCollision* _Collision);
+
 	void PlayerInfoUpdate();
 	void ItemCheck(Player* _Player, ItemType _ItemType);
 

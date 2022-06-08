@@ -228,13 +228,13 @@ void Player::DamagedUpdate()
 	}
 
 	Move(CurSpeed_);
-	StagePixelCheck(0.05f);
+	StagePixelCheck(0.2f);
 
-	//if (5.f < GetAccTime())
-	//{
-	//	ChangeState(PlayerState::Fade);
-	//	return;
-	//}
+	if (5.f < GetAccTime())
+	{
+		ChangeState(PlayerState::Fade);
+		return;
+	}
 
 	//if (PlayerAnimationRender_->IsEndAnimation())
 	//{
@@ -244,11 +244,13 @@ void Player::DamagedUpdate()
 
 }
 
+
 void Player::RevivalUpdate()
 {
 	if (PlayerAnimationRender_->IsEndAnimation())
 	{
 		ChangeState(PlayerState::Idle);
+		ChangeDirText_ = "Down";
 		return;
 	}
 }
@@ -271,7 +273,7 @@ void Player::FadeUpdate()
 
 
 	
-	StagePixelCheck(0.05f);
+	StagePixelCheck(0.2f);
 
 }
 
