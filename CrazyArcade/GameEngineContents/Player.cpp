@@ -475,7 +475,7 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_->On();
 
 		SetAttCount(1);
-		SetAttPower(1.f);			// 일단 10배
+		SetAttPower(3.f);			// 일단 10배
 		SetSpeed(5.f);
 
 		SetMaxAttCount(6);

@@ -21,7 +21,7 @@ MapGameObject::~MapGameObject()
 void MapGameObject::Start()
 {
 	SetPosition({ 0.0f, 0.0f });
-
+	GameItem_ = GetLevel()->FindActor<GameItemObject>("Item");
 }
 
 void MapGameObject::Update()
@@ -32,7 +32,7 @@ void MapGameObject::Update()
 }
 void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	GameItem_ = GetLevel()->FindActor<GameItemObject>("Item");
+
 }
 BlockType MapGameObject::CheckTile(float4 _Pos) {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
@@ -298,7 +298,10 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		Check->Power_ = _Power;
 		BoomBlockTiles_.push_back(Check);
 	}
-	else
+	else if (Check != nullptr)
+	{
+		return;
+	}
 	{
 		BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 		Boom_->BlockType_ = BlockType::BoomBlock;
@@ -351,6 +354,7 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 {
 
+
 	for (int i = 0; i < BoomBlockTiles_.size(); i++)
 	{
 		BoomBlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
@@ -359,6 +363,10 @@ void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 			float4 _Poss = BoomBlockTiles_[i]->TilePos_;
 			float _Power = BoomBlockTiles_[i]->Power_;
 			MapTile_->DeleteTile(BoomBlockTiles_[i]->TileIndex_.X, BoomBlockTiles_[i]->TileIndex_.Y);
+		//	if (Tiles_ != nullptr && Ti_->BlockType_ == BlockType::ItemBlock)
+		//	{
+		//		GameItemObject::GameItemObject_->MapTile_->DeleteTile(BoomBlockTiles_[i]->TileIndex_.X, BoomBlockTiles_[i]->TileIndex_.Y);
+		//	}
 			BoomBlockTiles_.erase(BoomBlockTiles_.begin() + i);
 			BubblePop(_Poss, _Power);//폭탄 지워진 자리에 웨이브 만들어줌
 		}
@@ -519,11 +527,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 
 			{
-				//GameItem_->CreateItem({ TileCenterPos_.x,TileCenterPos_.y }, Tiles_->ItemType_);
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-
-
-
+			//	GameItem_->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, Tiles_->ItemType_);
 
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
@@ -675,6 +680,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock)//------------------------------------------------부서지는벽
 			{
 				MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);
+			//	GameItem_->CreateItem({ float(TilePos.X + i) * 40,float(TilePos.Y) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 			}
@@ -822,6 +828,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 			{
 				MapTile_->DeleteTile(TilePos.X , TilePos.Y + i);
+			//	GameItem_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y + i) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -969,6 +976,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽//밀리는상자
 			{
 				MapTile_->DeleteTile(TilePos.X, TilePos.Y -i);
+			//	GameItem_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y - i) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
