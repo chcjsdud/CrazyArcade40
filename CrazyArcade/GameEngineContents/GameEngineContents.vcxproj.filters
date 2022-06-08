@@ -145,6 +145,9 @@
     <ClInclude Include="PlayerFaceIconUI.h">
       <Filter>Actor\UI\Play</Filter>
     </ClInclude>
+    <ClInclude Include="PlayNickName.h">
+      <Filter>Actor\UI\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -299,6 +302,9 @@
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFaceIconUI.cpp">
+      <Filter>Actor\UI\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayNickName.cpp">
       <Filter>Actor\UI\Play</Filter>
     </ClCompile>
   </ItemGroup>

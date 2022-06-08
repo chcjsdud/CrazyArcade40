@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineContents/ContentsEnum.h>
 
 class GameEngineBackGroundRenderer_;
 class PlayerFaceIconUI : public GameEngineActor
@@ -21,12 +22,23 @@ protected:
 private:
 	void Start() override;
 	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 
-	GameEngineRenderer* PlayerFaceIconUIRenderer_;
+	GameEngineRenderer* PlayerFaceIconUIRenderer_1P;
+	GameEngineRenderer* PlayerFaceIconUIRenderer_2P;
 
-	float BlinkTime_ = 0.0f;
-	float CryTime_ = 0.0f;
-	bool islive = true;
-private:
+	float BlinkTime_1P;
+	float CryTime_1P;
+	bool Islive_1P;
+
+	float BlinkTime_2P;
+	float CryTime_2P;
+	bool Islive_2P;
+
+	bool onetime;
+
+	Character CharacterType_1P;
+	Character CharacterType_2P;
+
 };
 

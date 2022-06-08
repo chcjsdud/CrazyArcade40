@@ -12,7 +12,14 @@ enum class ORDER
 	BOSS,
 	UI
 };
-
+enum class BlockDir
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	MAX
+};
 enum class BlockType
 {
 	FixBlock,// 안밀리는 타일
@@ -52,4 +59,13 @@ enum class UIType
 	Time = 21,
 	Mouse = 22,
 
+};
+
+enum class Character
+{
+	BAZZI,
+	LUXMARID,
+	DAO,
+
+	MAX,
 };

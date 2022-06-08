@@ -53,6 +53,7 @@ Player::Player()
 	, IsReady(true)
 	, AttMoveTime_(0.0f)
 	, MapTile_(nullptr)
+	, IsLive(true)
 {
 }
 Player::~Player()
@@ -108,11 +109,10 @@ void Player::Move(float _CurSpeed)
 				ChangeDirText_ = "Down";
 			}
 
-
-			if ( (true == GameEngineInput::GetInst()->IsUp("1PRight") && CheckDir_ == PlayerDir::Right) 
-				|| ((true == GameEngineInput::GetInst()->IsUp("1PLeft") && CheckDir_ == PlayerDir::Left))
-				|| ((true == GameEngineInput::GetInst()->IsUp("1PUp") && CheckDir_ == PlayerDir::Up))
-				|| ((true == GameEngineInput::GetInst()->IsUp("1PDown")&& CheckDir_ == PlayerDir::Down)))
+			if ((true == GameEngineInput::GetInst()->IsUp("1PRight") && CheckDir_ == PlayerDir::Right)
+				|| (true == GameEngineInput::GetInst()->IsUp("1PLeft") && CheckDir_ == PlayerDir::Left)
+				|| (true == GameEngineInput::GetInst()->IsUp("1PUp") && CheckDir_ == PlayerDir::Up)
+				|| (true == GameEngineInput::GetInst()->IsUp("1PDown") && CheckDir_ == PlayerDir::Down))
 			{
 				CheckDir_ = PlayerDir::None;
 			}
@@ -184,7 +184,7 @@ void Player::Move(float _CurSpeed)
 
 		if (CurState_ != PlayerState::Ready)
 		{
-
+			
 			if (true == GameEngineInput::GetInst()->IsDown("2PRight"))
 			{
 				CheckDir_ = PlayerDir::Right;
@@ -208,13 +208,13 @@ void Player::Move(float _CurSpeed)
 
 
 			if ((true == GameEngineInput::GetInst()->IsUp("2PRight") && CheckDir_ == PlayerDir::Right)
-				|| ((true == GameEngineInput::GetInst()->IsUp("2PLeft") && CheckDir_ == PlayerDir::Left))
-				|| ((true == GameEngineInput::GetInst()->IsUp("2PUp") && CheckDir_ == PlayerDir::Up))
-				|| ((true == GameEngineInput::GetInst()->IsUp("2PDown") && CheckDir_ == PlayerDir::Down)))
+				|| (true == GameEngineInput::GetInst()->IsUp("2PLeft") && CheckDir_ == PlayerDir::Left)
+				|| (true == GameEngineInput::GetInst()->IsUp("2PUp") && CheckDir_ == PlayerDir::Up)
+				|| (true == GameEngineInput::GetInst()->IsUp("2PDown") && CheckDir_ == PlayerDir::Down))
 			{
 				CheckDir_ = PlayerDir::None;
 			}
-
+			
 
 			///////////////////////////////////////////////////////////
 
@@ -256,6 +256,11 @@ void Player::Move(float _CurSpeed)
 
 	//SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
 
+}
+
+void Player::SetCollision(GameEngineCollision* _Collision)
+{
+	_Collision->GetActor();
 }
 
 void Player::PlayerInfoUpdate()
@@ -619,11 +624,11 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			PlayerAnimationRender_->SetAlpha(0);
 		}
 		break;
-		//case BlockType::ItemBlock:		// 아이템 체크하는 부분 
-		//{
-		//	PlayerInfoUpdate();
-		//}
-		//break;
+		case BlockType::ItemBlock:		// 아이템 체크하는 부분 
+		{
+			PlayerInfoUpdate();
+		}
+		break;
 		case BlockType::BoomBlock:
 		{
 			IsBoomblock = true;
@@ -849,10 +854,10 @@ void Player::PlayerCollisionUpdate()
 
 void Player::MonsterCollisionCheck()
 {
-	std::vector<GameEngineCollision*> ColList;
-
 	if (Type == PlayerType::Player1)
 	{
+		std::vector<GameEngineCollision*> ColList;
+
 		if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 		{
 			for (size_t i = 0; i < ColList.size(); i++)
@@ -861,18 +866,70 @@ void Player::MonsterCollisionCheck()
 				return;
 			}
 		}
+
+		// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+		{
+			std::vector<GameEngineCollision*> ColList;
+		
+			if (MainPlayer_1->CurState_ == PlayerState::Damaged
+				|| MainPlayer_1->CurState_ == PlayerState::Fade)
+			{
+				if (true == Collision1P_->CollisionResult("2PColl", ColList, CollisionType::Rect, CollisionType::Rect))
+				{
+					if (MainPlayer_2->CurState_ == PlayerState::Damaged
+						|| MainPlayer_2->CurState_ == PlayerState::Fade)
+					{
+						return;
+					}
+
+					for (size_t i = 0; i < ColList.size(); i++)
+					{
+						ChangeState(PlayerState::Die);
+						return;
+					}
+				}
+			}
+		}
+	
 	}
 
 	if (nullptr != MainPlayer_2)
 	{
 		if (Type == PlayerType::Player2)
 		{
+			std::vector<GameEngineCollision*> ColList;
+
 			if (true == Collision2P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 			{
 				for (size_t i = 0; i < ColList.size(); i++)
 				{
 					ChangeState(PlayerState::Die);
 					return;
+				}
+			}
+
+			// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+			{
+				std::vector<GameEngineCollision*> ColList;
+
+				
+				if (MainPlayer_2->CurState_ == PlayerState::Damaged
+					|| MainPlayer_2->CurState_ == PlayerState::Fade)
+				{
+					if (true == Collision2P_->CollisionResult("1PColl", ColList, CollisionType::Rect, CollisionType::Rect))
+					{
+						if (MainPlayer_1->CurState_ == PlayerState::Damaged
+							|| MainPlayer_1->CurState_ == PlayerState::Fade)
+						{
+							return;
+						}
+					
+						for (size_t i = 0; i < ColList.size(); i++)
+						{
+							ChangeState(PlayerState::Die);
+							return;
+						}
+					}
 				}
 			}
 		}

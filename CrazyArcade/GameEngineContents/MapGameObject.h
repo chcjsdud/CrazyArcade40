@@ -12,6 +12,7 @@ public:
 	BlockTile()
 		: BlockType_(BlockType::Max),
 		ItemType_(ItemType::Max),
+		BlockDir_(BlockDir::MAX),
 		BlockCol(nullptr),
 		Renderer(nullptr),
 		IsWaveDeath(false),
@@ -23,7 +24,8 @@ public:
 		Power_(),
 		CenterWaveX_(0),
 		CenterWaveY_(0),
-		DeathAniTime_(0.0f)
+		DeathAniTime_(0.0f),
+		MoveNextTilePos_()
 	{
 
 	}
@@ -51,6 +53,8 @@ public:
 	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
+	BlockDir BlockDir_;
+	float4 MoveNextTilePos_;
 	std::vector<BlockTile*> MyRightWave_;
 	std::vector<BlockTile*> MyLeftWave_;
 	std::vector<BlockTile*> MyDownWave_;
@@ -95,8 +99,13 @@ private:
 	void MakeLeftWave(TileIndex _Pos, float _Power);
 	void MakeDownWave(TileIndex _Pos, float _Power);
 	void MakeUpWave(TileIndex _Pos, float _Power);
+
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
-
+	float4 Move_;
+public:
+	void PushBlock(float4 _Pos, BlockDir _Dir);
+	void BlockMoveUpdate();
+	std::vector<BlockTile*> MoveBlocks_;
 };

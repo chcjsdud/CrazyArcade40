@@ -29,6 +29,7 @@ void MapGameObject::Update()
 	WaveDeathAni();
 	DestroyWave();
 	DestroyBoom();
+	BlockMoveUpdate();
 }
 void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
@@ -85,7 +86,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
 	Block_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
-
+	Block_->TilePos_=TileCenterPos_;
 	if (_Box == "WALLBLOCK")
 	{
 		Block_->Renderer->SetImage("TIleBase.BMP");
@@ -321,8 +322,115 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 
 
 }
+void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* PushTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (PushTile_ == nullptr)
+	{
+		return;
+	}
+
+	if (BlockDir::LEFT == _Dir)
+	{
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y);
+		if (NextTile_ == nullptr)
+		{
+			PushTile_->BlockDir_ = BlockDir::LEFT;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X - 1, TileIndex_.Y);
+			PushTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(PushTile_);
+		}
+	}
+	if (BlockDir::RIGHT == _Dir)
+	{
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y);
+		if (NextTile_ == nullptr)
+		{
+			PushTile_->BlockDir_ = BlockDir::RIGHT;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X + 1, TileIndex_.Y);
+			PushTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(PushTile_);
+		}
+	}
+	if (BlockDir::DOWN == _Dir)
+	{
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y + 1);
+		if (NextTile_ == nullptr)
+		{
+			PushTile_->BlockDir_ = BlockDir::DOWN;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y + 1);
+			PushTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(PushTile_);
+		}
+	}
+	if (BlockDir::UP == _Dir)
+	{
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y - 1);
+		if (NextTile_ == nullptr)
+		{
+			PushTile_->BlockDir_ = BlockDir::UP;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y - 1);
+			PushTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(PushTile_);
+		}
+	}
 
 
+}
+void MapGameObject::BlockMoveUpdate()
+{
+
+	for (size_t i = 0; i < MoveBlocks_.size(); i++)
+	{
+
+		if (BlockDir::LEFT == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime()*100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
+		if (BlockDir::RIGHT == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
+		if (BlockDir::DOWN == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
+		if (BlockDir::UP == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
+	}
+}
 
 void MapGameObject::BubblePop(float4 _Pos, float Power)
 {
