@@ -7,9 +7,9 @@ enum class ORDER
 	BlOCK,
 	STAGE,
 	MAPOBJECT,
-	MONSTER,
 	EFFECT,
 	PLAYER,
+	BOSS,
 	UI
 };
 enum class BlockDir
