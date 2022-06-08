@@ -32,7 +32,7 @@ void MapGameObject::Update()
 }
 void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	GameItem_ = GetLevel()->FindActor< GameItemObject>("GameItem");
+	GameItem_ = GetLevel()->FindActor<GameItemObject>("Item");
 }
 BlockType MapGameObject::CheckTile(float4 _Pos) {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
@@ -469,9 +469,7 @@ void MapGameObject::DestroyWave()
 
 void MapGameObject::SetGameItem()
 {
-	ItemType Value;
 	GameEngineRandom ItemRandom;
-	Value = static_cast<ItemType>(ItemRandom.RandomInt(0, 5));
 	for (int x = 0; x < 15; x++)
 	{
 		for (int y = 0; y < 13; y++)
@@ -480,7 +478,8 @@ void MapGameObject::SetGameItem()
 			{
 				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock)
 				{
-					MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = Value;
+					ItemValue_ = static_cast<ItemType>(ItemRandom.RandomInt(0, 5));
+					MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
 				}
 			}
 		}
@@ -520,8 +519,11 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 
 			{
+				//GameItem_->CreateItem({ TileCenterPos_.x,TileCenterPos_.y }, Tiles_->ItemType_);
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-				GameItem_->CreateItem(TileCenterPos_, Tiles_->ItemType_);
+
+
+
 
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료

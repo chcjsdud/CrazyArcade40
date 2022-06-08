@@ -89,6 +89,7 @@ private:
 	std::vector<BlockTile*> BoomBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 	GameItemObject* GameItem_;
+	ItemType ItemValue_;
 
 	void MakeRightWave(TileIndex _Pos, float _Power);
 	void MakeLeftWave(TileIndex _Pos, float _Power);

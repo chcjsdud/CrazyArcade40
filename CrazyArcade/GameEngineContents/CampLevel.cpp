@@ -77,12 +77,14 @@ void CampLevel::Loading()
 
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor ¸¸µé°í
 
+	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+
 	bubble_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
 	bubble_->SetGameItem();
 
-	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
-	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+
 
 //	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
 
