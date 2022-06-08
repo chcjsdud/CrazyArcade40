@@ -5,6 +5,7 @@
 
 class GameEngineRenderer;
 class GameEngineCollision;
+class GameItemObject;
 class BlockTile : public Tile
 {
 public:
@@ -77,14 +78,17 @@ public:
 	void CreateBlock(float4 _Pos, std::string _Box);
 	void BubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power);
+	void SetGameItem();
 protected:
 	void Start() override;
 	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel);
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	std::vector<BlockTile*> WaveBlockTiles_;
 	std::vector<BlockTile*> BoomBlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
+	GameItemObject* GameItem_;
 
 	void MakeRightWave(TileIndex _Pos, float _Power);
 	void MakeLeftWave(TileIndex _Pos, float _Power);

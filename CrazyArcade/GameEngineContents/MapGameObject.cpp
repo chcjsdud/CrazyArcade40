@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
@@ -29,7 +30,10 @@ void MapGameObject::Update()
 	DestroyWave();
 	DestroyBoom();
 }
-
+void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+	GameItem_ = GetLevel()->FindActor< GameItemObject>("GameItem");
+}
 BlockType MapGameObject::CheckTile(float4 _Pos) {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	if (0 > TileIndex_.X)
@@ -452,6 +456,27 @@ void MapGameObject::DestroyWave()
 	}
 }
 
+void MapGameObject::SetGameItem()
+{
+	ItemType Value;
+	GameEngineRandom ItemRandom;
+	Value = static_cast<ItemType>(ItemRandom.RandomInt(0, 5));
+	for (int x = 0; x < 15; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			if(MapTile_->GetTile<BlockTile>(x, y) !=nullptr)
+			{
+				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock)
+				{
+					MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = Value;
+				}
+			}
+		}
+	}
+
+}
+
 void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 {
 
@@ -475,17 +500,18 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
 			ItemBlockTile* Ti_ = MapTile_->GetTile<ItemBlockTile>(TilePos.X - i, TilePos.Y);
 
-
 			if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WallBlock) //-----------------------------------------안부서지는 벽이 있을 때
 
 			{
 				IndexCount_ = i - 1;//이만큼 가면된다.
-				i = PowerCount_ + 1;//여기서 for문 종료
+				i = PowerCount_ + 1;//여기서 for문 
 			}
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 
 			{
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
+				GameItem_->CreateItem(TileCenterPos_, Tiles_->ItemType_);
+
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨

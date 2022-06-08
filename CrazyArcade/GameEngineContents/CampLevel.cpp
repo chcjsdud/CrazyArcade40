@@ -72,60 +72,23 @@ void CampLevel::Loading()
 		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(11 * 40))), "WallBlock");
 		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 		BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
+
 	}
 
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
 
 	bubble_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
+	bubble_->SetGameItem();
 
 	Item_ = CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT), "Item");
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-//	bubble_->CreateBoom({ 40,40 }, 3);
-
-
-//	bubble_->CreateBoom({ 200,40 }, 3);
-
-//	Item_->CreateItem({ 200,380 }, (ItemType::Fluid));
-
-
-
-	if (false == GameEngineInput::GetInst()->IsKey("CreatBoom"))
-	{
-		GameEngineInput::GetInst()->CreateKey("CreatBoom", VK_SPACE);
-	}
-
-	//if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
-	//{
-	//	Player::MainPlayer_1 = nullptr;
-	//}
-
-	//if (nullptr != Player::MainPlayer_2)
-	//{
-	//	Player::MainPlayer_2 = nullptr;
-	//}
-
-	//Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	//Player::MainPlayer_1->SetCharacter(Character::BAZZI);
-	//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	//Player::MainPlayer_1->SetPosition({560.f, 500.f});
-	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
-	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	//Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
-	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	//Player::MainPlayer_2->SetPosition({200.f, 200.f});
-	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 
 void CampLevel::Update()
 {
-	if (GameEngineInput::GetInst()->IsDown("CreatBoom")==true)
-	{
-		bubble_->CreateBoom({ 200,380 }, 3);
-	}
 }
 
 void CampLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
