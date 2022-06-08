@@ -289,7 +289,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 	
-	if (Check == nullptr)
+	if (Check != nullptr)
 	{
 		return;
 	}
