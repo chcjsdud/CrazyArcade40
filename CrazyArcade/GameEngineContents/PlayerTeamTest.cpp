@@ -1,4 +1,5 @@
 #include"PlayerTeamTest.h"
+#include "GlobalUIName.h"
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngine.h>
 #include <GameEngine/GameEngineLevel.h>
@@ -24,6 +25,8 @@
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
 #include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
 #include "Area.h"
 #include <vector>
 
@@ -45,6 +48,8 @@ void PlayerTeamTest::Loading()
 	
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 	//CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
@@ -160,14 +165,14 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	}
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
 	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	Player::MainPlayer_2->SetCharacter(Character::DAO);
+	Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
 	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
 	Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
 	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
@@ -180,6 +185,15 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void PlayerTeamTest::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1->Death();
+	}
+
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2->Death();
+	}
 	//윈도우 마우스 보이기
 	ShowCursor(true);
 

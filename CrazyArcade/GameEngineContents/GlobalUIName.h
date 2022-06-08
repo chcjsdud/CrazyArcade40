@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "ContentsEnum.h"
 class GlobalUIName
 {
 private:
@@ -49,6 +50,28 @@ public:
 		RoomName_ = _Name;
 	}
 
+
+	inline void Set1P(int _Value)
+	{
+		Char_1P = _Value;
+	}
+
+	inline void Set2P(int _Value)
+	{
+		Char_2P = _Value;
+	}
+
+	inline int Get1PChar()
+	{
+		return Char_1P;
+	}
+
+	inline int Get2PChar()
+	{
+		return Char_2P;
+	}
+
+
 	bool Is1pUpdate()
 	{
 		return Is1pUpdate_;
@@ -83,6 +106,10 @@ private:
 	std::string NickName_1;
 	std::string NickName_2;
 	std::string RoomName_;
+	
+	int Char_1P;
+	int Char_2P;
+
 
 	bool Is1pUpdate_;
 	bool Is2pUpdate_;

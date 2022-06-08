@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 class GameEngineRenderer;
 class GameEngineCollision;
@@ -27,5 +28,6 @@ private:
 	void StartButtonClick();
 	GameEngineRenderer* StartRenderer_;
 	GameEngineCollision* StartCollision_;
+	GameEngineRandom Random_;
 };
 

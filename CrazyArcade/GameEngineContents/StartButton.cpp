@@ -1,4 +1,7 @@
 #include "StartButton.h"
+#include "GlobalUIName.h"
+#include "RoomCharaterSelectUI.h"
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineRenderer.h>
@@ -69,5 +72,13 @@ void StartButton::Update()
 
 void StartButton::StartButtonClick()
 {
+	if (4 == GlobalUIName::GetInst()->Get1PChar())
+	{
+		GlobalUIName::GetInst()->Set1P(Random_.RandomInt(0, 2));
+	}
+	if (4 == GlobalUIName::GetInst()->Get2PChar())
+	{
+		GlobalUIName::GetInst()->Set2P(Random_.RandomInt(0, 2));
+	}
 	GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
 }
