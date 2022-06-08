@@ -21,7 +21,6 @@ MapGameObject::~MapGameObject()
 void MapGameObject::Start()
 {
 	SetPosition({ 0.0f, 0.0f });
-	GameItem_ = GetLevel()->FindActor<GameItemObject>("Item");
 }
 
 void MapGameObject::Update()
@@ -299,10 +298,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		Check->Power_ = _Power;
 		BoomBlockTiles_.push_back(Check);
 	}
-	else if (Check != nullptr)
-	{
-		return;
-	}
+	else if (Check == nullptr)
 	{
 		BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 		Boom_->BlockType_ = BlockType::BoomBlock;
@@ -318,6 +314,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		Boom_->Power_ = _Power;
 		BoomBlockTiles_.push_back(Boom_);
 	}
+
 
 
 
@@ -622,7 +619,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 		}
 		else//맵에 안 부딪혔다면
 		{
-			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일위치
+			float4 TileCenterPos_ = MapTile_->GetWorldPostion(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 위치
 			BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TilePos.X - i, TilePos.Y);//현재 검사중인 타일 정보
 			ItemBlockTile* Ti_ = MapTile_->GetTile<ItemBlockTile>(TilePos.X - i, TilePos.Y);
 
@@ -633,11 +630,9 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 				i = PowerCount_ + 1;//여기서 for문 
 			}
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
-
 			{
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-			//	GameItem_->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, Tiles_->ItemType_);
-
+				GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -706,7 +701,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 
 			}
 		
-			else if (Tiles_ != nullptr && Ti_-> BlockType_ == BlockType::ItemBlock )//-----------------------------아이템이 있을때
+			 else if (Tiles_ != nullptr && Ti_-> BlockType_ == BlockType::ItemBlock )//-----------------------------아이템이 있을때
 			{
 				GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
 			}
@@ -788,7 +783,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock)//------------------------------------------------부서지는벽
 			{
 				MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);
-			//	GameItem_->CreateItem({ float(TilePos.X + i) * 40,float(TilePos.Y) * 40 }, Tiles_->ItemType_);
+				//GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X + i) * 40,float(TilePos.Y) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 			}
@@ -936,7 +931,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 			{
 				MapTile_->DeleteTile(TilePos.X , TilePos.Y + i);
-			//	GameItem_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y + i) * 40 }, Tiles_->ItemType_);
+			//	GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y+i) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -1084,7 +1079,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽//밀리는상자
 			{
 				MapTile_->DeleteTile(TilePos.X, TilePos.Y -i);
-			//	GameItem_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y - i) * 40 }, Tiles_->ItemType_);
+			//	GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y - i) * 40 }, Tiles_->ItemType_);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
