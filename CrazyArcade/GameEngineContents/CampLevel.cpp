@@ -146,7 +146,7 @@ void CampLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	}
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	//Player::MainPlayer_1->SetCharacter(GlobalUIName::GetInst()->Get1PChar());
+	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition({ 100.f, 340.f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);

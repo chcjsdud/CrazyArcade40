@@ -1,13 +1,18 @@
 #include"VillageLevel.h"
 #include"ContentsEnum.h"
+#include "GlobalUIName.h"
 #include "MapBackGround.h"
 #include "MapFront.h"
+#include "MapGameObject.h"
+#include"GameItemObject.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineWindow.h>
+#include<GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
-#include "MapGameObject.h"
+
+#include "Area.h"
 VillageLevel::VillageLevel()
 	: MapBackGround_(nullptr)
 	, MapFrontBackGround_(nullptr)
@@ -130,6 +135,23 @@ void VillageLevel::Update()
 
 void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
+
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1 = nullptr;
+	}
+
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2 = nullptr;
+	}
+
+	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
+	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	Player::MainPlayer_1->SetPosition({ 140.0f, 450.0f });
+	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
 }
 
 void VillageLevel::LevelChangeEnd(GameEngineLevel* _PrevLevel)
