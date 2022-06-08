@@ -12,7 +12,14 @@ enum class ORDER
 	PLAYER,
 	UI
 };
-
+enum class BlockDir
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	MAX
+};
 enum class BlockType
 {
 	FixBlock,// 안밀리는 타일
