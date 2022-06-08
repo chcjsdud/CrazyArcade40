@@ -252,7 +252,7 @@ protected:
 
 	void PlayerCollisionUpdate();
 
-	void MonsterCollisionCheck();
+	void CollisionCheck();
 
 	std::string GetCurrentLevel()
 	{

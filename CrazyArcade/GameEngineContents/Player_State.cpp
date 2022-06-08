@@ -49,6 +49,8 @@ void Player::JumpStart()
 void Player::AttackStart()
 {
 	AttMoveTime_ += GameEngineTime::GetDeltaTime();
+
+	GameEngineSound::SoundPlayOneShot("Attack.mp3");
 }
 
 void Player::DamagedStart()
@@ -60,6 +62,8 @@ void Player::DamagedStart()
 
 	AnimationName_ = "Damaged_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+
+	GameEngineSound::SoundPlayOneShot("Damaged.wav");
 }
 
 void Player::RevivalStart()
@@ -71,6 +75,8 @@ void Player::RevivalStart()
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 
 	CheckDir_ = PlayerDir::None;
+
+	GameEngineSound::SoundPlayOneShot("Revival.mp3");
 }
 
 void Player::FadeStart()
@@ -97,6 +103,8 @@ void Player::DieStart()
 
 	AnimationName_ = "Die_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+
+	GameEngineSound::SoundPlayOneShot("Die.mp3");
 }
 
 void Player::IdeOwlStart()

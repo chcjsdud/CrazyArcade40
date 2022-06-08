@@ -293,6 +293,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 	case ItemType::Roller:
 	{
+		_Player->CurSpeed_ += 1;
+
 		switch (CurCharacter)
 		{
 		case Character::BAZZI:
@@ -324,15 +326,17 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 				return;
 			}
 		}
+		break;
 		default:
 			break;
-		}
 
-		_Player->CurSpeed_ += 1;
+		}
 	}
 	break;
 	case ItemType::Bubble:
 	{
+		_Player->CurAttCount_ += 1;
+
 		switch (CurCharacter)
 		{
 		case Character::BAZZI:
@@ -364,11 +368,10 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 				return;
 			}
 		}
+		break;
 		default:
 			break;
 		}
-
-		_Player->CurAttCount_ += 1;
 	}
 	break;
 	case ItemType::Fluid:
@@ -404,6 +407,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 				return;
 			}
 		}
+		break;
 		default:
 			break;
 		}
@@ -419,6 +423,10 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		{
 			MaxSpeed_ = 9;
 
+			if (CurSpeed_ == MaxSpeed_)
+			{
+				return;
+			}
 			CurSpeed_ = MaxSpeed_;
 		}
 		break;
@@ -426,6 +434,10 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		{
 			MaxSpeed_ = 9;
 
+			if (CurSpeed_ == MaxSpeed_)
+			{
+				return;
+			}
 			CurSpeed_ = MaxSpeed_;
 		}
 		break;
@@ -433,26 +445,32 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		{
 			MaxSpeed_ = 7;
 
+			if (CurSpeed_ == MaxSpeed_)
+			{
+				return;
+			}
 			CurSpeed_ = MaxSpeed_;
 		}
+		break;
 		default:
 			break;
 		}
-	}
-	break;
-	case ItemType::Glove:
-	{
 
 	}
 	break;
 	case ItemType::Shoes:
 	{
-
+		// 물방울 던지기 
 	}
 	break;
 	default:
 		break;
 	}
+
+	// Devil
+	// Owl
+	// Turtle
+	// UFO
 }
 
 void Player::SpeedUpdate()
@@ -626,6 +644,8 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		break;
 		case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 		{
+			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
+
 			PlayerInfoUpdate();
 		}
 		break;
@@ -852,7 +872,7 @@ void Player::PlayerCollisionUpdate()
 	}
 }
 
-void Player::MonsterCollisionCheck()
+void Player::CollisionCheck()
 {
 	if (Type == PlayerType::Player1)
 	{
@@ -1188,7 +1208,7 @@ void Player::Update()
 	TileCheckResult();
 	FrontBlockCheck();
 
-	MonsterCollisionCheck();
+	CollisionCheck();
 
 
 	DebugModeSwitch();

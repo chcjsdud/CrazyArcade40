@@ -254,7 +254,7 @@ void CrazyArcade::GameInit()
     }
 
 
-    //플레이어 배찌
+    //플레이어
     {
         GameEngineDirectory ResourcesDir;
         ResourcesDir.MoveParent("CrazyArcade");
@@ -379,6 +379,22 @@ void CrazyArcade::GameInit()
             GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
         }
     }   
+    // 사운드
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("Sound");
+        ResourcesDir.Move("Effect");
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile();
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineSound::LoadRes(AllImageFileList[i].GetFullPath());
+        }
+    }
+    
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
     //////////물풍선 터지는 animationcut
