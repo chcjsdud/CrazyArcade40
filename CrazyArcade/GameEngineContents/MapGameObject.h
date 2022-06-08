@@ -25,13 +25,14 @@ public:
 		CenterWaveX_(0),
 		CenterWaveY_(0),
 		DeathAniTime_(0.0f),
-		MoveNextTilePos_()
+		MoveNextTilePos_(),
+		MoveOn(false)
 	{
 
 	}
 	~BlockTile()
 	{
-		if (Renderer != nullptr)
+		if (Renderer != nullptr&& MoveOn == false)
 		{
 			Renderer->Death();
 			Renderer = nullptr;
@@ -49,6 +50,7 @@ public:
 	int CenterWaveY_;
 	GameEngineRenderer* Renderer;
 	GameEngineCollision* BlockCol;
+	bool MoveOn;
 	float4 TilePos_;
 	TileIndex TileIndex_;
 	BlockType BlockType_;
