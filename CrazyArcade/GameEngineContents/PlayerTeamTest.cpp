@@ -23,6 +23,7 @@
 #include "TimeUI.h"
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
+#include "PlayNickName.h"
 #include "Area.h"
 #include <vector>
 
@@ -45,6 +46,7 @@ void PlayerTeamTest::Loading()
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<Mouse>((int)UIType::Mouse);
+	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 	//CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
 
 	{
