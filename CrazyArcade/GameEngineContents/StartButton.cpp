@@ -1,4 +1,7 @@
 #include "StartButton.h"
+#include "GlobalUIName.h"
+#include "RoomCharaterSelectUI.h"
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineRenderer.h>
@@ -69,5 +72,32 @@ void StartButton::Update()
 
 void StartButton::StartButtonClick()
 {
-	GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
+	if (4 == GlobalUIName::GetInst()->Get1PChar())
+	{
+		GlobalUIName::GetInst()->Set1P(Random_.RandomInt(0, 2));
+	}
+	if (4 == GlobalUIName::GetInst()->Get2PChar())
+	{
+		GlobalUIName::GetInst()->Set2P(Random_.RandomInt(0, 2));
+	}
+
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 1)
+	{
+		GameEngine::GetInst().ChangeLevel("VillageLevel");
+	}
+
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 2)
+	{
+		GameEngine::GetInst().ChangeLevel("CemetoryLevel");
+	}
+
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 3)
+	{
+		GameEngine::GetInst().ChangeLevel("CampLevel");
+	}
+	
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 4)
+	{
+		GameEngine::GetInst().ChangeLevel("Monster1Level");
+	}
 }

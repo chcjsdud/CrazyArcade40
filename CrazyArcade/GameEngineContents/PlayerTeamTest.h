@@ -2,6 +2,8 @@
 #include <GameEngine/GameEngineLevel.h>
 #include <GameEngine/GameEngineRenderer.h>
 
+
+
 class MapGameObject;
 class MapBackGround;
 class MapFront;
@@ -32,6 +34,7 @@ private:
 	GameEngineRenderer* MapColRenderer_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
+
 
 	Player* Player1_;
 	Player* Player2_;

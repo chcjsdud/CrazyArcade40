@@ -470,15 +470,16 @@ void CrazyArcade::GameInit()
     // Å° »ý¼º
     if (false == GameEngineInput::GetInst()->IsKey("TitleLevel"))
     {
+        GameEngineInput::GetInst()->CreateKey("StoryLevel", '3');
         GameEngineInput::GetInst()->CreateKey("TitleLevel", 'P');
+        GameEngineInput::GetInst()->CreateKey("TileMapEditorLevel", '0');
         GameEngineInput::GetInst()->CreateKey("MapTeamTest", '1');
         GameEngineInput::GetInst()->CreateKey("PlayerTeamTest", '2');
-        GameEngineInput::GetInst()->CreateKey("UITeamTest", '3');
+        //GameEngineInput::GetInst()->CreateKey("UITeamTest", '3');
 
         GameEngineInput::GetInst()->CreateKey("CampLevel", '4');
         GameEngineInput::GetInst()->CreateKey("VillageLevel", '5');
         GameEngineInput::GetInst()->CreateKey("LoginLevel", '6');
-        GameEngineInput::GetInst()->CreateKey("TileMapEditorLevel", '0');
 
         GameEngineInput::GetInst()->CreateKey("NextLevel", 'Z');
         GameEngineInput::GetInst()->CreateKey("Monster1Level", '7');
@@ -514,10 +515,21 @@ void CrazyArcade::GameInit()
 
 void CrazyArcade::GameLoop()
 {
+    if (true == GameEngineInput::GetInst()->IsDown("StoryLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("IntroLevel");
+    }
+
+    if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
+    {
+        GameEngine::GetInst().ChangeLevel("MapTeamTest");
+    }
+
     if (true == GameEngineInput::GetInst()->IsDown("Debug_Col"))
     {
         GameEngineLevel::IsDebugModeSwitch();
     }
+
     
     if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
     {
@@ -531,10 +543,10 @@ void CrazyArcade::GameLoop()
     {
         GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
     }
-    if (true == GameEngineInput::GetInst()->IsDown("UITeamTest"))
+   /* if (true == gameengineinput::getinst()->isdown("uiteamtest"))
     {
-        GameEngine::GetInst().ChangeLevel("UITeamTest");
-    }
+        gameengine::getinst().changelevel("uiteamtest");
+    }*/
     if (true == GameEngineInput::GetInst()->IsDown("CampLevel"))
     {
         GameEngine::GetInst().ChangeLevel("CampLevel");

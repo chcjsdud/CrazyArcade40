@@ -1,6 +1,8 @@
 #include "RoomCharaterSelectUI.h"
+#include "Player.h"
 #include "GlobalUIName.h"
 #include <Windows.h>
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineRenderer.h>
@@ -236,6 +238,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			ChoiceCharacter1P = 0;
+			GlobalUIName::GetInst()->Set1P(4);
 		}
 	}
 
@@ -245,6 +248,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			ChoiceCharacter1P = 1;
+			GlobalUIName::GetInst()->Set1P(0);
 		}
 	}
 
@@ -254,6 +258,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			ChoiceCharacter1P = 2;
+			GlobalUIName::GetInst()->Set1P(2);
 		}
 	}
 
@@ -263,6 +268,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 			true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			ChoiceCharacter1P = 3;
+			GlobalUIName::GetInst()->Set1P(1);
 		}
 	}
 
@@ -275,6 +281,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
 			{
 				ChoiceCharacter2P = 0;
+				GlobalUIName::GetInst()->Set2P(4);
 			}
 		}
 
@@ -284,6 +291,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
 			{
 				ChoiceCharacter2P = 1;
+				GlobalUIName::GetInst()->Set2P(0);
 			}
 		}
 
@@ -293,6 +301,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
 			{
 				ChoiceCharacter2P = 2;
+				GlobalUIName::GetInst()->Set2P(2);
 			}
 		}
 
@@ -302,6 +311,7 @@ void RoomCharaterSelectUI::ChoiceCharacter()
 				true == GameEngineInput::GetInst()->IsUp("RightMouse"))
 			{
 				ChoiceCharacter2P = 3;
+				GlobalUIName::GetInst()->Set2P(1);
 			}
 		}
 	}
@@ -520,6 +530,9 @@ void RoomCharaterSelectUI::LevelChangeStart(GameEngineLevel * _PrevLevel)
 {
 	ChoiceCharacter1P = 0;
 	ChoiceCharacter2P = 0;
+	GameEngineRandom a;
+	GlobalUIName::GetInst()->Set1P(4);
+	GlobalUIName::GetInst()->Set2P(4);
 	if (false == GlobalUIName::GetInst()->Is2pUpdate())
 	{
 		ChoiceCharacter2P = 5;
