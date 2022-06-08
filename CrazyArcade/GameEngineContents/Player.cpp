@@ -88,22 +88,22 @@ void Player::Move(float _CurSpeed)
 
 		if (CurState_ != PlayerState::Ready)
 		{
-			if (true == GameEngineInput::GetInst()->IsDown("1PRight"))
+			if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
 			{
 				CheckDir_ = PlayerDir::Right;
 				ChangeDirText_ = "Right";
 			}
-			if (true == GameEngineInput::GetInst()->IsDown("1PLeft"))
+			if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
 			{
 				CheckDir_ = PlayerDir::Left;
 				ChangeDirText_ = "Left";
 			}
-			if (true == GameEngineInput::GetInst()->IsDown("1PUp"))
+			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
 			{
 				CheckDir_ = PlayerDir::Up;
 				ChangeDirText_ = "Up";
 			}
-			if (true == GameEngineInput::GetInst()->IsDown("1PDown"))
+			if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
 			{
 				CheckDir_ = PlayerDir::Down;
 				ChangeDirText_ = "Down";
@@ -185,22 +185,22 @@ void Player::Move(float _CurSpeed)
 		if (CurState_ != PlayerState::Ready)
 		{
 			
-			if (true == GameEngineInput::GetInst()->IsDown("2PRight"))
+			if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
 			{
 				CheckDir_ = PlayerDir::Right;
 				ChangeDirText_ = "Right";
 			}
-			if (true == GameEngineInput::GetInst()->IsDown("2PLeft"))
+			if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
 			{
 				CheckDir_ = PlayerDir::Left;
 				ChangeDirText_ = "Left";
 			}
-			if (true == GameEngineInput::GetInst()->IsDown("2PUp"))
+			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
 			{
 				CheckDir_ = PlayerDir::Up;
 				ChangeDirText_ = "Up";
 			}
-			if (true == GameEngineInput::GetInst()->IsDown("2PDown"))
+			if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
 			{
 				CheckDir_ = PlayerDir::Down;
 				ChangeDirText_ = "Down";
