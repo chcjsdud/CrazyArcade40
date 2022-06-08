@@ -8,6 +8,7 @@ GlobalUIName::GlobalUIName()
 	, RoomName_("")
 	, Char_1P(0)
 	, Char_2P(2)
+	, ChoiceMap_(1)
 {
 }
 

@@ -11,6 +11,7 @@
 #include "MapChoiceUI.h"
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngine.h>
+#include "GlobalUIName.h"
 
 RoomLevel::RoomLevel()
 {
@@ -39,6 +40,7 @@ void RoomLevel::Update()
 }
 void RoomLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+	GlobalUIName::GetInst()->SetChoiceMap(1);
 	SetTextColor(GameEngine::BackBufferDC(), RGB(0, 0,0));
 	ShowCursor(false);
 }

@@ -72,6 +72,16 @@ public:
 	}
 
 
+	inline void SetChoiceMap(int _Value)
+	{
+		ChoiceMap_ = _Value;
+	}
+
+	inline int GetChoiceMap()
+	{
+		return ChoiceMap_;
+	}
+
 	bool Is1pUpdate()
 	{
 		return Is1pUpdate_;
@@ -109,7 +119,7 @@ private:
 	
 	int Char_1P;
 	int Char_2P;
-
+	int ChoiceMap_;
 
 	bool Is1pUpdate_;
 	bool Is2pUpdate_;

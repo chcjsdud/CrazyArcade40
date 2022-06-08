@@ -1,4 +1,5 @@
 #include "ChoiceMap.h"
+#include "GlobalUIName.h"
 #include <Windows.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineWindow.h>
@@ -127,6 +128,7 @@ void ChoiceMap::Update()
 		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			ChoiceMap_ = TempChoiceMap_;
+			GlobalUIName::GetInst()->SetChoiceMap(ChoiceMap_);
 			this->Off();
 		}
 	}

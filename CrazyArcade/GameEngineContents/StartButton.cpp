@@ -80,5 +80,24 @@ void StartButton::StartButtonClick()
 	{
 		GlobalUIName::GetInst()->Set2P(Random_.RandomInt(0, 2));
 	}
-	GameEngine::GetInst().ChangeLevel("PlayerTeamTest");
+
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 1)
+	{
+		GameEngine::GetInst().ChangeLevel("VillageLevel");
+	}
+
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 2)
+	{
+		GameEngine::GetInst().ChangeLevel("CemetoryLevel");
+	}
+
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 3)
+	{
+		GameEngine::GetInst().ChangeLevel("CampLevel");
+	}
+	
+	if (GlobalUIName::GetInst()->GetChoiceMap() == 4)
+	{
+		GameEngine::GetInst().ChangeLevel("Monster1Level");
+	}
 }

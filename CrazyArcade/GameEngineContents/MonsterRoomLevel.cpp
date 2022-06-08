@@ -1,4 +1,5 @@
 #include "MonsterRoomLevel.h"
+#include "GlobalUIName.h"
 #include "Mouse.h"
 #include "MapChoiceUI.h"
 #include "ContentsEnum.h"
@@ -33,6 +34,7 @@ void MonsterRoomLevel::Update()
 }
 void MonsterRoomLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+	GlobalUIName::GetInst()->SetChoiceMap(4);
 	ShowCursor(false);
 }
 
