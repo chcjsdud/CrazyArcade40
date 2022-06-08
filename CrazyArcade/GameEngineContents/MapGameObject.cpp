@@ -386,14 +386,46 @@ void MapGameObject::BlockMoveUpdate()
 		{
 			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
 			{
-				Move_ += float4::LEFT * GameEngineTime::GetDeltaTime()*0.01f;
-				MoveBlocks_[i]->Renderer->SetPivot(float4{ MoveBlocks_[i]->TilePos_.x ,
-					MoveBlocks_[i]->TilePos_.y + 20 }+ Move_ * GameEngineTime::GetDeltaTime() * 0.01f);
-				MoveBlocks_[i]->TilePos_ = float4{ float4{ MoveBlocks_[i]->TilePos_.x ,
-					MoveBlocks_[i]->TilePos_.y + 20 } + Move_ * GameEngineTime::GetDeltaTime() * 0.01f };
+				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime()*100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
 			}
 		}
-		
+		if (BlockDir::RIGHT == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
+		if (BlockDir::DOWN == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
+		if (BlockDir::UP == MoveBlocks_[i]->BlockDir_)
+		{
+			if (MoveBlocks_[i]->TilePos_.x > MoveBlocks_[i]->MoveNextTilePos_.x)
+			{
+				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 100.0f;
+				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
+				MovePos_ += Move_;
+				MoveBlocks_[i]->Renderer->SetPivot(MovePos_);
+				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+		}
 	}
 }
 
