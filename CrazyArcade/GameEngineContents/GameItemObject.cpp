@@ -17,7 +17,6 @@ GameItemObject::~GameItemObject()
 void GameItemObject::Start()
 {
 	GameItemObject_ = this;
-	LevelRegist("Item");
 }
 void GameItemObject::Update()
 {
@@ -28,8 +27,6 @@ void GameItemObject::Update()
 // 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
 void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 {
-
-	
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	ItemBlockTile* Tiles_ = MapTile_->CreateTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
@@ -55,9 +52,4 @@ ItemType GameItemObject::CheckItem(float4 _Pos)
 	{
 		return Tiles_->ItemType_;
 	}
-}
-
-void GameItemObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
-{
-
 }

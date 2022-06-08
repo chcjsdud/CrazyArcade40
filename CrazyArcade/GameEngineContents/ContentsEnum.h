@@ -22,6 +22,7 @@ enum class BlockDir
 };
 enum class BlockType
 {
+	Max,
 	FixBlock,// 안밀리는 타일
 	PullBlock,//밀수있는 타일
 	BushBlock, // 플레이어가 들어갈 수 있는 타일
@@ -31,8 +32,8 @@ enum class BlockType
 	WaveBlock, //물풍선 터질때 생기는 타일
 	WallBlock,//안부서지는 타일
 	NoBlock,
-	NiddleBlock,//가시있는 블록
-	Max
+	NiddleBlock//가시있는 블록
+
 };
 
 enum class ItemType

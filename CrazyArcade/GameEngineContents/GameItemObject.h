@@ -67,7 +67,6 @@ protected:
 	void Start() override;
 	void Update() override;
 
-	void LevelChangeStart(GameEngineLevel* _PrevLevel);
 private:
 
 };
