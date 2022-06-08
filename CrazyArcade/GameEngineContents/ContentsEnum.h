@@ -60,3 +60,12 @@ enum class UIType
 	Mouse = 22,
 
 };
+
+enum class Character
+{
+	BAZZI,
+	LUXMARID,
+	DAO,
+
+	MAX,
+};

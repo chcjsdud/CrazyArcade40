@@ -43,14 +43,6 @@ enum class PlayerType
 	Max,
 };
 
-enum class Character
-{
-	BAZZI,
-	LUXMARID,
-	DAO,
-
-	MAX,
-};
 
 class GameEngineImage;
 class GameEngineCollision;
@@ -100,6 +92,7 @@ protected:
 private:
 	PlayerDir CheckDir_;
 	bool IsBoomblock;
+	bool IsLive;
 
 protected:
 
@@ -215,6 +208,11 @@ public:
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{
 		MapTile_ = _MapTile;
+	}
+
+	inline bool GetIslive()
+	{
+		return IsLive;
 	}
 
 protected:

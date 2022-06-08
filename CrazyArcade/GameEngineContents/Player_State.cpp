@@ -90,6 +90,7 @@ void Player::DieStart()
 {
 	IsMove = false;
 	MoveDir = float4::ZERO;
+	IsLive = false;
 
 	ReSetAccTime();
 	AddAccTime(Time_);

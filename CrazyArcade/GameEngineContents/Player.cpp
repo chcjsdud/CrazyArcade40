@@ -53,6 +53,7 @@ Player::Player()
 	, IsReady(true)
 	, AttMoveTime_(0.0f)
 	, MapTile_(nullptr)
+	, IsLive(true)
 {
 }
 Player::~Player()
@@ -108,11 +109,10 @@ void Player::Move(float _CurSpeed)
 				ChangeDirText_ = "Down";
 			}
 
-
-			if ( (true == GameEngineInput::GetInst()->IsUp("1PRight") && CheckDir_ == PlayerDir::Right) 
-				|| ((true == GameEngineInput::GetInst()->IsUp("1PLeft") && CheckDir_ == PlayerDir::Left))
-				|| ((true == GameEngineInput::GetInst()->IsUp("1PUp") && CheckDir_ == PlayerDir::Up))
-				|| ((true == GameEngineInput::GetInst()->IsUp("1PDown")&& CheckDir_ == PlayerDir::Down)))
+			if ((true == GameEngineInput::GetInst()->IsUp("1PRight") && CheckDir_ == PlayerDir::Right)
+				|| (true == GameEngineInput::GetInst()->IsUp("1PLeft") && CheckDir_ == PlayerDir::Left)
+				|| (true == GameEngineInput::GetInst()->IsUp("1PUp") && CheckDir_ == PlayerDir::Up)
+				|| (true == GameEngineInput::GetInst()->IsUp("1PDown") && CheckDir_ == PlayerDir::Down))
 			{
 				CheckDir_ = PlayerDir::None;
 			}
@@ -184,7 +184,7 @@ void Player::Move(float _CurSpeed)
 
 		if (CurState_ != PlayerState::Ready)
 		{
-
+			
 			if (true == GameEngineInput::GetInst()->IsDown("2PRight"))
 			{
 				CheckDir_ = PlayerDir::Right;
@@ -208,13 +208,13 @@ void Player::Move(float _CurSpeed)
 
 
 			if ((true == GameEngineInput::GetInst()->IsUp("2PRight") && CheckDir_ == PlayerDir::Right)
-				|| ((true == GameEngineInput::GetInst()->IsUp("2PLeft") && CheckDir_ == PlayerDir::Left))
-				|| ((true == GameEngineInput::GetInst()->IsUp("2PUp") && CheckDir_ == PlayerDir::Up))
-				|| ((true == GameEngineInput::GetInst()->IsUp("2PDown") && CheckDir_ == PlayerDir::Down)))
+				|| (true == GameEngineInput::GetInst()->IsUp("2PLeft") && CheckDir_ == PlayerDir::Left)
+				|| (true == GameEngineInput::GetInst()->IsUp("2PUp") && CheckDir_ == PlayerDir::Up)
+				|| (true == GameEngineInput::GetInst()->IsUp("2PDown") && CheckDir_ == PlayerDir::Down))
 			{
 				CheckDir_ = PlayerDir::None;
 			}
-
+			
 
 			///////////////////////////////////////////////////////////
 
