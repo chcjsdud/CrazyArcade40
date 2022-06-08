@@ -17,6 +17,7 @@ GameItemObject::~GameItemObject()
 void GameItemObject::Start()
 {
 	GameItemObject_ = this;
+	LevelRegist("Item");
 }
 void GameItemObject::Update()
 {
@@ -58,5 +59,5 @@ ItemType GameItemObject::CheckItem(float4 _Pos)
 
 void GameItemObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	LevelRegist("GameItem");
+
 }
