@@ -102,14 +102,8 @@ void PlayerTeamTest::Loading()
 				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
 			}
 		}
-		BlockSet->CreateBlock(float4(static_cast<float>(3* 40), (static_cast<float>(0 * 40))), "WallBlock");
-		BlockSet->CreateBlock(float4(static_cast<float>(4 * 40), (static_cast<float>(0 * 40))), "WallBlock");
-		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(1 * 40))), "WallBlock");
-		BlockSet->CreateBlock(float4(static_cast<float>(3 * 40), (static_cast<float>(11	* 40))), "WallBlock");
-		BlockSet->CreateBlock(float4(static_cast<float>(11 * 40), (static_cast<float>(12 * 40))), "WallBlock");
-		BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(12 * 40))), "WallBlock");
 	}
-	YSortOn(static_cast<int>(ORDER::PLAYER));
+
 
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
@@ -171,12 +165,13 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 
 	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	Player::MainPlayer_2->SetCharacter(Character::LUXMARID);
+	Player::MainPlayer_2->SetCharacter(Character::DAO);
 	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[170].GetCenter());
+	Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
 	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 
-	
+	Character Char1 = Player::MainPlayer_1->GetCharacter();
+	Character Char = Player::MainPlayer_2->GetCharacter();
 	//À©µµ¿ì ¸¶¿ì½º ¼û±è
 	ShowCursor(false);
 }

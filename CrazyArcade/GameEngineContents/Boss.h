@@ -40,10 +40,9 @@ protected:
     void Update();
     void UpdateMove() override;
     void UpdateDirection() override;
+    void TakeDamage() override;
 
 private:
-    float AttTime_;
-    float StayIdleTime_;
     Player* Player_;
     //BossState BassState_;
     //, BossState_(BossState::IDLE)
@@ -54,7 +53,12 @@ private:
     int CheckIndex_;
     int AreaChangeCount_;
     int RandomAction_;
-    bool EndAttack_;
+    bool EndAttack_;	
+    GameEngineRenderer* BossHP_;
+    GameEngineRenderer* WaterAttack_;
+    GameEngineRenderer* HPUI_;
+    MapGameObject* BossBoom_;
+    Boss* Boss_;
 
 private:
     void UpdateAttack();
@@ -64,4 +68,5 @@ private:
     bool SameYLine();
     void RollAttack();
     void WaterAttack();
+    void UpdateHP();
 };

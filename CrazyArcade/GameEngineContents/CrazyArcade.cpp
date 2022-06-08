@@ -461,7 +461,7 @@ void CrazyArcade::GameInit()
 
     CreateLevel<TileMapEditorLevel>("TileMapEditorLevel");
 
-    ChangeLevel("VillageLevel");
+    ChangeLevel("BossLevel");
 
 }
 
@@ -475,6 +475,10 @@ void CrazyArcade::GameLoop()
     if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
     {
         GameEngine::GetInst().ChangeLevel("MapTeamTest");
+    }
+    if (true == GameEngineInput::GetInst()->IsDown("VillageLevel"))
+    {
+        GameEngine::GetInst().ChangeLevel("VillageLevel");
     }
     if (true == GameEngineInput::GetInst()->IsDown("PlayerTeamTest"))
     {

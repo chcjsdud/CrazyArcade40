@@ -288,23 +288,34 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
-	if (Check != nullptr)
+
+	if (Check != nullptr && Check->BlockType_ == BlockType::BushBlock)
 	{
-		return;
+		Check->BlockType_ = BlockType::BoomBlock;
+		Check->TileIndex_ = TileIndex_;
+		Check->TilePos_ = _Pos;
+		Check->DeathTime_ = 3.0f;
+		Check->Power_ = _Power;
+		BoomBlockTiles_.push_back(Check);
 	}
-	BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
-	Boom_->BlockType_ = BlockType::BoomBlock;
-	Boom_->Renderer = CreateRenderer();
-	Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
-	Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
-	Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
-	Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.2f, true);
-	Boom_->Renderer->ChangeAnimation("BubbleDefault");
-	Boom_->TileIndex_ = TileIndex_;
-	Boom_->TilePos_ = _Pos;
-	Boom_->DeathTime_ = 3.0f;
-	Boom_->Power_ = _Power;
-	BoomBlockTiles_.push_back(Boom_);
+	else
+	{
+		BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+		Boom_->BlockType_ = BlockType::BoomBlock;
+		Boom_->Renderer = CreateRenderer();
+		Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
+		Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.2f, true);
+		Boom_->Renderer->ChangeAnimation("BubbleDefault");
+		Boom_->TileIndex_ = TileIndex_;
+		Boom_->TilePos_ = _Pos;
+		Boom_->DeathTime_ = 3.0f;
+		Boom_->Power_ = _Power;
+		BoomBlockTiles_.push_back(Boom_);
+	}
+
+
 
 }
 
@@ -526,8 +537,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock)
 			{
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-				IndexCount_ = i - 1;
-				i = static_cast<int>(_Power) + 1;
+
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
@@ -669,8 +679,6 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock)
 			{
 				MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);
-				IndexCount_ = i - 1;
-				i = static_cast<int>(_Power) + 1;
 			}
 
 			else if (Tiles_ != nullptr&& Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
@@ -819,8 +827,6 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock) //------------------------------------------------부서지는벽
 			{
 				MapTile_->DeleteTile(TilePos.X, TilePos.Y + i);
-				IndexCount_ = i - 1;
-				i = static_cast<int>(_Power) + 1;
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
@@ -968,8 +974,6 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock)
 			{
 				MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);
-				IndexCount_ = i - 1;
-				i = static_cast<int>(_Power) + 1;
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::PullBlock)
 			{

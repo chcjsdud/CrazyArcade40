@@ -166,7 +166,7 @@ void Monster1Level::Loading()
 		Crocodile2->SetPosition(Areas_[175].GetCenter());
 		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
 		Monster::LV1_MON_COUNT++;
-
+		// LV1_MON_COUNT를 ++ 할지 아니면 한번에 세팅하고 줄일지 고민
 	}
 
 
@@ -205,11 +205,10 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetCharacter(Character::DAO);
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
-
 }
 void Monster1Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
