@@ -55,6 +55,30 @@ Player::Player()
 	, MapTile_(nullptr)
 	, IsLive(true)
 {
+	BazziAttCount_ = 1;
+	MaridAttCount_ = 2;
+	DaoAttCount_ = 1;
+
+	BazziAttPower_ = 1.f;
+	MaridAttPower_ = 1.f;
+	DaoAttPower_ = 1.f;
+
+	BazziSpeed_ = 5.f;
+	MaridSpeed_ = 5.f;
+	DaoSpeed_ = 5.f;
+
+	BazziMaxAttCount_ = 6;
+	MaridMaxAttCount_ = 9;
+	DaoMaxAttCount_ = 10;
+
+	BazziMaxAttPower_ = 7.f;
+	MaridMaxAttPower_ = 6.f;
+	DaoMaxAttPower_ = 7.f;
+
+	BazziMaxSpeed_ = 9.f;
+	MaridMaxpeed_ = 9.f;
+	DaoMaxSpeed_ = 7.f;
+
 }
 Player::~Player()
 {
@@ -125,18 +149,6 @@ void Player::Move(float _CurSpeed)
 			if (true == IsLeftMove)
 			{
 				MoveDir.x = -MovePos_;
-				//if (true == GameEngineInput::GetInst()->IsPress("1PUp"))			// 1. Left + UP 동시에 눌렸을 경우 => UP
-				//{
-				//	MoveDir.y = -MovePos;
-				//}
-				//else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Left + Down 동시에 눌렸을 경우 => Down
-				//{
-				//	MoveDir.y = MovePos;
-				//}
-				//else
-				//{
-				//	MoveDir.x = -MovePos;
-				//}
 			}
 
 		}
@@ -145,18 +157,6 @@ void Player::Move(float _CurSpeed)
 			if (true == IsRightMove)
 			{
 				MoveDir.x = MovePos_;
-				//if (true == GameEngineInput::GetInst()->IsPress("1PUp"))		// 1. Right + UP 동시에 눌렸을 경우 => UP
-				//{
-				//	MoveDir.y = -MovePos;
-				//}
-				//else if (true == GameEngineInput::GetInst()->IsPress("1PDown"))		// 2. Right + Down 동시에 눌렸을 경우 => Down
-				//{
-				//	MoveDir.y = MovePos;
-				//}
-				//else
-				//{
-				//	MoveDir.x = MovePos;
-				//}
 			}
 
 		}
@@ -268,7 +268,9 @@ void Player::PlayerInfoUpdate()
 	if (Type == PlayerType::Player1)
 	{
 		float4 Pos = MainPlayer_1->GetPosition();
-		CurItemType1_ = CheckItem(Pos + float4{ -20.0f,-20.0f });
+		//CurItemType1_ = CheckItem(Pos + float4{ -20.0f,-20.0f });
+	
+		CurItemType1_ = GameItemObject::GameItemObject_->CheckItem(Pos);
 
 		ItemCheck(MainPlayer_1, CurItemType1_);
 	}
@@ -278,7 +280,8 @@ void Player::PlayerInfoUpdate()
 		if (Type == PlayerType::Player2)
 		{
 			float4 Pos = MainPlayer_2->GetPosition();
-			CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
+			CurItemType2_ = GameItemObject::GameItemObject_->CheckItem(Pos);
+			//CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
 
 			ItemCheck(MainPlayer_2, CurItemType2_);
 		}
@@ -468,6 +471,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	}
 
 	// Devil
+	// UltraDevil
 	// Owl
 	// Turtle
 	// UFO
@@ -495,15 +499,15 @@ void Player::CharTypeUpdate()
 	{
 		BazziRenderer_->On();
 		PlayerAnimationRender_ = BazziRenderer_;
-		PlayerAnimationRender_->On();
+		PlayerAnimationRender_->On();;
 
-		SetAttCount(1);
-		SetAttPower(3.f);			// 일단 10배
-		SetSpeed(5.f);
+		SetAttCount(BazziAttCount_);
+		SetAttPower(BazziAttPower_);
+		SetSpeed(BazziSpeed_);
 
-		SetMaxAttCount(6);
-		SetMaxAttPower(7.f);
-		SetMaxSpeed(9.f);
+		SetMaxAttCount(BazziMaxAttCount_);
+		SetMaxAttPower(BazziMaxAttPower_);
+		SetMaxSpeed(BazziMaxSpeed_);
 	}
 	break;
 	case Character::LUXMARID:
@@ -512,13 +516,13 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_ = MaridRenderer_;
 		PlayerAnimationRender_->On();
 
-		SetAttCount(2);
-		SetAttPower(1.f);			// 일단 10배
-		SetSpeed(5.f);
+		SetAttCount(MaridAttCount_);
+		SetAttPower(MaridAttPower_);
+		SetSpeed(MaridSpeed_);
 
-		SetMaxAttCount(9);
-		SetMaxAttPower(6.f);
-		SetMaxSpeed(8.f);
+		SetMaxAttCount(MaridMaxAttCount_);
+		SetMaxAttPower(MaridMaxAttPower_);
+		SetMaxSpeed(MaridMaxpeed_);
 	}
 	break;
 	case Character::DAO:
@@ -527,13 +531,13 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_ = DaoRenderer_;
 		PlayerAnimationRender_->On();
 
-		SetAttCount(1);
-		SetAttPower(1.f);			// 일단 10배
-		SetSpeed(5.f);
+		SetAttCount(DaoAttCount_);
+		SetAttPower(DaoAttPower_);
+		SetSpeed(DaoSpeed_);
 
-		SetMaxAttCount(10);
-		SetMaxAttPower(7.f);
-		SetMaxSpeed(7.f);
+		SetMaxAttCount(DaoMaxAttCount_);
+		SetMaxAttPower(DaoMaxAttPower_);
+		SetMaxSpeed(DaoMaxSpeed_);
 	}
 	break;
 	}
@@ -617,10 +621,11 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		case BlockType::WaveBlock:
 		{
 			if (CurState_ != PlayerState::Die
+				&& CurState_ != PlayerState::DamageStart
 				&& CurState_ != PlayerState::Damaged
 				&& CurState_ != PlayerState::Fade)
 			{
-				ChangeState(PlayerState::Damaged);
+				ChangeState(PlayerState::DamageStart);
 				return;
 			}
 	
@@ -629,10 +634,11 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		case BlockType::BubbleBlock:
 		{
 			if (CurState_ != PlayerState::Die
+				&& CurState_ != PlayerState::DamageStart
 				&& CurState_ != PlayerState::Damaged
 				&& CurState_ != PlayerState::Fade)
 			{
-				ChangeState(PlayerState::Damaged);
+				ChangeState(PlayerState::DamageStart);
 				return;
 			}
 		}
@@ -640,13 +646,14 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		case BlockType::BushBlock:
 		{
 			PlayerAnimationRender_->SetAlpha(0);
+			
 		}
 		break;
 		case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 		{
 			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
-
-			PlayerInfoUpdate();
+			//int a = 0;
+			//PlayerInfoUpdate();
 		}
 		break;
 		case BlockType::BoomBlock:
@@ -662,6 +669,8 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		}
 		break;
 	}
+
+	PlayerInfoUpdate();
 }
 
 void Player::TileCheckResult()
@@ -959,6 +968,10 @@ void Player::CollisionCheck()
 
 void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+	if (CurrentLevel_ == "RoomLevel")
+	{
+		
+	}
 }
 
 void Player::Start()
@@ -987,6 +1000,8 @@ void Player::Start()
 		Bazzi3->CutCount(5, 4);
 		GameEngineImage* Bazzi = GameEngineImageManager::GetInst()->Find("Bazzi_1a.bmp");
 		Bazzi->CutCount(5, 18);
+		GameEngineImage* Bazzi4 = GameEngineImageManager::GetInst()->Find("Bazzi_4.bmp");
+		Bazzi4->CutCount(5, 7);
 
 		// 애니메이션
 
@@ -1006,8 +1021,9 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Move_Down", 21, 28, 0.1f, true);
 
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Damaged_", 60, 71, 0.2f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_1a.bmp", "Fade_", 72, 79, 0.25f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "DamagedStart_", 6, 10, 0.07f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "Damaged_", 11, 23, 0.2f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "Fade_", 24, 30, 0.25f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -1049,6 +1065,8 @@ void Player::Start()
 		Marid3->CutCount(5, 4);
 		GameEngineImage* Marid4 = GameEngineImageManager::GetInst()->Find("luxMarid_4.bmp");
 		Marid4->CutCount(5, 4);
+		GameEngineImage* Marid5 = GameEngineImageManager::GetInst()->Find("luxMarid_5.bmp");
+		Marid5->CutCount(5, 6);
 
 		// 애니메이션
 		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
@@ -1067,8 +1085,9 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Move_Down", 19, 23, 0.09f, true);
 
 		//MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Win_", 29, 36, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Damaged_", 39, 52, 0.2f, true); // 0.2   0.25
-		MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Fade_", 53, 59, 0.25f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_5.bmp", "DamagedStart_", 0, 4, 0.07f, false); // 0.2   0.25
+		MaridRenderer_->CreateAnimation("luxMarid_5.bmp", "Damaged_", 5, 18, 0.2f, true); // 0.2   0.25
+		MaridRenderer_->CreateAnimation("luxMarid_5.bmp", "Fade_", 19, 25, 0.25f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Die_", 0, 5, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -1117,6 +1136,8 @@ void Player::Start()
 		Dao3->CutCount(5, 4);
 		GameEngineImage* Dao4 = GameEngineImageManager::GetInst()->Find("Dao_4.bmp");
 		Dao4->CutCount(5, 4);
+		GameEngineImage* Dao5 = GameEngineImageManager::GetInst()->Find("Dao_5.bmp");
+		Dao5->CutCount(5, 6);
 
 		// 애니메이션
 		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
@@ -1135,8 +1156,9 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Move_Down", 19, 23, 0.09f, true);
 
 		//MaridRenderer_->CreateAnimation("luxMarid_1.bmp", "Win_", 29, 36, 0.1f, true);
-		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Damaged_", 39, 52, 0.2f, true);
-		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Fade_", 53, 59, 0.25f, false);
+		DaoRenderer_->CreateAnimation("Dao_5.bmp", "DamagedStart_", 0, 4, 0.07f, false); // 0.2   0.25
+		DaoRenderer_->CreateAnimation("Dao_5.bmp", "Damaged_", 5, 18, 0.2f, true); // 0.2   0.25
+		DaoRenderer_->CreateAnimation("Dao_5.bmp", "Fade_", 19, 25, 0.25f, false);
 		DaoRenderer_->CreateAnimation("Dao_2.bmp", "Die_", 0, 5, 0.15f, false);
 		DaoRenderer_->CreateAnimation("Dao_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -1190,7 +1212,7 @@ void Player::Start()
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
 
-		GameEngineInput::GetInst()->CreateKey("2POn", 'X');
+		//GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}
 
 	IsReady = true;
@@ -1401,6 +1423,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Attack:
 			AttackStart();
 			break;
+		case PlayerState::DamageStart:
+			DamagedStartStart();
+			break;
 		case PlayerState::Damaged:
 			DamagedStart();
 			break;
@@ -1456,6 +1481,9 @@ void Player::PlayerStateUpdate()
 		break;
 	case PlayerState::Attack:
 		AttackUpdate();
+		break;
+	case PlayerState::DamageStart:
+		DamagedStartUpdate();
 		break;
 	case PlayerState::Damaged:
 		DamagedUpdate();

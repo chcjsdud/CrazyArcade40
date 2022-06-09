@@ -12,6 +12,7 @@ enum class PlayerState
 	Move,
 	Jump,
 	Attack,
+	DamageStart,
 	Damaged,	// 물방울 갇혔을 때 1차 애니메이션
 	Revival,
 	Fade,		// 물방울 갇혔을 때 2차 애니메이션
@@ -76,12 +77,39 @@ protected:
 
 	// 플레이어 정보
 protected:
-	float CurSpeed_;			// 플레이어 속도 
-	float MaxSpeed_;
-	float CurAttPower_;		// 물줄기 길이
-	float MaxAttPower_;		// 최대 물줄기 길이
+	int BazziAttCount_;
+	int DaoAttCount_;
+	int MaridAttCount_;
+
+	float BazziAttPower_;
+	float DaoAttPower_;
+	float MaridAttPower_;
+
+	float BazziSpeed_;
+	float DaoSpeed_;
+	float MaridSpeed_;
+
+	int BazziMaxAttCount_;
+	int DaoMaxAttCount_;
+	int MaridMaxAttCount_;
+
+	float BazziMaxAttPower_;
+	float DaoMaxAttPower_;
+	float MaridMaxAttPower_;
+
+	float BazziMaxSpeed_;
+	float DaoMaxSpeed_;
+	float MaridMaxpeed_;
+
+
+
 	int CurAttCount_;			// 물풍선 개수 
+	float CurAttPower_;			// 물줄기 길이
+	float CurSpeed_;			// 플레이어 속도 
+
 	int MaxAttCount_;			// 최대 물풍선 개수
+	float MaxAttPower_;		// 최대 물줄기 길이
+	float MaxSpeed_;
 
 	float Time_;
 	float AttMoveTime_;
@@ -287,7 +315,8 @@ protected:
 	void IdleStart();
 	void MoveStart();
 	void JumpStart();
-	void AttackStart();
+	void AttackStart();	
+	void DamagedStartStart();
 	void DamagedStart();
 	void RevivalStart();
 	void FadeStart();
@@ -304,6 +333,7 @@ protected:
 	void MoveUpdate();
 	void JumpUpdate();
 	void AttackUpdate();
+	void DamagedStartUpdate();
 	void DamagedUpdate();
 	void RevivalUpdate();
 	void FadeUpdate();

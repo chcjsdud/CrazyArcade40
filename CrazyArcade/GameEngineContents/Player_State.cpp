@@ -53,6 +53,14 @@ void Player::AttackStart()
 	GameEngineSound::SoundPlayOneShot("Attack.mp3");
 }
 
+void Player::DamagedStartStart()
+{
+	AnimationName_ = "DamagedStart_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+
+	GameEngineSound::SoundPlayOneShot("Damaged.wav");
+}
+
 void Player::DamagedStart()
 {
 	IsMove = false;
@@ -62,8 +70,6 @@ void Player::DamagedStart()
 
 	AnimationName_ = "Damaged_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-
-	GameEngineSound::SoundPlayOneShot("Damaged.wav");
 }
 
 void Player::RevivalStart()
@@ -225,6 +231,15 @@ void Player::AttackUpdate()
 		return;
 	}
 
+}
+
+void Player::DamagedStartUpdate()
+{
+	if (PlayerAnimationRender_->IsEndAnimation())
+	{
+		ChangeState(PlayerState::Damaged);
+		return;
+	}
 }
 
 void Player::DamagedUpdate()
