@@ -308,7 +308,7 @@ void Player::PlayerInfoUpdate()
 		float4 Pos = MainPlayer_1->GetPosition();
 		//CurItemType1_ = CheckItem(Pos + float4{ -20.0f,-20.0f });
 	
-		CurItemType1_ = GameItemObject::GameItemObject_->CheckItem(Pos);
+		CurItemType1_ = GameItemObject::GameItemObject_->CheckItem(Pos + float4{ -20.0f,-20.0f });
 
 		if (true == IsItemKey())
 		{
@@ -321,8 +321,9 @@ void Player::PlayerInfoUpdate()
 		if (Type == PlayerType::Player2)
 		{
 			float4 Pos = MainPlayer_2->GetPosition();
-			CurItemType2_ = GameItemObject::GameItemObject_->CheckItem(Pos);
 			//CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
+
+			CurItemType2_ = GameItemObject::GameItemObject_->CheckItem(Pos + float4{ -20.0f,-20.0f });
 
 			if (true == IsItemKey())
 			{
@@ -714,21 +715,41 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 {
 	switch (_CurBlockType)
 	{
-		case BlockType::WaveBlock:
+	case BlockType::WaveBlock:
+	{
+		if (CurState_ == PlayerState::IdleOwl
+			|| CurState_ == PlayerState::IdleTurtle
+			|| CurState_ == PlayerState::RidingOwl
+			|| CurState_ == PlayerState::RidingTurtle
+			|| CurState_ == PlayerState::RidingUFO)
 		{
-			if (CurState_ != PlayerState::Die
-				&& CurState_ != PlayerState::DamageStart
-				&& CurState_ != PlayerState::Damaged
-				&& CurState_ != PlayerState::Fade)
-			{
-				ChangeState(PlayerState::DamageStart);
-				return;
-			}
+			ChangeState(PlayerState::Idle);
+			return;
+		}
+
+		if (CurState_ != PlayerState::Die
+			&& CurState_ != PlayerState::DamageStart
+			&& CurState_ != PlayerState::Damaged
+			&& CurState_ != PlayerState::Fade)
+		{
+			ChangeState(PlayerState::DamageStart);
+			return;
+		}
 	
 		}
 		break;
 		case BlockType::BubbleBlock:
 		{
+			if (CurState_ == PlayerState::IdleOwl
+				|| CurState_ == PlayerState::IdleTurtle
+				|| CurState_ == PlayerState::RidingOwl
+				|| CurState_ == PlayerState::RidingTurtle
+				|| CurState_ == PlayerState::RidingUFO)
+			{
+				ChangeState(PlayerState::Idle);
+				return;
+			}
+
 			if (CurState_ != PlayerState::Die
 				&& CurState_ != PlayerState::DamageStart
 				&& CurState_ != PlayerState::Damaged
@@ -915,7 +936,7 @@ void Player::FrontBlockCheck()
 		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
 		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
 
-
+		
 
 		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
 		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
@@ -931,7 +952,6 @@ void Player::FrontBlockCheck()
 	
 
 		FrontBlockCheckUpdate();
-
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -1314,7 +1334,7 @@ void Player::Start()
 
 void Player::Update()
 {
-	LevelChangeStart(GetLevel());
+	//LevelChangeStart(GetLevel());
 
 	ColMapUpdate();
 

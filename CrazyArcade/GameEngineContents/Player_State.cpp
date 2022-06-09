@@ -26,7 +26,6 @@ void Player::ReadyStart()
 void Player::IdleStart()
 {
 	IsMove = true;
-	CurSpeed_ = CurSpeed_;
 	ReSetAccTime();
 
 	AnimationName_ = "Idle_";
@@ -50,7 +49,6 @@ void Player::JumpStart()
 
 void Player::AttackStart()
 {
-	CurSpeed_ = 10.f;
 	AttMoveTime_ += GameEngineTime::GetDeltaTime();
 
 	GameEngineSound::SoundPlayOneShot("Attack.mp3");

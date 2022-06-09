@@ -195,12 +195,12 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
 	if (nullptr != Player::MainPlayer_1)
 	{
-		Player::MainPlayer_1 = nullptr;
+		Player::MainPlayer_1->Death();
 	}
 
 	if (nullptr != Player::MainPlayer_2)
 	{
-		Player::MainPlayer_2 = nullptr;
+		Player::MainPlayer_2->Death();
 	}
 
 
