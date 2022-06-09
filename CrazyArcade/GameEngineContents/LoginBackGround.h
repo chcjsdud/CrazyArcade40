@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include "ContentsEnum.h"
 
 class TextArea;
 class CreateRoomBackGround;
@@ -28,6 +29,7 @@ private:
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 	TextArea* NickName_One_;
 	TextArea* NickName_Two_;
+	PlayerMode Mode_;
 
 	GameEngineRenderer* LoginBackGroundRenderer_;
 

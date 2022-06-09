@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include "ContentsEnum.h"
 
 class GameEngineBackGroundRenderer_;
 class CreateRoomBackGround : public GameEngineActor
@@ -15,6 +16,12 @@ public:
 	CreateRoomBackGround& operator=(const CreateRoomBackGround& _Other) = delete;
 	CreateRoomBackGround& operator=(CreateRoomBackGround&& _Other) noexcept = delete;
 
+
+	inline void SetPlayerMode(PlayerMode _Mode)
+	{
+		Mode_ = _Mode;
+	}
+
 protected:
 
 
@@ -22,6 +29,8 @@ private:
 	void Start() override;
 	void Update() override;
 
+
+	PlayerMode Mode_;
 	GameEngineRenderer* CreateRoomBackGroundRenderer_;
 	GameEngineRenderer* NormalModeBtnRenderer_;
 	GameEngineRenderer* MonsterModeBtnRenderer_;

@@ -76,6 +76,13 @@ enum class UIType
 
 };
 
+enum class PlayerMode
+{
+	Play_1P,
+	Play_2P,
+	Max
+};
+
 enum class Character
 {
 	BAZZI,

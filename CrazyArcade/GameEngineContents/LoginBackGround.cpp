@@ -11,6 +11,7 @@
 
 LoginBackGround::LoginBackGround()
 	: LoginBackGroundRenderer_(nullptr)
+	, Mode_(PlayerMode::Play_1P)
 {
 }
 
@@ -54,6 +55,7 @@ void LoginBackGround::Start()
 	ExitBtnCollision_ = CreateCollision("Exit", { 90 ,30 }, { 71.0f,274.0f });
 
 	createRoomBackGround_ = GetLevel()->CreateActor<CreateRoomBackGround>((int)UIType::PopUp);
+	
 	createRoomBackGround_->Off();
 
 
@@ -80,6 +82,7 @@ void LoginBackGround::Update()
 		else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			LoginBackGroundRenderer_->SetImage("LoginUI_1P.bmp");
+			Mode_ = PlayerMode::Play_1P;
 			NickName_One_->SetPosition(float4(442.0f + 10.0f, 16.0f + 482.0f));
 			NickName_One_->On();
 			NickName_Two_->Off();
@@ -109,6 +112,7 @@ void LoginBackGround::Update()
 		else if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
 		{
 			LoginBackGroundRenderer_->SetImage("LoginUI_2P.bmp");
+			Mode_ = PlayerMode::Play_2P;
 			NickName_One_->SetPosition(float4(298.0f + 10.0f, 16.0f + 482.0f));
 			NickName_One_->On();
 			NickName_Two_->On();
@@ -156,6 +160,7 @@ void LoginBackGround::Update()
 
 					NickName_One_->Off();
 					NickName_Two_->Off();
+					createRoomBackGround_->SetPlayerMode(Mode_);
 					createRoomBackGround_->On();
 				}
 				else {
