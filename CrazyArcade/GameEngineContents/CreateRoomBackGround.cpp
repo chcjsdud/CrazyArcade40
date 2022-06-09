@@ -33,6 +33,7 @@ void CreateRoomBackGround::Start()
 	MonsterModeBtnRenderer_->CreateAnimation("MonsterBtn_Animation.bmp", "MonsterModeBtn_Select", 0, 4, 0.1f, false);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Idle", 4, 4, 0.1f, true);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Select", 0, 3, 0.1f, true);
+	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Disable", 4, 4, 0.1f, true);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Click", 5, 5, 0.1f, true);
 	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Idle", 4, 4, 0.1f, true);
 	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Select", 0, 3, 0.1f, true);
@@ -106,32 +107,42 @@ void CreateRoomBackGround::Update()
 	}
 
 	/////////////////확인 버튼///////////////
-	if (true == ConfirmBtnCollision_->CollisionCheck("MouseCol"))
+	
+	if (SelectMode_ == 1 && Mode_ == PlayerMode::Play_1P)
 	{
-		ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Select");
+		ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Disable");
+	}
+	else
+	{
+		if (true == ConfirmBtnCollision_->CollisionCheck("MouseCol"))
+		{
+			ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Select");
 
-		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
-		{
-			ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Click");
-		}
-		if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
-		{
-			if (Mode_ == PlayerMode::Play_2P)
+			if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 			{
-				if (SelectMode_ == 1)
+				ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Click");
+			}
+			if (true == GameEngineInput::GetInst()->IsUp("LeftMouse"))
+			{
+				if (Mode_ == PlayerMode::Play_2P)
 				{
-					GameEngine::GetInst().ChangeLevel("RoomLevel");
+					if (SelectMode_ == 1)
+					{
+						GameEngine::GetInst().ChangeLevel("RoomLevel");
+					}
+				}
+				if (SelectMode_ == 2)
+				{
+					GameEngine::GetInst().ChangeLevel("MonsterRoomLevel");
 				}
 			}
-			if (SelectMode_ == 2)
-			{
-				GameEngine::GetInst().ChangeLevel("MonsterRoomLevel");
-			}
+		}
+		else {
+
+			ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Idle");
 		}
 	}
-	else {
-		ConfirmBtnRenderer_->ChangeAnimation("ConfirmBtn_Idle");
-	}
+	
 
 	/////////////////취소 버튼///////////////
 	if (true == CancelBtnCollision_->CollisionCheck("MouseCol"))
