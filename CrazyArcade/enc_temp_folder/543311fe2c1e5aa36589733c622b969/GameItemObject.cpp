@@ -17,7 +17,6 @@ GameItemObject::~GameItemObject()
 void GameItemObject::Start()
 {
 	GameItemObject_ = this;
-	LevelRegist("GameItem");
 }
 void GameItemObject::Update()
 {

@@ -88,6 +88,7 @@ public:
 protected:
 	void Start() override;
 	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	std::vector<BlockTile*> WaveBlockTiles_;

@@ -30,6 +30,13 @@ void MapGameObject::Update()
 	DestroyBoom();
 	BlockMoveUpdate();
 }
+
+
+void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+	GameItem_ = GetLevel()->FindActor<GameItemObject>("GameItem");
+}
+
 BlockType MapGameObject::CheckTile(float4 _Pos) {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	if (0 > TileIndex_.X)
