@@ -99,7 +99,7 @@ protected:
 
 	float BazziMaxSpeed_;
 	float DaoMaxSpeed_;
-	float MaridMaxpeed_;
+	float MaridMaxSpeed_;
 
 
 
@@ -156,6 +156,7 @@ protected:
 
 	void SetCollision(GameEngineCollision* _Collision);
 
+	void PlayerInit();
 	void PlayerInfoUpdate();
 	void ItemCheck(Player* _Player, ItemType _ItemType);
 
@@ -169,6 +170,8 @@ protected:
 
 protected:
 	void CharTypeUpdate();
+
+	bool IsInGame;
 
 	bool IsReady;
 	bool IsMove;
@@ -321,7 +324,7 @@ protected:
 	void RevivalStart();
 	void FadeStart();
 	void DieStart();
-	void IdeOwlStart();
+	void IdleOwlStart();
 	void IdleTurtleStart();
 	void RidingOwlStart();
 	void RidingTurtleStart();

@@ -76,7 +76,7 @@ Player::Player()
 	DaoMaxAttPower_ = 7.f;
 
 	BazziMaxSpeed_ = 9.f;
-	MaridMaxpeed_ = 9.f;
+	MaridMaxSpeed_ = 9.f;
 	DaoMaxSpeed_ = 7.f;
 
 }
@@ -252,15 +252,53 @@ void Player::Move(float _CurSpeed)
 		}
 
 	}
-
-
-	//SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
-
 }
 
 void Player::SetCollision(GameEngineCollision* _Collision)
 {
 	_Collision->GetActor();
+}
+
+void Player::PlayerInit()
+{
+	switch (CurCharacter)
+	{
+	case Character::BAZZI:
+	{
+		SetAttCount(BazziAttCount_);
+		SetAttPower(BazziAttPower_);
+		SetSpeed(BazziSpeed_);
+
+		SetMaxAttCount(BazziMaxAttCount_);
+		SetMaxAttPower(BazziMaxAttPower_);
+		SetMaxSpeed(BazziMaxSpeed_);
+	}
+	break;
+	case Character::LUXMARID:
+	{
+		SetAttCount(MaridAttCount_);
+		SetAttPower(MaridAttPower_);
+		SetSpeed(MaridSpeed_);
+
+		SetMaxAttCount(MaridMaxAttCount_);
+		SetMaxAttPower(MaridMaxAttPower_);
+		SetMaxSpeed(MaridMaxSpeed_);
+	}
+	break;
+	case Character::DAO:
+	{
+		SetAttCount(DaoAttCount_);
+		SetAttPower(DaoAttPower_);
+		SetSpeed(DaoSpeed_);
+
+		SetMaxAttCount(DaoMaxAttCount_);
+		SetMaxAttPower(DaoMaxAttPower_);
+		SetMaxSpeed(DaoMaxSpeed_);
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 void Player::PlayerInfoUpdate()
@@ -272,7 +310,10 @@ void Player::PlayerInfoUpdate()
 	
 		CurItemType1_ = GameItemObject::GameItemObject_->CheckItem(Pos);
 
-		ItemCheck(MainPlayer_1, CurItemType1_);
+		if (true == IsItemKey())
+		{
+			ItemCheck(MainPlayer_1, CurItemType1_);
+		}
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -283,7 +324,10 @@ void Player::PlayerInfoUpdate()
 			CurItemType2_ = GameItemObject::GameItemObject_->CheckItem(Pos);
 			//CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
 
-			ItemCheck(MainPlayer_2, CurItemType2_);
+			if (true == IsItemKey())
+			{
+				ItemCheck(MainPlayer_2, CurItemType2_);
+			}
 		}
 	}
 }
@@ -296,15 +340,17 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 	case ItemType::Roller:
 	{
-		_Player->CurSpeed_ += 1;
+		if (_Player->CurSpeed_ >= _Player->MaxSpeed_)
+		{
+			return;
+		}
 
-		switch (CurCharacter)
+		_Player->CurSpeed_ += 1;
+	/*	switch (CurCharacter)
 		{
 		case Character::BAZZI:
 		{
-			MaxSpeed_ = 9.f;
-
-			if (CurSpeed_ >= MaxSpeed_)
+			if (CurSpeed_ >= BazziMaxSpeed_)
 			{
 				return;
 			}
@@ -312,9 +358,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::LUXMARID:
 		{
-			MaxSpeed_ = 9.f;
-
-			if (CurSpeed_ >= MaxSpeed_)
+			if (CurSpeed_ >= MaridMaxSpeed_)
 			{
 				return;
 			}
@@ -322,9 +366,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::DAO:
 		{
-			MaxSpeed_ = 7.f;
-
-			if (CurSpeed_ >= MaxSpeed_)
+			if (CurSpeed_ >= DaoMaxSpeed_)
 			{
 				return;
 			}
@@ -334,19 +376,24 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 			break;
 
 		}
+
+		_Player->CurSpeed_ += 1;*/
 	}
 	break;
 	case ItemType::Bubble:
 	{
+		if (_Player->CurAttCount_ >= _Player->MaxAttCount_)
+		{
+			return;
+		}
+
 		_Player->CurAttCount_ += 1;
 
-		switch (CurCharacter)
+		/*switch (CurCharacter)
 		{
 		case Character::BAZZI:
 		{
-			MaxAttCount_ = 6;
-
-			if (CurAttCount_ >= MaxAttCount_)
+			if (CurAttCount_ >= BazziMaxAttCount_)
 			{
 				return;
 			}
@@ -354,9 +401,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::LUXMARID:
 		{
-			MaxAttCount_ = 9;
-
-			if (CurAttCount_ >= MaxAttCount_)
+			if (CurAttCount_ >= MaridMaxAttCount_)
 			{
 				return;
 			}
@@ -364,9 +409,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::DAO:
 		{
-			MaxAttCount_ = 10;
-
-			if (CurAttCount_ >= MaxAttCount_)
+			if (CurAttCount_ >= DaoMaxAttCount_)
 			{
 				return;
 			}
@@ -375,17 +418,24 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		default:
 			break;
 		}
+
+		_Player->CurAttCount_ += 1;*/
 	}
 	break;
 	case ItemType::Fluid:
 	{
-		switch (CurCharacter)
+		if (_Player->CurAttPower_ >= _Player->MaxAttPower_)
+		{
+			return;
+		}
+
+		_Player->CurAttPower_ += 1;
+
+		/*switch (CurCharacter)
 		{
 		case Character::BAZZI:
 		{
-			MaxAttPower_ = 7;
-
-			if (CurAttPower_ >= MaxAttPower_)
+			if (CurAttPower_ >= BazziMaxAttPower_)
 			{
 				return;
 			}
@@ -393,9 +443,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::LUXMARID:
 		{
-			MaxAttPower_ = 6;
-
-			if (CurAttPower_ >= MaxAttPower_)
+			if (CurAttPower_ >= MaridMaxAttPower_)
 			{
 				return;
 			}
@@ -403,9 +451,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::DAO:
 		{
-			MaxAttPower_ = 7;
-
-			if (CurAttPower_ >= MaxAttPower_)
+			if (CurAttPower_ >= DaoMaxAttPower_)
 			{
 				return;
 			}
@@ -415,17 +461,21 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 			break;
 		}
 
-		_Player->CurAttCount_ += 1;
+		_Player->CurAttCount_ += 1;*/
 	}
 	break;
 	case ItemType::RedDevil:
 	{
-		switch (CurCharacter)
+		if (CurSpeed_ == MaxSpeed_)
+		{
+			return;
+		}
+		CurSpeed_ = MaxSpeed_;
+
+		/*switch (CurCharacter)
 		{
 		case Character::BAZZI:
 		{
-			MaxSpeed_ = 9;
-
 			if (CurSpeed_ == MaxSpeed_)
 			{
 				return;
@@ -435,8 +485,6 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::LUXMARID:
 		{
-			MaxSpeed_ = 9;
-
 			if (CurSpeed_ == MaxSpeed_)
 			{
 				return;
@@ -446,8 +494,6 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		case Character::DAO:
 		{
-			MaxSpeed_ = 7;
-
 			if (CurSpeed_ == MaxSpeed_)
 			{
 				return;
@@ -457,7 +503,28 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		break;
 		default:
 			break;
+		}*/
+
+	}
+	break;
+	case ItemType::UltraBubble:
+	{
+		if (CurAttPower_ == MaxAttPower_)
+		{
+			return;
 		}
+		CurAttPower_ = MaxAttPower_;
+	}
+	break;
+	break;
+	case ItemType::Niddle:
+	{
+		ChangeState(PlayerState::Revival);
+		return;
+	}
+	break;
+	case ItemType::Devil:
+	{
 
 	}
 	break;
@@ -466,12 +533,41 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		// 물방울 던지기 
 	}
 	break;
+	case ItemType::Shield:
+	{
+
+	}
+	break;
+	case ItemType::SuperJump:
+	{
+
+	}
+	break;
+	case ItemType::Owl:
+	{
+
+	}
+	break;
+	case ItemType::Turtle:
+	{
+
+	}
+	break;
+	case ItemType::SpaceShip:
+	{
+
+	}
+	break;
+	case ItemType::Bubble_Dark:
+	{
+
+	}
+	break;
 	default:
 		break;
 	}
 
 	// Devil
-	// UltraDevil
 	// Owl
 	// Turtle
 	// UFO
@@ -492,7 +588,6 @@ void Player::AttackPowerUpdate()
 
 void Player::CharTypeUpdate()
 {
-
 	switch (CurCharacter)
 	{
 	case Character::BAZZI:
@@ -501,13 +596,13 @@ void Player::CharTypeUpdate()
 		PlayerAnimationRender_ = BazziRenderer_;
 		PlayerAnimationRender_->On();;
 
-		SetAttCount(BazziAttCount_);
-		SetAttPower(BazziAttPower_);
-		SetSpeed(BazziSpeed_);
+		//SetAttCount(BazziAttCount_);
+		//SetAttPower(BazziAttPower_);
+		//SetSpeed(BazziSpeed_);
 
-		SetMaxAttCount(BazziMaxAttCount_);
-		SetMaxAttPower(BazziMaxAttPower_);
-		SetMaxSpeed(BazziMaxSpeed_);
+		//SetMaxAttCount(BazziMaxAttCount_);
+		//SetMaxAttPower(BazziMaxAttPower_);
+		//SetMaxSpeed(BazziMaxSpeed_);
 	}
 	break;
 	case Character::LUXMARID:
@@ -522,7 +617,7 @@ void Player::CharTypeUpdate()
 
 		SetMaxAttCount(MaridMaxAttCount_);
 		SetMaxAttPower(MaridMaxAttPower_);
-		SetMaxSpeed(MaridMaxpeed_);
+		SetMaxSpeed(MaridMaxSpeed_);
 	}
 	break;
 	case Character::DAO:
@@ -586,6 +681,7 @@ void Player::ColMapUpdate()
 		// ****** 보스레벨 ColMap 수정 필요 // 몬스터 테스트 위해서 기존 CampColMap->BossColMap으로 바꿔놨어용
 		MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 	}
+
 	else
 		return;
 }
@@ -845,25 +941,25 @@ void Player::FrontBlockCheck()
 			float4 Pos = MainPlayer_2->GetPosition();
 
 			
-		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
-		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
+			TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
+			TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
 
 
 
-		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
-		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
+			LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
+			UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
 
-		if (RightIndex.X != 15)
-		{
-			RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
-		}
-		if (DownIndex.Y != 13)
-		{
-			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
-		}
+			if (RightIndex.X != 15)
+			{
+				RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+			}
+			if (DownIndex.Y != 13)
+			{
+				DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+			}
 
 
-		FrontBlockCheckUpdate();
+			FrontBlockCheckUpdate();
 		}
 	}
 
@@ -968,10 +1064,7 @@ void Player::CollisionCheck()
 
 void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	if (CurrentLevel_ == "RoomLevel")
-	{
-		
-	}
+	PlayerInit();
 }
 
 void Player::Start()
@@ -1216,12 +1309,21 @@ void Player::Start()
 	}
 
 	IsReady = true;
+	//PlayerInit();
 }
 
 void Player::Update()
 {
+	LevelChangeStart(GetLevel());
+
 	ColMapUpdate();
 
+	// 인게임이 아니다 == 룸 레벨이다
+	//if (false == IsInGame)
+	//{
+	//	PlayerInit();
+	//	CharTypeUpdate();
+	//}
 	CharTypeUpdate();
 
 	PlayerStateUpdate();
@@ -1439,7 +1541,7 @@ void Player::ChangeState(PlayerState _State)
 			DieStart();
 			break;
 		case PlayerState::IdleOwl:
-			IdeOwlStart();
+			IdleOwlStart();
 			break;
 		case PlayerState::IdleTurtle:
 			IdleTurtleStart();

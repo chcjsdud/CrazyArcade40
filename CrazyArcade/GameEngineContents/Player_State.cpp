@@ -26,7 +26,7 @@ void Player::ReadyStart()
 void Player::IdleStart()
 {
 	IsMove = true;
-
+	CurSpeed_ = CurSpeed_;
 	ReSetAccTime();
 
 	AnimationName_ = "Idle_";
@@ -44,10 +44,13 @@ void Player::MoveStart()
 
 void Player::JumpStart()
 {
+	AnimationName_ = "Jump";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
 void Player::AttackStart()
 {
+	CurSpeed_ = 10.f;
 	AttMoveTime_ += GameEngineTime::GetDeltaTime();
 
 	GameEngineSound::SoundPlayOneShot("Attack.mp3");
@@ -113,7 +116,7 @@ void Player::DieStart()
 	GameEngineSound::SoundPlayOneShot("Die.mp3");
 }
 
-void Player::IdeOwlStart()
+void Player::IdleOwlStart()
 {
 }
 
