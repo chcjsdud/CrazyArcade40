@@ -180,6 +180,11 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Character Char1 = Player::MainPlayer_1->GetCharacter();
 	Character Char = Player::MainPlayer_2->GetCharacter();
 	//À©µµ¿ì ¸¶¿ì½º ¼û±è
+
+	PlayerTeamTestObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	PlayerTeamTestObject_->SetMapTile(&MapBackGround_->MapTileMap_);
+	PlayerTeamTestObject_->SetGameItem();
+
 	ShowCursor(false);
 }
 

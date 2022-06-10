@@ -35,6 +35,7 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	Tiles_->BlockType_ = BlockType::ItemBlock;
 	Tiles_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
 	Tiles_->ItemType_ = _Type;
+
 	if (_Type == ItemType::Roller)
 	{
 		Tiles_->Renderer->CreateAnimation("Roller.bmp", "Animation", 0, 5, 0.2f, true);
