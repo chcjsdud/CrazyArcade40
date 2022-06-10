@@ -3,6 +3,7 @@
 class MapBackGround;
 class MapFront;
 class Player;
+class MapGameObject;
 class VillageLevel : public GameEngineLevel
 {
 public:
@@ -23,4 +24,6 @@ protected:
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
+	MapGameObject* VillageObject_;
+
 };

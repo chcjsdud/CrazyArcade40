@@ -169,6 +169,9 @@ void Monster1Level::Loading()
 		// LV1_MON_COUNT를 ++ 할지 아니면 한번에 세팅하고 줄일지 고민
 	}
 
+	Monster1Object_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	Monster1Object_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Monster1Object_->SetGameItem();
 
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }

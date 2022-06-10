@@ -3,6 +3,7 @@
 class MapBackGround;
 class MapFront;
 class Player;
+class MapGameObject;
 class CemetoryLevel : public GameEngineLevel
 {
 public:
@@ -24,4 +25,5 @@ protected:
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
+	MapGameObject* CemetoryObject_;
 };

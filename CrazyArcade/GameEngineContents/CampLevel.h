@@ -13,7 +13,7 @@ class CampLevel : public GameEngineLevel
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
-	MapGameObject* bubble_;
+	MapGameObject* CampObject_;
 public:
 	CampLevel();
 	~CampLevel();

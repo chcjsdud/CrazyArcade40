@@ -125,7 +125,9 @@ void VillageLevel::Loading()
 		}
 	}
 
-
+	VillageObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	VillageObject_->SetMapTile(&MapBackGround_->MapTileMap_);
+	VillageObject_->SetGameItem();
 
 
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor ¸¸µé°í

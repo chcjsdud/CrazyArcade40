@@ -35,7 +35,7 @@ PlayerTeamTest::PlayerTeamTest()
 	, MapBackGround_(nullptr)
 	, MapColRenderer_(nullptr)
 	, MapFrontBackGround_(nullptr)
-	, bubble_(nullptr)
+	, PlayerTeamTestObject_(nullptr)
 {
 
 }
