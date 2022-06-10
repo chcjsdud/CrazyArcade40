@@ -55,6 +55,7 @@ protected:
 	BlockType CurBlockType_;
 	GameEngineRenderer* Renderer_;
 	GameEngineImage* ColMapImage_;
+
 	MonsterClass MonsterClass_;
 	MonsterState MonsterState_;
 	float4 Dir_;
@@ -65,6 +66,11 @@ protected:
 	Area NorthArea;
 	Area SouthArea;
 	Area CurArea;
+	Area NorthEastArea;
+	Area NorthWestArea;
+	Area SouthEastArea;
+	Area SouthWestArea;
+
 
 	int HP_;
 	int Index_;
@@ -84,6 +90,7 @@ protected:
 	GameEngineCollision* CenterCol_;
 	std::vector<std::vector<Tile*>> Tiles_;
 	std::map<int, Area> MovableAreas;
+	std::map<int, Area> CanAttackAreas;
 
 public:
 	void SetMapSizeY(float _MapSizeY)
@@ -125,7 +132,7 @@ public:
 	{
 		return MonsterState_;
 	}
-	
+
 	void SetHP(int _HP)
 	{
 		HP_ = _HP;
@@ -165,6 +172,11 @@ public:
 	GameEngineRendererTileMap* GetMapTile()
 	{
 		return MapTile_;
+	}
+
+	int GetIndex()
+	{
+		return Index_;
 	}
 };
 

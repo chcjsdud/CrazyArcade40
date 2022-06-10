@@ -50,6 +50,6 @@ void Monster1::Update()
 	}
 	else
 	{
-	Monster::Update();
+		Monster::Update();
 	}
 }
