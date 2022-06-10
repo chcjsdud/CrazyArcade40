@@ -33,7 +33,7 @@ void CreateRoomBackGround::Start()
 	MonsterModeBtnRenderer_->CreateAnimation("MonsterBtn_Animation.bmp", "MonsterModeBtn_Select", 0, 4, 0.1f, false);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Idle", 4, 4, 0.1f, true);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Select", 0, 3, 0.1f, true);
-	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Disable", 4, 4, 0.1f, true);
+	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Disable", 6, 6, 0.1f, true);
 	ConfirmBtnRenderer_->CreateAnimation("ConfirmBtn.bmp", "ConfirmBtn_Click", 5, 5, 0.1f, true);
 	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Idle", 4, 4, 0.1f, true);
 	CancelBtnRenderer_->CreateAnimation("CancelBtn.bmp", "CancelBtn_Select", 0, 3, 0.1f, true);
