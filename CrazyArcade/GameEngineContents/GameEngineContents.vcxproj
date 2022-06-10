@@ -189,6 +189,7 @@
     </ClInclude>
     <ClInclude Include="CreateRoomBackGround.h" />
     <ClInclude Include="GameItemObject.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="GlobalUIName.h">
       <SubType>
       </SubType>
@@ -314,6 +315,7 @@
     </ClCompile>
     <ClCompile Include="CreateRoomBackGround.cpp" />
     <ClCompile Include="GameItemObject.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GlobalUIName.cpp">
       <SubType>
       </SubType>

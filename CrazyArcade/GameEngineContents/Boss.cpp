@@ -22,6 +22,8 @@ Boss::Boss()
 	, Boss_(nullptr)
 	, BossBoom_(nullptr)
 	, CheckIndex_()
+	, WaterAttackStartTime_(0.0f)
+	, WaterAttacOn_(false)
 {
 }
 
@@ -106,12 +108,27 @@ void Boss::Start()
 	}
 
 	{
-		// WaterAttack
+		//WaterAttack
+
+	   //WaterAttack_ = CreateRenderer("WaterAttack.bmp");
+	   //GameEngineImage* WaterAttackImage = WaterAttack_->GetImage();
+	   //WaterAttackImage->CutCount(10, 5); // Todo chowon : need to chk
+	   //WaterAttack_->CreateAnimation("WaterAttack.bmp", "WaterAttack", 0, 0, 0.1f);
+	   //WaterAttack_->CreateAnimation("WaterAttack.bmp", "Idle", 0, 0, 0.1f);
+	   //WaterAttack_->ChangeAnimation("Idle");		
+
+
+		WaterAttack_ = CreateRenderer("Center.bmp");
+		WaterAttack_->SetOrder(8);
+		WaterAttack_->CreateAnimation("Center.bmp", "boom", 0, 0, 0.1f, true);
+		WaterAttack_->ChangeAnimation("boom");
+		WaterAttack_->SetAlpha(0);
+
 		//WaterAttack_ = CreateRenderer("WaterAttack.bmp");
 		//GameEngineImage* WaterAttackImage = WaterAttack_->GetImage();
 		//WaterAttackImage->CutCount(10, 5); // Todo chowon : need to chk
-		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "WaterAttack", 0, 0, 0.1f);
-		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "Idle", 0, 0, 0.1f);
+		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "WaterAttack", 0, 0, 0.1f, true);
+		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "Idle", 0, 0, 0.1f, true);
 		//WaterAttack_->ChangeAnimation("Idle");
 
 	}
@@ -135,7 +152,6 @@ void Boss::Start()
 	SetMapSizeY(360);
 	AreaHeight_ = 9;
 	AreaWidth_ = 11;
-
 	for (int x = 0; x < AreaWidth_; ++x)
 	{
 		for (int y = 0; y < AreaHeight_; ++y)
@@ -149,7 +165,6 @@ void Boss::Start()
 			Areas_.push_back(area);
 		}
 	}
-
 	Index_ = 49; // 시작 Index를
 	SetPosition(Areas_[49].GetCenter());
 	srand(time(NULL));
@@ -161,11 +176,33 @@ void Boss::Render()
 
 void Boss::Update()
 {
+	WaterAttackStartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	UpdateDirection();
 	UpdateMove();
 	UpdateHP();
+	Die();
+}
+
+void Boss::Die()
+{
+	if (true == IsDie()) // HP가 0이거나 0보다 작으면
+	{
+
+		if (true == Renderer_->IsAnimationName("Die") && true == Renderer_->IsEndAnimation())
+		{
+			CenterCol_->Off();
+			Death();
+		}
+
+		if (true != Renderer_->IsAnimationName("Die"))
+		{
+			Dir_ = float4::ZERO;
+			Renderer_->ChangeAnimation("Die");
+		}
+	}
+
 }
 
 void Boss::UpdateHP()
@@ -217,7 +254,7 @@ void Boss::UpdateHP()
 		BossHP_->SetPivot(float4(-16.0f, -176.0f));
 		break;
 	case 11:
-		BossHP_->ChangeAnimation("HP11");		
+		BossHP_->ChangeAnimation("HP11");
 		BossHP_->SetPivot(float4(-12.5f, -176.0f));
 		break;
 	case 12:
@@ -235,8 +272,19 @@ void Boss::UpdateHP()
 	}
 }
 
+
+
 void Boss::UpdateMove()
 {
+	if (true == WaterAttacOn_)
+	{
+		if (WaterAttack_->IsAnimationName("boom") && WaterAttack_->IsEndAnimation())
+		{
+			WaterAttack_->SetAlpha(0);
+			WaterAttacOn_ = false;
+		}
+	}
+
 	if (RandomAction_ < 3)
 	{
 		if (true != IsDie())
@@ -245,6 +293,7 @@ void Boss::UpdateMove()
 			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 		}
 	}
+
 	else if (RandomAction_ == 3)
 	{
 		if (Renderer_->IsAnimationName("WaterAttack") &&
@@ -252,10 +301,13 @@ void Boss::UpdateMove()
 		{
 			if (WaterTime_ > 3.0f)
 			{
+				Dir_ = float4::ZERO;
 				EndAttack_ = true;
+				CanAttackAreas.clear();
 			}
 		}
 	}
+
 	else if (RandomAction_ == 4)
 	{
 		if (Renderer_->IsAnimationName("RollAttackRight"))
@@ -284,6 +336,8 @@ void Boss::UpdateMove()
 		}
 
 	}
+
+
 }
 
 void Boss::UpdateDirection()
@@ -313,9 +367,23 @@ void Boss::UpdateDirection()
 							Index_ >= (AreaWidth_ - 1) * AreaHeight_) &&
 							RandomAction_ != 0)
 						{
-							RandomAction_ = 4;
-							IsAreaChanged = true;
-							AreaChangeCount_ = 0;
+							if (Index_ == 0 ||
+								Index_ == 8 ||
+								Index_ == 4 ||
+								Index_ == 94 ||
+								Index_ == 90 ||
+								Index_ == 98)
+							{
+								RandomAction_ = 4;
+								IsAreaChanged = true;
+								AreaChangeCount_ = 0;
+							}
+							else
+							{
+								RandomAction_ = 0;
+								IsAreaChanged = true;
+								AreaChangeCount_ = 0;
+							}
 						}
 						else
 						{
@@ -323,11 +391,11 @@ void Boss::UpdateDirection()
 							IsAreaChanged = true;
 							AreaChangeCount_ = 0;
 						}
+						SetPosition(NewArea.GetCenter());
 					}
-					SetPosition(NewArea.GetCenter());
 				}
+				NewArea.SetMapTile(MapTile_);
 			}
-			NewArea.SetMapTile(MapTile_);
 		}
 	}
 	CheckWaveTile(GetPosition());
@@ -335,7 +403,7 @@ void Boss::UpdateDirection()
 	if (Dir_.x == 0 && Dir_.y == 0)
 	{
 		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
-			(Renderer_->IsAnimationName("RollAttack"+Direction_) && EndAttack_ == true))
+			(Renderer_->IsAnimationName("RollAttack" + Direction_) && EndAttack_ == true))
 		{
 			RandomAction_ = 0;
 			IsAreaChanged = true;
@@ -687,7 +755,7 @@ void Boss::RollAttack()
 	{
 		Direction_ = "Right";
 		Renderer_->ChangeAnimation("RollAttackRight");
-	} 
+	}
 	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_ &&
 		false == Renderer_->IsAnimationName("RollAttackLeft") &&
 		false == Renderer_->IsAnimationName("RollAttackRight"))
@@ -695,62 +763,159 @@ void Boss::RollAttack()
 		Direction_ = "Left";
 		Renderer_->ChangeAnimation("RollAttackLeft");
 	}
-	
+
 }
 
 void Boss::WaterAttack()
 {
 	UpdateAttack();
 	Renderer_->ChangeAnimation("WaterAttack");
+	CheckCanAttackTile();
 	Dir_ = float4::ZERO;
-
-	if (GetHP() >= 5)
-	{
-		//BossBoom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		//BossBoom_->SetMapTile(MapTile_);
-		//BossBoom_->CreateBoom(float4(GetPosition().x-280.0f,GetPosition().y), 1);
-	}
-	else
-	{
-
-	}
 }
 
-//
-//bool Boss::SameXLine() // 가로줄
-//{
-//	int Offset = PlayerIndex_ - Index_;
-//	if (Offset < 0)
-//	{
-//		Offset = Offset * -1;
-//	}
-//
-//	return Offset % 3 == 0;
-//}
+void Boss::CheckCanAttackTile()
+{
+	if (WaterAttacOn_ == true)
+	{
 
-//bool Boss::SameYLine() // 세로줄
-//{
-//	if (PlayerIndex_ < 3 && Index_ < 3)
-//	{
-//		return true;
-//	}
-//
-//	else if (PlayerIndex_ >= 3 && Index_ >= 3 &&
-//		PlayerIndex_ < 6 && Index_ < 6)
-//	{
-//		return true;
-//	}
-//
-//	else if (PlayerIndex_ >= 6 && Index_ >= 6 &&
-//		PlayerIndex_ < 9 && Index_ < 9)
-//	{
-//		return true;
-//	}
-//
-//	else
-//	{
-//		return false;
-//	}
-//}
+		if (WaterAttack_->IsAnimationName("") || WaterAttack_->IsEndAnimation())
+		{
+			if (WaterAttack_->IsEndAnimation())
+			{
+
+				WaterAttacOn_ = false;
+			}
+		}
+	}
+
+	int EastIndex = Index_ + AreaHeight_;
+	int WestIndex = Index_ - AreaHeight_;
+	int NorthIndex = Index_ - 1;
+	int SouthIndex = Index_ + 1;
+	int NorthEastIndex = Index_ + (AreaHeight_ - 1);
+	int	NorthWestIndex = Index_ - (AreaHeight_ + 1);
+	int	SouthEastIndex = Index_ + (AreaHeight_ + 1);
+	int	SouthWestIndex = Index_ - (AreaHeight_ - 1);
+
+	// 동서남북이 벽이 아니면
+	if (EastIndex >= 0 &&
+		EastIndex < Areas_.size() &&
+		Index_ < Areas_.size() - AreaHeight_)
+	{
+		EastArea = Areas_[EastIndex];
+		if (false == EastArea.HasWall())
+		{
+			Area& EastArea = Areas_[EastIndex];
+			CanAttackAreas.insert(std::make_pair(0, EastArea));
+		}
+	}
+
+	if (WestIndex >= 0 &&
+		WestIndex < Areas_.size() &&
+		Index_ >= AreaHeight_)
+	{
+		WestArea = Areas_[WestIndex];
+		if (false == WestArea.HasWall())
+		{
+			Area& WestArea = Areas_[WestIndex];
+			CanAttackAreas.insert(std::make_pair(1, WestArea));
+		}
+	}
+
+	if (SouthIndex >= 0 &&
+		SouthIndex < Areas_.size() &&
+		Index_ % AreaHeight_ != AreaHeight_ - 1)
+	{
+		Area& SouthArea = Areas_[SouthIndex];
+		if (false == SouthArea.HasWall() &&
+			!(true == SouthArea.HasBlock() &&
+				false == SouthArea.HasWaveTile()))
+		{
+			Area& SouthArea = Areas_[SouthIndex];
+			CanAttackAreas.insert(std::make_pair(2, SouthArea));
+		}
+	}
+
+	if (NorthIndex >= 0 &&
+		NorthIndex < Areas_.size() &&
+		Index_ % AreaHeight_ != 0)
+	{
+		Area& NorthArea = Areas_[NorthIndex];
+		if (false == NorthArea.HasWall())
+		{
+			Area& NorthArea = Areas_[NorthIndex];
+			CanAttackAreas.insert(std::make_pair(3, NorthArea));
+		}
+	}
+
+	if (NorthEastIndex >= 0 &&
+		NorthEastIndex < Areas_.size() &&
+		Index_ % AreaHeight_ != 0 &&
+		Index_ < Areas_.size() - AreaHeight_)
+	{
+		Area& NorthEastArea = Areas_[NorthEastIndex];
+		CanAttackAreas.insert(std::make_pair(4, NorthEastArea));
+	}
+
+	if (NorthWestIndex >= 0 &&
+		NorthWestIndex < Areas_.size() &&
+		Index_ % AreaHeight_ != 0 &&
+		Index_ >= AreaHeight_)
+	{
+		Area& NorthWestArea = Areas_[NorthWestIndex];
+		CanAttackAreas.insert(std::make_pair(5, NorthWestArea));
+	}
+
+	if (SouthEastIndex >= 0 &&
+		SouthEastIndex < Areas_.size() &&
+		Index_ % AreaHeight_ != AreaHeight_ - 1 &&
+		Index_ < Areas_.size() - AreaHeight_)
+	{
+		Area& SouthEastArea = Areas_[SouthEastIndex];
+		CanAttackAreas.insert(std::make_pair(6, SouthEastArea));
+	}
+
+	if (SouthWestIndex >= 0 &&
+		SouthWestIndex < Areas_.size() &&
+		Index_ % AreaHeight_ != AreaHeight_ - 1 &&
+		Index_ >= AreaHeight_)
+	{
+		Area& SouthWestArea = Areas_[SouthWestIndex];
+		CanAttackAreas.insert(std::make_pair(7, SouthWestArea));
+	}
+
+	if (Index_ >= 0 &&
+		Index_ < Areas_.size())
+	{
+		Area& CenterArea = Areas_[Index_];
+		CanAttackAreas.insert(std::make_pair(8, CenterArea));
+	}
+
+	if (CanAttackAreas.size() != 0)
+	{
+		for (auto it = CanAttackAreas.begin(); it != CanAttackAreas.end(); it++)
+		{
+			// 블락을 체크해서 블락이 있으면 
+			if (0 == it->second.ChooseWaterAttackAni()) // 블럭 없음
+			{
+				WaterAttack_->ChangeAnimation("boom");
+				WaterAttack_->SetAlpha(255);
+				WaterAttacOn_ = true;
+
+			}
+
+			else if (1 == it->second.ChooseWaterAttackAni()) // 블럭 있음
+			{
+				WaterAttack_->ChangeAnimation("boom");
+				WaterAttack_->SetAlpha(255);
+				WaterAttacOn_ = true;
+				auto a = it->second.GetMapTile()->GetTileIndex(it->second.GetCenter());
+				it->second.GetMapTile()->DeleteTile(a.X, a.Y);
+
+			}
+		}
+	}
+}
 
 //Todo chowon: BOSS_COUNT--; -> boss 죽었을 때 
