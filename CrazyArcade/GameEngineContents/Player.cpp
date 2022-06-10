@@ -1653,15 +1653,22 @@ BlockType Player::CheckBlockTile(float4 _Pos)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	ItemBlockTile* ItemTiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (ItemTiles_ !=nullptr&& ItemTiles_->ItemType_!=ItemType::Max)
+	{
+		return ItemTiles_->BlockType_;
+
+	}
 
 	if (Tiles_ == nullptr)
 	{
 		return BlockType::Max;
 	}
-	else
-	{
-		return Tiles_->BlockType_;
-	}
+
+	return Tiles_->BlockType_;
+
+
+
 }
 
 ItemType Player::CheckItem(float4 _Pos)

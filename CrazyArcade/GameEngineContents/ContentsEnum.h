@@ -26,6 +26,7 @@ enum class BlockType
 	FixBlock,// 안밀리는 타일
 	PullBlock,//밀수있는 타일
 	BushBlock, // 플레이어가 들어갈 수 있는 타일
+	FixItemBlock,
 	ItemBlock, // 아이템만 있는 타일
 	BubbleBlock,
 	BoomBlock,// 물풍선있는 타일

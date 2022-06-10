@@ -671,15 +671,19 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			}
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 			{
-				ItemType ItemValue = Tiles_ ->ItemType_;
+				ItemType ItemValue = Tiles_->ItemType_;
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
-				Item->SetMapTile(MapTile_);
-				Item->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, ItemValue);
+				if (ItemValue != ItemType::Max)
+				{
+					GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+					Item->SetMapTile(MapTile_);
+					Item->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, ItemValue);
+				}
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
 			}
+
 			else if (Tiles_ != nullptr&& Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
