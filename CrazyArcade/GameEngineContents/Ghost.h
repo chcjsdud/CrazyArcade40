@@ -18,6 +18,10 @@ protected:
 	void Update() override;
 	void UpdateDirection() override;
 	void UpdateMove() override;
+	void Die() override;
+
+private:
+	void UpdateAttack();
 
 private:
 	float AttTime_;

@@ -3,6 +3,7 @@
 #include <GameEngine/GameEngineImage.h>
 #include "Area.h"
 #include "GameEngine/GameEngineCollision.h"
+#include "Player.h"
 
 Ghost::Ghost()
 	: Monster()
@@ -17,20 +18,29 @@ Ghost::~Ghost()
 void Ghost::Start()
 {
 	Monster::Start();
-	//Renderer_ = CreateRenderer("Monster.bmp");
-	//GameEngineImage* Image = Renderer_->GetImage();
-	//Image->CutCount(10, 8);
-	//Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 6, 7, 0.3f, true);
-	//Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 4, 5, 0.3f, true);
-	//Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 0, 1, 0.3f, true);
-	//Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 2, 3, 0.3f, true);
-	//Renderer_->CreateAnimation("Monster.bmp", "Die", 8, 10, 0.2f, true);
-	//Renderer_->CreateAnimation("Monster.bmp", "Start", 11, 14, 0.1f, true);
-	//Renderer_->ChangeAnimation("Start");
-	//SetSpeed(70);
-	//Dir_ = float4::ZERO;
+	Renderer_ = CreateRenderer("Monster.bmp");
+	GameEngineImage* Image = Renderer_->GetImage();
+	Image->CutCount(10, 11);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 91, 92, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 100, 101, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 87, 88, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 83, 84, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackStartDown", 85, 85, 1.0f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackStartUp", 89, 89, 1.0f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackStartRight", 93, 93, 1.0f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackStartLeft", 99, 99, 1.0f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackEndDown", 86, 86, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackEndUp", 90, 90, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackEndRight", 94, 94, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "AttackEndLeft", 98, 98, 0.5f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Die", 95, 97, 0.2f, true);
+	Renderer_->CreateAnimation("Monster.bmp", "Start", 97, 95, 0.1f, true); // need to chk : image 
+	Renderer_->ChangeAnimation("Start");
+	SetSpeed(20);
+	Dir_ = float4::ZERO;
 	SetHP(10000);
 	CenterCol_->SetPivot(float4(0.0f, -18.0f));
+	SetPosition(Areas_[100].GetCenter());
 }
 
 void Ghost::Render()
@@ -40,13 +50,31 @@ void Ghost::Render()
 void Ghost::Update()
 {
 	AttTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-	UpdateDirection();
-	UpdateMove();
+
+	if (true == Renderer_->IsAnimationName("Start") &&
+		true == Renderer_->IsEndAnimation())
+	{
+		Renderer_->ChangeAnimation("MoveRight");
+		Direction_ = "Right";
+		Dir_ = float4::RIGHT;
+	}
+	else if (true != Renderer_->IsAnimationName("Die"))
+	{
+		UpdateAttack();
+		UpdateMove();
+		UpdateDirection();
+		Die();
+	}
+
+	if (Renderer_->IsAnimationName("Die") &&
+		Renderer_->IsEndAnimation())
+	{
+		Death();
+	}
 }
 
 void Ghost::UpdateDirection()
 {
-
 	PrevIndex_ = Index_; // 이전 인덱스 저장
 	bool IsAreaChanged = false;
 
@@ -62,7 +90,6 @@ void Ghost::UpdateDirection()
 				SetPosition(NewArea.GetCenter());
 			}
 		}
-		NewArea.SetMapTile(MapTile_);
 	}
 
 	if (Dir_.x == 0 && Dir_.y == 0)
@@ -84,7 +111,8 @@ void Ghost::UpdateDirection()
 		{
 			// 동쪽이 벽이 아니고, 물풍선이 아니면
 			EastArea = Areas_[EastIndex];
-			if (false == EastArea.HasWall())
+			if (false == EastArea.HasWall() &&
+				!(true == EastArea.HasBlock() && false == EastArea.GhostCanMoveTile()))
 			{
 				Area& EastArea = Areas_[EastIndex];
 				MovableAreas.insert(std::make_pair(0, EastArea));
@@ -97,7 +125,8 @@ void Ghost::UpdateDirection()
 		{
 			// 서쪽이 벽이 아니고, Wave 타일이 아니면
 			WestArea = Areas_[WestIndex];
-			if (false == WestArea.HasWall())
+			if (false == WestArea.HasWall() &&
+				!(true == WestArea.HasBlock() && false == WestArea.GhostCanMoveTile()))
 			{
 				Area& WestArea = Areas_[WestIndex];
 				MovableAreas.insert(std::make_pair(1, WestArea));
@@ -111,7 +140,8 @@ void Ghost::UpdateDirection()
 		{
 			// 남쪽이 벽이 아니고, Wave 타일이 아니면
 			Area& SouthArea = Areas_[SouthIndex];
-			if (false == SouthArea.HasWall())
+			if (false == SouthArea.HasWall() &&
+				!(true == SouthArea.HasBlock() && false == SouthArea.GhostCanMoveTile()))
 			{
 				Area& SouthArea = Areas_[SouthIndex];
 				MovableAreas.insert(std::make_pair(2, SouthArea));
@@ -123,7 +153,8 @@ void Ghost::UpdateDirection()
 			Index_ % AreaHeight_ != 0) // 맵의 제일 위쪽이 아닐 때
 		{
 			Area& NorthArea = Areas_[NorthIndex];
-			if (false == NorthArea.HasWall())
+			if (false == NorthArea.HasWall() &&
+				!(true == NorthArea.HasBlock() && false == NorthArea.GhostCanMoveTile()))
 			{
 				Area& NorthArea = Areas_[NorthIndex];
 				MovableAreas.insert(std::make_pair(3, NorthArea));
@@ -367,28 +398,77 @@ void Ghost::UpdateDirection()
 
 void Ghost::UpdateMove()
 {
-	if (true == Renderer_->IsAnimationName(""))
+	if (true == Renderer_->IsAnimationName("AttackStart" + Direction_))
+	{
+		if (true == Renderer_->IsEndAnimation())
+		{
+			Renderer_->ChangeAnimation("AttackEnd" + Direction_);
+		}
+	}
+
+	else if (true == Renderer_->IsAnimationName("AttackEnd" + Direction_))
 	{
 		if (false == Renderer_->IsEndAnimation())
 		{
+			if (Direction_ == "Right")
+			{
+				Dir_ = float4::RIGHT;
+			}
+			else if ((Direction_ == "Left"))
+			{
+				Dir_ = float4::LEFT;
+			}
+			else if ((Direction_ == "Up"))
+			{
+				Dir_ = float4::UP;
+			}
+			else if ((Direction_ == "Down"))
+			{
+				Dir_ = float4::DOWN;
+			}
 			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_ * 10);
 		}
 		else
 		{
-			AttTime_ = 0.0f;
-			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_ * 10);
+			Renderer_->ChangeAnimation("Move" + Direction_);
+			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 		}
 	}
 
-	if (AttTime_ > 15.0f)
+	else if (true != Renderer_->IsAnimationName("AttackStart" + Direction_) &&
+		true != Renderer_->IsAnimationName("Start"))
 	{
-		//Renderer_->ChangeAnimation("Move" + Direction_);
-	}
-
-	else
-	{
-		//Renderer_->ChangeAnimation("Move" + Direction_);
+		Renderer_->ChangeAnimation("Move" + Direction_);
 		SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 	}
+}
 
+void Ghost::Die()
+{
+	std::vector<GameEngineCollision*> Collision;
+
+	if (true == CenterCol_->CollisionResult("1PColl", Collision, CollisionType::Rect, CollisionType::Rect) ||
+		true == CenterCol_->CollisionResult("2PColl", Collision, CollisionType::Rect, CollisionType::Rect))
+	{
+		for (GameEngineCollision* ColActor : Collision)
+		{
+			GameEngineActor* ColPlayer = ColActor->GetActor();
+			if (dynamic_cast<Player*>(ColPlayer))
+			{
+				Renderer_->ChangeAnimation("Die");
+			}
+
+		}
+	}
+}
+
+void Ghost::UpdateAttack()
+{
+	if (AttTime_ > 10.0f)
+	{
+
+		Renderer_->ChangeAnimation("AttackStart" + Direction_);
+		Dir_ = float4::ZERO;
+		AttTime_ = 0.0f;
+	}
 }
