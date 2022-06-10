@@ -28,6 +28,8 @@ private:
 	int ChoiceCharacter1P;
 	int ChoiceCharacter2P;
 
+	GameEngineRenderer* Rank_1P;
+	GameEngineRenderer* Rank_2P;
 	GameEngineRenderer* Choice2PRenderer;
 	GameEngineRenderer* RoomCharacterRenderer1P;
 	GameEngineRenderer* RoomCharacterRenderer2P;
