@@ -34,7 +34,7 @@ void MapGameObject::Update()
 
 void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	GameItem_ = GetLevel()->FindActor<GameItemObject>("GameItem");
+
 }
 
 BlockType MapGameObject::CheckTile(float4 _Pos) {
@@ -673,7 +673,9 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			{
 				ItemType ItemValue = Tiles_ ->ItemType_;
 				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-				GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, ItemValue);
+				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+				Item->SetMapTile(MapTile_);
+				Item->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, ItemValue);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -743,7 +745,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 		
 			 else if (Ti_ != nullptr && Ti_-> BlockType_ == BlockType::ItemBlock )//-----------------------------아이템이 있을때
 			{
- 				GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
+
+				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
  			}
 		}
 	}
@@ -825,7 +828,9 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			{
 				ItemType ItemValue = Tiles_->ItemType_;
 				MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);
-				GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X + i) * 40,float(TilePos.Y) * 40 }, ItemValue);
+				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+				Item->SetMapTile(MapTile_);
+				Item->CreateItem({ float(TilePos.X + i) * 40,float(TilePos.Y) * 40 }, ItemValue);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 			}
@@ -895,7 +900,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 			}
 			else if (Ti_ != nullptr && Ti_->BlockType_ == BlockType::ItemBlock )//-----------------------------아이템이 있을때
 			{
-				GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X +i, TilePos.Y);
+				MapTile_->DeleteTile(TilePos.X +i, TilePos.Y);
 			}
 		}
 	}
@@ -975,7 +980,9 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			{
 				ItemType ItemValue = Tiles_->ItemType_;
 				MapTile_->DeleteTile(TilePos.X , TilePos.Y + i);
-				GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y+i) * 40 }, ItemValue);
+				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+				Item->SetMapTile(MapTile_);
+				Item->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y+i) * 40 }, ItemValue);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -1043,7 +1050,7 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			}
 			else if (Ti_ != nullptr && Ti_->BlockType_ == BlockType::ItemBlock)//-----------------------------아이템이 있을때
 			{
-				GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X, TilePos.Y+i);
+				MapTile_->DeleteTile(TilePos.X, TilePos.Y+i);
 			}
 		}
 	}
@@ -1125,7 +1132,9 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			{
 				ItemType ItemValue = Tiles_->ItemType_;
 				MapTile_->DeleteTile(TilePos.X, TilePos.Y -i);
-				GameItemObject::GameItemObject_->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y - i) * 40 }, ItemValue);
+				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+				Item->SetMapTile(MapTile_);
+				Item->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y - i) * 40 }, ItemValue);
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -1193,7 +1202,7 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			}
 			else if (Ti_ != nullptr && Ti_->BlockType_ == BlockType::ItemBlock)
 			{
-				GameItemObject::GameItemObject_->MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);
+				MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);
 			}
 		}
 	}

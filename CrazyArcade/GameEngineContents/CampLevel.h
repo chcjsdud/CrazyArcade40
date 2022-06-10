@@ -14,7 +14,6 @@ private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
 	MapGameObject* bubble_;
-	GameItemObject* Item_;
 public:
 	CampLevel();
 	~CampLevel();

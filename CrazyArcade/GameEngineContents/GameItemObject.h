@@ -49,7 +49,7 @@ public:
 	GameItemObject& operator=(const GameItemObject& _Other) = delete;
 	GameItemObject& operator=(GameItemObject&& _Other) noexcept = delete;
 
-	static GameItemObject* GameItemObject_;
+
 
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{

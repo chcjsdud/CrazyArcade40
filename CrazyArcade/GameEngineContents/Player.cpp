@@ -307,8 +307,9 @@ void Player::PlayerInfoUpdate()
 	{
 		float4 Pos = MainPlayer_1->GetPosition();
 		//CurItemType1_ = CheckItem(Pos + float4{ -20.0f,-20.0f });
-	
-		CurItemType1_ = GameItemObject::GameItemObject_->CheckItem(Pos + float4{ -20.0f,-20.0f });
+		GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+		Item->SetMapTile(MapTile_);
+		CurItemType1_ = Item->CheckItem(Pos + float4{ -20.0f,-20.0f });
 
 		if (true == IsItemKey())
 		{
@@ -322,8 +323,9 @@ void Player::PlayerInfoUpdate()
 		{
 			float4 Pos = MainPlayer_2->GetPosition();
 			//CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
-
-			CurItemType2_ = GameItemObject::GameItemObject_->CheckItem(Pos + float4{ -20.0f,-20.0f });
+			GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+			Item->SetMapTile(MapTile_);
+			CurItemType2_ = Item->CheckItem(Pos + float4{ -20.0f,-20.0f });
 
 			if (true == IsItemKey())
 			{
