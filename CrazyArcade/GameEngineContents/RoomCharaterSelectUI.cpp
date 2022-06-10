@@ -35,15 +35,25 @@ RoomCharaterSelectUI::~RoomCharaterSelectUI()
 
 void RoomCharaterSelectUI::Start()
 {
+	Rank_1P = CreateRenderer((int)UIType::StartIntroUI);
+	Rank_2P = CreateRenderer((int)UIType::StartIntroUI);
+	Rank_1P->SetImage("rank_High.bmp");
+	Rank_2P->SetImage("rank_low.bmp");
+	Rank_1P->SetScale(float4{ 20.0f, 20.0f });
+	Rank_2P->SetScale(float4{ 22.0f, 22.0f });
 	if (GetLevel()->GetNameConstRef() == "RoomLevel")
 	{
 		RoomCharacterRenderer1P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 48.0f });
 		RoomCharacterRenderer2P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -488.0f, 48.0f });
+		Rank_1P->SetPivot({ -563.0f, 60.0f });
+		Rank_2P->SetPivot({ -457.0f, 60.0f });
 	}
 	else if (GetLevel()->GetNameConstRef() == "MonsterRoomLevel")
 	{
 		RoomCharacterRenderer1P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -594.0f, 67.0f });
 		RoomCharacterRenderer2P = CreateRenderer((int)UIType::PopUpButton, RenderPivot::CENTER, { -488.0f, 67.0f });
+		Rank_1P->SetPivot({ -563.0f, 79.0f });
+		Rank_2P->SetPivot({ -457.0f, 79.0f });
 	}
 	SetPosition({ 670, 95 });
 	
@@ -94,6 +104,7 @@ void RoomCharaterSelectUI::Start()
 	Choice2PRenderer->SetPivot({ 4.0f, 10.0f });
 	Choice2PRenderer->Off();
 	RoomCharacterRenderer2P->Off();
+	Rank_2P->Off();
 
 	ChoiceCharacter1P = 0;
 	ChoiceCharacter2P = 0;
@@ -533,10 +544,12 @@ void RoomCharaterSelectUI::LevelChangeStart(GameEngineLevel * _PrevLevel)
 	GameEngineRandom a;
 	GlobalUIName::GetInst()->Set1P(4);
 	GlobalUIName::GetInst()->Set2P(4);
+	Rank_2P->On();
 	if (false == GlobalUIName::GetInst()->Is2pUpdate())
 	{
 		ChoiceCharacter2P = 5;
-		//Choice2PRenderer->Off();
+		Choice2PRenderer->Off();
+		Rank_2P->Off();
 		RoomCharacterRenderer2P->Off();
 	}
 }
