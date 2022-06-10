@@ -30,7 +30,6 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
 	ItemBlockTile* Tiles_ = MapTile_->CreateTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 	Tiles_->Renderer = CreateRenderer();
-	Tiles_->Renderer->SetImage("Tank.bmp");
 	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y }); // 아이템 y는 90이어야한다.
 	Tiles_->BlockType_ = BlockType::ItemBlock;
 	Tiles_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
@@ -85,35 +84,39 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 		Tiles_->Renderer->CreateAnimation("SuperJump.bmp", "Animation", 0, 5, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-		else if (_Type == ItemType::Turtle)
+	else if (_Type == ItemType::Turtle)
 	{
 		Tiles_->Renderer->CreateAnimation("Turtle.bmp", "Animation", 0, 5, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-		else if (_Type == ItemType::SpaceShip)
+	else if (_Type == ItemType::SpaceShip)
 	{
 		Tiles_->Renderer->CreateAnimation("SpaceShip.bmp", "Animation", 0, 5, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-		else if (_Type == ItemType::Owl)
+	else if (_Type == ItemType::Owl)
 	{
 		Tiles_->Renderer->CreateAnimation("Owl.bmp", "Animation", 0, 5, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-		else if (_Type == ItemType::Bubble_Dark)
+	else if (_Type == ItemType::Bubble_Dark)
 	{
 		Tiles_->Renderer->CreateAnimation("Bubble_Dark.bmp", "Animation", 0, 3, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-		else if (_Type == ItemType::Bubble_Boss)
+	else if (_Type == ItemType::Bubble_Boss)
 	{
 		Tiles_->Renderer->CreateAnimation("Bubble_Boss.bmp", "Animation", 0, 3, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-		else if (_Type == ItemType::Bubble_Default)
+	else if (_Type == ItemType::Bubble_Default)
 	{
 		Tiles_->Renderer->CreateAnimation("Bubble_Default.bmp", "Animation", 0, 3, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
+	}
+	else
+	{
+		Tiles_->Renderer->SetImage("TIleBase.bmp");
 	}
 }
 
