@@ -31,6 +31,8 @@ public:
         Player_ = _Player;
     }
 
+    void SetBoom(MapGameObject* _BossBoom);
+
 
 protected:
     void Start() override;
@@ -56,7 +58,6 @@ private:
     bool EndAttack_;
     bool WaterAttacOn_;
     GameEngineRenderer* BossHP_;
-    GameEngineRenderer* WaterAttack_;
     GameEngineRenderer* HPUI_;
     MapGameObject* BossBoom_;
     Boss* Boss_;
@@ -72,4 +73,5 @@ private:
     void WaterAttack();
     void CheckCanAttackTile();
     void UpdateHP();
+
 };

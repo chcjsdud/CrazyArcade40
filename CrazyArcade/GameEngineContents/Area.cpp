@@ -58,13 +58,19 @@ int Area::ChooseWaterAttackAni()
 
     if (Tile_ != nullptr)
     {
-        if(Tile_->BlockType_ == BlockType::Max)
+        if (Tile_->BlockType_ == BlockType::FixBlock ||
+            Tile_->BlockType_ == BlockType::PullBlock ||
+            Tile_->BlockType_ == BlockType::BushBlock ||
+            Tile_->BlockType_ == BlockType::FixItemBlock ||
+            Tile_->BlockType_ == BlockType::ItemBlock ||
+            Tile_->BlockType_ == BlockType::WallBlock ||
+            Tile_->BlockType_ == BlockType::NiddleBlock)
         {
-            return 0; // 0번 애니메이션
+            return 0; // 1번 애니메이션
         }
         else
         {
-            return 1; // 1번 애니메이션
+            return 1; // 0번 애니메이션
         }
     }
 }
@@ -78,6 +84,15 @@ bool Area::InCenter(float4 _Pos)
     }
 
     return false;
+}
+
+bool Area::GhostCanMoveTile()
+{
+    BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
+
+    return Tile_ != nullptr ?
+        Tile_->BlockType_ != BlockType::WallBlock :
+        false;
 }
 
 bool Area::HasWaveTile()

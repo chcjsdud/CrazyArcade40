@@ -18,23 +18,23 @@ Ghost::~Ghost()
 void Ghost::Start()
 {
 	Monster::Start();
-	Renderer_ = CreateRenderer("Monster.bmp");
+	Renderer_ = CreateRenderer("BasicMonster.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
-	Image->CutCount(10, 11);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 91, 92, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 100, 101, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 87, 88, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 83, 84, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackStartDown", 85, 85, 1.0f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackStartUp", 89, 89, 1.0f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackStartRight", 93, 93, 1.0f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackStartLeft", 99, 99, 1.0f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackEndDown", 86, 86, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackEndUp", 90, 90, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackEndRight", 94, 94, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "AttackEndLeft", 98, 98, 0.5f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "Die", 95, 97, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "Start", 97, 95, 0.1f, true); // need to chk : image 
+	Image->CutCount(10, 6);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveRight", 8, 9, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveLeft", 17, 18, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveUp", 4, 5, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveDown", 0, 1, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartDown", 2, 2, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartUp", 6, 6, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartRight", 10, 10, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartLeft", 16, 16, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndDown", 3, 3, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndUp", 7, 7, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndRight", 11, 11, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndLeft", 15, 15, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "Die", 12, 14, 0.2f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "Start", 13, 14, 0.1f, true); // need to chk : image 
 	Renderer_->ChangeAnimation("Start");
 	SetSpeed(20);
 	Dir_ = float4::ZERO;

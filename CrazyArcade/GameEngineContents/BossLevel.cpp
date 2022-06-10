@@ -59,7 +59,7 @@ void BossLevel::Loading()
 				}
 
 				//                          5 7
-				BlockSet->CreateBlock(float4(static_cast<float>(x * 40),static_cast<float>( y * 40)), Name);
+				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
 			}
 		}
 	}
@@ -72,12 +72,9 @@ void BossLevel::Loading()
 		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
 		Monster::BOSS_COUNT++;
 
-		//Player* NewPlayer = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-		//NewPlayer->SetCharacter(Character::BAZZI);
-		//NewPlayer->SetPlayerType(PlayerType::Player1);
-		//NewPlayer->SetPosition({ 500.f, 300.f });
-
-		//Seal->SetPlayer(NewPlayer);
+		MapGameObject* BossBoom_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		BossBoom_->SetMapTile(&MapBackGround_->MapTileMap_);
+		Seal->SetBoom(BossBoom_);
 	}
 	BossObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	BossObject_->SetMapTile(&MapBackGround_->MapTileMap_);

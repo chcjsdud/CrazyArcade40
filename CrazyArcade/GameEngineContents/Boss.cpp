@@ -31,25 +31,33 @@ Boss::~Boss()
 {
 }
 
+void Boss::SetBoom(MapGameObject* _BossBoom)
+{
+	BossBoom_ = _BossBoom;
+}
+
 void Boss::Start()
 {
+	Monster::Start();
 	// 이미지
-	Renderer_ = CreateRenderer("Monster.bmp");
+	Renderer_ = CreateRenderer("Boss.bmp");
 	GameEngineImage* Image = Renderer_->GetImage();
-	Image->CutCount(10, 8);
-	Renderer_->CreateAnimation("Monster.bmp", "Idle", 37, 38, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveRight", 39, 40, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveLeft", 41, 42, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveUp", 43, 44, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "MoveDown", 37, 38, 0.2f, true);
-	Renderer_->CreateAnimation("Monster.bmp", "Die", 64, 73, 0.3f, true); // Need to chk : 속도
-	Renderer_->CreateAnimation("Monster.bmp", "TakeDamageDown", 50, 51, 0.2f, true); // 아래
-	Renderer_->CreateAnimation("Monster.bmp", "TakeDamageRight", 52, 53, 0.2f, true); // 오른쪽
-	Renderer_->CreateAnimation("Monster.bmp", "TakeDamageLeft", 54, 55, 0.2f, true); // 왼쪽
+	Image->CutCount(10, 5);
+	Renderer_->CreateAnimation("Boss.bmp", "Idle", 0, 1, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "MoveRight", 2, 3, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "MoveLeft", 4, 5, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "MoveUp", 6, 7, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "MoveDown", 0, 1, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "Die", 36, 38, 0.3f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "DieBubble", 39, 42, 0.3f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "DieEnd", 43, 45, 0.3f, false); // 이미지 높이
+	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageDown", 13, 14, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageRight", 15, 16, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageLeft", 17, 18, 0.2f, true);
 	// Need to chk : TakeDamageUp 필요
-	Renderer_->CreateAnimation("Monster.bmp", "WaterAttack", 61, 63, 0.2f, false); // 물주기
-	Renderer_->CreateAnimation("Monster.bmp", "RollAttackRight", 45, 49, 0.2f, true); // 구르기
-	Renderer_->CreateAnimation("Monster.bmp", "RollAttackLeft", 56, 60, 0.2f, true); // 구르기
+	Renderer_->CreateAnimation("Boss.bmp", "WaterAttack", 24, 35, 0.2f, false);
+	Renderer_->CreateAnimation("Boss.bmp", "RollAttackRight", 8, 12, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "RollAttackLeft", 19, 23, 0.2f, true);
 	Renderer_->ChangeAnimation("MoveRight");
 	Dir_ = float4::RIGHT;
 	Direction_ = "Right";
@@ -108,66 +116,16 @@ void Boss::Start()
 	}
 
 	{
-		//WaterAttack
 
-	   //WaterAttack_ = CreateRenderer("WaterAttack.bmp");
-	   //GameEngineImage* WaterAttackImage = WaterAttack_->GetImage();
-	   //WaterAttackImage->CutCount(10, 5); // Todo chowon : need to chk
-	   //WaterAttack_->CreateAnimation("WaterAttack.bmp", "WaterAttack", 0, 0, 0.1f);
-	   //WaterAttack_->CreateAnimation("WaterAttack.bmp", "Idle", 0, 0, 0.1f);
-	   //WaterAttack_->ChangeAnimation("Idle");		
+		// 상태
+		SetMonsterClass(MonsterClass::BOSS);
+		SetHP(14);
+		SetSpeed(50); // Need to chk : Speed
 
-
-		WaterAttack_ = CreateRenderer("Center.bmp");
-		WaterAttack_->SetOrder(8);
-		WaterAttack_->CreateAnimation("Center.bmp", "boom", 0, 0, 0.1f, true);
-		WaterAttack_->ChangeAnimation("boom");
-		WaterAttack_->SetAlpha(0);
-
-		//WaterAttack_ = CreateRenderer("WaterAttack.bmp");
-		//GameEngineImage* WaterAttackImage = WaterAttack_->GetImage();
-		//WaterAttackImage->CutCount(10, 5); // Todo chowon : need to chk
-		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "WaterAttack", 0, 0, 0.1f, true);
-		//WaterAttack_->CreateAnimation("WaterAttack.bmp", "Idle", 0, 0, 0.1f, true);
-		//WaterAttack_->ChangeAnimation("Idle");
-
+		// Index 설정
+		Index_ = 97; // 시작 Index를
+		SetPosition(Areas_[97].GetCenter());
 	}
-	// ColMap
-	if (GetLevel()->GetNameCopy() == "BossLevel")
-	{
-		SetColMapImage("Boss_ColMap.bmp");
-	}
-	else
-	{
-		return;
-	}
-
-	// 상태
-	SetMonsterClass(MonsterClass::BOSS);
-	SetHP(14);
-	SetSpeed(50); // Need to chk : Speed
-
-	// Index 설정
-	SetMapSizeX(440);
-	SetMapSizeY(360);
-	AreaHeight_ = 9;
-	AreaWidth_ = 11;
-	for (int x = 0; x < AreaWidth_; ++x)
-	{
-		for (int y = 0; y < AreaHeight_; ++y)
-		{
-			float StartX = static_cast<float>((MapSizeX_ / AreaWidth_ * x) + 100);
-			float StartY = static_cast<float>((MapSizeY_ / AreaHeight_ * y) + 120);
-			float EndX = static_cast<float>((MapSizeX_ / AreaWidth_ * (x + 1)) + 100);
-			float EndY = static_cast<float>((MapSizeY_ / AreaHeight_ * (y + 1)) + 120);
-
-			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
-			Areas_.push_back(area);
-		}
-	}
-	Index_ = 49; // 시작 Index를
-	SetPosition(Areas_[49].GetCenter());
-	srand(time(NULL));
 }
 
 void Boss::Render()
@@ -272,18 +230,8 @@ void Boss::UpdateHP()
 	}
 }
 
-
-
 void Boss::UpdateMove()
 {
-	if (true == WaterAttacOn_)
-	{
-		if (WaterAttack_->IsAnimationName("boom") && WaterAttack_->IsEndAnimation())
-		{
-			WaterAttack_->SetAlpha(0);
-			WaterAttacOn_ = false;
-		}
-	}
 
 	if (RandomAction_ < 3)
 	{
@@ -357,7 +305,7 @@ void Boss::UpdateDirection()
 				{
 					Index_ = i;
 					AreaChangeCount_++;
-					if (AreaChangeCount_ == 3 ||
+					if (AreaChangeCount_ == 1 ||
 						Index_ < AreaHeight_ ||
 						Index_ % AreaHeight_ == 0 ||
 						Index_ % AreaHeight_ == AreaHeight_ - 1 ||
@@ -394,7 +342,6 @@ void Boss::UpdateDirection()
 						SetPosition(NewArea.GetCenter());
 					}
 				}
-				NewArea.SetMapTile(MapTile_);
 			}
 		}
 	}
@@ -776,27 +723,19 @@ void Boss::WaterAttack()
 
 void Boss::CheckCanAttackTile()
 {
-	if (WaterAttacOn_ == true)
+	if (MapTile_ == nullptr)
 	{
-
-		if (WaterAttack_->IsAnimationName("") || WaterAttack_->IsEndAnimation())
-		{
-			if (WaterAttack_->IsEndAnimation())
-			{
-
-				WaterAttacOn_ = false;
-			}
-		}
+		return;
 	}
 
 	int EastIndex = Index_ + AreaHeight_;
 	int WestIndex = Index_ - AreaHeight_;
 	int NorthIndex = Index_ - 1;
 	int SouthIndex = Index_ + 1;
-	int NorthEastIndex = Index_ + (AreaHeight_ - 1);
-	int	NorthWestIndex = Index_ - (AreaHeight_ + 1);
-	int	SouthEastIndex = Index_ + (AreaHeight_ + 1);
-	int	SouthWestIndex = Index_ - (AreaHeight_ - 1);
+	int NorthEastIndex = EastIndex - 1;
+	int	NorthWestIndex = WestIndex - 1;
+	int	SouthEastIndex = EastIndex + 1;
+	int	SouthWestIndex = WestIndex + 1;
 
 	// 동서남북이 벽이 아니면
 	if (EastIndex >= 0 &&
@@ -897,22 +836,19 @@ void Boss::CheckCanAttackTile()
 		for (auto it = CanAttackAreas.begin(); it != CanAttackAreas.end(); it++)
 		{
 			// 블락을 체크해서 블락이 있으면 
-			if (0 == it->second.ChooseWaterAttackAni()) // 블럭 없음
+			if (0 == it->second.ChooseWaterAttackAni()) // 블럭 있음
 			{
-				WaterAttack_->ChangeAnimation("boom");
-				WaterAttack_->SetAlpha(255);
-				WaterAttacOn_ = true;
-
+				//WaterAttack_->ChangeAnimation("boom"); // 먼지
+				//WaterAttack_->SetAlpha(255);
+				//WaterAttacOn_ = true;
+				auto a = it->second.GetMapTile()->GetTileIndex(it->second.GetCenter() - float4(20.0f, 40.0f));
+				it->second.GetMapTile()->DeleteTile(a.X, a.Y);
 			}
 
-			else if (1 == it->second.ChooseWaterAttackAni()) // 블럭 있음
+			//else if (1 == it->second.ChooseWaterAttackAni()) // 블럭 없음
 			{
-				WaterAttack_->ChangeAnimation("boom");
-				WaterAttack_->SetAlpha(255);
-				WaterAttacOn_ = true;
-				auto a = it->second.GetMapTile()->GetTileIndex(it->second.GetCenter());
-				it->second.GetMapTile()->DeleteTile(a.X, a.Y);
-
+				BossBoom_->BubblePop(GetPosition() - float4(20.0f, 40.0f), 1);
+				break;
 			}
 		}
 	}

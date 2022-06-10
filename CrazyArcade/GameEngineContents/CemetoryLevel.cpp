@@ -11,6 +11,7 @@
 #include<GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
+#include "Ghost.h"
 
 #include "Area.h"
 CemetoryLevel::CemetoryLevel()
@@ -131,6 +132,11 @@ void CemetoryLevel::Loading()
 
 	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor ¸¸µé°í
 	YSortOn(static_cast<int>(ORDER::PLAYER));
+
+	{// Test Ghost : need to delete
+		Ghost* Ghost_ = CreateActor<Ghost>((int)ORDER::PLAYER);
+		Ghost_->SetMapTile(&MapBackGround_->MapTileMap_);
+	}
 }
 
 void CemetoryLevel::Update()

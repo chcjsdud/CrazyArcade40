@@ -43,6 +43,7 @@ public:
     int ChooseWaterAttackAni();
     bool HasBubble();
     bool InCenter(float4 _Pos);
+    bool GhostCanMoveTile();
 
     BlockTile* GetTile(float4 _Pos);
 
@@ -56,4 +57,3 @@ public:
         return MapTile_;
     }
 };
-    

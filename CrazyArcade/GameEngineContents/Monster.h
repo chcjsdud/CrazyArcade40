@@ -163,7 +163,7 @@ public:
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{
 		MapTile_ = _MapTile;
-		for (Area _Area : Areas_)
+		for (Area& _Area : Areas_)
 		{
 			_Area.SetMapTile(_MapTile);
 		}

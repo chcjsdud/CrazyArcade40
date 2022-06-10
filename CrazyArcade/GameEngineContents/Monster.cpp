@@ -43,9 +43,9 @@ Monster::Monster()
 	, SouthArea(ColMapImage_, 0, 0, 0, 0)
 	, CurArea(ColMapImage_, 0, 0, 0, 0)
 	, NorthEastArea(ColMapImage_, 0, 0, 0, 0)
-	,NorthWestArea(ColMapImage_, 0, 0, 0, 0)
-	,SouthEastArea(ColMapImage_, 0, 0, 0, 0)
-	,SouthWestArea(ColMapImage_, 0, 0, 0, 0)
+	, NorthWestArea(ColMapImage_, 0, 0, 0, 0)
+	, SouthEastArea(ColMapImage_, 0, 0, 0, 0)
+	, SouthWestArea(ColMapImage_, 0, 0, 0, 0)
 	, IndexCheck_(false)
 	, PrevIndex_(0)
 	, MapTile_(nullptr)
@@ -74,11 +74,14 @@ void Monster::Start()
 	{
 		SetColMapImage("Camp_ColMap.bmp");
 	}
-	else
+	else if (GetLevel()->GetNameCopy() == "BossLevel")
 	{
-		return;
+		SetColMapImage("Boss_ColMap.bmp");
 	}
-
+	else if (GetLevel()->GetNameCopy() == "CemetoryLevel")
+	{
+		SetColMapImage("Cemetory_ColMap.bmp");
+	}
 
 	for (int x = 0; x < AreaWidth_; ++x)
 	{
