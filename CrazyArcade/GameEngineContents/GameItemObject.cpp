@@ -1,7 +1,8 @@
 #include"GameItemObject.h"
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
-
+#include "Ghost.h"
+#include <GameEngine/GameEngineLevel.h>
 
 GameItemObject::GameItemObject()
 	:	MapTile_(nullptr)
@@ -118,7 +119,11 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 		Tiles_->Renderer->CreateAnimation("Bubble_Default.bmp", "Animation", 0, 3, 0.2f, true);
 		Tiles_->Renderer->ChangeAnimation("Animation");
 	}
-
+	else if (_Type == ItemType::Ghost)
+	{
+		Ghost* Ghost_ = GetLevel()->CreateActor<Ghost>((int)ORDER::BOSS);
+		Ghost_->SetPosition(_Pos);
+	}
 }
 
 // 플레이어가 서있는 위치의 타일의 BlockType이 아이템블록이라면 , 아이템이 무슨아이템인지 체크하는 함수입니당. 위치넣어주면 아이템타입이 리턴됩니당. 

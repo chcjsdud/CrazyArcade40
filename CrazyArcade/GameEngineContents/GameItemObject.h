@@ -4,7 +4,7 @@
 #include <GameEngine/GameEngineRendererTileMap.h>
 
 class GameEngineRenderer;
-
+class Ghost;
 class ItemBlockTile : public Tile
 {
 public:
@@ -34,6 +34,7 @@ public:
 	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
+	Ghost* Ghost_;
 };
 
 
