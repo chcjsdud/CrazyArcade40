@@ -58,8 +58,9 @@ enum class ItemType
 
 	Bubble_Dark,
 	Bubble_Boss,
-	Bubble_Default
+	Bubble_Default,
 
+	Ghost,
 };
 enum class UIType
 {
