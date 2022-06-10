@@ -1,6 +1,5 @@
 #pragma once
 #include "Monster.h"
-#include <GameEngineContents/Area.h>
 
 enum class BossState
 {
@@ -15,8 +14,6 @@ enum class BossState
 class Player;
 class GameEngineImage;
 class GameEngineRenderer;
-
-
 class Boss : public Monster
 {
 public:
@@ -34,6 +31,7 @@ public:
         Player_ = _Player;
     }
 
+
 protected:
     void Start() override;
     void Render();
@@ -41,6 +39,7 @@ protected:
     void UpdateMove() override;
     void UpdateDirection() override;
     void TakeDamage() override;
+    void Die() override;
 
 private:
     Player* Player_;
@@ -49,16 +48,19 @@ private:
     int PlayerIndex_;
     float RollTime_;
     float WaterTime_;
+    float WaterAttackStartTime_;
     float4 PlayerPos_;
     int CheckIndex_;
     int AreaChangeCount_;
     int RandomAction_;
-    bool EndAttack_;	
+    bool EndAttack_;
+    bool WaterAttacOn_;
     GameEngineRenderer* BossHP_;
     GameEngineRenderer* WaterAttack_;
     GameEngineRenderer* HPUI_;
     MapGameObject* BossBoom_;
     Boss* Boss_;
+
 
 private:
     void UpdateAttack();
@@ -68,5 +70,6 @@ private:
     bool SameYLine();
     void RollAttack();
     void WaterAttack();
+    void CheckCanAttackTile();
     void UpdateHP();
 };

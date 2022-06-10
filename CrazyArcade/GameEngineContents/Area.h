@@ -40,6 +40,7 @@ public:
     bool HasWall();
     bool HasWaveTile();
     bool HasBlock();
+    int ChooseWaterAttackAni();
     bool HasBubble();
     bool InCenter(float4 _Pos);
 

@@ -52,6 +52,23 @@ bool Area::HasBlock()
     return GetTile(float4(CenterX_, CenterY_)) != nullptr;
 }
 
+int Area::ChooseWaterAttackAni()
+{
+    BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
+
+    if (Tile_ != nullptr)
+    {
+        if(Tile_->BlockType_ == BlockType::Max)
+        {
+            return 0; // 0번 애니메이션
+        }
+        else
+        {
+            return 1; // 1번 애니메이션
+        }
+    }
+}
+
 bool Area::InCenter(float4 _Pos)
 {
     if (CenterX_ - 5 < _Pos.x && _Pos.x < CenterX_ + 5 &&
@@ -76,22 +93,22 @@ bool Area::HasBubble()
 {
     BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
 
-	return Tile_ != nullptr ?
-		Tile_->BlockType_ == BlockType::BoomBlock :
-		false;
+    return Tile_ != nullptr ?
+        Tile_->BlockType_ == BlockType::BoomBlock :
+        false;
 }
 
 BlockTile* Area::GetTile(float4 _Pos)
 {
-	if (MapTile_ == nullptr)
-	{
-		return nullptr;
-	}
+    if (MapTile_ == nullptr)
+    {
+        return nullptr;
+    }
 
-	TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
-	if (TileIndex_.Y >= 13 || TileIndex_.X >= 15)
-	{
-		return nullptr;
-	}
-	return MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+    TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
+    if (TileIndex_.Y >= 13 || TileIndex_.X >= 15)
+    {
+        return nullptr;
+    }
+    return MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 }

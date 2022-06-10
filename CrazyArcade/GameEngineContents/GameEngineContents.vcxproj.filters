@@ -148,6 +148,9 @@
     <ClInclude Include="PlayNickName.h">
       <Filter>Actor\UI\Play</Filter>
     </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -306,6 +309,9 @@
     </ClCompile>
     <ClCompile Include="PlayNickName.cpp">
       <Filter>Actor\UI\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
