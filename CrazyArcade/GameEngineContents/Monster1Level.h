@@ -6,6 +6,7 @@ class MapBackGround;
 class Player;
 class MapFront;
 class Area;
+class MapGameObject;
 class Monster1Level : public GameEngineLevel
 {
 public:
@@ -27,4 +28,5 @@ private:
 	MapFront* MapFrontBackGround_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
+	MapGameObject* Monster1Object_;
 };

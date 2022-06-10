@@ -79,7 +79,9 @@ void BossLevel::Loading()
 
 		//Seal->SetPlayer(NewPlayer);
 	}
-
+	BossObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	BossObject_->SetMapTile(&MapBackGround_->MapTileMap_);
+	BossObject_->SetGameItem();
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 

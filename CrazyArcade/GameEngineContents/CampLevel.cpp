@@ -17,7 +17,7 @@
 CampLevel::CampLevel()
 :MapBackGround_(nullptr)
 , MapFrontBackGround_(nullptr)
-, bubble_(nullptr)
+, CampObject_(nullptr)
 {
 
 }
@@ -84,16 +84,16 @@ void CampLevel::Loading()
 
 
 
-	bubble_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-	bubble_->SetMapTile(&MapBackGround_->MapTileMap_);
-	bubble_->SetGameItem();
+	CampObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	CampObject_->SetMapTile(&MapBackGround_->MapTileMap_);
+	CampObject_->SetGameItem();
 
 
 	///블럭 push 테스트
 	//bubble_->PushBlock({ 100, 60 }, BlockDir::LEFT);//왼쪽으로 미는거 테스트
-	bubble_->PushBlock({ 100, 60 },BlockDir::DOWN); //아래으로 미는거 테스트
+	CampObject_->PushBlock({ 100, 60 },BlockDir::DOWN); //아래으로 미는거 테스트
 	//bubble_->PushBlock({ 100, 150 }, BlockDir::UP);
-	bubble_->PushBlock({ 100, 150 }, BlockDir::RIGHT);
+	CampObject_->PushBlock({ 100, 150 }, BlockDir::RIGHT);
 
 	if (false == GameEngineInput::GetInst()->IsKey("CreatBoom"))
 	{

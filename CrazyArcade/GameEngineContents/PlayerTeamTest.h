@@ -28,7 +28,7 @@ protected:
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
-	MapGameObject* bubble_;
+	MapGameObject* PlayerTeamTestObject_;
 
 	//GameEngineImage* MapColMap_;
 	GameEngineRenderer* MapColRenderer_;

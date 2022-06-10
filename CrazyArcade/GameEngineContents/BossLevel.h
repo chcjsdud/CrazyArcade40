@@ -5,6 +5,7 @@ class Area;
 class MapBackGround;
 class Player;
 class GameEngineImage;
+class MapGameObject;
 class BossLevel : public GameEngineLevel
 {
 public:
@@ -23,6 +24,7 @@ protected:
 	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 private:
+	MapGameObject* BossObject_;
 	MapBackGround* MapBackGround_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;

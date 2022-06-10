@@ -173,6 +173,9 @@ void Monster2Level::Loading()
 		Crocodile6->SetMapTile(&MapBackGround_->MapTileMap_);
 		Monster::LV2_MON_COUNT++;
 	}
+	Monster2Object_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	Monster2Object_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Monster2Object_->SetGameItem();
 
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }

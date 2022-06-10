@@ -31,7 +31,7 @@ void CemetoryLevel::Loading()
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
 
-	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
+
 
 	{
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
@@ -125,7 +125,11 @@ void CemetoryLevel::Loading()
 
 		}
 	}
+	CemetoryObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	CemetoryObject_->SetMapTile(&MapBackGround_->MapTileMap_);
+	CemetoryObject_->SetGameItem();
 
+	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 
@@ -149,7 +153,7 @@ void CemetoryLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 100.f, 340.f });
+	Player::MainPlayer_1->SetPosition({ 200.f, 300.f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 }

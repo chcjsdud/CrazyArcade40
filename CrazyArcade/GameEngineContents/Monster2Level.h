@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineLevel.h>
 #include <vector>
 
+class MapGameObject;
 class GameEngineImage;
 class MapBackGround;
 class Player;
@@ -26,6 +27,7 @@ protected:
 private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
+	MapGameObject* Monster2Object_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
 };
