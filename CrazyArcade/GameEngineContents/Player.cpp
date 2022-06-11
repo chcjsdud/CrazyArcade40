@@ -311,6 +311,7 @@ void Player::PlayerInfoUpdate()
 		Item->SetMapTile(MapTile_);
 		CurItemType1_ = Item->CheckItem(Pos + float4{ -20.0f,-20.0f });
 
+		ItemCheck(MainPlayer_1, CurItemType1_);
 		if (true == IsItemKey())
 		{
 			ItemCheck(MainPlayer_1, CurItemType1_);
@@ -469,12 +470,12 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::RedDevil:
 	{
-		if (CurSpeed_ == MaxSpeed_)
+		if (_Player->CurSpeed_ == _Player->MaxSpeed_)
 		{
 			return;
 		}
-		CurSpeed_ = MaxSpeed_;
 
+		_Player->CurSpeed_ = _Player->MaxSpeed_;
 		/*switch (CurCharacter)
 		{
 		case Character::BAZZI:
@@ -512,13 +513,13 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::UltraBubble:
 	{
-		if (CurAttPower_ == MaxAttPower_)
+		if (_Player->CurAttPower_ == _Player->MaxAttPower_)
 		{
 			return;
 		}
-		CurAttPower_ = MaxAttPower_;
+
+		_Player->CurAttPower_ = _Player->MaxAttPower_;
 	}
-	break;
 	break;
 	case ItemType::Niddle:
 	{
@@ -528,7 +529,26 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Devil:
 	{
-
+		if (CurDir_ == PlayerDir::Left)
+		{
+			CheckDir_ = PlayerDir::Right;
+			ChangeDirText_ = "Right";
+		}
+		else if (CurDir_ == PlayerDir::Right)
+		{
+			CheckDir_ = PlayerDir::Left;
+			ChangeDirText_ = "Left";
+		}
+		else if (CurDir_ == PlayerDir::Up)
+		{
+			CheckDir_ = PlayerDir::Down;
+			ChangeDirText_ = "Down";
+		}
+		else if (CurDir_ == PlayerDir::Down)
+		{
+			CheckDir_ = PlayerDir::Up;
+			ChangeDirText_ = "Up";
+		}
 	}
 	break;
 	case ItemType::Shoes:
@@ -538,7 +558,18 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Shield:
 	{
+		AddAccTime(Time_);
 
+		// 3초가 지나기 전은 무적
+		if (3.f > GetAccTime())
+		{
+			IsInvincible = true;
+		}
+		else // 3초가 지나면 무적 해제 및 ResetTime
+		{
+			IsInvincible = false;
+			ReSetAccTime();
+		}
 	}
 	break;
 	case ItemType::SuperJump:
@@ -548,32 +579,31 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Owl:
 	{
-
+		ChangeState(PlayerState::OnOwl);
+		return;
 	}
 	break;
 	case ItemType::Turtle:
 	{
-
+		ChangeState(PlayerState::OnTurtle);
+		return;
 	}
 	break;
 	case ItemType::SpaceShip:
 	{
-
+		ChangeState(PlayerState::OnUFO);
+		return;
 	}
 	break;
 	case ItemType::Bubble_Dark:
 	{
-
+		// 물풍선 이미지 변경
 	}
 	break;
 	default:
 		break;
 	}
 
-	// Devil
-	// Owl
-	// Turtle
-	// UFO
 }
 
 void Player::SpeedUpdate()
@@ -587,6 +617,25 @@ void Player::AttackCountUpdate()
 
 void Player::AttackPowerUpdate()
 {
+}
+
+void Player::Attack()
+{
+	float4 ModifyPos = float4{ -20.f, -20.f };
+
+	if (Type == PlayerType::Player1)
+	{
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->SetMapTile(MapTile_);
+		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_);
+	}
+
+	if (Type == PlayerType::Player2)
+	{
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->SetMapTile(MapTile_);
+		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_);
+	}
 }
 
 void Player::CharTypeUpdate()
@@ -691,10 +740,10 @@ void Player::ColMapUpdate()
 
 void Player::StagePixelCheck(float _Speed)
 {
-	float4 LeftTopPos = GetPosition() + float4{ -19.f, -5.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 RightTopPos = GetPosition() + float4{ 19.f, -5.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 LeftBotPos = GetPosition() + float4{ -19.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
-	float4 RightBotPos = GetPosition() + float4{ 19.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 LeftTopPos = GetPosition() + float4{ -12.f, 5.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightTopPos = GetPosition() + float4{ 12.f, 5.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 LeftBotPos = GetPosition() + float4{ -12.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
+	float4 RightBotPos = GetPosition() + float4{ 12.f, 30.f } + MoveDir * GameEngineTime::GetDeltaTime() * _Speed;
 
 	int LeftTopColor = MapColImage_->GetImagePixel(LeftTopPos);
 	int RightTopColor = MapColImage_->GetImagePixel(RightTopPos);
@@ -719,29 +768,10 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	{
 	case BlockType::WaveBlock:
 	{
-		if (CurState_ == PlayerState::IdleOwl
-			|| CurState_ == PlayerState::IdleTurtle
-			|| CurState_ == PlayerState::RidingOwl
-			|| CurState_ == PlayerState::RidingTurtle
-			|| CurState_ == PlayerState::RidingUFO)
+		// 무적이 아닐 때만
+		if (false == IsInvincible)
 		{
-			ChangeState(PlayerState::Idle);
-			return;
-		}
-
-		if (CurState_ != PlayerState::Die
-			&& CurState_ != PlayerState::DamageStart
-			&& CurState_ != PlayerState::Damaged
-			&& CurState_ != PlayerState::Fade)
-		{
-			ChangeState(PlayerState::DamageStart);
-			return;
-		}
-	
-		}
-		break;
-		case BlockType::BubbleBlock:
-		{
+			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl
 				|| CurState_ == PlayerState::IdleTurtle
 				|| CurState_ == PlayerState::RidingOwl
@@ -761,35 +791,77 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 				return;
 			}
 		}
-		break;
-		case BlockType::BushBlock:
+		else
 		{
-			PlayerAnimationRender_->SetAlpha(0);
+			return;
+
+		}
+	}
+		break;
+	case BlockType::BubbleBlock:
+	{
+		// 무적이 아닐 때만
+		if (false == IsInvincible)
+		{
+			// 탈 것을 타고 있는 상태에서는 -> Idle
+			if (CurState_ == PlayerState::IdleOwl
+				|| CurState_ == PlayerState::IdleTurtle
+				|| CurState_ == PlayerState::RidingOwl
+				|| CurState_ == PlayerState::RidingTurtle
+				|| CurState_ == PlayerState::RidingUFO)
+			{
+				ChangeState(PlayerState::Idle);
+				return;
+			}
+
+			if (CurState_ != PlayerState::Die
+				&& CurState_ != PlayerState::DamageStart
+				&& CurState_ != PlayerState::Damaged
+				&& CurState_ != PlayerState::Fade)
+			{
+				ChangeState(PlayerState::DamageStart);
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+	}
+		break;
+	case BlockType::BushBlock:
+	{
+		PlayerAnimationRender_->SetAlpha(0);
 			
-		}
-		break;
-		case BlockType::ItemBlock:		// 아이템 체크하는 부분 
-		{
-			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
-			//int a = 0;
-			//PlayerInfoUpdate();
-		}
-		break;
-		case BlockType::BoomBlock:
-		{
-			IsBoomblock = true;
-			break;
-		}
-		break;
-		default:
-		{
-			IsBoomblock = false;
-			PlayerAnimationRender_->SetAlpha(255);
-		}
+	}
+	break;
+	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
+	{
+		GameEngineSound::SoundPlayOneShot("eat_item.mp3");
+		//int a = 0;
+		PlayerInfoUpdate();
+	}
+	break;
+	case BlockType::BoomBlock:
+	{
+		IsBoomblock = true;
 		break;
 	}
+	break;
+	default:
+	{
+		IsBoomblock = false;
+		PlayerAnimationRender_->SetAlpha(255);
+	}
+	break;
+	}
 
-	PlayerInfoUpdate();
+	// UFO를 탄 상태가 아닐 때만 아이템 체크 
+	//if (CurState_ != PlayerState::RidingUFO)
+	//{
+	//	PlayerInfoUpdate();
+	//}
+	//
 }
 
 void Player::TileCheckResult()
@@ -819,6 +891,16 @@ void Player::TileCheckResult()
 // 앞 뒤 양옆 블럭을 체크한 뒤 할 일
 void Player::FrontBlockCheckUpdate()
 {
+	float4 Pos = {};
+	if (Type == PlayerType::Player1)
+	{
+		Pos = MainPlayer_1->GetPosition();
+	}
+	else if (Type == PlayerType::Player2)
+	{
+		Pos = MainPlayer_2->GetPosition();
+	}
+
 	// 왼쪽 블럭
 	switch (LeftBlock)
 	{
@@ -836,7 +918,15 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		IsLeftMove = false;
+		IsLeftMove = false;	
+
+		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		Box_->SetMapTile(MapTile_);
+		if (PlayerDir::Left == CurDir_)
+		{
+			Box_->PushBlock(Pos + float4{-40.0f, -20.0f}, BlockDir::LEFT);
+
+		}
 	}
 	break;
 	default:
@@ -864,6 +954,15 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::PullBlock:
 	{
 		IsRightMove = false;
+
+		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		Box_->SetMapTile(MapTile_);
+		if (PlayerDir::Right == CurDir_)
+		{
+			Box_->PushBlock(Pos + float4{ 0.0f, -20.0f }, BlockDir::RIGHT);
+
+		}
+		
 	}
 	break;
 	default:
@@ -891,6 +990,14 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::PullBlock:
 	{
 		IsUpMove = false;
+
+		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		Box_->SetMapTile(MapTile_);
+		if (PlayerDir::Up == CurDir_)
+		{
+			Box_->PushBlock(Pos + float4{ -20.0f, -40.0f }, BlockDir::UP);
+
+		}
 	}
 	break;
 	default:
@@ -919,6 +1026,14 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::PullBlock:
 	{
 		IsDownMove = false;
+
+		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		Box_->SetMapTile(MapTile_);
+		if (PlayerDir::Down == CurDir_)
+		{
+			Box_->PushBlock(Pos + float4{ -20.0f, 0.0f }, BlockDir::DOWN);
+
+		}
 	}
 	break;
 	default:
@@ -934,7 +1049,7 @@ void Player::FrontBlockCheck()
 	if (Type == PlayerType::Player1)
 	{
 		float4 Pos = MainPlayer_1->GetPosition();
-
+		
 		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
 		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
 
@@ -1001,18 +1116,23 @@ void Player::PlayerCollisionUpdate()
 
 void Player::CollisionCheck()
 {
+	// 무적이 아닐 때만
 	if (Type == PlayerType::Player1)
 	{
-		std::vector<GameEngineCollision*> ColList;
-
-		if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
+		if (false == IsInvincible)
 		{
-			for (size_t i = 0; i < ColList.size(); i++)
+			std::vector<GameEngineCollision*> ColList;
+
+			if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 			{
-				ChangeState(PlayerState::Die);
-				return;
+				for (size_t i = 0; i < ColList.size(); i++)
+				{
+					ChangeState(PlayerState::Die);
+					return;
+				}
 			}
 		}
+
 
 		// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
 		{
@@ -1044,16 +1164,21 @@ void Player::CollisionCheck()
 	{
 		if (Type == PlayerType::Player2)
 		{
-			std::vector<GameEngineCollision*> ColList;
-
-			if (true == Collision2P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
+			// 무적이 아닐 때만
+			if (false == IsInvincible)
 			{
-				for (size_t i = 0; i < ColList.size(); i++)
+				std::vector<GameEngineCollision*> ColList;
+
+				if (true == Collision2P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 				{
-					ChangeState(PlayerState::Die);
-					return;
+					for (size_t i = 0; i < ColList.size(); i++)
+					{
+						ChangeState(PlayerState::Die);
+						return;
+					}
 				}
 			}
+			
 
 			// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
 			{
@@ -1138,7 +1263,7 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Win_", 29, 36, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "DamagedStart_", 6, 10, 0.07f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "Damaged_", 11, 23, 0.2f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "Fade_", 24, 30, 0.25f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_4.bmp", "Fade_", 24, 31, 0.25f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
@@ -1336,16 +1461,8 @@ void Player::Start()
 
 void Player::Update()
 {
-	//LevelChangeStart(GetLevel());
-
 	ColMapUpdate();
 
-	// 인게임이 아니다 == 룸 레벨이다
-	//if (false == IsInGame)
-	//{
-	//	PlayerInit();
-	//	CharTypeUpdate();
-	//}
 	CharTypeUpdate();
 
 	PlayerStateUpdate();
@@ -1375,7 +1492,7 @@ void Player::Render()
 	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
 	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 
-	/*std::string Posx = "";
+	std::string Posx = "";
 	std::string Posy = "";
 	std::string State = "";
 
@@ -1445,9 +1562,9 @@ void Player::Render()
 	}
 
 
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, Posx.c_str(), static_cast<int>(Posx.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, Posy.c_str(), static_cast<int>(Posy.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, State.c_str(), static_cast<int>(State.length()));*/
+	/*TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, Posx.c_str(), static_cast<int>(Posx.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, Posy.c_str(), static_cast<int>(Posy.length()));*/
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, State.c_str(), static_cast<int>(State.length()));
 }
 
 bool Player::IsMoveKey()
@@ -1562,6 +1679,24 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Die:
 			DieStart();
 			break;
+		case PlayerState::OnOwl:
+			OnOwlStart();
+			break;
+		case PlayerState::OnTurtle:
+			OnTurtleStart();
+			break;
+		case PlayerState::OnUFO:
+			OnUFOStart();
+			break;
+		case PlayerState::OffOwl:
+			OffOwlStart();
+			break;
+		case PlayerState::OffTurtle:
+			OffTurtleStart();
+			break;
+		case PlayerState::OffUFO:
+			OffUFOStart();
+			break;
 		case PlayerState::IdleOwl:
 			IdleOwlStart();
 			break;
@@ -1620,6 +1755,24 @@ void Player::PlayerStateUpdate()
 		break;
 	case PlayerState::Die:
 		DieUpdate();
+		break;
+	case PlayerState::OnOwl:
+		OnOwlUpdate();
+		break;
+	case PlayerState::OnTurtle:
+		OnTurtleUpdate();
+		break;
+	case PlayerState::OnUFO:
+		OnUFOUpdate();
+		break;
+	case PlayerState::OffOwl:
+		OffOwlUpdate();
+		break;
+	case PlayerState::OffTurtle:
+		OffTurtleUpdate();
+		break;
+	case PlayerState::OffUFO:
+		OffUFOUpdate();
 		break;
 	case PlayerState::IdleOwl:
 		IdleOwlUpdate();

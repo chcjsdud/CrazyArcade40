@@ -114,24 +114,64 @@ void Player::DieStart()
 	GameEngineSound::SoundPlayOneShot("Die.mp3");
 }
 
+void Player::OnOwlStart()
+{
+}
+
+void Player::OnTurtleStart()
+{
+}
+
+void Player::OnUFOStart()
+{
+}
+
+void Player::OffOwlStart()
+{
+}
+
+void Player::OffTurtleStart()
+{
+}
+
+void Player::OffUFOStart()
+{
+}
+
 void Player::IdleOwlStart()
 {
+	AnimationName_ = "IdleOwl_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_+ ChangeDirText_);
 }
 
 void Player::IdleTurtleStart()
 {
+	AnimationName_ = "IdleTurtle_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
 void Player::RidingOwlStart()
 {
+	CurSpeed_ = 5.f;
+
+	AnimationName_ = "RidingOwl_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
 void Player::RidingTurtleStart()
 {
+	CurSpeed_ = 1.f;
+
+	AnimationName_ = "RidingTurtle_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
 void Player::RidingUFOStart()
 {
+	CurSpeed_ = 10.f;
+
+	AnimationName_ = "IdleUFO_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
 void Player::WaitUpdate()
@@ -184,11 +224,6 @@ void Player::MoveUpdate()
 	}
 
 	Move(CurSpeed_);
-	//if (true == IsMove)
-	//{
-	//	
-	//}
-
 
 	StagePixelCheck(CurSpeed_);
 }
@@ -199,38 +234,17 @@ void Player::JumpUpdate()
 
 void Player::AttackUpdate()
 {
-	float4 ModifyPos = float4{ -20.f, -20.f };
+	Attack();
 
-	if (Type == PlayerType::Player1)
-	{
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom_->SetMapTile(MapTile_);
+	ChangeState(PlayerState::Move);
+	return;
 
-		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_);
 
-		//BlockType block = Boom->CheckTile(MainPlayer_1->GetPosition());
-		//체크타일이 웨이브면 -> Damaged
-
-		ChangeState(PlayerState::Move);
-		return;
-
-	}
-
-	if (Type == PlayerType::Player2)
-	{
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom_->SetMapTile(MapTile_);
-		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_);
-
-		ChangeState(PlayerState::Move);
-		return;
-	}
-
-	if (true == IsMoveKey())
-	{
-		ChangeState(PlayerState::Move);
-		return;
-	}
+	//if (true == IsMoveKey())
+	//{
+	//	ChangeState(PlayerState::Move);
+	//	return;
+	//}
 
 }
 
@@ -254,7 +268,7 @@ void Player::DamagedUpdate()
 	Move(CurSpeed_);
 	StagePixelCheck(0.2f);
 
-	if (5.f < GetAccTime())
+	if (6.f < GetAccTime())
 	{
 		ChangeState(PlayerState::Fade);
 		return;
@@ -289,11 +303,11 @@ void Player::FadeUpdate()
 	}
 
 	// 1.5초 후 -> Die
-	//if (2.f < GetAccTime())
-	//{
-	//	ChangeState(PlayerState::Die);
-	//	return;
-	//}
+	if (2.f < GetAccTime())
+	{
+		ChangeState(PlayerState::Die);
+		return;
+	}
 
 
 	
@@ -310,22 +324,114 @@ void Player::DieUpdate()
 	}
 }
 
+void Player::OnOwlUpdate()
+{
+}
+
+void Player::OnTurtleUpdate()
+{
+}
+
+void Player::OnUFOUpdate()
+{
+}
+
+void Player::OffOwlUpdate()
+{
+}
+
+void Player::OffTurtleUpdate()
+{
+}
+
+void Player::OffUFOUpdate()
+{
+}
+
 void Player::IdleOwlUpdate()
 {
+	DirAnimationCheck();
+
+	if (true == IsMoveKey())
+	{
+		ChangeState(PlayerState::RidingOwl);
+		return;
+	}
+
+	if (true == IsAttackKey())
+	{
+		Attack();
+	}
 }
 
 void Player::IdleTurtleUpdate()
 {
+	DirAnimationCheck();
+
+	if (true == IsMoveKey())
+	{
+		ChangeState(PlayerState::RidingTurtle);
+		return;
+	}
+
+	if (true == IsAttackKey())
+	{
+		Attack();
+	}
 }
 
 void Player::RidingOwlUpdate()
 {
+	DirAnimationCheck();
+
+	if (false == IsMoveKey())
+	{
+		ChangeState(PlayerState::IdleOwl);
+		return;
+	}
+
+	if (true == IsAttackKey())
+	{
+		Attack();
+	}
+
+	Move(CurSpeed_);
+
+	StagePixelCheck(CurSpeed_);
 }
 
 void Player::RidingTurtleUpdate()
 {
+	DirAnimationCheck();
+
+	if (false == IsMoveKey())
+	{
+		ChangeState(PlayerState::IdleTurtle);
+		return;
+	}
+
+	if (true == IsAttackKey())
+	{
+		Attack();
+	}
+
+	Move(CurSpeed_);
+
+	StagePixelCheck(CurSpeed_);
 }
 
 void Player::RidingUFOUpdate()
 {
+	DirAnimationCheck();
+
+	if (true == IsAttackKey())
+	{
+		Attack();
+	}
+
+
+	Move(CurSpeed_);
+	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
+
+	IsMove = true;
 }

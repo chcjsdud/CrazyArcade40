@@ -17,6 +17,12 @@ enum class PlayerState
 	Revival,
 	Fade,		// 물방울 갇혔을 때 2차 애니메이션
 	Die,
+	OnOwl,
+	OnTurtle,
+	OnUFO,
+	OffOwl,
+	OffTurtle,
+	OffUFO,
 	IdleOwl,
 	IdleTurtle,
 	RidingOwl,
@@ -121,9 +127,9 @@ private:
 	PlayerDir CheckDir_;
 	bool IsBoomblock;
 	bool IsLive;
+	bool IsInvincible;
 
 protected:
-
 	void SetSpeed(float _CurSpeed)
 	{
 		CurSpeed_ = _CurSpeed;
@@ -164,14 +170,14 @@ protected:
 	void AttackCountUpdate();
 	void AttackPowerUpdate();
 
+	void Attack();
+
 protected:
 	PlayerType Type;
 	Character CurCharacter;
 
 protected:
 	void CharTypeUpdate();
-
-	bool IsInGame;
 
 	bool IsReady;
 	bool IsMove;
@@ -215,6 +221,7 @@ public:
 
 protected:
 	MapGameObject* Boom_;
+	MapGameObject* Box_;
 
 	MapBackGround* MapBackGround_;
 
@@ -324,6 +331,12 @@ protected:
 	void RevivalStart();
 	void FadeStart();
 	void DieStart();
+	void OnOwlStart();
+	void OnTurtleStart();
+	void OnUFOStart();
+	void OffOwlStart();
+	void OffTurtleStart();
+	void OffUFOStart();
 	void IdleOwlStart();
 	void IdleTurtleStart();
 	void RidingOwlStart();
@@ -341,6 +354,12 @@ protected:
 	void RevivalUpdate();
 	void FadeUpdate();
 	void DieUpdate();
+	void OnOwlUpdate();
+	void OnTurtleUpdate();
+	void OnUFOUpdate();
+	void OffOwlUpdate();
+	void OffTurtleUpdate();
+	void OffUFOUpdate();
 	void IdleOwlUpdate();
 	void IdleTurtleUpdate();
 	void RidingOwlUpdate();

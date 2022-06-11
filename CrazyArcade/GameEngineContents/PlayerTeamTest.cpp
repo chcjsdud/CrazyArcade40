@@ -167,7 +167,7 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
+	Player::MainPlayer_1->SetPosition(Areas_[170].GetCenter());		// 23
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
