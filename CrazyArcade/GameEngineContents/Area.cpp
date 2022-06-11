@@ -58,13 +58,7 @@ int Area::ChooseWaterAttackAni()
 
     if (Tile_ != nullptr)
     {
-        if (Tile_->BlockType_ == BlockType::FixBlock ||
-            Tile_->BlockType_ == BlockType::PullBlock ||
-            Tile_->BlockType_ == BlockType::BushBlock ||
-            Tile_->BlockType_ == BlockType::FixItemBlock ||
-            Tile_->BlockType_ == BlockType::ItemBlock ||
-            Tile_->BlockType_ == BlockType::WallBlock ||
-            Tile_->BlockType_ == BlockType::NiddleBlock)
+        if (Tile_->BlockType_ != BlockType::Max)
         {
             return 0; // 1번 애니메이션
         }
@@ -72,6 +66,10 @@ int Area::ChooseWaterAttackAni()
         {
             return 1; // 0번 애니메이션
         }
+    }
+    else
+    {
+        return 1;
     }
 }
 

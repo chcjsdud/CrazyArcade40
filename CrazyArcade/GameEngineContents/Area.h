@@ -9,51 +9,52 @@ struct TileIndex;
 class BlockTile;
 class Area
 {
-    friend GameEngineLevel;
+	friend GameEngineLevel;
 public:
-    Area(GameEngineImage* _ColMapImage, float _StartX, float _StartY, float _EndX, float _EndY);
-    ~Area();
+	Area() {}
+	Area(GameEngineImage* _ColMapImage, float _StartX, float _StartY, float _EndX, float _EndY);
+	~Area();
 
-    //Area(const Area& _Other) = delete;
-    //Area(Area&& _Other) noexcept = delete;
+	//Area(const Area& _Other) = delete;
+	//Area(Area&& _Other) noexcept = delete;
    // Area& operator=(const Area& _Other) = delete;
-    //Area& operator=(Area&& _Other) noexcept = delete;
+	//Area& operator=(Area&& _Other) noexcept = delete;
 private:
-    float StartX_;
-    float StartY_;
-    float EndX_;
-    float EndY_;
-    float CenterX_;
-    float CenterY_;
-    GameEngineImage* ColMapImage_;
-    Monster* Monster_;
-    BlockType* BlockType_;
-    GameEngineRendererTileMap* MapTile_;
-    TileIndex TileIndex_;
+	float StartX_;
+	float StartY_;
+	float EndX_;
+	float EndY_;
+	float CenterX_;
+	float CenterY_;
+	GameEngineImage* ColMapImage_;
+	Monster* Monster_;
+	BlockType* BlockType_;
+	GameEngineRendererTileMap* MapTile_;
+	TileIndex TileIndex_;
 
 public:
-    float4 GetCenter() const { return float4(CenterX_, CenterY_); }
+	float4 GetCenter() const { return float4(CenterX_, CenterY_); }
 
-    // 해당위치가 Area 안에 있는지
-    bool Contains(float4 _Pos);
-    // ColMap이 검은색
-    bool HasWall();
-    bool HasWaveTile();
-    bool HasBlock();
-    int ChooseWaterAttackAni();
-    bool HasBubble();
-    bool InCenter(float4 _Pos);
-    bool GhostCanMoveTile();
+	// 해당위치가 Area 안에 있는지
+	bool Contains(float4 _Pos);
+	// ColMap이 검은색
+	bool HasWall();
+	bool HasWaveTile();
+	bool HasBlock();
+	int ChooseWaterAttackAni();
+	bool HasBubble();
+	bool InCenter(float4 _Pos);
+	bool GhostCanMoveTile();
 
-    BlockTile* GetTile(float4 _Pos);
+	BlockTile* GetTile(float4 _Pos);
 
-    inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
-    {
-        MapTile_ = _MapTile;
-    }
+	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
+	{
+		MapTile_ = _MapTile;
+	}
 
-    GameEngineRendererTileMap* GetMapTile()
-    {
-        return MapTile_;
-    }
+	GameEngineRendererTileMap* GetMapTile()
+	{
+		return MapTile_;
+	}
 };

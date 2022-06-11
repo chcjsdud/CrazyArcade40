@@ -1,4 +1,5 @@
 #include "Boss.h"
+#include "BossBoom.h"
 #include "Monster.h"
 #include "Player.h"
 #include <GameEngine/GameEngineRenderer.h>
@@ -14,16 +15,16 @@
 
 Boss::Boss()
 	: Monster()
-	, PlayerIndex_(4)
-	, WaterTime_(0.0f)
+	, WaterTime_(-7.0f)
+	, WaterAttackInterval_(-8.5f)
 	, RollTime_(0.0f)
 	, AreaChangeCount_(0)
 	, BossHP_(nullptr)
-	, Boss_(nullptr)
-	, BossBoom_(nullptr)
-	, CheckIndex_()
 	, WaterAttackStartTime_(0.0f)
 	, WaterAttacOn_(false)
+	, AttackIndex_(0)
+	, BossBoomIndex_(1)
+	, LevelStart_(true)
 {
 }
 
@@ -31,9 +32,9 @@ Boss::~Boss()
 {
 }
 
-void Boss::SetBoom(MapGameObject* _BossBoom)
+void Boss::AddBoom(BossBoom* _BossBoom)
 {
-	BossBoom_ = _BossBoom;
+	BossBooms_.push_back(_BossBoom);
 }
 
 void Boss::Start()
@@ -136,6 +137,7 @@ void Boss::Update()
 {
 	WaterAttackStartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	UpdateDirection();
 	UpdateMove();
@@ -252,7 +254,7 @@ void Boss::UpdateMove()
 			{
 				Dir_ = float4::ZERO;
 				EndAttack_ = true;
-				CanAttackAreas.clear();
+				LevelStart_ = false;
 			}
 		}
 	}
@@ -306,7 +308,7 @@ void Boss::UpdateDirection()
 				{
 					Index_ = i;
 					AreaChangeCount_++;
-					if (AreaChangeCount_ == 1 ||
+					if (AreaChangeCount_ == 3 ||
 						Index_ < AreaHeight_ ||
 						Index_ % AreaHeight_ == 0 ||
 						Index_ % AreaHeight_ == AreaHeight_ - 1 ||
@@ -316,12 +318,12 @@ void Boss::UpdateDirection()
 							Index_ >= (AreaWidth_ - 1) * AreaHeight_) &&
 							RandomAction_ != 0)
 						{
-							if (Index_ == 0 ||
-								Index_ == 8 ||
-								Index_ == 4 ||
-								Index_ == 94 ||
-								Index_ == 90 ||
-								Index_ == 98)
+							if (Index_ == 3 ||
+								Index_ == 16 ||
+								Index_ == 175 ||
+								Index_ == 188 ||
+								Index_ == 10 ||
+								Index_ == 23 )
 							{
 								RandomAction_ = 4;
 								IsAreaChanged = true;
@@ -347,7 +349,10 @@ void Boss::UpdateDirection()
 		}
 	}
 	CheckWaveTile(GetPosition());
-
+	if (LevelStart_ == true)
+	{
+		RandomAction_ = 3;
+	}
 	if (Dir_.x == 0 && Dir_.y == 0)
 	{
 		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
@@ -662,6 +667,7 @@ void Boss::UpdateDirection()
 
 	else if (RandomAction_ == 3)
 	{
+		Dir_ = float4::ZERO;
 		WaterAttack();
 	}
 	else if (RandomAction_ == 4)
@@ -686,7 +692,10 @@ void Boss::UpdateAttack()
 	if (false == Renderer_->IsAnimationName("WaterAttack") &&
 		false == Renderer_->IsAnimationName("RollAttack" + Direction_))
 	{
-		WaterTime_ = 0.0f;
+		if (LevelStart_ == false)
+		{
+			WaterTime_ = 0.0f;
+		}
 		RollTime_ = 0.0f;
 		EndAttack_ = false;
 	}
@@ -718,21 +727,53 @@ void Boss::WaterAttack()
 {
 	UpdateAttack();
 	Renderer_->ChangeAnimation("WaterAttack");
-	CheckCanAttackTile();
-	Dir_ = float4::ZERO;
+	if (WaterAttackInterval_ > 1.5f)
+	{
+		if (LevelStart_ == true)
+		{
+			BossBoomIndex_ = 0;
+			std::vector<int> AttackIndices = { 28, 32, 36, 97, 101, 158, 162, 166 };
+			for (int AttackIndex : AttackIndices)
+			{
+				BossBoom* _BossBoom = BossBooms_[BossBoomIndex_++ % BossBooms_.size()];
+				CheckCanAttackTile(_BossBoom, AttackIndex);
+			}
+		}
+		else
+		{
+			if (GetHP() < 5)
+			{
+				AttackIndex_ = (rand() % Areas_.size());
+			}
+			else
+			{
+				std::vector<int> AttackIndices = { 28, 32, 36, 93, 97, 101, 158, 162, 166 };
+				int RandomIndex = (rand() % AttackIndices.size());
+				AttackIndex_ = AttackIndices[RandomIndex];
+			}
+
+			BossBoom* _BossBoom = BossBooms_[(BossBoomIndex_++ % BossBooms_.size())];
+			CheckCanAttackTile(_BossBoom, AttackIndex_);
+		}
+		WaterAttackInterval_ = 0.0f;
+	}
 }
 
-void Boss::CheckCanAttackTile()
+
+void Boss::CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex)
 {
-	if (MapTile_ == nullptr)
+	if (MapTile_ == nullptr ||
+		_BossBoom == nullptr)
 	{
 		return;
 	}
 
-	int EastIndex = Index_ + AreaHeight_;
-	int WestIndex = Index_ - AreaHeight_;
-	int NorthIndex = Index_ - 1;
-	int SouthIndex = Index_ + 1;
+	std::map<int, Area> _CanAttackAreas;
+
+	int EastIndex = _AttackIndex + AreaHeight_;
+	int WestIndex = _AttackIndex - AreaHeight_;
+	int NorthIndex = _AttackIndex - 1;
+	int SouthIndex = _AttackIndex + 1;
 	int NorthEastIndex = EastIndex - 1;
 	int	NorthWestIndex = WestIndex - 1;
 	int	SouthEastIndex = EastIndex + 1;
@@ -741,118 +782,96 @@ void Boss::CheckCanAttackTile()
 	// 동서남북이 벽이 아니면
 	if (EastIndex >= 0 &&
 		EastIndex < Areas_.size() &&
-		Index_ < Areas_.size() - AreaHeight_)
+		_AttackIndex < Areas_.size() - AreaHeight_)
 	{
 		EastArea = Areas_[EastIndex];
 		if (false == EastArea.HasWall())
 		{
 			Area& EastArea = Areas_[EastIndex];
-			CanAttackAreas.insert(std::make_pair(0, EastArea));
+			_CanAttackAreas.insert(std::make_pair(0, EastArea));
 		}
 	}
 
 	if (WestIndex >= 0 &&
 		WestIndex < Areas_.size() &&
-		Index_ >= AreaHeight_)
+		_AttackIndex >= AreaHeight_)
 	{
 		WestArea = Areas_[WestIndex];
 		if (false == WestArea.HasWall())
 		{
 			Area& WestArea = Areas_[WestIndex];
-			CanAttackAreas.insert(std::make_pair(1, WestArea));
+			_CanAttackAreas.insert(std::make_pair(1, WestArea));
 		}
 	}
 
 	if (SouthIndex >= 0 &&
 		SouthIndex < Areas_.size() &&
-		Index_ % AreaHeight_ != AreaHeight_ - 1)
+		_AttackIndex % AreaHeight_ != AreaHeight_ - 1)
 	{
 		Area& SouthArea = Areas_[SouthIndex];
-		if (false == SouthArea.HasWall() &&
-			!(true == SouthArea.HasBlock() &&
-				false == SouthArea.HasWaveTile()))
+		if (false == SouthArea.HasWall())
 		{
 			Area& SouthArea = Areas_[SouthIndex];
-			CanAttackAreas.insert(std::make_pair(2, SouthArea));
+			_CanAttackAreas.insert(std::make_pair(2, SouthArea));
 		}
 	}
 
 	if (NorthIndex >= 0 &&
 		NorthIndex < Areas_.size() &&
-		Index_ % AreaHeight_ != 0)
+		_AttackIndex % AreaHeight_ != 0)
 	{
 		Area& NorthArea = Areas_[NorthIndex];
 		if (false == NorthArea.HasWall())
 		{
 			Area& NorthArea = Areas_[NorthIndex];
-			CanAttackAreas.insert(std::make_pair(3, NorthArea));
+			_CanAttackAreas.insert(std::make_pair(3, NorthArea));
 		}
 	}
 
 	if (NorthEastIndex >= 0 &&
 		NorthEastIndex < Areas_.size() &&
-		Index_ % AreaHeight_ != 0 &&
-		Index_ < Areas_.size() - AreaHeight_)
+		_AttackIndex % AreaHeight_ != 0 &&
+		_AttackIndex < Areas_.size() - AreaHeight_)
 	{
 		Area& NorthEastArea = Areas_[NorthEastIndex];
-		CanAttackAreas.insert(std::make_pair(4, NorthEastArea));
+		_CanAttackAreas.insert(std::make_pair(4, NorthEastArea));
 	}
 
 	if (NorthWestIndex >= 0 &&
 		NorthWestIndex < Areas_.size() &&
-		Index_ % AreaHeight_ != 0 &&
-		Index_ >= AreaHeight_)
+		_AttackIndex % AreaHeight_ != 0 &&
+		_AttackIndex >= AreaHeight_)
 	{
 		Area& NorthWestArea = Areas_[NorthWestIndex];
-		CanAttackAreas.insert(std::make_pair(5, NorthWestArea));
+		_CanAttackAreas.insert(std::make_pair(5, NorthWestArea));
 	}
 
 	if (SouthEastIndex >= 0 &&
 		SouthEastIndex < Areas_.size() &&
-		Index_ % AreaHeight_ != AreaHeight_ - 1 &&
-		Index_ < Areas_.size() - AreaHeight_)
+		_AttackIndex % AreaHeight_ != AreaHeight_ - 1 &&
+		_AttackIndex < Areas_.size() - AreaHeight_)
 	{
 		Area& SouthEastArea = Areas_[SouthEastIndex];
-		CanAttackAreas.insert(std::make_pair(6, SouthEastArea));
+		_CanAttackAreas.insert(std::make_pair(6, SouthEastArea));
 	}
 
 	if (SouthWestIndex >= 0 &&
 		SouthWestIndex < Areas_.size() &&
-		Index_ % AreaHeight_ != AreaHeight_ - 1 &&
-		Index_ >= AreaHeight_)
+		_AttackIndex % AreaHeight_ != AreaHeight_ - 1 &&
+		_AttackIndex >= AreaHeight_)
 	{
 		Area& SouthWestArea = Areas_[SouthWestIndex];
-		CanAttackAreas.insert(std::make_pair(7, SouthWestArea));
+		_CanAttackAreas.insert(std::make_pair(7, SouthWestArea));
 	}
 
-	if (Index_ >= 0 &&
-		Index_ < Areas_.size())
+	if (_AttackIndex >= 0 &&
+		_AttackIndex < Areas_.size())
 	{
-		Area& CenterArea = Areas_[Index_];
-		CanAttackAreas.insert(std::make_pair(8, CenterArea));
+		Area& CenterArea = Areas_[_AttackIndex];
+		_CanAttackAreas.insert(std::make_pair(8, CenterArea));
 	}
 
-	if (CanAttackAreas.size() != 0)
-	{
-		for (auto it = CanAttackAreas.begin(); it != CanAttackAreas.end(); it++)
-		{
-			// 블락을 체크해서 블락이 있으면 
-			if (0 == it->second.ChooseWaterAttackAni()) // 블럭 있음
-			{
-				//WaterAttack_->ChangeAnimation("boom"); // 먼지
-				//WaterAttack_->SetAlpha(255);
-				//WaterAttacOn_ = true;
-				auto a = it->second.GetMapTile()->GetTileIndex(it->second.GetCenter() - float4(20.0f, 40.0f));
-				it->second.GetMapTile()->DeleteTile(a.X, a.Y);
-			}
-
-			//else if (1 == it->second.ChooseWaterAttackAni()) // 블럭 없음
-			{
-				BossBoom_->BubblePop(GetPosition() - float4(20.0f, 40.0f), 3);
-				break;
-			}
-		}
-	}
+	_BossBoom->BubbleBubblePop(_CanAttackAreas);
 }
 
 //Todo chowon: BOSS_COUNT--; -> boss 죽었을 때 

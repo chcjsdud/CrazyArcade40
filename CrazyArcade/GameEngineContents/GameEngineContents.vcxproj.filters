@@ -151,6 +151,9 @@
     <ClInclude Include="Ghost.h">
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="BossBoom.h">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -311,6 +314,9 @@
       <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
+      <Filter>Actor\Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBoom.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
   </ItemGroup>

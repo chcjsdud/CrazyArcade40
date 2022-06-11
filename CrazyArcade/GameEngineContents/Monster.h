@@ -90,7 +90,6 @@ protected:
 	GameEngineCollision* CenterCol_;
 	std::vector<std::vector<Tile*>> Tiles_;
 	std::map<int, Area> MovableAreas;
-	std::map<int, Area> CanAttackAreas;
 
 public:
 	void SetMapSizeY(float _MapSizeY)

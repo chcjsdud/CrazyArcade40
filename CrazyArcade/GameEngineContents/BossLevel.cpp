@@ -2,6 +2,7 @@
 #include"ContentsEnum.h"
 #include "MapBackGround.h"
 #include "Boss.h"
+#include "BossBoom.h"
 #include "MapGameObject.h"
 #include "Player.h"
 #include <GameEngine/GameEngine.h>
@@ -28,41 +29,41 @@ void BossLevel::Loading()
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
 
-	//{
-	//	MapGameObject* BlockSet = CreateActor<MapGameObject>();
-	//	BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
-	//	GameEngineDirectory Dir;
-	//
-	//	Dir.MoveParent("CrazyArcade");
-	//	Dir.Move("Resources");
-	//	Dir.Move("Data");
-	//
-	//	GameEngineFile LoadFile = (Dir.GetFullPath() + "\\BossLevel.MapData").c_str();
-	//
-	//	LoadFile.Open(OpenMode::Read);
-	//
-	//	int Size = 0;
-	//	LoadFile.Read(&Size, sizeof(int));
-	//
-	//	for (size_t y = 0; y < Size; y++)
-	//	{
-	//		int XSize = 0;
-	//		LoadFile.Read(&XSize, sizeof(int));
-	//		for (size_t x = 0; x < XSize; x++)
-	//		{
-	//			std::string Name;
-	//			LoadFile.Read(Name);
-	//
-	//			if (Name == "None")
-	//			{
-	//				continue;
-	//			}
-	//
-	//			//                          5 7
-	//			BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
-	//		}
-	//	}
-	//}
+	{
+		MapGameObject* BlockSet = CreateActor<MapGameObject>();
+		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+		GameEngineDirectory Dir;
+	
+		Dir.MoveParent("CrazyArcade");
+		Dir.Move("Resources");
+		Dir.Move("Data");
+	
+		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\BossLevel.MapData").c_str();
+	
+		LoadFile.Open(OpenMode::Read);
+	
+		int Size = 0;
+		LoadFile.Read(&Size, sizeof(int));
+	
+		for (size_t y = 0; y < Size; y++)
+		{
+			int XSize = 0;
+			LoadFile.Read(&XSize, sizeof(int));
+			for (size_t x = 0; x < XSize; x++)
+			{
+				std::string Name;
+				LoadFile.Read(Name);
+	
+				if (Name == "None")
+				{
+					continue;
+				}
+	
+				//                          5 7
+				BlockSet->CreateBlock(float4(static_cast<float>(x * 40), static_cast<float>(y * 40)), Name);
+			}
+		}
+	}
 
 	{
 		////// 몬스터 //////
@@ -72,13 +73,16 @@ void BossLevel::Loading()
 		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
 		Monster::BOSS_COUNT++;
 
-		BossObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		BossObject_->SetMapTile(&MapBackGround_->MapTileMap_);
-		Seal->SetBoom(BossObject_);
-		BossObject_->SetGameItem();
-
+		for (int i = 0; i < 9; ++i)
+		{
+			BossBoom* _BossBoom = CreateActor<BossBoom>(static_cast<int>(ORDER::UI), "Bubble");
+			_BossBoom->SetMapTile(&MapBackGround_->MapTileMap_);
+			Seal->AddBoom(_BossBoom);
+		}
 	}
-
+	BossObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	BossObject_->SetMapTile(&MapBackGround_->MapTileMap_);
+	BossObject_->SetGameItem();
 	YSortOn(static_cast<int>(ORDER::PLAYER));
 }
 

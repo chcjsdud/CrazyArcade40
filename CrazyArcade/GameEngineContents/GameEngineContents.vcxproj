@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Area.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossBoom.h" />
     <ClInclude Include="BossLevel.h">
       <SubType>
       </SubType>
@@ -288,6 +289,7 @@
   <ItemGroup>
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossBoom.cpp" />
     <ClCompile Include="BossLevel.cpp">
       <SubType>
       </SubType>
