@@ -141,6 +141,7 @@ void Boss::Update()
 	UpdateMove();
 	UpdateHP();
 	Die();
+
 }
 
 void Boss::Die()
@@ -847,7 +848,7 @@ void Boss::CheckCanAttackTile()
 
 			//else if (1 == it->second.ChooseWaterAttackAni()) // 블럭 없음
 			{
-				BossBoom_->BubblePop(GetPosition() - float4(20.0f, 40.0f), 1);
+				BossBoom_->BubblePop(GetPosition() - float4(20.0f, 40.0f), 3);
 				break;
 			}
 		}
