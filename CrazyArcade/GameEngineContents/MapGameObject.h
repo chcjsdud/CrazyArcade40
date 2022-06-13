@@ -85,7 +85,7 @@ public:
 	BlockType CheckTile(float4 _Pos);
 	void CreateBlock(float4 _Pos, std::string _Box);
 	void BubblePop(float4 _Pos, float _Power);
-	void BossBubblePop(float4 _Pos, float _Power);
+	void BossBubblePop(float4 _Pos);
 	void CreateBoom(float4 _Pos, float _Power, int _PlayerNum);
 
 	inline size_t ReturnPlayer1BoomCount()

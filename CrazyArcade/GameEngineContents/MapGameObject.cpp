@@ -2011,7 +2011,7 @@ void MapGameObject::BlockValueSetting()
 	}
 }
 
-void MapGameObject::BossBubblePop(float4 _Pos, float _Power)
+void MapGameObject::BossBubblePop(float4 _Pos)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
