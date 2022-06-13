@@ -364,10 +364,16 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerFaceIconUI.cpp" />
+    <ClCompile Include="Player_ItemCheck.cpp" />
+    <ClCompile Include="Player_Key.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PlayerTeamTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Player_TileCheck.cpp" />
     <ClCompile Include="Player_State.cpp" />
     <ClCompile Include="PlayNickName.cpp" />
     <ClCompile Include="PlayResultUI.cpp" />

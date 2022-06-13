@@ -81,6 +81,22 @@ protected:
 
 	void DebugModeSwitch();
 
+protected:
+	float4 Player1Pos_;
+	float4 Player2Pos_;
+
+	float4 LeftPos_1P;
+	float4 RightPos_1P;
+	float4 UpPos_1P;
+	float4 DownPos_1P;	
+	
+	float4 LeftPos_2P;
+	float4 RightPos_2P;
+	float4 UpPos_2P;
+	float4 DownPos_2P;
+
+	void PositionUpdate();
+
 	// 플레이어 정보
 protected:
 	int BazziAttCount_;
@@ -165,10 +181,6 @@ protected:
 	void PlayerInit();
 	void PlayerInfoUpdate();
 	void ItemCheck(Player* _Player, ItemType _ItemType);
-
-	void SpeedUpdate();
-	void AttackCountUpdate();
-	void AttackPowerUpdate();
 
 	void Attack();
 

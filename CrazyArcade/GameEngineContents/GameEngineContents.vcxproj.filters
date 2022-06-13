@@ -319,6 +319,15 @@
     <ClCompile Include="BossBoom.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Player_Key.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_TileCheck.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_ItemCheck.cpp">
+      <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

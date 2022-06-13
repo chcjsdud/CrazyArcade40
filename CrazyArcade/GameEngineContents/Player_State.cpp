@@ -51,7 +51,7 @@ void Player::AttackStart()
 {
 	AttMoveTime_ += GameEngineTime::GetDeltaTime();
 
-	GameEngineSound::SoundPlayOneShot("Attack.mp3");
+ 	GameEngineSound::SoundPlayOneShot("Attack.mp3");
 }
 
 void Player::DamagedStartStart()
@@ -434,4 +434,23 @@ void Player::RidingUFOUpdate()
 	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
 
 	IsMove = true;
+}
+
+void Player::Attack()
+{
+	float4 ModifyPos = float4{ -20.f, -20.f };
+
+	if (Type == PlayerType::Player1)
+	{
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->SetMapTile(MapTile_);
+		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_);
+	}
+
+	if (Type == PlayerType::Player2)
+	{
+		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+		Boom_->SetMapTile(MapTile_);
+		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_);
+	}
 }

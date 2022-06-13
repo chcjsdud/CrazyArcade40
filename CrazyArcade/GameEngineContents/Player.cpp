@@ -31,7 +31,7 @@ Player::Player()
 	, MaridRenderer_(nullptr)
 	, MapColImage_(nullptr)
 	, CurCharacter(Character::MAX)
-	, IsDebug(false)
+	, IsDebug(true)		// false에서 잠시 바꿔둠
 	, CurrentLevel_("")
 	, IsMove(false)
 	, MapBackGround_(nullptr)
@@ -54,6 +54,9 @@ Player::Player()
 	, AttMoveTime_(0.0f)
 	, MapTile_(nullptr)
 	, IsLive(true)
+	, IsInvincible(false)
+	, Box_(nullptr)
+
 {
 	BazziAttCount_ = 1;
 	MaridAttCount_ = 2;
@@ -78,7 +81,6 @@ Player::Player()
 	BazziMaxSpeed_ = 9.f;
 	MaridMaxSpeed_ = 9.f;
 	DaoMaxSpeed_ = 7.f;
-
 }
 Player::~Player()
 {
@@ -100,159 +102,15 @@ void Player::DebugModeSwitch()
 
 }
 
-void Player::Move(float _CurSpeed)
+void Player::PositionUpdate()
 {
-
-	MoveDir = float4::ZERO;
-
-	if (Type == PlayerType::Player1)
+	if (nullptr != MainPlayer_1)
 	{
-		_CurSpeed = MainPlayer_1->CurSpeed_;
-		MovePos_ = _CurSpeed * 7.f;
-
-		if (CurState_ != PlayerState::Ready)
-		{
-			if (true == GameEngineInput::GetInst()->IsPress("1PRight"))
-			{
-				CheckDir_ = PlayerDir::Right;
-				ChangeDirText_ = "Right";
-			}
-			if (true == GameEngineInput::GetInst()->IsPress("1PLeft"))
-			{
-				CheckDir_ = PlayerDir::Left;
-				ChangeDirText_ = "Left";
-			}
-			if (true == GameEngineInput::GetInst()->IsPress("1PUp"))
-			{
-				CheckDir_ = PlayerDir::Up;
-				ChangeDirText_ = "Up";
-			}
-			if (true == GameEngineInput::GetInst()->IsPress("1PDown"))
-			{
-				CheckDir_ = PlayerDir::Down;
-				ChangeDirText_ = "Down";
-			}
-
-			if ((true == GameEngineInput::GetInst()->IsUp("1PRight") && CheckDir_ == PlayerDir::Right)
-				|| (true == GameEngineInput::GetInst()->IsUp("1PLeft") && CheckDir_ == PlayerDir::Left)
-				|| (true == GameEngineInput::GetInst()->IsUp("1PUp") && CheckDir_ == PlayerDir::Up)
-				|| (true == GameEngineInput::GetInst()->IsUp("1PDown") && CheckDir_ == PlayerDir::Down))
-			{
-				CheckDir_ = PlayerDir::None;
-			}
-		}
-
-		///////////////////////////////////////////////////////////
-
-		if (CheckDir_ == PlayerDir::Left)
-		{
-			if (true == IsLeftMove)
-			{
-				MoveDir.x = -MovePos_;
-			}
-
-		}
-		else if (CheckDir_ == PlayerDir::Right)
-		{
-			if (true == IsRightMove)
-			{
-				MoveDir.x = MovePos_;
-			}
-
-		}
-		else if (CheckDir_ == PlayerDir::Up)
-		{
-			if (true == IsUpMove)
-			{
-				MoveDir.y = -MovePos_;
-			}
-
-		}
-		else if (CheckDir_ == PlayerDir::Down)
-		{
-			if (true == IsDownMove)
-			{
-				MoveDir.y = MovePos_;
-			}
-		}
-	}
-
-	else if (Type == PlayerType::Player2)
-	{
-		_CurSpeed = MainPlayer_2->CurSpeed_;
-		MovePos_ = _CurSpeed * 7.f;
-
-		if (CurState_ != PlayerState::Ready)
-		{
-			
-			if (true == GameEngineInput::GetInst()->IsPress("2PRight"))
-			{
-				CheckDir_ = PlayerDir::Right;
-				ChangeDirText_ = "Right";
-			}
-			if (true == GameEngineInput::GetInst()->IsPress("2PLeft"))
-			{
-				CheckDir_ = PlayerDir::Left;
-				ChangeDirText_ = "Left";
-			}
-			if (true == GameEngineInput::GetInst()->IsPress("2PUp"))
-			{
-				CheckDir_ = PlayerDir::Up;
-				ChangeDirText_ = "Up";
-			}
-			if (true == GameEngineInput::GetInst()->IsPress("2PDown"))
-			{
-				CheckDir_ = PlayerDir::Down;
-				ChangeDirText_ = "Down";
-			}
-
-
-			if ((true == GameEngineInput::GetInst()->IsUp("2PRight") && CheckDir_ == PlayerDir::Right)
-				|| (true == GameEngineInput::GetInst()->IsUp("2PLeft") && CheckDir_ == PlayerDir::Left)
-				|| (true == GameEngineInput::GetInst()->IsUp("2PUp") && CheckDir_ == PlayerDir::Up)
-				|| (true == GameEngineInput::GetInst()->IsUp("2PDown") && CheckDir_ == PlayerDir::Down))
-			{
-				CheckDir_ = PlayerDir::None;
-			}
-			
-
-			///////////////////////////////////////////////////////////
-
-			if (CheckDir_ == PlayerDir::Left)
-			{
-				if (true == IsLeftMove)
-				{
-					MoveDir.x = -MovePos_;
-				}
-
-			}
-			else if (CheckDir_ == PlayerDir::Right)
-			{
-				if (true == IsRightMove)
-				{
-					MoveDir.x = MovePos_;
-				}
-
-			}
-			else if (CheckDir_ == PlayerDir::Up)
-			{
-				if (true == IsUpMove)
-				{
-					MoveDir.y = -MovePos_;
-				}
-
-			}
-			else if (CheckDir_ == PlayerDir::Down)
-			{
-				if (true == IsDownMove)
-				{
-					MoveDir.y = MovePos_;
-				}
-			}
-		}
-
+		Player1Pos_ = MainPlayer_1->GetPosition() + float4{ -20.0f, -20.0f };
+		Player2Pos_ = MainPlayer_2->GetPosition() + float4{ -20.0f, -20.0f };
 	}
 }
+
 
 void Player::SetCollision(GameEngineCollision* _Collision)
 {
@@ -305,338 +163,39 @@ void Player::PlayerInfoUpdate()
 {	
 	if (Type == PlayerType::Player1)
 	{
-		float4 Pos = MainPlayer_1->GetPosition();
-		//CurItemType1_ = CheckItem(Pos + float4{ -20.0f,-20.0f });
+		float4 Pos = MainPlayer_1->GetPosition() + float4{ -20.0f,-20.0f };
 		GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
 		Item->SetMapTile(MapTile_);
-		CurItemType1_ = Item->CheckItem(Pos + float4{ -20.0f,-20.0f });
+		CurItemType1_ = Item->CheckItem(Pos);
 
 		ItemCheck(MainPlayer_1, CurItemType1_);
-		if (true == IsItemKey())
-		{
-			ItemCheck(MainPlayer_1, CurItemType1_);
-		}
+
+		//if (true == IsItemKey())
+		//{
+		//	ItemCheck(MainPlayer_1, CurItemType1_);
+		//}
 	}
 
 	if (nullptr != MainPlayer_2)
 	{
 		if (Type == PlayerType::Player2)
 		{
-			float4 Pos = MainPlayer_2->GetPosition();
-			//CurItemType2_ = CheckItem(Pos + float4{ -20.0f, -20.0f });
+			float4 Pos = MainPlayer_2->GetPosition() + float4{ -20.0f,-20.0f };
 			GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
 			Item->SetMapTile(MapTile_);
-			CurItemType2_ = Item->CheckItem(Pos + float4{ -20.0f,-20.0f });
+			CurItemType2_ = Item->CheckItem(Pos);
 
-			if (true == IsItemKey())
+			ItemCheck(MainPlayer_2, CurItemType2_);
+
+	/*		if (true == IsItemKey())
 			{
 				ItemCheck(MainPlayer_2, CurItemType2_);
-			}
+			}*/
 		}
 	}
 }
 
-void Player::ItemCheck(Player* _Player, ItemType _ItemType)
-{
-	CurCharacter = GetCharacter();
 
-	switch (_ItemType)
-	{
-	case ItemType::Roller:
-	{
-		if (_Player->CurSpeed_ >= _Player->MaxSpeed_)
-		{
-			return;
-		}
-
-		_Player->CurSpeed_ += 1;
-	/*	switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurSpeed_ >= BazziMaxSpeed_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurSpeed_ >= MaridMaxSpeed_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurSpeed_ >= DaoMaxSpeed_)
-			{
-				return;
-			}
-		}
-		break;
-		default:
-			break;
-
-		}
-
-		_Player->CurSpeed_ += 1;*/
-	}
-	break;
-	case ItemType::Bubble:
-	{
-		if (_Player->CurAttCount_ >= _Player->MaxAttCount_)
-		{
-			return;
-		}
-
-		_Player->CurAttCount_ += 1;
-
-		/*switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurAttCount_ >= BazziMaxAttCount_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurAttCount_ >= MaridMaxAttCount_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurAttCount_ >= DaoMaxAttCount_)
-			{
-				return;
-			}
-		}
-		break;
-		default:
-			break;
-		}
-
-		_Player->CurAttCount_ += 1;*/
-	}
-	break;
-	case ItemType::Fluid:
-	{
-		if (_Player->CurAttPower_ >= _Player->MaxAttPower_)
-		{
-			return;
-		}
-
-		_Player->CurAttPower_ += 1;
-
-		/*switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurAttPower_ >= BazziMaxAttPower_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurAttPower_ >= MaridMaxAttPower_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurAttPower_ >= DaoMaxAttPower_)
-			{
-				return;
-			}
-		}
-		break;
-		default:
-			break;
-		}
-
-		_Player->CurAttCount_ += 1;*/
-	}
-	break;
-	case ItemType::RedDevil:
-	{
-		if (_Player->CurSpeed_ == _Player->MaxSpeed_)
-		{
-			return;
-		}
-
-		_Player->CurSpeed_ = _Player->MaxSpeed_;
-		/*switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurSpeed_ == MaxSpeed_)
-			{
-				return;
-			}
-			CurSpeed_ = MaxSpeed_;
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurSpeed_ == MaxSpeed_)
-			{
-				return;
-			}
-			CurSpeed_ = MaxSpeed_;
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurSpeed_ == MaxSpeed_)
-			{
-				return;
-			}
-			CurSpeed_ = MaxSpeed_;
-		}
-		break;
-		default:
-			break;
-		}*/
-
-	}
-	break;
-	case ItemType::UltraBubble:
-	{
-		if (_Player->CurAttPower_ == _Player->MaxAttPower_)
-		{
-			return;
-		}
-
-		_Player->CurAttPower_ = _Player->MaxAttPower_;
-	}
-	break;
-	case ItemType::Niddle:
-	{
-		ChangeState(PlayerState::Revival);
-		return;
-	}
-	break;
-	case ItemType::Devil:
-	{
-		if (CurDir_ == PlayerDir::Left)
-		{
-			CheckDir_ = PlayerDir::Right;
-			ChangeDirText_ = "Right";
-		}
-		else if (CurDir_ == PlayerDir::Right)
-		{
-			CheckDir_ = PlayerDir::Left;
-			ChangeDirText_ = "Left";
-		}
-		else if (CurDir_ == PlayerDir::Up)
-		{
-			CheckDir_ = PlayerDir::Down;
-			ChangeDirText_ = "Down";
-		}
-		else if (CurDir_ == PlayerDir::Down)
-		{
-			CheckDir_ = PlayerDir::Up;
-			ChangeDirText_ = "Up";
-		}
-	}
-	break;
-	case ItemType::Shoes:
-	{
-		// 물방울 던지기 
-	}
-	break;
-	case ItemType::Shield:
-	{
-		AddAccTime(Time_);
-
-		// 3초가 지나기 전은 무적
-		if (3.f > GetAccTime())
-		{
-			IsInvincible = true;
-		}
-		else // 3초가 지나면 무적 해제 및 ResetTime
-		{
-			IsInvincible = false;
-			ReSetAccTime();
-		}
-	}
-	break;
-	case ItemType::SuperJump:
-	{
-
-	}
-	break;
-	case ItemType::Owl:
-	{
-		ChangeState(PlayerState::OnOwl);
-		return;
-	}
-	break;
-	case ItemType::Turtle:
-	{
-		ChangeState(PlayerState::OnTurtle);
-		return;
-	}
-	break;
-	case ItemType::SpaceShip:
-	{
-		ChangeState(PlayerState::OnUFO);
-		return;
-	}
-	break;
-	case ItemType::Bubble_Dark:
-	{
-		// 물풍선 이미지 변경
-	}
-	break;
-	default:
-		break;
-	}
-
-}
-
-void Player::SpeedUpdate()
-{
-
-}
-
-void Player::AttackCountUpdate()
-{
-}
-
-void Player::AttackPowerUpdate()
-{
-}
-
-void Player::Attack()
-{
-	float4 ModifyPos = float4{ -20.f, -20.f };
-
-	if (Type == PlayerType::Player1)
-	{
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom_->SetMapTile(MapTile_);
-		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_);
-	}
-
-	if (Type == PlayerType::Player2)
-	{
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-		Boom_->SetMapTile(MapTile_);
-		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_);
-	}
-}
 
 void Player::CharTypeUpdate()
 {
@@ -647,14 +206,6 @@ void Player::CharTypeUpdate()
 		BazziRenderer_->On();
 		PlayerAnimationRender_ = BazziRenderer_;
 		PlayerAnimationRender_->On();;
-
-		//SetAttCount(BazziAttCount_);
-		//SetAttPower(BazziAttPower_);
-		//SetSpeed(BazziSpeed_);
-
-		//SetMaxAttCount(BazziMaxAttCount_);
-		//SetMaxAttPower(BazziMaxAttPower_);
-		//SetMaxSpeed(BazziMaxSpeed_);
 	}
 	break;
 	case Character::LUXMARID:
@@ -662,14 +213,6 @@ void Player::CharTypeUpdate()
 		MaridRenderer_->On();
 		PlayerAnimationRender_ = MaridRenderer_;
 		PlayerAnimationRender_->On();
-
-		SetAttCount(MaridAttCount_);
-		SetAttPower(MaridAttPower_);
-		SetSpeed(MaridSpeed_);
-
-		SetMaxAttCount(MaridMaxAttCount_);
-		SetMaxAttPower(MaridMaxAttPower_);
-		SetMaxSpeed(MaridMaxSpeed_);
 	}
 	break;
 	case Character::DAO:
@@ -677,14 +220,6 @@ void Player::CharTypeUpdate()
 		DaoRenderer_->On();
 		PlayerAnimationRender_ = DaoRenderer_;
 		PlayerAnimationRender_->On();
-
-		SetAttCount(DaoAttCount_);
-		SetAttPower(DaoAttPower_);
-		SetSpeed(DaoSpeed_);
-
-		SetMaxAttCount(DaoMaxAttCount_);
-		SetMaxAttPower(DaoMaxAttPower_);
-		SetMaxSpeed(DaoMaxSpeed_);
 	}
 	break;
 	}
@@ -693,12 +228,6 @@ void Player::CharTypeUpdate()
 void Player::ColMapUpdate()
 {
 	CurrentLevel_ = GetCurrentLevel();
-
-	//if (nullptr == MapColImage_)
-	//{
-	//	return;
-	//}
-	//	
 
 	// ====================================== 테스트 레벨
 	if (CurrentLevel_ == "PlayerTeamTest")
@@ -730,10 +259,8 @@ void Player::ColMapUpdate()
 	}
 	else if (CurrentLevel_ == "BossLevel")
 	{
-		// ****** 보스레벨 ColMap 수정 필요 // 몬스터 테스트 위해서 기존 CampColMap->BossColMap으로 바꿔놨어용
 		MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 	}
-
 	else
 		return;
 }
@@ -759,347 +286,6 @@ void Player::StagePixelCheck(float _Speed)
 		IsMove = true;
 		SetMove(MoveDir * GameEngineTime::GetDeltaTime() * _Speed);
 	}
-}
-
-// 플레이어의 현재 타일 체크 
-void Player::TileCheckResultUpdate(BlockType _CurBlockType)
-{
-	switch (_CurBlockType)
-	{
-	case BlockType::WaveBlock:
-	{
-		// 무적이 아닐 때만
-		if (false == IsInvincible)
-		{
-			// 탈 것을 타고 있는 상태에서는 -> Idle
-			if (CurState_ == PlayerState::IdleOwl
-				|| CurState_ == PlayerState::IdleTurtle
-				|| CurState_ == PlayerState::RidingOwl
-				|| CurState_ == PlayerState::RidingTurtle
-				|| CurState_ == PlayerState::RidingUFO)
-			{
-				ChangeState(PlayerState::Idle);
-				return;
-			}
-
-			if (CurState_ != PlayerState::Die
-				&& CurState_ != PlayerState::DamageStart
-				&& CurState_ != PlayerState::Damaged
-				&& CurState_ != PlayerState::Fade)
-			{
-				ChangeState(PlayerState::DamageStart);
-				return;
-			}
-		}
-		else
-		{
-			return;
-
-		}
-	}
-		break;
-	case BlockType::BubbleBlock:
-	{
-		// 무적이 아닐 때만
-		if (false == IsInvincible)
-		{
-			// 탈 것을 타고 있는 상태에서는 -> Idle
-			if (CurState_ == PlayerState::IdleOwl
-				|| CurState_ == PlayerState::IdleTurtle
-				|| CurState_ == PlayerState::RidingOwl
-				|| CurState_ == PlayerState::RidingTurtle
-				|| CurState_ == PlayerState::RidingUFO)
-			{
-				ChangeState(PlayerState::Idle);
-				return;
-			}
-
-			if (CurState_ != PlayerState::Die
-				&& CurState_ != PlayerState::DamageStart
-				&& CurState_ != PlayerState::Damaged
-				&& CurState_ != PlayerState::Fade)
-			{
-				ChangeState(PlayerState::DamageStart);
-				return;
-			}
-		}
-		else
-		{
-			return;
-		}
-	}
-		break;
-	case BlockType::BushBlock:
-	{
-		PlayerAnimationRender_->SetAlpha(0);
-			
-	}
-	break;
-	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
-	{
-		GameEngineSound::SoundPlayOneShot("eat_item.mp3");
-		//int a = 0;
-		PlayerInfoUpdate();
-	}
-	break;
-	case BlockType::BoomBlock:
-	{
-		IsBoomblock = true;
-		break;
-	}
-	break;
-	default:
-	{
-		IsBoomblock = false;
-		PlayerAnimationRender_->SetAlpha(255);
-	}
-	break;
-	}
-
-	// UFO를 탄 상태가 아닐 때만 아이템 체크 
-	//if (CurState_ != PlayerState::RidingUFO)
-	//{
-	//	PlayerInfoUpdate();
-	//}
-	//
-}
-
-void Player::TileCheckResult()
-{
-	if (Type == PlayerType::Player1)
-	{
-		float4 Pos = MainPlayer_1->GetPosition();
-		CurBlockType1_ = CheckBlockTile(Pos + float4{ -20.0f,-20.0f });
-
-		TileCheckResultUpdate(CurBlockType1_);
-	}
-
-	if (nullptr != MainPlayer_2)
-	{
-		if (Type == PlayerType::Player2)
-		{
-			float4 Pos = MainPlayer_2->GetPosition();
-			CurBlockType2_ = CheckBlockTile(Pos + float4{ -20.0f, -20.0f });
-
-			TileCheckResultUpdate(CurBlockType2_);
-		}
-
-	}
-
-}
-
-// 앞 뒤 양옆 블럭을 체크한 뒤 할 일
-void Player::FrontBlockCheckUpdate()
-{
-	float4 Pos = {};
-	if (Type == PlayerType::Player1)
-	{
-		Pos = MainPlayer_1->GetPosition();
-	}
-	else if (Type == PlayerType::Player2)
-	{
-		Pos = MainPlayer_2->GetPosition();
-	}
-
-	// 왼쪽 블럭
-	switch (LeftBlock)
-	{
-	case BlockType::BoomBlock:
-	{
-		if (IsBoomblock == false) {
-			IsLeftMove = false;
-		}
-	}
-	break;
-	case BlockType::FixBlock:
-	{
-		IsLeftMove = false;
-	}
-	break;
-	case BlockType::PullBlock:
-	{
-		IsLeftMove = false;	
-
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Left == CurDir_)
-		{
-			Box_->PushBlock(Pos + float4{-40.0f, -20.0f}, BlockDir::LEFT);
-
-		}
-	}
-	break;
-	default:
-	{
-		IsLeftMove = true;
-	}
-	break;
-	}
-
-	// 오른쪽 블럭
-	switch (RightBlock)
-	{
-	case BlockType::BoomBlock:
-	{
-		if (IsBoomblock == false) {
-			IsRightMove = false;
-		}
-	}
-	break;
-	case BlockType::FixBlock:
-	{
-		IsRightMove = false;
-	}
-	break;
-	case BlockType::PullBlock:
-	{
-		IsRightMove = false;
-
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Right == CurDir_)
-		{
-			Box_->PushBlock(Pos + float4{ 0.0f, -20.0f }, BlockDir::RIGHT);
-
-		}
-		
-	}
-	break;
-	default:
-	{
-		IsRightMove = true;
-	}
-	break;
-	}
-
-	// 위쪽 블럭
-	switch (UpBlock)
-	{
-	case BlockType::BoomBlock:
-	{
-		if (IsBoomblock == false) {
-			IsUpMove = false;
-		}
-	}
-	break;
-	case BlockType::FixBlock:
-	{
-		IsUpMove = false;
-	}
-	break;
-	case BlockType::PullBlock:
-	{
-		IsUpMove = false;
-
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Up == CurDir_)
-		{
-			Box_->PushBlock(Pos + float4{ -20.0f, -40.0f }, BlockDir::UP);
-
-		}
-	}
-	break;
-	default:
-	{
-		IsUpMove = true;
-	}
-	break;
-	}
-
-
-	// 아래쪽 블럭
-	switch (DownBlock)
-	{
-	case BlockType::BoomBlock:
-	{
-		if (IsBoomblock == false) {
-			IsDownMove = false;
-		}
-	}
-	break;
-	case BlockType::FixBlock:
-	{
-		IsDownMove = false;
-	}
-	break;
-	case BlockType::PullBlock:
-	{
-		IsDownMove = false;
-
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Down == CurDir_)
-		{
-			Box_->PushBlock(Pos + float4{ -20.0f, 0.0f }, BlockDir::DOWN);
-
-		}
-	}
-	break;
-	default:
-	{
-		IsDownMove = true;
-	}
-	break;
-	}
-}
-
-void Player::FrontBlockCheck()
-{
-	if (Type == PlayerType::Player1)
-	{
-		float4 Pos = MainPlayer_1->GetPosition();
-		
-		TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
-		TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
-
-		
-
-		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
-		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
-
-		if (RightIndex.X != 15)
-		{
-			RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
-		}
-		if (DownIndex.Y != 13)
-		{
-			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
-		}
-	
-
-		FrontBlockCheckUpdate();
-	}
-
-	if (nullptr != MainPlayer_2)
-	{
-		if (Type == PlayerType::Player2)
-		{
-			float4 Pos = MainPlayer_2->GetPosition();
-
-			
-			TileIndex RightIndex = MapTile_->GetTileIndex(Pos + float4{ 10.f, 0.f });
-			TileIndex DownIndex = MapTile_->GetTileIndex(Pos + float4{ 0.f, 10.f });
-
-
-
-			LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
-			UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
-
-			if (RightIndex.X != 15)
-			{
-				RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
-			}
-			if (DownIndex.Y != 13)
-			{
-				DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
-			}
-
-
-			FrontBlockCheckUpdate();
-		}
-	}
-
 }
 
 void Player::PlayerCollisionUpdate()
@@ -1467,7 +653,6 @@ void Player::Update()
 
 	PlayerStateUpdate();
 	PlayerCollisionUpdate();
-
 	TileCheckResult();
 	FrontBlockCheck();
 
@@ -1492,13 +677,24 @@ void Player::Render()
 	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
 	//TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 
-	std::string Posx = "";
-	std::string Posy = "";
+	//std::string Posx = "";
+	//std::string Posy = "";
+
+	//Posx = "Pos x : " + std::to_string(GetPosition().ix());
+	//Posy = "Pos y : " + std::to_string(GetPosition().iy());
+
+	/*TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, Posx.c_str(), static_cast<int>(Posx.length()));
+	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, Posy.c_str(), static_cast<int>(Posy.length()));*/
+
 	std::string State = "";
+	std::string Item = "";
 
-
-	Posx = "Pos x : " + std::to_string(GetPosition().ix());
-	Posy = "Pos y : " + std::to_string(GetPosition().iy());
+	std::string CurSpeed = "";
+	std::string CurAttCount = "";
+	std::string CurAttPower = "";
+	std::string MaxSpeed = "";
+	std::string MaxAttCount = "";
+	std::string MaxAttPower = "";
 
 	if (CurState_ == PlayerState::Wait)
 	{
@@ -1561,77 +757,27 @@ void Player::Render()
 		State = "STATE : RidingUFO";
 	}
 
+	CurSpeed = "SPEED : " + std::to_string(CurSpeed_);
+	CurAttCount = "COUNT : " + std::to_string(CurAttCount_);;
+	CurAttPower = "POWER : " + std::to_string(CurAttPower_);;
+	MaxSpeed = "MAXSPEED : " + std::to_string(MaxSpeed_);;
+	MaxAttCount = "MAXCOUNT : " + std::to_string(MaxAttCount_);;
+	MaxAttPower = "MAXPOWER : " + std::to_string(MaxAttPower_);;
 
-	/*TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, Posx.c_str(), static_cast<int>(Posx.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, Posy.c_str(), static_cast<int>(Posy.length()));*/
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, State.c_str(), static_cast<int>(State.length()));
+
+
+	if (true == IsDebug)
+	{
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, CurAttCount.c_str(), static_cast<int>(CurAttCount.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, CurAttPower.c_str(), static_cast<int>(CurAttPower.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
+	}
 }
 
-bool Player::IsMoveKey()
-{
-	if (true == IsMove)
-	{
-		if (Type == PlayerType::Player1)
-		{
-			if (CheckDir_ == PlayerDir::None)
-			{
-				return false;
-			}
-		}
-		else if(Type == PlayerType::Player2)
-		{
-			if (CheckDir_ == PlayerDir::None)
-			{
-				return false;
-			}
-		}
-
-
-		return true;
-	}
-
-	return false;
-}
-
-bool Player::IsAttackKey()
-{
-	if (Type == PlayerType::Player1)
-	{
-		if (true == GameEngineInput::GetInst()->IsDown("1PAttack"))
-		{
-			return true;
-		}
-	}
-	else
-	{
-		if (true == GameEngineInput::GetInst()->IsDown("2PAttack"))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool Player::IsItemKey()
-{
-	if (Type == PlayerType::Player1)
-	{
-		if (true == GameEngineInput::GetInst()->IsDown("1PItem"))
-		{
-			return true;
-		}
-	}
-	else
-	{
-		if (true == GameEngineInput::GetInst()->IsDown("2PItem"))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
 
 void Player::ChangeState(PlayerState _State)
 {
@@ -1801,49 +947,4 @@ void Player::DirAnimationCheck()
 	}
 }
 
-// 플레이어가 서있는 위치의 타일이 어떤 타입의 블럭인지 알려주는 함수 return 값이 Max이면 - 아무것도 없는 타일입니다.
-BlockType Player::CheckBlockTile(float4 _Pos)
-{
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
-	ItemBlockTile* ItemTiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
 
-	if (Tiles_ == nullptr)
-	{
-		return BlockType::Max;
-	}
-
-
-	if (Tiles_->BlockType_ == BlockType::WaveBlock)
-	{
-		return  BlockType::WaveBlock;
-	}
-
-	if (ItemTiles_ !=nullptr&& ItemTiles_->ItemType_!=ItemType::Max)
-	{
-		return ItemTiles_->BlockType_;
-
-	}
-
-
-	return Tiles_->BlockType_;
-
-
-
-}
-
-ItemType Player::CheckItem(float4 _Pos)
-{
-	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-	ItemBlockTile* Tiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
-	if (Tiles_ == nullptr)
-	{
-		return ItemType::Max;
-	}
-	else
-	{
-		return Tiles_->ItemType_;
-	}
-
-	return ItemType();
-}
