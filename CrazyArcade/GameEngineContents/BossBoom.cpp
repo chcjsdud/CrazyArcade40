@@ -40,7 +40,11 @@ void BossBoom::Update()
 						{
 							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
-							_Area.GetMapTile()->DeleteTile(_TileIndex.X, _TileIndex.Y);
+							BlockTile* _check = _Area.GetMapTile()->GetTile<BlockTile>(_TileIndex.X, _TileIndex.Y);
+							_check->Renderer->ChangeAnimation("Death");
+							_check->TileIndex_ = _TileIndex;
+							DeleteTileList_.push_back(_check);
+							
 						}
 
 						else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음
@@ -66,6 +70,17 @@ void BossBoom::Update()
 		Bubble_->ChangeAnimation("None");
 	}
 	BossWaveDeath();
+	
+	for (size_t i = 0; i < DeleteTileList_.size(); i++)
+	{
+		if (DeleteTileList_[i]->Renderer->IsEndAnimation() == true)
+		{
+			CanAttackAreas_.begin()->second.GetMapTile()->DeleteTile(DeleteTileList_[i]->TileIndex_.X, DeleteTileList_[i]->TileIndex_.Y);
+			DeleteTileList_.erase(DeleteTileList_.begin() + i);
+
+		}
+	}
+
 }
 
 

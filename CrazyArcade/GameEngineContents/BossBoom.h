@@ -21,6 +21,6 @@ public:
 private:
 	GameEngineRenderer* Bubble_;
 	std::map<int, Area> CanAttackAreas_;
-
+	std::vector<BlockTile*> DeleteTileList_;
 };
 
