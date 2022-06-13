@@ -5,6 +5,12 @@
 #include "MapFront.h"
 #include "MapGameObject.h"
 #include"GameItemObject.h"
+#include "PlayBackGround.h"
+#include "StartIntroUI.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
+#include "Mouse.h"
+#include "PlayNickName.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineWindow.h>
@@ -27,6 +33,13 @@ CemetoryLevel::~CemetoryLevel()
 
 void CemetoryLevel::Loading()
 {
+	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<Mouse>((int)UIType::Mouse);
+	CreateActor<PlayNickName>((int)UIType::PopUpButton);
+
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
 	MapBackGround_->GetRenderer()->SetImage("Cemetory_Back.bmp");//Actor에 이미지 세팅해주고
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
