@@ -100,11 +100,6 @@ void CampLevel::Loading()
 	CampObject_->SetGameItem();
 
 
-	///블럭 push 테스트
-	//bubble_->PushBlock({ 100, 60 }, BlockDir::LEFT);//왼쪽으로 미는거 테스트
-	CampObject_->PushBlock({ 100, 60 },BlockDir::DOWN); //아래으로 미는거 테스트
-	//bubble_->PushBlock({ 100, 150 }, BlockDir::UP);
-	CampObject_->PushBlock({ 100, 150 }, BlockDir::RIGHT);
 
 	if (false == GameEngineInput::GetInst()->IsKey("CreatBoom"))
 	{
