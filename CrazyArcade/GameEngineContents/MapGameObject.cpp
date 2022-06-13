@@ -2040,12 +2040,12 @@ void MapGameObject::BossWaveDeath()
 {
 	for (int i = 0; i < BossWaveTiles_.size(); i++)//물풍선 백터 돌다가
 	{
-		if (BossWaveTiles_[i]->IsWaveDeath == false)
+		if (BossWaveTiles_[i]->IsWaveDeath == false&& BossWaveTiles_[i]->Renderer->IsEndAnimation() == true)
 		{
 			BossWaveTiles_[i]->Renderer->ChangeAnimation("Death");
 			BossWaveTiles_[i]->IsWaveDeath = true;
 		}
-		else if (BossWaveTiles_[i]->Renderer->IsEndAnimation() == true)
+		else if (BossWaveTiles_[i]->IsWaveDeath == true&&BossWaveTiles_[i]->Renderer->IsEndAnimation() == true)
 		{
 			MapTile_->DeleteTile(BossWaveTiles_[i]->TileIndex_.X, BossWaveTiles_[i]->TileIndex_.Y);//중앙부분지우기
 			BossWaveTiles_.erase(BossWaveTiles_.begin() + i);//중앙벡터 지우기
