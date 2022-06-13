@@ -85,6 +85,7 @@ public:
 	BlockType CheckTile(float4 _Pos);
 	void CreateBlock(float4 _Pos, std::string _Box);
 	void BubblePop(float4 _Pos, float _Power);
+	void BossBubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power, int _PlayerNum);
 
 	inline size_t ReturnPlayer1BoomCount()
@@ -103,6 +104,7 @@ protected:
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	std::vector<BlockTile*> WaveBlockTiles_;
+	std::vector<BlockTile*> BossWaveTiles_;
 	std::vector<BlockTile*> Player1BlockTiles_;
 	std::vector<BlockTile*> Player2BlockTiles_;
 	static size_t Player1BoomNum_;
@@ -116,7 +118,7 @@ private:
 	void MakeDownWave(TileIndex _Pos, float _Power);
 	void MakeUpWave(TileIndex _Pos, float _Power);
 
-
+	void BossWaveDeath();
 	void BlockValueSetting();
 	void DestroyBlock();
 	void DestroyBoom();

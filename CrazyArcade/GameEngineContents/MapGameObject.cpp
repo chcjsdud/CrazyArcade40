@@ -53,11 +53,13 @@ void MapGameObject::Update()
 		return;
 	}
 	WaveDeathAni();
+	BossWaveDeath();
 	DestroyWave();
 	DestroyBoom();
 	DestroyBlock();
 	BlockMoveUpdate();
 	BubbleMoveUpdate();
+
 }
 
 
@@ -2006,5 +2008,48 @@ void MapGameObject::BlockValueSetting()
 		Bubble_BossValue_ = 0;
 		Bubble_DefaultValue_ = 0;
 		GhostValue_ = 0;
+	}
+}
+
+void MapGameObject::BossBubblePop(float4 _Pos, float _Power)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* Check = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+
+	if (Check != nullptr)
+	{
+		return;
+	}
+	else
+	{
+		BlockTile* BossWave_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "Empty.bmp", static_cast<int>(ORDER::EFFECT));
+		BossWave_->BlockCol = CreateCollision("WaveCol", { 40,40 });
+		BossWave_->BlockType_ = BlockType::BubbleBlock;
+		BossWave_->TileIndex_ = TileIndex_;
+		BossWave_->Renderer = CreateRenderer();
+		BossWave_->Renderer->SetPivot({ TileCenterPos_.x,TileCenterPos_.y });
+		BossWave_->Renderer->CreateAnimation("Center.bmp", "Center", 0, 5, 0.05f, true);
+		BossWave_->Renderer->CreateAnimation("Center.bmp", "Death", 0, 5, 0.05f, false);
+		BossWave_->Renderer->ChangeAnimation("Center");
+		BossWave_->IsWaveDeath = false;
+		BossWaveTiles_.push_back(BossWave_);
+	}
+}
+void MapGameObject::BossWaveDeath()
+{
+	for (int i = 0; i < BossWaveTiles_.size(); i++)//물풍선 백터 돌다가
+	{
+		if (BossWaveTiles_[i]->IsWaveDeath == false)
+		{
+			BossWaveTiles_[i]->Renderer->ChangeAnimation("Death");
+			BossWaveTiles_[i]->IsWaveDeath = true;
+		}
+		else if (BossWaveTiles_[i]->Renderer->IsEndAnimation() == true)
+		{
+			MapTile_->DeleteTile(BossWaveTiles_[i]->TileIndex_.X, BossWaveTiles_[i]->TileIndex_.Y);//중앙부분지우기
+			BossWaveTiles_.erase(BossWaveTiles_.begin() + i);//중앙벡터 지우기
+		}
+
 	}
 }
