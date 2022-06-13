@@ -27,10 +27,12 @@ protected:
     void UpdateDirection() override;
     void TakeDamage() override;
     void Die() override;
+    void AllMonsterDeathModeSwitch() override;
 
 private:
     float RollTime_;
     float WaterTime_;
+    float StartTime_;
     float WaterAttackInterval_;
     float WaterAttackStartTime_;
     int AreaChangeCount_;

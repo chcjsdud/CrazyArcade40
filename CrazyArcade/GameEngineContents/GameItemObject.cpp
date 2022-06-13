@@ -133,7 +133,7 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	}
 	else if (_Type == ItemType::Ghost)
 	{
-		Ghost* Ghost_ = GetLevel()->CreateActor<Ghost>((int)ORDER::BOSS);
+		Ghost* Ghost_ = GetLevel()->CreateActor<Ghost>((int)ORDER::PLAYER);
 		Ghost_->SetPosition(_Pos);
 	}
 

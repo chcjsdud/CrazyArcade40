@@ -109,8 +109,8 @@ void Monster::Update()
 		GetAttTime_ += GameEngineTime::GetDeltaTime();
 		UpdateDirection();
 		UpdateMove();
-		Die();
 		AllMonsterDeathModeSwitch();
+		Die();
 	}
 }
 
@@ -463,26 +463,14 @@ void Monster::AllMonsterDeathModeSwitch()
 {
 	if (true == GameEngineInput::GetInst()->IsDown("AllMonsterDeath") && IsStageClear_ == false)
 	{
-		IsStageClear_ == true;
-
-		if (GetLevel()->GetNameCopy() == "Monster1Level")
+		if (GetLevel()->GetNameCopy() == "Monster1Level" && GetHP() > 0)
 		{
+			Renderer_->ChangeAnimation("Die");
 			SetHP(0);
 			LV1_MON_COUNT = 0;
 		}
 
-		if (GetLevel()->GetNameCopy() == "Monster2Level")
-		{
-			Death();
-			LV2_MON_COUNT = 0;
-		}
-
-		if (GetLevel()->GetNameCopy() == "BossLevel")
-		{
-			Death();
-			BOSS_COUNT = 0;
-		}
-
+		IsStageClear_ = true;
 	}
 }
 

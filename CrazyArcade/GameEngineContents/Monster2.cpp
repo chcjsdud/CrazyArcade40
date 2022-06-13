@@ -3,6 +3,7 @@
 #include <GameEngine/GameEngineImage.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineContents/MapGameObject.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 Monster2::Monster2()
 	: Monster()
@@ -27,7 +28,7 @@ void Monster2::Start()
 	MiniRenderer_->CreateAnimation("BasicMonster.bmp", "MoveLeft", 48, 49, 0.2f, true);
 	MiniRenderer_->CreateAnimation("BasicMonster.bmp", "MoveUp", 42, 43, 0.2f, true);
 	MiniRenderer_->CreateAnimation("BasicMonster.bmp", "MoveDown", 46, 47, 0.2f, true);
-	MiniRenderer_->CreateAnimation("BasicMonster.bmp", "Die", 50, 52, 0.2f, false);
+	MiniRenderer_->CreateAnimation("BasicMonster.bmp", "Die", 50, 52, 0.2f, true);
 	MiniRenderer_->ChangeAnimation("MoveLeft");
 
 	//악어
@@ -38,8 +39,8 @@ void Monster2::Start()
 	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveLeft", 40, 41, 0.2f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveUp", 34, 35, 0.2f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "MoveDown", 36, 37, 0.2f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "Start", 53, 55, 0.1f, false);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "Die", 50, 52, 0.2f, false);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "Start", 53, 55, 0.1f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "Die", 50, 52, 0.2f, true);
 	Renderer_->ChangeAnimation("Start");
 	Dir_ = float4::ZERO;
 	CenterCol_->SetScale(float4(30.0f, 30.0f));
@@ -49,6 +50,7 @@ void Monster2::Start()
 	MiniRenderer_->SetAlpha(0);
 	MiniRenderer_->Off();
 	MiniRendererOn_ = false;
+	IsStageClear_ = false;
 }
 
 
@@ -56,11 +58,42 @@ void Monster2::Update()
 {
 	GetBackTime_ += GameEngineTime::GetDeltaTime();
 	GetAttTime_ += GameEngineTime::GetDeltaTime();
+
 	UpdateDirection();
 	UpdateMove();
 	UpdateGetBack();
-	Die();
 	AllMonsterDeathModeSwitch();
+	Die();
+}
+
+
+void Monster2::AllMonsterDeathModeSwitch()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("AllMonsterDeath"))
+	{
+		if (GetLevel()->GetNameCopy() == "Monster1Level" && GetHP() > 0 && IsStageClear_ == false)
+		{
+			MiniRendererOn_ = true;
+			MiniRenderer_->On();
+			MiniRenderer_->SetAlpha(255);
+			Renderer_->Off();
+			SetHP(0);
+			LV1_MON_COUNT = 0;
+		}
+
+		if (GetLevel()->GetNameCopy() == "Monster2Level" && GetHP() > 0 && IsStageClear_ == false)
+		{
+			MiniRendererOn_ = true;
+			MiniRenderer_->On();
+			MiniRenderer_->SetAlpha(255);
+			Renderer_->Off();
+			SetHP(0);
+			LV2_MON_COUNT = 0;
+		}
+
+		IsStageClear_ = true;
+
+	}
 }
 
 void Monster2::TakeDamage()
@@ -135,12 +168,18 @@ void Monster2::Die()
 
 				if (GetLevel()->GetNameCopy() == "Monster1Level")
 				{
-					LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.
+					if(LV1_MON_COUNT != 0)
+					{
+						LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.
+					}
 				}
 
 				else if (GetLevel()->GetNameCopy() == "Monster2Level") // 만약 몬스터가 한마리 남으면
 				{
-					LV2_MON_COUNT--; // total 몬스터 수가 줄어든다.
+					if (LV2_MON_COUNT != 0)
+					{
+						LV2_MON_COUNT--; // total 몬스터 수가 줄어든다.
+					}
 				}
 
 				if (LV1_MON_COUNT == 1 || LV2_MON_COUNT == 1)

@@ -1,4 +1,5 @@
 #include "MonsterRoomLevel.h"
+#include "GameBgmPlayer.h"
 #include "GlobalUIName.h"
 #include "Mouse.h"
 #include "MapChoiceUI.h"
@@ -34,11 +35,13 @@ void MonsterRoomLevel::Update()
 }
 void MonsterRoomLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
+	GameBgmPlayer::BgmPlay_->ChangeBgm("RoomBGM.wav");
 	GlobalUIName::GetInst()->SetChoiceMap(4);
 	ShowCursor(false);
 }
 
 void MonsterRoomLevel::LevelChangeEnd(GameEngineLevel* NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 	ShowCursor(true);
 }

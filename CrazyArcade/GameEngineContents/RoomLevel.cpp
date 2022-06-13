@@ -4,6 +4,7 @@
 #include "Mouse.h"
 #include "MapChoiceUI.h"
 #include "RoomNickName.h"
+#include "GameBgmPlayer.h"
 #include "ContentsEnum.h"
 #include "RoomBackGround.h"
 #include "RoomCharaterSelectUI.h"
@@ -41,11 +42,13 @@ void RoomLevel::Update()
 void RoomLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	GlobalUIName::GetInst()->SetChoiceMap(1);
+	GameBgmPlayer::BgmPlay_->ChangeBgm("RoomBGM.wav");
 	SetTextColor(GameEngine::BackBufferDC(), RGB(0, 0,0));
 	ShowCursor(false);
 }
 
 void RoomLevel::LevelChangeEnd(GameEngineLevel* NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 	ShowCursor(true);
 }

@@ -14,7 +14,8 @@ public:
 		Renderer(nullptr),
 		BlockCol(nullptr),
 		TilePos_(float4::ZERO),
-		TileIndex_()
+		TileIndex_(),
+		Ghost_(nullptr)
 	{
 
 	}
