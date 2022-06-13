@@ -29,4 +29,6 @@ private:
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
 	MapGameObject* Monster1Object_;
+	float LevelChngTime_;
+	bool ChngTimeSwitch_;
 };

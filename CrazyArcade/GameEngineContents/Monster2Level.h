@@ -30,4 +30,6 @@ private:
 	MapGameObject* Monster2Object_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
+	float LevelChngTime_;
+	bool ChngTimeSwitch_;
 };

@@ -29,9 +29,12 @@
 #include "PlayNickName.h"
 #include "TimeUI.h"
 #include "PlayerFaceIconUI.h"
+#include <GameEngineContents/GlobalUIName.h>
 BossLevel::BossLevel()
 	: ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
+	, ChngTimeSwitch_(false)
+	, LevelChngTime_(0)
 {
 
 }
@@ -112,11 +115,53 @@ void BossLevel::Loading()
 
 void BossLevel::Update()
 {
+	LevelChngTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+
+	if (ChngTimeSwitch_)
+	{
+		if (LevelChngTime_ > 2.0f)
+		{
+			GameEngine::GetInst().ChangeLevel("LoginLevel");
+		}
+	}
+	if (Monster::BOSS_COUNT == 0 && ChngTimeSwitch_ == false)
+	{
+		ChngTimeSwitch_ = true;
+		LevelChngTime_ = 0.0f;
+	}
+
 }
 
 void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterBossStageBGM.mp3");
+
+	//if (nullptr != Player::MainPlayer_1)
+	//{
+	//	Player::MainPlayer_1->Death();
+	//}
+
+	//if (nullptr != Player::MainPlayer_2)
+	//{
+	//	Player::MainPlayer_2->Death();
+	//}
+
+
+	//Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
+	//Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
+	//Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
+	//Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
+	//Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+	//if (true == GlobalUIName::GetInst()->Is2pUpdate())
+	//{
+
+	//	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	//	Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+	//	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	//	Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+	//	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	//}
 }
 
 void BossLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)

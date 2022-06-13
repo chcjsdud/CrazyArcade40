@@ -201,13 +201,12 @@ void Boss::Update()
 			UpdateDirection();
 			UpdateMove();
 			UpdateHP();
-			AllMonsterDeathModeSwitch();
 			Speech();
 		}
 	}
-		Die();
-		Speech();
-	//}
+	AllMonsterDeathModeSwitch();
+	Die();
+	Speech();
 }
 
 void Boss::Die()

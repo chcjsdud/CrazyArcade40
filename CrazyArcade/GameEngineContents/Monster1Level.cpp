@@ -41,6 +41,8 @@ Monster1Level::Monster1Level()
 	: ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
 	, MapFrontBackGround_(nullptr)
+	, ChngTimeSwitch_(false)
+	, LevelChngTime_(0)
 {
 
 }
@@ -196,14 +198,23 @@ void Monster1Level::Loading()
 
 void Monster1Level::Update()
 {
-	if (Monster::LV1_MON_COUNT == 0)
+	LevelChngTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+
+	if (ChngTimeSwitch_)
 	{
-		// UI 나오고
-		////if(UI 화면 끝나면)
-		//{
-		//	GameEngine::GetInst().ChangeLevel("Monster2Level");
-		//}
+		if (LevelChngTime_ > 1.0f)
+		{
+			GameEngine::GetInst().ChangeLevel("Monster2Level");
+
+		}
 	}
+
+	if (Monster::LV1_MON_COUNT == 0 && ChngTimeSwitch_ == false)
+	{
+		ChngTimeSwitch_ = true;
+		LevelChngTime_ = 0.0f;
+	}
+
 
 	//else if 플레이어 수가 0이되면
 	//	UI 나오고

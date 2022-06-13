@@ -36,17 +36,16 @@ void BossBoom::Update()
 						Area& _Area = it->second;
 						float4 _Center = _Area.GetCenter() - float4(20.0f, 40.0f);
 						// 블락을 체크해서 블락이 있으면 
-						if (0 == _Area.ChooseWaterAttackAni()) // 블럭 있음
-						{
-							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
-							_Area.GetMapTile()->DeleteTile(_TileIndex.X, _TileIndex.Y);
-							BossBubblePop(_Center, 0);
-						}
+						//if (0 == _Area.ChooseWaterAttackAni()) // 블럭 있음
+						//{
+ 					//		TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
+						//	_Area.GetMapTile()->DeleteTile(_TileIndex.X, _TileIndex.Y);
+						//}
 
-						else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음
-						{
+						//else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음
+						//{
 							BossBubblePop(_Center, 0);
-						}
+						//}
 					}
 				}
 				SetPosition(float4::ZERO);
