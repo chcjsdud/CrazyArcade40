@@ -34,17 +34,17 @@ void MapFront::Start()
 		GameEngineRenderer* Y3 = CreateRenderer("CemetoryY3.bmp", static_cast<int>(ORDER::PLAYER));
 		Y3->SetPivot({ 0,-160 });
 		GameEngineRenderer* Y5 = CreateRenderer("CemetoryY5.bmp", static_cast<int>(ORDER::PLAYER));
-		Y5->SetPivot({ 0,-80 });
+		Y5->SetPivot({ 0,-100 });
 		GameEngineRenderer* Y6 = CreateRenderer("CemetoryY6.bmp", static_cast<int>(ORDER::PLAYER));
 		Y6->SetPivot({ 0,-40 });
 		GameEngineRenderer* Y7 = CreateRenderer("CemetoryY7.bmp", static_cast<int>(ORDER::PLAYER));
-		Y7->SetPivot({ 0,0 });
+		Y7->SetPivot({ 0,-20 });
 		GameEngineRenderer* Y9 = CreateRenderer("CemetoryY9.bmp", static_cast<int>(ORDER::PLAYER));
 		Y9->SetPivot({ 0,80 });
 		GameEngineRenderer* Y10 = CreateRenderer("CemetoryY10.bmp", static_cast<int>(ORDER::PLAYER));
-		Y10->SetPivot({ 0,120 });
+		Y10->SetPivot({ 0,100 });
 		GameEngineRenderer* Y12 = CreateRenderer("CemetoryY12.bmp", static_cast<int>(ORDER::PLAYER));
-		Y12->SetPivot({ 0,200 });
+		Y12->SetPivot({ 0,180 });
 		GameEngineRenderer* Y13 = CreateRenderer("CemetoryY13.bmp", static_cast<int>(ORDER::PLAYER));
 		Y13->SetPivot({ 0,240 });
 	}
