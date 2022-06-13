@@ -30,6 +30,7 @@ void MapGameObject::Update()
 	WaveDeathAni();
 	DestroyWave();
 	DestroyBoom();
+	DestroyBlock();
 	BlockMoveUpdate();
 }
 
@@ -90,6 +91,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 	Block_->Renderer = CreateRenderer();
 	Block_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y - 4});
 	Block_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
+	Block_->Renderer->CreateAnimation("DestroyBlock.bmp", "Death", 0, 3, 0.1f, false);
 	Block_->TilePos_=TileCenterPos_;
 	if (_Box == "WALLBLOCK")
 	{
@@ -857,20 +859,53 @@ void MapGameObject::WaveDeathAni()
 }
 void MapGameObject::DestroyBlock()
 {
-//	for(int x = 0; x < 14; x++)
-//	{
-//		for (int y = 0; y < 12; y++)
-//		{
-//			BlockTile* BlockCheck = MapTile_->GetTile<BlockTile>(x, y);
-//			if (BlockCheck != nullptr && BlockCheck->BlockType_ != BlockType::Max)
-//			{
-//				if (BlockCheck->IsBlockDeath_ == true)
-//				{
-//					BlockCheck->Renderer->
-//				}
-//			}
-//		}
-//	}
+
+	for (float x = 0; x < 15; x++)
+	{
+		for (float y = 0; y < 13; y++)
+		{
+			BlockTile* BlockCheck = MapTile_->GetTile<BlockTile>(x, y);
+
+			if (BlockCheck != nullptr && BlockCheck->BlockType_ == BlockType::FixBlock)//블럭있는게 맞아?
+			{
+				if (BlockCheck->IsBlockDeath_ == true)//죽어야하는 타일이라면
+				{
+					BlockCheck->Renderer->ChangeAnimation("Death");
+					if (BlockCheck->Renderer->IsEndAnimation() == true)//애니메이션이 끝났다면
+					{
+						BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(x, y);//현재 검사중인 타일 정보
+						ItemType ItemValue = Tiles_->ItemType_;
+						MapTile_->DeleteTile(x, y);
+						if (ItemValue != ItemType::Max)
+						{
+							GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+							Item->SetMapTile(MapTile_);
+							Item->CreateItem({ float(x) * 40,float(y) * 40 }, ItemValue);
+						}
+					}
+				}
+			}
+			else if (BlockCheck != nullptr && BlockCheck->BlockType_ == BlockType::PullBlock)
+			{
+				if (BlockCheck->IsBlockDeath_ == true)//죽어야하는 타일이라면
+				{
+					BlockCheck->Renderer->ChangeAnimation("Death");
+					if (BlockCheck->Renderer->IsEndAnimation() == true)//애니메이션이 끝났다면
+					{
+						BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(x, y);//현재 검사중인 타일 정보
+						ItemType ItemValue = Tiles_->ItemType_;
+						MapTile_->DeleteTile(x, y);
+						if (ItemValue != ItemType::Max)
+						{
+							GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+							Item->SetMapTile(MapTile_);
+							Item->CreateItem({ float(x) * 40,float(y) * 40 }, ItemValue);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 void MapGameObject::DestroyWave()
 {
@@ -961,14 +996,8 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 			}
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 			{
-				ItemType ItemValue = Tiles_->ItemType_;
-				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
-				if (ItemValue != ItemType::Max)
-				{
-					GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
-					Item->SetMapTile(MapTile_);
-					Item->CreateItem({ float(TilePos.X - i) * 40,float(TilePos.Y) * 40 }, ItemValue);
-				}
+	
+				Tiles_->IsBlockDeath_ = true;
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -976,7 +1005,7 @@ void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 
 			else if (Tiles_ != nullptr&& Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
-				MapTile_->DeleteTile(TilePos.X - i, TilePos.Y);
+				Tiles_->IsBlockDeath_ = true;
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
@@ -1120,11 +1149,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock)//------------------------------------------------부서지는벽
 			{
-				ItemType ItemValue = Tiles_->ItemType_;
-				MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);
-				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
-				Item->SetMapTile(MapTile_);
-				Item->CreateItem({ float(TilePos.X + i) * 40,float(TilePos.Y) * 40 }, ItemValue);
+				Tiles_->IsBlockDeath_ = true;
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 			}
@@ -1135,7 +1160,7 @@ void MapGameObject::MakeRightWave(TileIndex _Pos, float _Power)
 
 			else if (Tiles_ != nullptr&& Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
-				MapTile_->DeleteTile(TilePos.X + i, TilePos.Y);
+				Tiles_->IsBlockDeath_ = true;
 				IndexCount_ = i - 1;//이만큼 가면된다.
 					i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 					//여기서 해당 오브젝트부숴주면됨
@@ -1272,22 +1297,18 @@ void MapGameObject::MakeDownWave(TileIndex _Pos, float _Power)
 			}
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽
 			{
-				ItemType ItemValue = Tiles_->ItemType_;
-				MapTile_->DeleteTile(TilePos.X , TilePos.Y + i);
-				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
-				Item->SetMapTile(MapTile_);
-				Item->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y+i) * 40 }, ItemValue);
+				Tiles_->IsBlockDeath_ = true;
 				IndexCount_ = i - 1;//이만큼 가면된다.
 				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
 				//여기서 해당 오브젝트부숴주면됨
 			}
-			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock) //------------------------------------------------부서지는벽
+			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock) //------------------------------------------------부쉬
 			{
 				MapTile_->DeleteTile(TilePos.X, TilePos.Y + i);
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::PullBlock)//밀리는상자
 			{
-				MapTile_->DeleteTile(TilePos.X, TilePos.Y + i);
+				Tiles_->IsBlockDeath_ = true;
 				IndexCount_ = i - 1;
 				i = static_cast<int>(_Power) + 1;
 
@@ -1424,14 +1445,10 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			}
 			else if (Tiles_ != nullptr &&Tiles_->BlockType_ == BlockType::FixBlock ) //------------------------------------------------부서지는벽//밀리는상자
 			{
-				ItemType ItemValue = Tiles_->ItemType_;
-				MapTile_->DeleteTile(TilePos.X, TilePos.Y -i);
-				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
-				Item->SetMapTile(MapTile_);
-				Item->CreateItem({ float(TilePos.X) * 40,float(TilePos.Y - i) * 40 }, ItemValue);
-				IndexCount_ = i - 1;//이만큼 가면된다.
-				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
-				//여기서 해당 오브젝트부숴주면됨
+				Tiles_->IsBlockDeath_ = true;
+				IndexCount_ = i - 1;
+				i = static_cast<int>(_Power) + 1;
+
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::BushBlock)
 			{
@@ -1439,10 +1456,9 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::PullBlock)
 			{
-				MapTile_->DeleteTile(TilePos.X, TilePos.Y - i);
-				IndexCount_ = i - 1;//이만큼 가면된다.
-				i = static_cast<int>(_Power) + 1;//여기서 for문 종료
-				//여기서 해당 오브젝트부숴주면됨
+				Tiles_->IsBlockDeath_ = true;
+				IndexCount_ = i - 1;
+				i = static_cast<int>(_Power) + 1;
 			}
 			else if (Tiles_ != nullptr && Tiles_->BlockType_ == BlockType::WaveBlock)//-------------------------------이미 터지고 있을때
 			{
