@@ -51,11 +51,11 @@ public:
 	GameItemObject& operator=(GameItemObject&& _Other) noexcept = delete;
 
 
-
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{
 		MapTile_ = _MapTile;
 	}
+
 	inline GameEngineRendererTileMap* ReturnGameTileObejctMap_()
 	{
 		return MapTile_;

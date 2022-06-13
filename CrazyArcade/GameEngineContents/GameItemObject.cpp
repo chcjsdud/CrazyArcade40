@@ -45,8 +45,8 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	ItemBlockTile* Tiles_ = MapTile_->CreateTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 	Tiles_->Renderer = CreateRenderer();
 	Tiles_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y }); // 아이템 y는 90이어야한다.
-	Tiles_->BlockType_ = BlockType::ItemBlock;
 	Tiles_->Renderer->SetOrder(static_cast<int>(ORDER::PLAYER));
+	Tiles_->BlockType_ = BlockType::ItemBlock;
 	Tiles_->ItemType_ = _Type;
 
 	if (_Type == ItemType::Roller)
@@ -136,6 +136,7 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 		Ghost* Ghost_ = GetLevel()->CreateActor<Ghost>((int)ORDER::BOSS);
 		Ghost_->SetPosition(_Pos);
 	}
+
 }
 
 // 플레이어가 서있는 위치의 타일의 BlockType이 아이템블록이라면 , 아이템이 무슨아이템인지 체크하는 함수입니당. 위치넣어주면 아이템타입이 리턴됩니당. 
