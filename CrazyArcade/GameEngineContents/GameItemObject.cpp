@@ -5,7 +5,19 @@
 #include <GameEngine/GameEngineLevel.h>
 
 GameItemObject::GameItemObject()
-	:	MapTile_(nullptr)
+	:	MapTile_(nullptr),
+	 MaxValue(0),
+	FixBlockValue(0),
+	PullBlockValue(0),
+	 BushBlockValue(0),
+ FixItemBlockValue(0),
+ ItemBlockValue(0),
+ BubbleBlockValue(0),
+ BoomBlockValue(0),
+ WaveBlockValue(0),
+ WallBlockValue(0),
+ NoBlockValue(0),
+ NiddleBlockValue(0)
 
 {
 
@@ -129,15 +141,14 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 // 플레이어가 서있는 위치의 타일의 BlockType이 아이템블록이라면 , 아이템이 무슨아이템인지 체크하는 함수입니당. 위치넣어주면 아이템타입이 리턴됩니당. 
 ItemType GameItemObject::CheckItem(float4 _Pos)
 {
-//	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
-//	ItemBlockTile* Tiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
-//	if (Tiles_ == nullptr)
-//	{
-//		return ItemType::Max;
-//	}
-//	else
-//	{
-//		return Tiles_->ItemType_;
-//	}
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	ItemBlockTile* Tiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (Tiles_  != nullptr &&Tiles_->ItemType_ != ItemType::Max)
+	{
+		return Tiles_->ItemType_;
+	}
+	else
+	{
 	return ItemType::Max;
+	}
 }

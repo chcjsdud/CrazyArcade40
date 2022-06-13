@@ -69,5 +69,17 @@ protected:
 	void Update() override;
 
 private:
+	int MaxValue;
+	int FixBlockValue;
+	int PullBlockValue;
+	int BushBlockValue;
+	int FixItemBlockValue;
+	int ItemBlockValue;
+	int BubbleBlockValue;
+	int BoomBlockValue;
+	int WaveBlockValue;
+	int WallBlockValue;
+	int NoBlockValue;
+	int NiddleBlockValue;
 
 };
