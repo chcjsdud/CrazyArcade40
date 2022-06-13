@@ -7,6 +7,8 @@
 
 MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
+	GameItem_(nullptr),
+	ItemValue_(ItemType::Max),
 	AllBlockTiles_()
 
 {
@@ -335,9 +337,16 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 	{
 		return;
 	}
-
+	if (PushTile_->MoveOn ==true)
+	{
+		return;
+	}
 	if (BlockDir::LEFT == _Dir)
 	{
+		if (TileIndex_.X - 1 < 0)
+		{
+			return;
+		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y);
 		if (NextTile_ == nullptr)
 		{
@@ -357,6 +366,10 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 	}
 	if (BlockDir::RIGHT == _Dir)
 	{
+		if (TileIndex_.X + 1 > 14)
+		{
+			return;
+		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y);
 		if (NextTile_ == nullptr)
 		{
@@ -376,6 +389,10 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 	}
 	if (BlockDir::DOWN == _Dir)
 	{
+		if (TileIndex_.Y + 1 > 12)
+		{
+			return;
+		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y + 1);
 		if (NextTile_ == nullptr)
 		{
@@ -395,6 +412,10 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 	}
 	if (BlockDir::UP == _Dir)
 	{
+		if (TileIndex_.Y - 1 < 0)
+		{
+			return;
+		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y - 1);
 		if (NextTile_ == nullptr)
 		{
@@ -430,6 +451,11 @@ void MapGameObject::BlockMoveUpdate()
 				MovePos_ += Move_;
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{0,-4});
 				MoveBlocks_[i]->TilePos_ = MovePos_;
+				MoveBlocks_[i]->MoveOn = true;
+			}
+			else
+			{
+				MoveBlocks_[i]->MoveOn = false;
 			}
 
 		}
@@ -443,6 +469,10 @@ void MapGameObject::BlockMoveUpdate()
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
 			}
+			else
+			{
+				MoveBlocks_[i]->MoveOn = false;
+			}
 		}
 		if (BlockDir::DOWN == MoveBlocks_[i]->BlockDir_)
 		{
@@ -454,6 +484,10 @@ void MapGameObject::BlockMoveUpdate()
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
 			}
+			else
+			{
+				MoveBlocks_[i]->MoveOn = false;
+			}
 		}
 		if (BlockDir::UP == MoveBlocks_[i]->BlockDir_)
 		{
@@ -464,6 +498,10 @@ void MapGameObject::BlockMoveUpdate()
 				MovePos_ += Move_;
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
+			}
+			else
+			{
+				MoveBlocks_[i]->MoveOn = false;
 			}
 		}
 	}

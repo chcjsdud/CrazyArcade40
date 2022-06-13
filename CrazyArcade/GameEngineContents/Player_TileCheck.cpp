@@ -16,7 +16,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	case BlockType::WaveBlock:
 	{
 		// 무적이 아닐 때만
-		if (false == IsInvincible)
+		if (false == IsShield)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl
@@ -48,7 +48,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	case BlockType::BubbleBlock:
 	{
 		// 무적이 아닐 때만
-		if (false == IsInvincible)
+		if (false == IsShield)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl
@@ -139,15 +139,22 @@ void Player::TileCheckResult()
 // 앞 뒤 양옆 블럭을 체크한 뒤 할 일
 void Player::FrontBlockCheckUpdate()
 {
-	LeftPos_1P = MainPlayer_1->GetPosition() + float4{ -40.0f, -20.0f };
-	RightPos_1P = MainPlayer_1->GetPosition() + float4{ 0.0f, -20.0f };
-	UpPos_1P = MainPlayer_1->GetPosition() + float4{ -20.0f, -40.0f };
-	DownPos_1P = MainPlayer_1->GetPosition() + float4{ -20.0f, 0.0f };
+	if (nullptr != MainPlayer_1)
+	{
+		LeftPos_1P = MainPlayer_1->GetPosition() + float4{ -40.0f, -20.0f };
+		RightPos_1P = MainPlayer_1->GetPosition() + float4{ 0.0f, -20.0f };
+		UpPos_1P = MainPlayer_1->GetPosition() + float4{ -20.0f, -40.0f };
+		DownPos_1P = MainPlayer_1->GetPosition() + float4{ -20.0f, 0.0f };
+	}
 
-	LeftPos_2P = MainPlayer_2->GetPosition() + float4{ -40.0f, -20.0f };
-	RightPos_2P = MainPlayer_2->GetPosition() + float4{ 0.0f, -20.0f };
-	UpPos_2P = MainPlayer_2->GetPosition() + float4{ -20.0f, -40.0f };
-	DownPos_2P = MainPlayer_2->GetPosition() + float4{ -20.0f, 0.0f };
+	if(nullptr != MainPlayer_2)
+	{
+		LeftPos_2P = MainPlayer_2->GetPosition() + float4{ -40.0f, -20.0f };
+		RightPos_2P = MainPlayer_2->GetPosition() + float4{ 0.0f, -20.0f };
+		UpPos_2P = MainPlayer_2->GetPosition() + float4{ -20.0f, -40.0f };
+		DownPos_2P = MainPlayer_2->GetPosition() + float4{ -20.0f, 0.0f };
+	}
+
 
 	// 왼쪽 블럭
 	switch (LeftBlock)
