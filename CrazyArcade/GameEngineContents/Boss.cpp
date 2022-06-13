@@ -31,6 +31,7 @@ Boss::Boss()
 	, SpeechTime_(0)
 	, IntervalTime_(0)
 	, SpeechNum_(0)
+	, IsAreaChanged(false)
 {
 }
 
@@ -418,7 +419,7 @@ void Boss::UpdateMove()
 	{
 		if (Renderer_->IsAnimationName("RollAttackRight"))
 		{
-			if (RollTime_ < 8.0f)
+			if (RollTime_ < 9.0f)
 			{
 				SetMove(float4::RIGHT * GameEngineTime::GetInst()->GetDeltaTime() * Speed_);
 			}
@@ -430,7 +431,7 @@ void Boss::UpdateMove()
 		}
 		else if (Renderer_->IsAnimationName("RollAttackLeft"))
 		{
-			if (RollTime_ < 8.0f)
+			if (RollTime_ < 9.0f)
 			{
 				SetMove(float4::LEFT * GameEngineTime::GetInst()->GetDeltaTime() * Speed_);
 			}
@@ -449,7 +450,7 @@ void Boss::UpdateMove()
 void Boss::UpdateDirection()
 {
 	PrevIndex_ = Index_; // 이전 인덱스 저장
-	bool IsAreaChanged = false;
+	IsAreaChanged = false;
 
 	if (false == Renderer_->IsAnimationName("WaterAttack") &&
 		false == Renderer_->IsAnimationName("RollAttack" + Direction_))

@@ -168,8 +168,9 @@ void Monster2::UpdateMove()
 
 void Monster2::UpdateGetBack()
 {
-	if (GetHP() >= 1 &&
-		GetBackTime_ > 7.0f)
+	if (GetHP() < 2 &&
+		GetBackTime_ > 7.0f &&
+		IsDie() == false)
 	{
 		GameEngineSound::SoundPlayOneShot("Monster2_Grow.mp3");
 		MiniRendererOn_ = false;
@@ -191,6 +192,7 @@ void Monster2::Die()
 			{
 				CenterCol_->Off();
 				Death();
+				GameEngineSound::SoundPlayOneShot("Monster2_Die.mp3");
 
 				if (GetLevel()->GetNameCopy() == "Monster1Level")
 				{
@@ -218,7 +220,6 @@ void Monster2::Die()
 		if (true != MiniRenderer_->IsAnimationName("Die"))
 		{
 			Dir_ = float4::ZERO;
-			GameEngineSound::SoundPlayOneShot("Monster2_Die.mp3");
 			MiniRenderer_->ChangeAnimation("Die");
 			Renderer_->ChangeAnimation("Die");
 		}
