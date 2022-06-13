@@ -288,7 +288,7 @@ void MapGameObject::CreateBlock(float4 _Pos, std::string _Box)
 }
 
 
-void MapGameObject::CreateBoom(float4 _Pos, float _Power)
+void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
@@ -302,7 +302,14 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		CheckBlock->TilePos_ = _Pos;
 		CheckBlock->DeathTime_ = 3.0f;
 		CheckBlock->Power_ = _Power;
-		BoomBlockTiles_.push_back(CheckBlock);
+		if (_PlayerNum == 1)
+		{
+			Player1BlockTiles_.push_back(CheckBlock);
+		}
+		else if (_PlayerNum == 2)
+		{
+			Player2BlockTiles_.push_back(CheckBlock);
+		}
 	}
 	else if (CheckBlock != nullptr && CheckItemBlock->BlockType_ == BlockType::ItemBlock)
 	{
@@ -318,8 +325,15 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		Boom_->TileIndex_ = TileIndex_;
 		Boom_->TilePos_ = _Pos;
 		Boom_->DeathTime_ = 3.0f;
-		Boom_->Power_ = _Power;
-		BoomBlockTiles_.push_back(Boom_);
+		Boom_->Power_ = _Power;	
+		if (_PlayerNum == 1)
+		{
+			Player1BlockTiles_.push_back(CheckBlock);
+		}
+		else if (_PlayerNum == 2)
+		{
+			Player2BlockTiles_.push_back(CheckBlock);
+		}
 	}
 	else if (CheckBlock != nullptr)
 	{
@@ -339,7 +353,14 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power)
 		Boom_->TilePos_ = _Pos;
 		Boom_->DeathTime_ = 3.0f;
 		Boom_->Power_ = _Power;
-		BoomBlockTiles_.push_back(Boom_);
+		if (_PlayerNum == 1)
+		{
+			Player1BlockTiles_.push_back(CheckBlock);
+		}
+		else if (_PlayerNum == 2)
+		{
+			Player2BlockTiles_.push_back(CheckBlock);
+		}
 	}
 }
 void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
@@ -473,7 +494,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 void MapGameObject::BlockMoveUpdate()
 {
 
-	for (size_t i = 0; i < MoveBlocks_.size(); i++)
+	for (int i = 0; i < MoveBlocks_.size(); i++)
 	{
 
 		if (BlockDir::LEFT == MoveBlocks_[i]->BlockDir_)
@@ -582,19 +603,30 @@ void MapGameObject::BubblePop(float4 _Pos, float Power)
 void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 {
 
-	for (int i = 0; i < BoomBlockTiles_.size(); i++)
+	for (int i = 0; i < Player1BlockTiles_.size(); i++)
 	{
-		BoomBlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
-		if (BoomBlockTiles_[i]->DeathTime_ <= 0.0f)
+		Player1BlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
+		if (Player1BlockTiles_[i]->DeathTime_ <= 0.0f)
 		{
-			float4 _Poss = BoomBlockTiles_[i]->TilePos_;
-			float _Power = BoomBlockTiles_[i]->Power_;
-			MapTile_->DeleteTile(BoomBlockTiles_[i]->TileIndex_.X, BoomBlockTiles_[i]->TileIndex_.Y);
-			BoomBlockTiles_.erase(BoomBlockTiles_.begin() + i);
+			float4 _Poss = Player1BlockTiles_[i]->TilePos_;
+			float _Power = Player1BlockTiles_[i]->Power_;
+			MapTile_->DeleteTile(Player1BlockTiles_[i]->TileIndex_.X, Player1BlockTiles_[i]->TileIndex_.Y);
+			Player1BlockTiles_.erase(Player1BlockTiles_.begin() + i);
 			BubblePop(_Poss, _Power);//폭탄 지워진 자리에 웨이브 만들어줌
 		}
 	}
-
+	for (int i = 0; i < Player2BlockTiles_.size(); i++)
+	{
+		Player2BlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
+		if (Player2BlockTiles_[i]->DeathTime_ <= 0.0f)
+		{
+			float4 _Poss = Player2BlockTiles_[i]->TilePos_;
+			float _Power = Player2BlockTiles_[i]->Power_;
+			MapTile_->DeleteTile(Player2BlockTiles_[i]->TileIndex_.X, Player2BlockTiles_[i]->TileIndex_.Y);
+			Player2BlockTiles_.erase(Player2BlockTiles_.begin() + i);
+			BubblePop(_Poss, _Power);//폭탄 지워진 자리에 웨이브 만들어줌
+		}
+	}
 }
 void MapGameObject::WaveDeathAni()
 {

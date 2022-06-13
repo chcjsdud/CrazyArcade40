@@ -83,8 +83,16 @@ public:
 	BlockType CheckTile(float4 _Pos);
 	void CreateBlock(float4 _Pos, std::string _Box);
 	void BubblePop(float4 _Pos, float _Power);
-	void CreateBoom(float4 _Pos, float _Power);
+	void CreateBoom(float4 _Pos, float _Power, int _PlayerNum);
 	void SetGameItem();
+	int ReturnPlayer1BoomCount()
+	{
+		return Player1BlockTiles_.size();
+	}
+	int ReturnPlayer2BoomCount()
+	{
+		return Player2BlockTiles_.size();
+	}
 protected:
 	void Start() override;
 	void Update() override;
@@ -92,7 +100,8 @@ protected:
 private:
 	std::vector<BlockTile*> AllBlockTiles_;
 	std::vector<BlockTile*> WaveBlockTiles_;
-	std::vector<BlockTile*> BoomBlockTiles_;
+	std::vector<BlockTile*> Player1BlockTiles_;
+	std::vector<BlockTile*> Player2BlockTiles_;
 	GameEngineRendererTileMap* MapTile_;
 	GameItemObject* GameItem_;
 	ItemType ItemValue_;
