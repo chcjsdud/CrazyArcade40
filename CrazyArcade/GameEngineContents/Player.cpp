@@ -54,7 +54,7 @@ Player::Player()
 	, AttMoveTime_(0.0f)
 	, MapTile_(nullptr)
 	, IsLive(true)
-	, IsInvincible(false)
+	, IsShield(false)
 	, Box_(nullptr)
 
 {
@@ -305,7 +305,7 @@ void Player::CollisionCheck()
 	// 무적이 아닐 때만
 	if (Type == PlayerType::Player1)
 	{
-		if (false == IsInvincible)
+		if (false == IsShield)
 		{
 			std::vector<GameEngineCollision*> ColList;
 
@@ -351,7 +351,7 @@ void Player::CollisionCheck()
 		if (Type == PlayerType::Player2)
 		{
 			// 무적이 아닐 때만
-			if (false == IsInvincible)
+			if (false == IsShield)
 			{
 				std::vector<GameEngineCollision*> ColList;
 

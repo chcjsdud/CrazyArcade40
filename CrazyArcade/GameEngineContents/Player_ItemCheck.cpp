@@ -200,6 +200,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Devil:
 	{
+		// 1. 누른 방향키와 반대로 이동
 		if (CurDir_ == PlayerDir::Left)
 		{
 			CheckDir_ = PlayerDir::Right;
@@ -220,6 +221,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 			CheckDir_ = PlayerDir::Up;
 			ChangeDirText_ = "Up";
 		}
+
+		// 2. CurAttCount만큼 연속으로 자동 공격 
 	}
 	break;
 	case ItemType::Shoes:
@@ -234,11 +237,11 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		// 3초가 지나기 전은 무적
 		if (3.f > GetAccTime())
 		{
-			IsInvincible = true;
+			IsShield = true;
 		}
 		else // 3초가 지나면 무적 해제 및 ResetTime
 		{
-			IsInvincible = false;
+			IsShield = false;
 			ReSetAccTime();
 		}
 	}
