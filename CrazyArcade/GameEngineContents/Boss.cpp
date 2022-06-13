@@ -16,9 +16,9 @@
 
 Boss::Boss()
 	: Monster()
-	, WaterTime_(-1.0f)
+	, WaterTime_(0.0f)
 	, StartTime_(0.0f)
-	, WaterAttackInterval_(-8.5f)
+	, WaterAttackInterval_(1.5f)
 	, RollTime_(0.0f)
 	, AreaChangeCount_(0)
 	, BossHP_(nullptr)
@@ -68,9 +68,8 @@ void Boss::Start()
 	Renderer_->ChangeAnimation("Idle");
 	Dir_ = float4::RIGHT;
 	Direction_ = "Right";
-	CenterCol_ = CreateCollision("Monster", float4(50.0f, 50.0f), float4(0.0f, -25.0f));
-	CenterCol_->SetScale(float4(130.0, 150.0f));
-	CenterCol_->SetPivot(float4(0.0f, -50.0f));
+	CenterCol_->SetScale(float4(120.0, 120.0f));
+	CenterCol_->SetPivot(float4(0.0f, -70.0f));
 
 	{
 		//Boss UI
@@ -158,8 +157,8 @@ void Boss::Start()
 		SetSpeed(50); // Need to chk : Speed
 
 		// Index 설정
-		Index_ = 97; // 시작 Index를
-		SetPosition(Areas_[97].GetCenter());
+		Index_ = 94; // 시작 Index를
+		SetPosition(Areas_[94].GetCenter());
 	}
 }
 
@@ -188,12 +187,9 @@ void Boss::Update()
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-	StartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	SpeechTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	IntervalTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
-
-	//if (StartTime_ > 0)
-	//{
+	
 	if (true == IsSppechEnd_)
 	{
 		if (IsDie() != true)
@@ -341,7 +337,7 @@ void Boss::Speech()
 {
 	if (IsSppechEnd_ == false)
 	{
-		if (SpeechNum_ < 5)
+		if (SpeechNum_ < 3)
 		{
 			if (IntervalTime_ < 0.0f)
 			{
@@ -351,40 +347,41 @@ void Boss::Speech()
 					{
 						IntervalTime_ = 2.0f;
 						SpeechNum_++;
-						if (SpeechNum_ == 3)
-						{
-							Renderer_->ChangeAnimation("WaterAttack");
-							RandomAction_ = 4;
-							IntervalTime_ = 5.0f;
-						}
 						SpeechBubble_->ChangeAnimation("Bubble" + std::to_string(SpeechNum_));
 					}
+
 				}
 			}
 		}
 
-		if (SpeechNum_ == 5)
+		if (SpeechNum_ == 3)
 		{
+			WaterAttack();
+			IntervalTime_ = 2.0f;
 			IsSppechEnd_ = true;
+			SpeechNum_++;
 		}
 	}
 
 	else if (IsSppechEnd_)
 	{
-		if (SpeechTime_ > 3.0f)
+		if (IntervalTime_ < 0.0f)
 		{
-			int RandomSpeech = (rand() % 20);
-			if (RandomSpeech < 5)
+			if (SpeechTime_ > 3.0f)
 			{
-				RandomSpeech += 5;
+				int RandomSpeech = (rand() % 20);
+				if (RandomSpeech < 5)
+				{
+					RandomSpeech += 5;
+				}
+				else if (RandomSpeech == 9 || RandomSpeech == 10 || RandomSpeech == 17)
+				{
+					RandomSpeech = 12;
+				}
+				std::string SpeechNum = std::to_string(RandomSpeech);
+				SpeechBubble_->ChangeAnimation("Bubble" + SpeechNum);
+				SpeechTime_ = 0.0f;
 			}
-			else if (RandomSpeech == 9 || RandomSpeech == 10 || RandomSpeech == 17)
-			{
-				RandomSpeech = 12;
-			}
-			std::string SpeechNum = std::to_string(RandomSpeech);
-			SpeechBubble_->ChangeAnimation("Bubble" + SpeechNum);
-			SpeechTime_ = 0.0f;
 		}
 	}
 }
@@ -819,6 +816,13 @@ void Boss::UpdateDirection()
 				Direction_ = "Down";
 			}
 		}
+
+		if (Dir_.x != 0 &&
+			Dir_.y != 0 )
+		{
+		GameEngineSound::SoundPlayOneShot("Boss_Attack_Walk.mp3");
+
+		}
 	}
 
 	else if (RandomAction_ == 3)
@@ -838,6 +842,7 @@ void Boss::TakeDamage()
 	{
 		SetHP(GetHp() - 1);
 		GetAttTime_ = 0.0f;
+		GameEngineSound::SoundPlayOneShot("Boss_Rage.mp3");
 		Renderer_->ChangeAnimation("TakeDamage" + Direction_);
 		Dir_ = float4::ZERO;
 	}
@@ -846,7 +851,8 @@ void Boss::TakeDamage()
 void Boss::UpdateAttack()
 {
 	if (false == Renderer_->IsAnimationName("WaterAttack") &&
-		false == Renderer_->IsAnimationName("RollAttack" + Direction_))
+		false == Renderer_->IsAnimationName("RollAttack" + Direction_) &&
+		IsSppechEnd_ == true)
 	{
 		if (LevelStart_ == false)
 		{
@@ -867,6 +873,7 @@ void Boss::RollAttack()
 		false == Renderer_->IsAnimationName("RollAttackLeft"))
 	{
 		Direction_ = "Right";
+		GameEngineSound::SoundPlayOneShot("Boss_Attack_Roll.mp3");
 		Renderer_->ChangeAnimation("RollAttackRight");
 	}
 	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_ &&
@@ -874,6 +881,7 @@ void Boss::RollAttack()
 		false == Renderer_->IsAnimationName("RollAttackRight"))
 	{
 		Direction_ = "Left";
+		GameEngineSound::SoundPlayOneShot("Boss_Attack_Roll.mp3");
 		Renderer_->ChangeAnimation("RollAttackLeft");
 	}
 
@@ -911,7 +919,7 @@ void Boss::WaterAttack()
 			BossBoom* _BossBoom = BossBooms_[(BossBoomIndex_++ % BossBooms_.size())];
 			CheckCanAttackTile(_BossBoom, AttackIndex_);
 		}
-		WaterAttackInterval_ = 0.0f;
+		WaterAttackInterval_ = -1.0f;
 	}
 }
 

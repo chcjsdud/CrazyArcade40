@@ -118,7 +118,7 @@ private:
 	void MakeDownWave(TileIndex _Pos, float _Power);
 	void MakeUpWave(TileIndex _Pos, float _Power);
 
-	void BossWaveDeath();
+	//void BossWaveDeath();
 	void BlockValueSetting();
 	void DestroyBlock();
 	void DestroyBoom();
@@ -152,4 +152,5 @@ public:
 	void BubbleMoveUpdate();
 	std::vector<BlockTile*> MoveBlocks_;
 	std::vector<BlockTile*> MoveBubble_;
+	void BossWaveDeath();
 };

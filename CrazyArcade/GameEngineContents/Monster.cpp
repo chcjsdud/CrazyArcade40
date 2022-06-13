@@ -492,40 +492,6 @@ void Monster::Render()
 
 void Monster::Die()
 {
-	if (true == IsDie()) // HP가 0이거나 0보다 작으면
-	{
-
-		if (true == Renderer_->IsAnimationName("Die") && true == Renderer_->IsEndAnimation())
-		{
-			CenterCol_->Off();
-			Death();
-			if (GetLevel()->GetNameCopy() == "Monster1Level")
-			{
-				LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.
-			}
-
-			else if (GetLevel()->GetNameCopy() == "Monster2Level") // 만약 몬스터가 한마리 남으면
-			{
-				LV2_MON_COUNT--; // total 몬스터 수가 줄어든다.
-			}
-
-			else if (GetLevel()->GetNameCopy() == "BossLevel")
-			{
-				BOSS_COUNT--;
-			}
-
-			if (LV1_MON_COUNT == 1 || LV2_MON_COUNT == 1)
-			{
-				SetSpeed(Speed_ + 20); // 속도가 빨라져라
-			}
-		}
-
-		if (true != Renderer_->IsAnimationName("Die"))
-		{
-			Dir_ = float4::ZERO;
-			Renderer_->ChangeAnimation("Die");
-		}
-	}
 
 }
 

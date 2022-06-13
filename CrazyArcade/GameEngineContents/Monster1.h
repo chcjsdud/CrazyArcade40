@@ -17,7 +17,7 @@ protected:
 	void Start() override;
 	void Render() override;
 	void Update() override;
-
+	void Die() override;
 private:
 
 	float SpeechTime_;

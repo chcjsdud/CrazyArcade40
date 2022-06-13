@@ -121,7 +121,7 @@ void BossLevel::Update()
 	{
 		if (LevelChngTime_ > 2.0f)
 		{
-			GameEngine::GetInst().ChangeLevel("LoginLevel");
+			GameEngine::GetInst().ChangeLevel("RoomLevel");
 		}
 	}
 	if (Monster::BOSS_COUNT == 0 && ChngTimeSwitch_ == false)

@@ -171,6 +171,7 @@ void Monster2::UpdateGetBack()
 	if (GetHP() >= 1 &&
 		GetBackTime_ > 7.0f)
 	{
+		GameEngineSound::SoundPlayOneShot("Monster2_Grow.mp3");
 		MiniRendererOn_ = false;
 		MiniRenderer_->Off();
 		Renderer_->On();
@@ -217,6 +218,7 @@ void Monster2::Die()
 		if (true != MiniRenderer_->IsAnimationName("Die"))
 		{
 			Dir_ = float4::ZERO;
+			GameEngineSound::SoundPlayOneShot("Monster2_Die.mp3");
 			MiniRenderer_->ChangeAnimation("Die");
 			Renderer_->ChangeAnimation("Die");
 		}
