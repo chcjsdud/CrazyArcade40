@@ -362,6 +362,11 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 			return;
 		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X - 1, TileIndex_.Y);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X - 1, TileIndex_.Y);
+		}
 		if (NextTile_ == nullptr)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
@@ -385,6 +390,11 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 			return;
 		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X + 1, TileIndex_.Y);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X + 1, TileIndex_.Y);
+		}
 		if (NextTile_ == nullptr)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
@@ -408,6 +418,11 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 			return;
 		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y + 1);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y+1);
+		}
 		if (NextTile_ == nullptr)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y + 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
@@ -431,6 +446,11 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 			return;
 		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y - 1);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X , TileIndex_.Y + 1);
+		}
 		if (NextTile_ == nullptr)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y - 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
