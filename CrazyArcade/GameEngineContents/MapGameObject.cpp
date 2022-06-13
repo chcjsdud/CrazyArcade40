@@ -328,11 +328,11 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		Boom_->Power_ = _Power;	
 		if (_PlayerNum == 1)
 		{
-			Player1BlockTiles_.push_back(CheckBlock);
+			Player1BlockTiles_.push_back(Boom_);
 		}
 		else if (_PlayerNum == 2)
 		{
-			Player2BlockTiles_.push_back(CheckBlock);
+			Player2BlockTiles_.push_back(Boom_);
 		}
 	}
 	else if (CheckBlock != nullptr)
@@ -355,13 +355,141 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		Boom_->Power_ = _Power;
 		if (_PlayerNum == 1)
 		{
-			Player1BlockTiles_.push_back(CheckBlock);
+			Player1BlockTiles_.push_back(Boom_);
 		}
 		else if (_PlayerNum == 2)
 		{
-			Player2BlockTiles_.push_back(CheckBlock);
+			Player2BlockTiles_.push_back(Boom_);
 		}
 	}
+}
+void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir)
+{
+	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
+	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	BlockTile* PushTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
+	if (PushTile_ == nullptr)
+	{
+		return;
+	}
+	if (PushTile_->MoveOn == true)
+	{
+		return;
+	}
+	if (BlockDir::LEFT == _Dir)
+	{
+		if (TileIndex_.X - 1 < 0)
+		{
+			return;
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X - 1, TileIndex_.Y);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X - 1, TileIndex_.Y);
+		}
+		if (NextTile_ == nullptr)
+		{
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			NextTile_->Renderer = PushTile_->Renderer;
+			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->BlockType_ = PushTile_->BlockType_;
+			NextTile_->ItemType_ = PushTile_->ItemType_;
+			NextTile_->BlockHp_ = PushTile_->BlockHp_;
+			NextTile_->BlockDir_ = BlockDir::LEFT;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X - 1, TileIndex_.Y);
+			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(NextTile_);
+			PushTile_->MoveOn = true;
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+		}
+	}
+	if (BlockDir::RIGHT == _Dir)
+	{
+		if (TileIndex_.X + 1 > 14)
+		{
+			return;
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X + 1, TileIndex_.Y);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X + 1, TileIndex_.Y);
+		}
+		if (NextTile_ == nullptr)
+		{
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			NextTile_->Renderer = PushTile_->Renderer;
+			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->BlockType_ = PushTile_->BlockType_;
+			NextTile_->ItemType_ = PushTile_->ItemType_;
+			NextTile_->BlockHp_ = PushTile_->BlockHp_;
+			NextTile_->BlockDir_ = BlockDir::RIGHT;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X + 1, TileIndex_.Y);
+			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(NextTile_);
+			PushTile_->MoveOn = true;
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+		}
+	}
+	if (BlockDir::DOWN == _Dir)
+	{
+		if (TileIndex_.Y + 1 > 12)
+		{
+			return;
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y + 1);
+		}
+		if (NextTile_ == nullptr)
+		{
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y + 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			NextTile_->Renderer = PushTile_->Renderer;
+			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->BlockType_ = PushTile_->BlockType_;
+			NextTile_->ItemType_ = PushTile_->ItemType_;
+			NextTile_->BlockHp_ = PushTile_->BlockHp_;
+			NextTile_->BlockDir_ = BlockDir::DOWN;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y + 1);
+			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(NextTile_);
+			PushTile_->MoveOn = true;
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+		}
+	}
+	if (BlockDir::UP == _Dir)
+	{
+		if (TileIndex_.Y - 1 < 0)
+		{
+			return;
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y - 1);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
+		{
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y + 1);
+		}
+		if (NextTile_ == nullptr)
+		{
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y - 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			NextTile_->Renderer = PushTile_->Renderer;
+			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->BlockType_ = PushTile_->BlockType_;
+			NextTile_->ItemType_ = PushTile_->ItemType_;
+			NextTile_->BlockHp_ = PushTile_->BlockHp_;
+			NextTile_->BlockDir_ = BlockDir::UP;
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y - 1);
+			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
+			MoveBlocks_.push_back(NextTile_);
+			PushTile_->MoveOn = true;
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+		}
+	}
+
+
 }
 void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 {

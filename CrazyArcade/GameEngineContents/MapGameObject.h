@@ -116,6 +116,7 @@ private:
 	void WaveDeathAni();
 	float4 Move_;
 public:
+	void PushBubble(float4 _Pos, BlockDir _Dir);
 	void PushBlock(float4 _Pos, BlockDir _Dir);
 	void BlockMoveUpdate();
 	std::vector<BlockTile*> MoveBlocks_;
