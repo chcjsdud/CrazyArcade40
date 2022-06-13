@@ -95,7 +95,6 @@ void BossLevel::Loading()
 
 		Boss* Seal = CreateActor<Boss>((int)ORDER::BOSS);
 		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::BOSS_COUNT++;
 
 		for (int i = 0; i < 9; ++i)
 		{

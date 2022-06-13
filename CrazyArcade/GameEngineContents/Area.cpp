@@ -39,7 +39,8 @@ bool Area::Contains(float4 _Pos)
 
 bool Area::HasWall()
 {
-    if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(float4(CenterX_, CenterY_)))
+    if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(float4(CenterX_, CenterY_)) ||
+        RGB(16, 184, 152) == ColMapImage_->GetImagePixel(float4(CenterX_, CenterY_)))
     {
         return true;
     }

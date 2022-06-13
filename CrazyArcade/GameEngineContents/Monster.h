@@ -48,6 +48,7 @@ protected:
 	virtual void UpdateDirection();
 	virtual void Die();
 	virtual bool IsDie();
+	virtual void AllMonsterDeathModeSwitch();
 
 protected:
 	GameEngineRendererTileMap* MapTile_;
@@ -82,6 +83,7 @@ protected:
 	float MapSizeX_;
 	float MapSizeY_;
 	bool IndexCheck_;
+	bool IsStageClear_;
 
 	GameEngineCollision* TopCol_;
 	GameEngineCollision* LeftCol_;

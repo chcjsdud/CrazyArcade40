@@ -636,7 +636,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("2PItem", VK_LCONTROL);
 
 		// ============== 디버그 모드 =============
-		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
+
 
 		//GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}

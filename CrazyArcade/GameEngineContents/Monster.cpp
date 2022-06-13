@@ -13,10 +13,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <GameEngineBase/GameEngineInput.h>
 
-int Monster::LV1_MON_COUNT = 0;
-int Monster::LV2_MON_COUNT = 0;
-int Monster::BOSS_COUNT = 0;
+int Monster::LV1_MON_COUNT = 8;
+int Monster::LV2_MON_COUNT = 6;
+int Monster::BOSS_COUNT = 1;
 
 Monster::Monster()
 	: Renderer_(nullptr)
@@ -50,6 +51,7 @@ Monster::Monster()
 	, PrevIndex_(0)
 	, MapTile_(nullptr)
 	, CurBlockType_(BlockType::Max)
+	, IsStageClear_(false)
 {
 }
 
@@ -98,7 +100,6 @@ void Monster::Start()
 	}
 
 	srand(time(NULL));
-
 }
 
 void Monster::Update()
@@ -109,6 +110,7 @@ void Monster::Update()
 		UpdateDirection();
 		UpdateMove();
 		Die();
+		AllMonsterDeathModeSwitch();
 	}
 }
 
@@ -456,9 +458,36 @@ void Monster::TakeDamage()
 	}
 }
 
+
+void Monster::AllMonsterDeathModeSwitch()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("AllMonsterDeath") && IsStageClear_ == false)
+	{
+		IsStageClear_ == true;
+
+		if (GetLevel()->GetNameCopy() == "Monster1Level")
+		{
+			SetHP(0);
+			LV1_MON_COUNT = 0;
+		}
+
+		if (GetLevel()->GetNameCopy() == "Monster2Level")
+		{
+			Death();
+			LV2_MON_COUNT = 0;
+		}
+
+		if (GetLevel()->GetNameCopy() == "BossLevel")
+		{
+			Death();
+			BOSS_COUNT = 0;
+		}
+
+	}
+}
+
 void Monster::Render()
 {
-
 	std::string IndexX = "";
 	std::string IndexY = "";
 
@@ -467,9 +496,9 @@ void Monster::Render()
 	IndexX = "Index X : " + std::to_string(TileIndex_.X);
 	IndexY = "Index Y : " + std::to_string(TileIndex_.Y);
 
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, IndexX.c_str(), static_cast<int>(IndexX.length()));
-	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, IndexY.c_str(), static_cast<int>(IndexY.length()));
 }
 
 void Monster::Die()
@@ -489,6 +518,11 @@ void Monster::Die()
 			else if (GetLevel()->GetNameCopy() == "Monster2Level") // 만약 몬스터가 한마리 남으면
 			{
 				LV2_MON_COUNT--; // total 몬스터 수가 줄어든다.
+			}
+
+			else if (GetLevel()->GetNameCopy() == "BossLevel")
+			{
+				BOSS_COUNT--;
 			}
 
 			if (LV1_MON_COUNT == 1 || LV2_MON_COUNT == 1)
