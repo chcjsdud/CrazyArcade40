@@ -8,6 +8,9 @@ class MapBackGround;
 class Player;
 class MapFront;
 class Area;
+class PlayScoreBoard;
+class PlayResultUI;
+class TimeUI;
 class Monster2Level : public GameEngineLevel
 {
 public:
@@ -30,6 +33,9 @@ private:
 	MapGameObject* Monster2Object_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
-	float LevelChngTime_;
-	bool ChngTimeSwitch_;
+
+	PlayScoreBoard* PlayScoreBoard_;
+	PlayResultUI* PlayResultUI_;
+	TimeUI* TimeUI_;
+	bool IsGameEnd_;
 };

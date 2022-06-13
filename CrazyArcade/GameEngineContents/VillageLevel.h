@@ -1,9 +1,14 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+#include <GameEngine/GameEngineRenderer.h>
 class MapBackGround;
 class MapFront;
 class Player;
 class MapGameObject;
+class Area;
+class PlayScoreBoard;
+class PlayResultUI;
+class TimeUI;
 class VillageLevel : public GameEngineLevel
 {
 public:
@@ -26,4 +31,12 @@ private:
 	MapFront* MapFrontBackGround_;
 	MapGameObject* VillageObject_;
 
+private:
+	std::vector<Area> Areas_;
+	GameEngineImage* ColMapImage_;
+
+	PlayScoreBoard* PlayScoreBoard_;
+	PlayResultUI* PlayResultUI_;
+	TimeUI* TimeUI_;
+	bool IsGameEnd_;
 };

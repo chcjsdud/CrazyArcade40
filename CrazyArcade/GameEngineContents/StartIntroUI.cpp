@@ -6,6 +6,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngine.h>
 #include "ContentsEnum.h"
+#include <GameEngineBase/GameEngineSound.h>
 
 StartIntroUI::StartIntroUI()
 {
@@ -17,6 +18,11 @@ StartIntroUI::~StartIntroUI()
 
 void StartIntroUI::Start()
 {
+	StartScreenRenderer_ = CreateRenderer("StartScreen.bmp");
+	StartScreenRenderer_->SetAlpha(60);
+	StartScreenRenderer_->SetPivot(GameEngineWindow::GetScale().Half());
+
+
 	for (size_t i = 0; i < 11; i++)
 	{
 		GameEngineRenderer* TempRenderer = CreateRenderer("GameStartIntro.bmp");
@@ -68,6 +74,7 @@ void StartIntroUI::Start()
 	StartIntroUIRenderer_[10]->Off();
 
 
+	
 
 	Death(5.0f);
 }
@@ -76,60 +83,87 @@ void StartIntroUI::Update()
 {
 	IntroMoveTime_ += GameEngineTime::GetDeltaTime();
 
-	if (GetAccTime() > 0.0f && GetAccTime() < 1.5f)
+	if (onetime_ == false) {
+		GameEngineSound::SoundPlayOneShot("GameStart.wav");
+		onetime_ = true;
+	}
+
+	if (GetAccTime() > 0.0f && GetAccTime() < 2.5f)
 	{
-		if (GetAccTime() < 0.6) {
-			if (StartIntroUIRenderer_[0]->GetPivot().y < 250.f) {
-				StartIntroUIRenderer_[0]->SetPivot(StartIntroUIRenderer_[0]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
+			
+			if (StartIntroUIRenderer_[0]->GetPivot().y < 250.f) 
+			{
+				StartIntroUIRenderer_[0]->SetPivot(StartIntroUIRenderer_[0]->GetPivot() + float4{ 0.0f, 7.0f * IntroMoveTime_ });
+				if (StartIntroUIRenderer_[0]->GetPivot().y > 250.f) 
+				{
+					StartIntroUIRenderer_[0]->SetPivot(float4(StartIntroUIRenderer_[0]->GetPivot().x, 250.0f));
+				}
+
 			}
-			else {
+			else if (StartIntroUIRenderer_[1]->GetPivot().y < 250.f) 
+			{
+				StartIntroUIRenderer_[1]->SetPivot(StartIntroUIRenderer_[1]->GetPivot() + float4{ 0.0f, 7.0f * IntroMoveTime_ });
+				if (StartIntroUIRenderer_[1]->GetPivot().y > 250.f) 
+				{
+					StartIntroUIRenderer_[1]->SetPivot(float4(StartIntroUIRenderer_[1]->GetPivot().x, 250.0f));
+				}
+
+			}
+			else if (StartIntroUIRenderer_[2]->GetPivot().y < 250.f) 
+			{
+				StartIntroUIRenderer_[2]->SetPivot(StartIntroUIRenderer_[2]->GetPivot() + float4{ 0.0f, 7.0f * IntroMoveTime_ });
+				if (StartIntroUIRenderer_[2]->GetPivot().y > 250.f) 
+				{
+					StartIntroUIRenderer_[2]->SetPivot(float4(StartIntroUIRenderer_[2]->GetPivot().x, 250.0f));
+				}
+			}
+			else if (StartIntroUIRenderer_[3]->GetPivot().y < 250.f) 
+			{
+				StartIntroUIRenderer_[3]->SetPivot(StartIntroUIRenderer_[3]->GetPivot() + float4{ 0.0f, 7.0f * IntroMoveTime_ });
+				if (StartIntroUIRenderer_[3]->GetPivot().y > 250.f)
+				{
+					StartIntroUIRenderer_[3]->SetPivot(float4(StartIntroUIRenderer_[3]->GetPivot().x, 250.0f));
+				}
+			}
+			else
+			{
 				StartIntroUIRenderer_[0]->SetPivot(float4(StartIntroUIRenderer_[0]->GetPivot().x, 250.0f));
-			}
-		}
-		else if (GetAccTime() < 0.9) {
-			if (StartIntroUIRenderer_[1]->GetPivot().y < 250.f) {
-				StartIntroUIRenderer_[1]->SetPivot(StartIntroUIRenderer_[1]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
-			}
-			else {
 				StartIntroUIRenderer_[1]->SetPivot(float4(StartIntroUIRenderer_[1]->GetPivot().x, 250.0f));
-			}
-		}
-		else if (GetAccTime() < 1.2) {
-			if (StartIntroUIRenderer_[2]->GetPivot().y < 250.f) {
-				StartIntroUIRenderer_[2]->SetPivot(StartIntroUIRenderer_[2]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
-			}
-			else {
 				StartIntroUIRenderer_[2]->SetPivot(float4(StartIntroUIRenderer_[2]->GetPivot().x, 250.0f));
-			}
-		}
-		else if (GetAccTime() < 1.5) {
-			if (StartIntroUIRenderer_[3]->GetPivot().y < 250.f) {
-				StartIntroUIRenderer_[3]->SetPivot(StartIntroUIRenderer_[3]->GetPivot() + float4{ 0.0f, 10.0f * IntroMoveTime_ });
-			}
-			else {
 				StartIntroUIRenderer_[3]->SetPivot(float4(StartIntroUIRenderer_[3]->GetPivot().x, 250.0f));
+
+				for (int i = 4; i < 11; i++)
+				{
+					StartIntroUIRenderer_[i]->On();
+				}
 			}
-		}
+		
 
 	}
-	else if (GetAccTime() > 1.5f && GetAccTime() < 1.7f)
+	
+	
+	if (GetAccTime() > 2.5f )
 	{
-		for (int i = 4; i < 11; i++)
-		{
-			StartIntroUIRenderer_[i]->On();
-		}
-	}
-	else if (GetAccTime() > 2.2f && GetAccTime() > 2.7f)
-	{
+		StartScreenRenderer_->Off();
+
 		for (int i = 0; i < 11; i++)
 		{
 			if (i < 4) {
-				StartIntroUIRenderer_[i]->SetPivot(StartIntroUIRenderer_[i]->GetPivot() + float4{ 0.0f, -0.3f * IntroMoveTime_ });
+				StartIntroUIRenderer_[i]->SetPivot(StartIntroUIRenderer_[i]->GetPivot() + float4{ 0.0f, -0.4f * IntroMoveTime_ });
 			}
 			else if (i >= 4)
 			{
-				StartIntroUIRenderer_[i]->SetPivot(StartIntroUIRenderer_[i]->GetPivot() + float4{ 0.0f, 0.3f * IntroMoveTime_ });
+				StartIntroUIRenderer_[i]->SetPivot(StartIntroUIRenderer_[i]->GetPivot() + float4{ 0.0f, 0.4f * IntroMoveTime_ });
 			}
 		}
 	}
+}
+
+void StartIntroUI::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+}
+
+void StartIntroUI::LevelChangeEnd(GameEngineLevel* _NextLevel)
+{
+	this->Death();
 }

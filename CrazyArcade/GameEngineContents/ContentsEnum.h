@@ -92,3 +92,13 @@ enum class Character
 
 	MAX,
 };
+
+enum class GameResult
+{
+	Win,
+	Lose,
+	Draw,
+	Win_1P,
+	Win_2P,
+	Max,
+};

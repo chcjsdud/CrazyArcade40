@@ -6,6 +6,9 @@ class MapBackGround;
 class Player;
 class GameEngineImage;
 class MapGameObject;
+class PlayScoreBoard;
+class PlayResultUI;
+class TimeUI;
 class BossLevel : public GameEngineLevel
 {
 public:
@@ -28,6 +31,9 @@ private:
 	MapBackGround* MapBackGround_;
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
-	float LevelChngTime_;
-	bool ChngTimeSwitch_;
+
+	PlayScoreBoard* PlayScoreBoard_;
+	PlayResultUI* PlayResultUI_;
+	TimeUI* TimeUI_;
+	bool IsGameEnd_;
 };

@@ -18,10 +18,13 @@ public:
 protected:
 	void Start() override;
 	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 private:
 	std::vector<GameEngineRenderer*> Renderer;
 	float GameTime_;
+	bool IsTimeOver_;
 
 public :
 	void SetGameTime(float _GameTime)
@@ -32,6 +35,10 @@ public :
 	float GetGameTime()
 	{
 		return GameTime_;
+	}
+	bool GetIsTimeOver()
+	{
+		return IsTimeOver_;
 	}
 };
 

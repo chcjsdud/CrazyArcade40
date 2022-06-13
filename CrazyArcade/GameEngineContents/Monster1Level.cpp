@@ -36,13 +36,14 @@
 #include "PlayNickName.h"
 #include "TimeUI.h"
 #include "PlayerFaceIconUI.h"
+#include "PlayResultUI.h"
+#include "PlayScoreBoard.h"
 
 Monster1Level::Monster1Level()
 	: ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
 	, MapFrontBackGround_(nullptr)
-	, ChngTimeSwitch_(false)
-	, LevelChngTime_(0)
+	, IsGameEnd_(false)
 {
 
 }
@@ -53,9 +54,6 @@ Monster1Level::~Monster1Level()
 void Monster1Level::Loading()
 {
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
-	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
-	CreateActor<TimeUI>((int)UIType::Time);
-	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 
@@ -198,43 +196,71 @@ void Monster1Level::Loading()
 
 void Monster1Level::Update()
 {
-	LevelChngTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-
-	if (ChngTimeSwitch_)
+	if (Monster::LV1_MON_COUNT == 0)
 	{
-		if (LevelChngTime_ > 1.0f)
-		{
-			GameEngine::GetInst().ChangeLevel("Monster2Level");
-
+		if (IsGameEnd_ == false) {
+			PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+			PlayResultUI_->SetGameResult(GameResult::Win);
+			PlayResultUI_->SetChangeLevel("Monster2Level");
+			PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+			PlayScoreBoard_->SetWhowin(GameResult::Win);
+			GameBgmPlayer::BgmPlay_->Stop();
+			IsGameEnd_ = true;
 		}
 	}
 
-	if (Monster::LV1_MON_COUNT == 0 && ChngTimeSwitch_ == false)
+	if (true == GlobalUIName::GetInst()->Is2pUpdate()) {
+		if (Player::MainPlayer_1->GetIslive() == false && Player::MainPlayer_2->GetIslive() == false)
+		{
+			if (IsGameEnd_ == false) {
+				PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+				PlayResultUI_->SetGameResult(GameResult::Lose);
+				PlayResultUI_->SetChangeLevel("MonsterRoomLevel");
+				PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+				PlayScoreBoard_->SetWhowin(GameResult::Lose);
+				GameBgmPlayer::BgmPlay_->Stop();
+				IsGameEnd_ = true;
+			}
+		}
+	}
+	else
 	{
-		ChngTimeSwitch_ = true;
-		LevelChngTime_ = 0.0f;
+		if (Player::MainPlayer_1->GetIslive() == false)
+		{
+			if (IsGameEnd_ == false) {
+				PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+				PlayResultUI_->SetGameResult(GameResult::Lose);
+				PlayResultUI_->SetChangeLevel("MonsterRoomLevel");
+				PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+				PlayScoreBoard_->SetWhowin(GameResult::Lose);
+				GameBgmPlayer::BgmPlay_->Stop();
+				IsGameEnd_ = true;
+			}
+		}
 	}
 
-
-	//else if 플레이어 수가 0이되면
-	//	UI 나오고
-	//	//if(UI 화면 끝나면)
-	//{
-	//대기실로 이동
-	//}
+	if (true == TimeUI_->GetIsTimeOver())
+	{
+		if (IsGameEnd_ == false) {
+			PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+			PlayResultUI_->SetGameResult(GameResult::Lose);
+			PlayResultUI_->SetChangeLevel("MonsterRoomLevel");
+			PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+			PlayScoreBoard_->SetWhowin(GameResult::Lose);
+			GameBgmPlayer::BgmPlay_->Stop();
+			IsGameEnd_ = true;
+		}
+	}
+	
 }
 void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
+	TimeUI_ = CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	IsGameEnd_ = false;
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterStage1,2_Bgm.mp3");
-	if (nullptr != Player::MainPlayer_1)
-	{
-		Player::MainPlayer_1->Death();
-	}
-
-	if (nullptr != Player::MainPlayer_2)
-	{
-		Player::MainPlayer_2->Death();
-	}
+	
 
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
@@ -249,11 +275,33 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
 		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
 		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetPosition(Areas_[179].GetCenter());
 		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
+	ShowCursor(false);
 }
 void Monster1Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
 	GameBgmPlayer::BgmPlay_->Stop();
+
+	if (nullptr != Player::MainPlayer_1)	
+	{
+		Player::MainPlayer_1->Death();
+	}
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2->Death();
+	}
+	if (nullptr != PlayResultUI_)
+	{
+		PlayResultUI_->Death();
+		PlayResultUI_ = nullptr;
+	}
+	if (nullptr != PlayScoreBoard_)
+	{
+		PlayScoreBoard_->Death();
+		PlayScoreBoard_ = nullptr;
+	}
+
+	ShowCursor(true);
 }

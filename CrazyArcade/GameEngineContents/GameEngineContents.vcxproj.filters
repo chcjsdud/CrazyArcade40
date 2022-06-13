@@ -157,6 +157,9 @@
     <ClInclude Include="MapGameObject.h">
       <Filter>Actor\Map</Filter>
     </ClInclude>
+    <ClInclude Include="PlayScoreBoard.h">
+      <Filter>Actor\UI\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -311,6 +314,9 @@
       <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="PlayNickName.cpp">
+      <Filter>Actor\UI\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScoreBoard.cpp">
       <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">

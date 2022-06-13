@@ -7,6 +7,9 @@ class Player;
 class MapFront;
 class Area;
 class MapGameObject;
+class PlayScoreBoard;
+class PlayResultUI;
+class TimeUI;
 class Monster1Level : public GameEngineLevel
 {
 public:
@@ -29,6 +32,10 @@ private:
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
 	MapGameObject* Monster1Object_;
-	float LevelChngTime_;
-	bool ChngTimeSwitch_;
+
+
+	PlayScoreBoard* PlayScoreBoard_;
+	PlayResultUI* PlayResultUI_;
+	TimeUI* TimeUI_;
+	bool IsGameEnd_;
 };

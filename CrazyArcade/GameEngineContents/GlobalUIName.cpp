@@ -9,6 +9,8 @@ GlobalUIName::GlobalUIName()
 	, Char_1P(0)
 	, Char_2P(2)
 	, ChoiceMap_(1)
+	, Is1pUpdate_(true)
+	, Is2pUpdate_(false)
 {
 }
 

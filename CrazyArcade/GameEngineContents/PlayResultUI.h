@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
+#include "ContentsEnum.h"
 
 class GameEngineBackGroundRenderer_;
 class PlayResultUI : public GameEngineActor
@@ -29,6 +30,27 @@ private:
 	float IntroMoveTime_;
 	float StartTime_ =0.1f;
 	float BlinkTime_ =0.0f;
-	int GameResult = 1;
+	GameResult GameResult_ = GameResult::Max;
+	GameResult WhoWin_ = GameResult::Max;
+	float FallHeight = 0.0f;
+	float FallWidth = 0.0f;
+
+	bool onetime = false;
+	bool setting = false;
+	std::string ChangeLevelName_;
+public:
+	void SetGameResult(GameResult _GameResult)
+	{
+		GameResult_ = _GameResult;
+	}
+
+	void SetWhowin(GameResult _WhoWin)
+	{
+		WhoWin_ = _WhoWin;
+	}
+	
+	void SetChangeLevel(std::string _ChangeLevelName) {
+		ChangeLevelName_ = _ChangeLevelName;
+	}
 };
 

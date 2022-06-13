@@ -14,7 +14,8 @@ PlayNickName::~PlayNickName()
 void PlayNickName::Render()
 {
 	SetTextAlign(GameEngine::BackBufferDC(), TA_LEFT);
-	
+
+	SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
 	TextOut(GameEngine::BackBufferDC(), 708, 120, GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str(), lstrlen(GlobalUIName::GetInst()->GetNickName_1ConstRef().c_str()));
 	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{

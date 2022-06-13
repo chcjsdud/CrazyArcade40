@@ -22,11 +22,14 @@ protected:
 private:
 	void Start() override;
 	void Update() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 	std::vector<GameEngineRenderer*> StartIntroUIRenderer_;
-
+	GameEngineRenderer* StartScreenRenderer_;
 private:
 	float IntroMoveTime_;
 	float StartTime_ =0.1f;
+	bool onetime_ = false;
 };
 

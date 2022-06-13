@@ -29,12 +29,14 @@
 #include "PlayNickName.h"
 #include "TimeUI.h"
 #include "PlayerFaceIconUI.h"
+#include "PlayResultUI.h"
+#include "PlayScoreBoard.h"
+
 Monster2Level::Monster2Level()
 	:ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
 	, MapFrontBackGround_(nullptr)
-	, ChngTimeSwitch_(false)
-	, LevelChngTime_(0.0f)
+	, IsGameEnd_(false)
 {
 
 }
@@ -45,9 +47,6 @@ Monster2Level::~Monster2Level()
 void Monster2Level::Loading()
 {
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
-	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
-	CreateActor<TimeUI>((int)UIType::Time);
-	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 
@@ -202,36 +201,69 @@ void Monster2Level::Loading()
 }
 void Monster2Level::Update()
 {
-	LevelChngTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-
-	if (ChngTimeSwitch_)
+	if (Monster::LV2_MON_COUNT == 0)
 	{
-		if (LevelChngTime_ > 1.0f)
-		{
-			GameEngine::GetInst().ChangeLevel("BossLevel");
+		if (IsGameEnd_ == false) {
+			PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+			PlayResultUI_->SetGameResult(GameResult::Win);
+			PlayResultUI_->SetChangeLevel("BossLevel");
+			PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+			PlayScoreBoard_->SetWhowin(GameResult::Win);
+			GameBgmPlayer::BgmPlay_->Stop();
+			IsGameEnd_ = true;
 		}
 	}
 
-	if (Monster::LV2_MON_COUNT == 0 && ChngTimeSwitch_ == false)
+	if (true == GlobalUIName::GetInst()->Is2pUpdate()) {
+		if (Player::MainPlayer_1->GetIslive() == false && Player::MainPlayer_2->GetIslive() == false)
+		{
+			if (IsGameEnd_ == false) {
+				PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+				PlayResultUI_->SetGameResult(GameResult::Lose);
+				PlayResultUI_->SetChangeLevel("MonsterRoomLevel");
+				PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+				PlayScoreBoard_->SetWhowin(GameResult::Lose);
+				GameBgmPlayer::BgmPlay_->Stop();
+				IsGameEnd_ = true;
+			}
+		}
+	}
+	else
 	{
-		ChngTimeSwitch_ = true;
-		LevelChngTime_ = 0.0f;
+		if (Player::MainPlayer_1->GetIslive() == false)
+		{
+			if (IsGameEnd_ == false) {
+				PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+				PlayResultUI_->SetGameResult(GameResult::Lose);
+				PlayResultUI_->SetChangeLevel("MonsterRoomLevel");
+				PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+				PlayScoreBoard_->SetWhowin(GameResult::Lose);
+				GameBgmPlayer::BgmPlay_->Stop();
+				IsGameEnd_ = true;
+			}
+		}
 	}
 
-
+	if (true == TimeUI_->GetIsTimeOver())
+	{
+		if (IsGameEnd_ == false) {
+			PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+			PlayResultUI_->SetGameResult(GameResult::Lose);
+			PlayResultUI_->SetChangeLevel("MonsterRoomLevel");
+			PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+			PlayScoreBoard_->SetWhowin(GameResult::Lose);
+			GameBgmPlayer::BgmPlay_->Stop();
+			IsGameEnd_ = true;
+		}
+	}
 }
 void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
+	TimeUI_ = CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterStage1,2_Bgm.mp3");
-	if (nullptr != Player::MainPlayer_1)
-	{
-		Player::MainPlayer_1->IsDeath();
-	}
-
-	if (nullptr != Player::MainPlayer_2)
-	{
-		Player::MainPlayer_2->IsDeath();
-	}
+	
 
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
@@ -248,8 +280,30 @@ void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
 		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
+
+	ShowCursor(false);
 }
 void Monster2Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
 	GameBgmPlayer::BgmPlay_->Stop();
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1->Death();
+	}
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2->Death();
+	}
+	if (nullptr != PlayResultUI_)
+	{
+		PlayResultUI_->Death();
+		PlayResultUI_ = nullptr;
+	}
+	if (nullptr != PlayScoreBoard_)
+	{
+		PlayScoreBoard_->Death();
+		PlayScoreBoard_ = nullptr;
+	}
+
+	ShowCursor(true);
 }

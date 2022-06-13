@@ -10,6 +10,9 @@ class GameItemObject;
 class MapFront;
 class Area;
 class Player;
+class PlayScoreBoard;
+class PlayResultUI;
+class TimeUI;
 class PlayerTeamTest : public GameEngineLevel
 {
 public:
@@ -37,7 +40,13 @@ private:
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
 
-
 	Player* Player1_;
 	Player* Player2_;
+
+
+
+	PlayScoreBoard* PlayScoreBoard_;
+	PlayResultUI* PlayResultUI_;
+	TimeUI* TimeUI_;
+	bool IsGameEnd_ = false;
 };

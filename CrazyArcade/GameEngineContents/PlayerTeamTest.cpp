@@ -10,8 +10,8 @@
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
 #include "Player.h"
-#include"ContentsEnum.h"
-#include"MapBackGround.h."
+#include "ContentsEnum.h"
+#include "MapBackGround.h."
 #include "MapFront.h"
 #include "MapGameObject.h"
 #include "GameEngineContents/GameItemObject.h"
@@ -29,6 +29,7 @@
 #include "TimeUI.h"
 #include "PlayerFaceIconUI.h"
 #include "Area.h"
+#include "PlayScoreBoard.h"
 #include <vector>
 
 PlayerTeamTest::PlayerTeamTest()
@@ -37,6 +38,7 @@ PlayerTeamTest::PlayerTeamTest()
 	, MapColRenderer_(nullptr)
 	, MapFrontBackGround_(nullptr)
 	, PlayerTeamTestObject_(nullptr)
+	, IsGameEnd_(false)
 {
 
 }
@@ -46,14 +48,11 @@ PlayerTeamTest::~PlayerTeamTest()
 }
 void PlayerTeamTest::Loading()
 {
-	
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
-	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
-	CreateActor<TimeUI>((int)UIType::Time);
-	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
-	//CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+	
+	
 
 	{
 		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
@@ -137,25 +136,6 @@ void PlayerTeamTest::Loading()
 	//Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
 	//Crocodile1->SetPosition(Areas_[6].GetCenter());
 	//Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-
-}
-void PlayerTeamTest::Update()
-{
-
-}
-void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
-{
-	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
-	//Mandarin1->SetPosition(float4(100.0f, 100.0f));
-
-	////Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
-	////Crocodile1->SetPosition(float4(150.0f, 150.0f));
-
-	////Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
-	////Seal->SetPosition(float4(200.0f, 200.0f));
-
-	// =========================================== 다른 레벨에서 플레이어 생성 시 필요한 구문
-	// 플레이어 포지션 세팅 시, 단순 값이 아닌 타일 기준으로 세팅할 경우(Area사용) 레벨 내에서 ColMapImage_세팅이 필요합니다 
 	for (int x = 0; x < 15; ++x)
 	{
 		for (int y = 0; y < 13; ++y)
@@ -169,17 +149,67 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 			Areas_.push_back(area);
 		}
 	}
-
-
-	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
-	{
-		Player::MainPlayer_1->Death();
+}
+void PlayerTeamTest::Update()
+{
+	if (nullptr != Player::MainPlayer_1) {
+		if (Player::MainPlayer_1->GetIslive() == false)
+		{
+			if (IsGameEnd_ == false) {
+				PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+				PlayResultUI_->SetGameResult(GameResult::Lose);
+				PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+				PlayScoreBoard_->SetWhowin(GameResult::Win_2P);
+				IsGameEnd_ = true;
+			}
+		}
 	}
 
 	if (nullptr != Player::MainPlayer_2)
 	{
-		Player::MainPlayer_2->Death();
+		if (Player::MainPlayer_2->GetIslive() == false)
+		{
+			if (IsGameEnd_ == false) {
+				PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+				PlayResultUI_->SetGameResult(GameResult::Win);
+				PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+				PlayScoreBoard_->SetWhowin(GameResult::Win_1P);
+				IsGameEnd_ = true;
+			}
+		}
 	}
+
+	if (true == TimeUI_->GetIsTimeOver())
+	{
+		if (IsGameEnd_ == false) {
+			PlayResultUI_ = CreateActor< PlayResultUI>((int)UIType::PlayResultUI);
+			PlayResultUI_->SetGameResult(GameResult::Draw);
+			PlayScoreBoard_ = CreateActor<PlayScoreBoard>((int)UIType::PlayResultUI);
+			PlayScoreBoard_->SetWhowin(GameResult::Draw);
+			IsGameEnd_ = true;
+		}
+	}
+}
+void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	TimeUI_ = CreateActor<TimeUI>((int)UIType::Time);
+	IsGameEnd_ = false;
+
+	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
+	//Mandarin1->SetPosition(float4(100.0f, 100.0f));
+
+	////Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::MONSTER);
+	////Crocodile1->SetPosition(float4(150.0f, 150.0f));
+
+	////Boss* Seal = CreateActor<Boss>((int)ORDER::MONSTER);
+	////Seal->SetPosition(float4(200.0f, 200.0f));
+
+	// =========================================== 다른 레벨에서 플레이어 생성 시 필요한 구문
+	// 플레이어 포지션 세팅 시, 단순 값이 아닌 타일 기준으로 세팅할 경우(Area사용) 레벨 내에서 ColMapImage_세팅이 필요합니다 
+	
+
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
@@ -207,16 +237,27 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void PlayerTeamTest::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
-	//if (nullptr != Player::MainPlayer_1)	
-	//{
-	//	Player::MainPlayer_1->Death();
-	//}
-
-	//if (nullptr != Player::MainPlayer_2)
-	//{
-	//	Player::MainPlayer_2->Death();
-	//}
+	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
+	{
+		Player::MainPlayer_1->Death();
+	}
+	if (nullptr != Player::MainPlayer_2)
+	{
+		Player::MainPlayer_2->Death();
+	}
+	if (nullptr != PlayResultUI_)
+	{
+		PlayResultUI_->Death();
+		PlayResultUI_ = nullptr;
+	}
+	if (nullptr != PlayScoreBoard_)
+	{
+		PlayScoreBoard_->Death();
+		PlayScoreBoard_ = nullptr;
+	}
+	
 	//윈도우 마우스 보이기
+	
 	ShowCursor(true);
 
 }

@@ -247,6 +247,7 @@
     </ClInclude>
     <ClInclude Include="PlayNickName.h" />
     <ClInclude Include="PlayResultUI.h" />
+    <ClInclude Include="PlayScoreBoard.h" />
     <ClInclude Include="RoomBackGround.h">
       <SubType>
       </SubType>
@@ -385,6 +386,7 @@
     <ClCompile Include="Player_State.cpp" />
     <ClCompile Include="PlayNickName.cpp" />
     <ClCompile Include="PlayResultUI.cpp" />
+    <ClCompile Include="PlayScoreBoard.cpp" />
     <ClCompile Include="RoomBackGround.cpp">
       <SubType>
       </SubType>

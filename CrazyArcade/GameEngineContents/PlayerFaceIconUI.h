@@ -23,9 +23,12 @@ private:
 	void Start() override;
 	void Update() override;
 	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
+	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 	GameEngineRenderer* PlayerFaceIconUIRenderer_1P;
 	GameEngineRenderer* PlayerFaceIconUIRenderer_2P;
+	GameEngineRenderer* RankRenderer_1P;
+	GameEngineRenderer* RankRenderer_2P;
 
 	float BlinkTime_1P;
 	float CryTime_1P;

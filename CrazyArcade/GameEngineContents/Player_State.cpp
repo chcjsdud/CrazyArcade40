@@ -68,6 +68,21 @@ void Player::JumpStart()
 void Player::AttackStart()
 {
 	AttMoveTime_ += GameEngineTime::GetDeltaTime();
+
+	if (Type == PlayerType::Player1)
+	{
+		if (Player::MainPlayer_1->CurAttCount_ > Boom_->ReturnPlayer1BoomCount())
+		{
+			GameEngineSound::SoundPlayOneShot("Attack.mp3");
+		}
+	}
+	else if (Type == PlayerType::Player2)
+	{
+		if (Player::MainPlayer_2->CurAttCount_ > Boom_->ReturnPlayer2BoomCount())
+		{
+			GameEngineSound::SoundPlayOneShot("Attack.mp3");
+		}
+	}
 }
 
 void Player::DamagedStartStart()
@@ -364,7 +379,8 @@ void Player::DieUpdate()
 	if (PlayerAnimationRender_->IsEndAnimation()
 		&& 4.f < GetAccTime())
 	{
-		Death();
+		Off();
+		//Death();
 	}
 }
 

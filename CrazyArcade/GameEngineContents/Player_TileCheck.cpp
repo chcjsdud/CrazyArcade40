@@ -174,8 +174,11 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::PullBlock:
 	{
 		IsLeftMove = false;
-
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		if (Playeractorvalue_ <2)
+		{
+			Box_ = GetLevel()->CreateActor<MapGameObject>();
+			Playeractorvalue_ += 1;
+		}
 		Box_->SetMapTile(MapTile_);
 		if (PlayerDir::Left == CurDir_
 			&& true == IsMoveKey())
@@ -218,7 +221,11 @@ void Player::FrontBlockCheckUpdate()
 	{
 		IsRightMove = false;
 
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		if (Playeractorvalue_ < 2)
+		{
+			Box_ = GetLevel()->CreateActor<MapGameObject>();
+			Playeractorvalue_ += 1;
+		}
 		Box_->SetMapTile(MapTile_);
 		if (PlayerDir::Right == CurDir_
 			&& true == IsMoveKey())
@@ -261,7 +268,11 @@ void Player::FrontBlockCheckUpdate()
 	{
 		IsUpMove = false;
 
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		if (Playeractorvalue_ < 2)
+		{
+			Box_ = GetLevel()->CreateActor<MapGameObject>();
+			Playeractorvalue_ += 1;
+		}
 		Box_->SetMapTile(MapTile_);
 		if (PlayerDir::Up == CurDir_
 			&& true == IsMoveKey())
@@ -306,7 +317,11 @@ void Player::FrontBlockCheckUpdate()
 	{
 		IsDownMove = false;
 
-		Box_ = GetLevel()->CreateActor<MapGameObject>();
+		if (Playeractorvalue_ < 2)
+		{
+			Box_ = GetLevel()->CreateActor<MapGameObject>();
+			Playeractorvalue_ += 1;
+		}
 		Box_->SetMapTile(MapTile_);
 		if (PlayerDir::Down == CurDir_
 			&& true == IsMoveKey())

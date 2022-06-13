@@ -5,7 +5,8 @@
 #include "Player.h"
 
 TimeUI::TimeUI()
-	:GameTime_(180.0f)
+	:GameTime_(180.0f),
+	IsTimeOver_(false)
 {
 }
 
@@ -41,5 +42,16 @@ void TimeUI::Update()
 	
 	if (GameTime_ < 0) {
 		GameTime_ = 0.0f;
+		IsTimeOver_ = true;
 	}
+}
+
+void TimeUI::LevelChangeStart(GameEngineLevel* _PrevLevel)
+{
+	GameTime_ = 180.0f;
+}
+
+void TimeUI::LevelChangeEnd(GameEngineLevel* _NextLevel)
+{
+	this->Death();
 }

@@ -296,7 +296,7 @@ private:
 	// ¸Ê °ü·Ã
 	GameEngineImage* MapColImage_;
 	GameEngineRenderer* MapColRenderer_;
-
+	int Playeractorvalue_ =0;
 	std::string CurrentLevel_;
 	//std::string CurrentColMap_;
 

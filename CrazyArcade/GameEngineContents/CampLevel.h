@@ -8,6 +8,9 @@ class MapBackGround;
 class Player;
 class MapFront;
 class Area;
+class PlayScoreBoard;
+class PlayResultUI;
+class TimeUI;
 class CampLevel : public GameEngineLevel
 {
 private:
@@ -34,4 +37,8 @@ private:
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
 
+	PlayScoreBoard* PlayScoreBoard_;
+	PlayResultUI* PlayResultUI_;
+	TimeUI* TimeUI_;
+	bool IsGameEnd_;
 };

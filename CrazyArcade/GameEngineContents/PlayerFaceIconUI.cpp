@@ -8,6 +8,7 @@
 #include "ContentsEnum.h"
 #include "TimeUI.h"
 #include "Player.h"
+#include "GlobalUIName.h"
 
 PlayerFaceIconUI::PlayerFaceIconUI()
 	: PlayerFaceIconUIRenderer_1P(nullptr),
@@ -55,7 +56,7 @@ void PlayerFaceIconUI::Update()
 			PlayerFaceIconUIRenderer_1P->ChangeAnimation("MaridFace_Icon_Idle");
 		}
 
-		if (nullptr != Player::MainPlayer_2)
+		if (true == GlobalUIName::GetInst()->Is2pUpdate())
 		{
 			if (CharacterType_2P == Character::BAZZI)
 			{
@@ -162,7 +163,7 @@ void PlayerFaceIconUI::Update()
 
 
 
-	if (nullptr != Player::MainPlayer_2)
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
 		if (CharacterType_2P == Character::BAZZI)
 		{
@@ -275,10 +276,14 @@ void PlayerFaceIconUI::LevelChangeStart(GameEngineLevel* _PrevLevel)
 		PlayerFaceIconUIRenderer_1P->CreateAnimation("MaridFace_Icon.bmp", "MaridFace_Icon_Cry", 4, 5, 0.15f, true);
 
 
+		RankRenderer_1P = CreateRenderer((int)UIType::Time);
+		RankRenderer_1P->SetImage("Rank_High.bmp");
+		RankRenderer_1P->SetPivot(float4{ 716.0f,112.0f });
+		RankRenderer_1P->SetScale(float4{ 20.0f,20.0f });
 
 	}
 
-	if (nullptr != Player::MainPlayer_2)
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
 		CharacterType_2P = Player::MainPlayer_2->GetCharacter();
 
@@ -299,5 +304,28 @@ void PlayerFaceIconUI::LevelChangeStart(GameEngineLevel* _PrevLevel)
 		PlayerFaceIconUIRenderer_2P->CreateAnimation("MaridFace_Icon.bmp", "MaridFace_Icon_CryIdle", 3, 3, 0.1f, false);
 		PlayerFaceIconUIRenderer_2P->CreateAnimation("MaridFace_Icon.bmp", "MaridFace_Icon_Cry", 4, 5, 0.15f, true);
 
+
+		RankRenderer_2P = CreateRenderer((int)UIType::Time);
+		RankRenderer_2P->SetImage("Rank_low.bmp");
+		RankRenderer_2P->SetPivot(float4{ 716.0f,155.0f });
+		RankRenderer_2P->SetScale(float4{ 20.0f,20.0f });
+	}
+}
+
+
+
+void PlayerFaceIconUI::LevelChangeEnd(GameEngineLevel* _NextLevel)
+{
+	if (PlayerFaceIconUIRenderer_1P != nullptr) {
+		PlayerFaceIconUIRenderer_1P->Death();
+		RankRenderer_1P->Death();
+		PlayerFaceIconUIRenderer_1P = nullptr;
+		RankRenderer_1P = nullptr;
+	}
+	if (PlayerFaceIconUIRenderer_2P != nullptr) {
+		PlayerFaceIconUIRenderer_2P->Death();
+		RankRenderer_2P->Death();
+		PlayerFaceIconUIRenderer_2P = nullptr;
+		RankRenderer_2P = nullptr;
 	}
 }
