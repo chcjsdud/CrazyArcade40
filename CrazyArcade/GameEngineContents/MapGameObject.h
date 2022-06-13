@@ -86,7 +86,7 @@ public:
 	void CreateBlock(float4 _Pos, std::string _Box);
 	void BubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power, int _PlayerNum);
-	void SetGameItem();
+
 	inline size_t ReturnPlayer1BoomCount()
 	{
 		return Player1BoomNum_;
@@ -95,6 +95,7 @@ public:
 	{
 		return Player2BoomNum_;
 	}
+	void SetGameItem();
 protected:
 	void Start() override;
 	void Update() override;
@@ -115,11 +116,33 @@ private:
 	void MakeDownWave(TileIndex _Pos, float _Power);
 	void MakeUpWave(TileIndex _Pos, float _Power);
 
+
+	void BlockValueSetting();
 	void DestroyBlock();
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();
 	float4 Move_;
+
+	int MaxValue_;
+	int RollerValue_;
+	int BubbleValue_;
+	int FluidValue_;
+	int UltraBubbleValue_;
+	int RedDevilValue_;
+	int DevilValue_;
+	int ShoesValue_;
+	int NiddleValue_;
+	int ShieldValue_;
+	int SuperJumpValue_;
+	int TurtleValue_;
+	int SpaceShipValue_;
+	int OwlValue_;
+	int Bubble_DarkValue_;
+	int Bubble_BossValue_;
+	int Bubble_DefaultValue_;
+	int GhostValue_;
+
 public:
 	void PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum);
 	void PushBlock(float4 _Pos, BlockDir _Dir);

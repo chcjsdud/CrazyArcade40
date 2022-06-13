@@ -5,20 +5,8 @@
 #include <GameEngine/GameEngineLevel.h>
 
 GameItemObject::GameItemObject()
-	:	MapTile_(nullptr),
-	 MaxValue(0),
-	FixBlockValue(0),
-	PullBlockValue(0),
-	 BushBlockValue(0),
- FixItemBlockValue(0),
- ItemBlockValue(0),
- BubbleBlockValue(0),
- BoomBlockValue(0),
- WaveBlockValue(0),
- WallBlockValue(0),
- NoBlockValue(0),
- NiddleBlockValue(0)
-
+	: MapTile_(nullptr)
+	, Ghost_(nullptr)
 {
 
 }
@@ -133,7 +121,7 @@ void GameItemObject::CreateItem(float4 _Pos, ItemType _Type)
 	}
 	else if (_Type == ItemType::Ghost)
 	{
-		Ghost* Ghost_ = GetLevel()->CreateActor<Ghost>((int)ORDER::PLAYER);
+		Ghost_ = GetLevel()->CreateActor<Ghost>((int)ORDER::PLAYER);
 		Ghost_->SetPosition(_Pos);
 	}
 

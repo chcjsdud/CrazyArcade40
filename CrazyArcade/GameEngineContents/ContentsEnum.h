@@ -59,7 +59,7 @@ enum class ItemType
 	Bubble_Boss,
 	Bubble_Default,
 
-	Ghost,
+	Ghost
 };
 enum class UIType
 {

@@ -4,7 +4,6 @@
 #include <GameEngine/GameEngineRendererTileMap.h>
 
 class GameEngineRenderer;
-class Ghost;
 class ItemBlockTile : public Tile
 {
 public:
@@ -14,8 +13,7 @@ public:
 		Renderer(nullptr),
 		BlockCol(nullptr),
 		TilePos_(float4::ZERO),
-		TileIndex_(),
-		Ghost_(nullptr)
+		TileIndex_()
 	{
 
 	}
@@ -35,10 +33,9 @@ public:
 	TileIndex TileIndex_;
 	BlockType BlockType_;
 	ItemType ItemType_;
-	Ghost* Ghost_;
 };
 
-
+class Ghost;
 class GameItemObject : public GameEngineActor
 {
 public:
@@ -70,17 +67,6 @@ protected:
 	void Update() override;
 
 private:
-	int MaxValue;
-	int FixBlockValue;
-	int PullBlockValue;
-	int BushBlockValue;
-	int FixItemBlockValue;
-	int ItemBlockValue;
-	int BubbleBlockValue;
-	int BoomBlockValue;
-	int WaveBlockValue;
-	int WallBlockValue;
-	int NoBlockValue;
-	int NiddleBlockValue;
+	Ghost* Ghost_;
 
 };

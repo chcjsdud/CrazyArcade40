@@ -11,7 +11,25 @@ MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
 	GameItem_(nullptr),
 	ItemValue_(ItemType::Max),
-	AllBlockTiles_()
+	AllBlockTiles_(),
+	MaxValue_(0),
+	RollerValue_(0),
+	BubbleValue_(0),
+	FluidValue_(0),
+	UltraBubbleValue_(0),
+	RedDevilValue_(0),
+	DevilValue_(0),
+	ShoesValue_(0),
+	NiddleValue_(0),
+	ShieldValue_(0),
+	SuperJumpValue_(0),
+	TurtleValue_(0),
+	SpaceShipValue_(0),
+	OwlValue_(0),
+	Bubble_DarkValue_(0),
+	Bubble_BossValue_(0),
+	Bubble_DefaultValue_(0),
+	GhostValue_(0)
 
 {
 
@@ -25,6 +43,7 @@ MapGameObject::~MapGameObject()
 void MapGameObject::Start()
 {
 	SetPosition({ 0.0f, 0.0f });
+	BlockValueSetting();
 }
 
 void MapGameObject::Update()
@@ -44,7 +63,7 @@ void MapGameObject::Update()
 
 void MapGameObject::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-
+	BlockValueSetting();
 }
 
 BlockType MapGameObject::CheckTile(float4 _Pos) {
@@ -1154,26 +1173,6 @@ void MapGameObject::DestroyWave()
 	}
 }
 
-void MapGameObject::SetGameItem()
-{
-	GameEngineRandom ItemRandom;
-	for (int x = 0; x < 15; x++)
-	{
-		for (int y = 0; y < 13; y++)
-		{
-			if(MapTile_->GetTile<BlockTile>(x, y) !=nullptr)
-			{
-				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock)
-				{
-					ItemValue_ = static_cast<ItemType>(ItemRandom.RandomInt(1, 7));
-					MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
-				}
-			}
-		}
-	}
-
-}
-
 void MapGameObject::MakeLeftWave(TileIndex _Pos, float _Power)
 {
 
@@ -1768,5 +1767,244 @@ void MapGameObject::MakeUpWave(TileIndex _Pos, float _Power)
 
 		}
 
+	}
+}
+
+void MapGameObject::SetGameItem()
+{
+	GameEngineRandom ItemRandom;
+	for (int x = 0; x < 15; x++)
+	{
+		for (int y = 0; y < 13; y++)
+		{
+			if (MapTile_->GetTile<BlockTile>(x, y) != nullptr)
+			{
+				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock)
+				{
+					ItemValue_ = static_cast<ItemType>(ItemRandom.RandomInt(0,17));
+					if (ItemValue_ == ItemType::Roller && RollerValue_>0)
+					{
+						RollerValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Bubble && RollerValue_ > 0)
+					{
+						BubbleValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Fluid && FluidValue_ > 0)
+					{
+						FluidValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::UltraBubble && UltraBubbleValue_ > 0)
+					{
+						UltraBubbleValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::RedDevil && RedDevilValue_ > 0)
+					{
+						RedDevilValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Devil && DevilValue_ > 0)
+					{
+						DevilValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Shoes && ShoesValue_ > 0)
+					{
+						ShoesValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Niddle && NiddleValue_ > 0)
+					{
+						NiddleValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Shield && ShieldValue_ > 0)
+					{
+						ShieldValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::SuperJump && SuperJumpValue_ > 0)
+					{
+						SuperJumpValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Turtle && TurtleValue_ > 0)
+					{
+						TurtleValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::SpaceShip && SpaceShipValue_ > 0)
+					{
+						SpaceShipValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Owl && OwlValue_ > 0)
+					{
+						OwlValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Bubble_Dark && Bubble_DarkValue_ > 0)
+					{
+						Bubble_DarkValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Bubble_Boss && Bubble_BossValue_ > 0)
+					{
+						Bubble_BossValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Bubble_Default && Bubble_DefaultValue_ > 0)
+					{
+						Bubble_DefaultValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Ghost && GhostValue_ > 0)
+					{
+						GhostValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+					else if (ItemValue_ == ItemType::Max && MaxValue_ > 0)
+					{
+						MaxValue_ -= 1;
+						MapTile_->GetTile<BlockTile>(x, y)->ItemType_ = ItemValue_;
+					}
+				}
+			}
+		}
+	}
+}
+
+void MapGameObject::BlockValueSetting()
+{
+	if (GetLevel()->GetNameConstRef() == "CampLevel")//รั 71ฐณ
+	{
+
+		MaxValue_ = 20;
+		RollerValue_ = 7;
+		BubbleValue_ = 13;
+		FluidValue_ = 7;
+		UltraBubbleValue_ = 2;
+		RedDevilValue_ = 1;
+		DevilValue_ = 5;
+		ShoesValue_ = 1;
+		NiddleValue_ = 2;
+		ShieldValue_ = 1;
+		SuperJumpValue_ = 2;
+		TurtleValue_ = 2;
+		SpaceShipValue_ = 1;
+		OwlValue_ = 2;
+		Bubble_DarkValue_ = 0;
+		Bubble_BossValue_ = 0;
+		Bubble_DefaultValue_ = 0;
+		GhostValue_ = 0;
+	}
+	else if (GetLevel()->GetNameConstRef() == "VillageLevel")//รั57
+	{
+		MaxValue_ = 8;
+		RollerValue_ = 7;
+		BubbleValue_ = 7;
+		FluidValue_ = 7;
+		UltraBubbleValue_ = 3;
+		RedDevilValue_ = 2;
+		DevilValue_ = 5;
+		ShoesValue_ = 3;
+		NiddleValue_ = 3;
+		ShieldValue_ = 3;
+		SuperJumpValue_ = 3;
+		TurtleValue_ = 2;
+		SpaceShipValue_ = 2;
+		OwlValue_ = 2;
+		Bubble_DarkValue_ = 0;
+		Bubble_BossValue_ = 0;
+		Bubble_DefaultValue_ = 0;
+		GhostValue_ = 0;
+	}
+	else if (GetLevel()->GetNameConstRef() == "CemetoryLevel")//รั30
+	{
+		MaxValue_ = 6;
+		RollerValue_ = 3;
+		BubbleValue_ = 3;
+		FluidValue_ = 4;
+		UltraBubbleValue_ = 1;
+		RedDevilValue_ = 2;
+		DevilValue_ = 2;
+		ShoesValue_ = 0;
+		NiddleValue_ = 2;
+		ShieldValue_ = 0;
+		SuperJumpValue_ = 0;
+		TurtleValue_ = 2;
+		SpaceShipValue_ = 2;
+		OwlValue_ = 2;
+		Bubble_DarkValue_ = 0;
+		Bubble_BossValue_ = 0;
+		Bubble_DefaultValue_ = 0;
+		GhostValue_ = 1;
+	}
+	else if (GetLevel()->GetNameConstRef() == "Monster1Level")//รั36
+	{
+		MaxValue_ = 4;
+		RollerValue_ = 6;
+		BubbleValue_ = 6;
+		FluidValue_ = 6;
+		UltraBubbleValue_ = 2;
+		RedDevilValue_ = 1;
+		DevilValue_ = 5;
+		ShoesValue_ =2;
+		NiddleValue_ = 2;
+		ShieldValue_ = 2;
+		SuperJumpValue_ = 0;
+		TurtleValue_ = 0;
+		SpaceShipValue_ = 0;
+		OwlValue_ = 0;
+		Bubble_DarkValue_ = 0;
+		Bubble_BossValue_ = 0;
+		Bubble_DefaultValue_ = 0;
+		GhostValue_ = 0;
+	}
+	else if (GetLevel()->GetNameConstRef() == "Monster2Level")//รั6
+	{
+		MaxValue_ = 5;
+		RollerValue_ = 2;
+		BubbleValue_ = 2;
+		FluidValue_ = 2;
+		UltraBubbleValue_ = 2;
+		RedDevilValue_ = 1;
+		DevilValue_ = 2;
+		ShoesValue_ = 2;
+		NiddleValue_ = 1;
+		ShieldValue_ = 1;
+		SuperJumpValue_ = 0;
+		TurtleValue_ = 0;
+		SpaceShipValue_ = 0;
+		OwlValue_ = 0;
+		Bubble_DarkValue_ = 0;
+		Bubble_BossValue_ = 0;
+		Bubble_DefaultValue_ = 0;
+		GhostValue_ = 0;
+	}
+		else if (GetLevel()->GetNameConstRef() == "BossLevel")//รั81
+	{
+		MaxValue_ = 38;
+		RollerValue_ = 7;
+		BubbleValue_ = 7;
+		FluidValue_ = 7;
+		UltraBubbleValue_ = 3;
+		RedDevilValue_ = 2;
+		DevilValue_ = 5;
+		ShoesValue_ = 3;
+		NiddleValue_ = 3;
+		ShieldValue_ = 3;
+		SuperJumpValue_ = 3;
+		TurtleValue_ = 0;
+		SpaceShipValue_ = 0;
+		OwlValue_ = 0;
+		Bubble_DarkValue_ = 0;
+		Bubble_BossValue_ = 0;
+		Bubble_DefaultValue_ = 0;
+		GhostValue_ = 0;
 	}
 }
