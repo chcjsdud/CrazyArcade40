@@ -187,7 +187,7 @@ void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 140.0f, 450.0f });
+	Player::MainPlayer_1->SetPosition({ 80.0f, 450.0f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	if (true == GlobalUIName::GetInst()->Is2pUpdate())
