@@ -1,4 +1,5 @@
 #include "RoomCharaterSelectUI.h"
+#include <GameEngineBase/GameEngineSound.h>
 #include "Player.h"
 #include "GlobalUIName.h"
 #include <Windows.h>
@@ -144,13 +145,17 @@ void RoomCharaterSelectUI::RendererMouseCheck()
 			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			RandomRenderer->ChangeAnimation("RandomCharSelecter_Cilck");
+			GameEngineSound::SoundPlayOneShot("Click.wav");
 		}
 
-
-		if (true == RandomCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+		if (true == GlobalUIName::GetInst()->Is2pUpdate())
 		{
-			RandomRenderer->ChangeAnimation("RandomCharSelecter_Cilck");
+			if (true == RandomCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+			{
+				RandomRenderer->ChangeAnimation("RandomCharSelecter_Cilck");
+				GameEngineSound::SoundPlayOneShot("Click.wav");
+			}
 		}
 	}
 
@@ -171,14 +176,18 @@ void RoomCharaterSelectUI::RendererMouseCheck()
 				true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			BazziRenderer->ChangeAnimation("BazziCharSelecter_Cilck");
+			GameEngineSound::SoundPlayOneShot("Click.wav");
 		}
 
-		if (true == BazziCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+		if (true == GlobalUIName::GetInst()->Is2pUpdate())
 		{
-			BazziRenderer->ChangeAnimation("BazziCharSelecter_Cilck");
+			if (true == BazziCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+			{
+				BazziRenderer->ChangeAnimation("BazziCharSelecter_Cilck");
+				GameEngineSound::SoundPlayOneShot("Click.wav");
+			}
 		}
-
 	}
 
 	// 다오 애니메이션 변경
@@ -199,13 +208,17 @@ void RoomCharaterSelectUI::RendererMouseCheck()
 			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			DaoRenderer->ChangeAnimation("DaoCharSelecter_Cilck");
+			GameEngineSound::SoundPlayOneShot("Click.wav");
 		}
 
-
-		if (true == DaoCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+		if (true == GlobalUIName::GetInst()->Is2pUpdate())
 		{
-			DaoRenderer->ChangeAnimation("DaoCharSelecter_Cilck");
+			if (true == DaoCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+			{
+				DaoRenderer->ChangeAnimation("DaoCharSelecter_Cilck");
+				GameEngineSound::SoundPlayOneShot("Click.wav");
+			}
 		}
 	}
 
@@ -222,20 +235,24 @@ void RoomCharaterSelectUI::RendererMouseCheck()
 		}
 
 
-
 		if (true == MaridCollision->CollisionCheck("MouseCol") &&
 			true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			MaridRenderer->ChangeAnimation("MaridCharSelecter_Cilck");
+			GameEngineSound::SoundPlayOneShot("Click.wav");
 
 		}
 
-		if (true == MaridCollision->CollisionCheck("MouseCol") &&
-			true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+		if (true == GlobalUIName::GetInst()->Is2pUpdate())
 		{
-			MaridRenderer->ChangeAnimation("MaridCharSelecter_Cilck");
-
+			if (true == MaridCollision->CollisionCheck("MouseCol") &&
+				true == GameEngineInput::GetInst()->IsPress("RightMouse"))
+			{
+				MaridRenderer->ChangeAnimation("MaridCharSelecter_Cilck");
+				GameEngineSound::SoundPlayOneShot("Click.wav");
+			}
 		}
+	
 	}
 
 	

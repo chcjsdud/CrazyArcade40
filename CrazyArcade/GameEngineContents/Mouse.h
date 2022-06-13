@@ -44,6 +44,7 @@ protected:
 
 
 private:
+	bool SoundPlay_;
 	GameEngineCollision* MouseCol_;
 	GameEngineRenderer* MouseRenderer_;
 	float4 CurPos_;

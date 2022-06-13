@@ -1,4 +1,5 @@
 #include "StartButton.h"
+#include <GameEngineBase/GameEngineSound.h>
 #include "GlobalUIName.h"
 #include "RoomCharaterSelectUI.h"
 #include <GameEngineBase/GameEngineRandom.h>
@@ -55,6 +56,7 @@ void StartButton::Update()
 
 	if (true == StartCollision_->CollisionCheck("MouseCol"))
 	{
+		
 		if (true == GameEngineInput::GetInst()->IsPress("LeftMouse"))
 		{
 			StartRenderer_->ChangeAnimation("StartButton_Cilck");

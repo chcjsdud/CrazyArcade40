@@ -295,9 +295,6 @@
     <ClCompile Include="GlobalUIName.cpp">
       <Filter>Actor\Etc</Filter>
     </ClCompile>
-    <ClCompile Include="ChattingHistory.cpp">
-      <Filter>Actor\UI\Room</Filter>
-    </ClCompile>
     <ClCompile Include="ChattingInput.cpp">
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
@@ -334,6 +331,9 @@
     <ClCompile Include="GameBgmPlayer.cpp">
       <Filter>Actor\Etc</Filter>
     </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -369,9 +369,6 @@
     <Filter Include="Actor\UI\Login">
       <UniqueIdentifier>{b1f1557b-bdea-4ad9-b8e5-e6af4747c4c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\UI\Room">
-      <UniqueIdentifier>{2e4a20aa-9014-4c87-b2e0-277cd5a910f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\UI\RoomCreate">
       <UniqueIdentifier>{61c51dcf-e1e9-4d12-9c53-b93473a15c22}</UniqueIdentifier>
     </Filter>
@@ -401,6 +398,9 @@
     </Filter>
     <Filter Include="Level\TileMapEditorLevel">
       <UniqueIdentifier>{de1c8388-a91f-46ab-b38b-099b3a10b351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\Room">
+      <UniqueIdentifier>{2e4a20aa-9014-4c87-b2e0-277cd5a910f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
