@@ -70,7 +70,7 @@ GameEngineSoundPlayer GameEngineSound::SoundPlayControl(const std::string& _Name
 	FMOD::Channel* PlayControl = nullptr;
 
 	SoundSystem_->playSound(FindSound->Sound, nullptr, false, &PlayControl);
-	PlayControl->setLoopCount(LoopCount);
+	//PlayControl->setLoopCount(LoopCount);
 
 	return GameEngineSoundPlayer(FindSound, PlayControl);
 }

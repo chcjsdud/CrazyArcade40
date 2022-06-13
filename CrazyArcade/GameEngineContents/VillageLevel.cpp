@@ -1,4 +1,5 @@
 #include"VillageLevel.h"
+#include "GameBgmPlayer.h"
 #include"ContentsEnum.h"
 #include "GlobalUIName.h"
 #include "MapBackGround.h"
@@ -173,7 +174,7 @@ void VillageLevel::Update()
 
 void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
-
+	GameBgmPlayer::BgmPlay_->ChangeBgm("VillageBGM.mp3");
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
 		Player::MainPlayer_1 = nullptr;
@@ -203,4 +204,5 @@ void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 
 void VillageLevel::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 }

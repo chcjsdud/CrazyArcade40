@@ -24,7 +24,7 @@ void IntroLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 	IntroVideo_ = CreateActor<VideoPlayer>();
 	IntroVideo_->SetInfo("intro_frame_", 0, 245, 15.0f);
 	
-	//BgmPlayer = GameEngineSound::SoundPlayControl("00.mp3");
+	GameEngineSound::SoundPlayOneShot("IntroBGM.mp3");
 }
 
 void IntroLevel::Update()

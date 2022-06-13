@@ -10,6 +10,7 @@
 
 #include "CrazyArcade.h"
 #include "GlobalUIName.h"
+#include "GameBgmPlayer.h"
 #include "IntroLevel.h"
 #include "TitleLevel.h"
 #include "LoginLevel.h"
@@ -394,6 +395,21 @@ void CrazyArcade::GameInit()
             GameEngineSound::LoadRes(AllImageFileList[i].GetFullPath());
         }
     }
+
+    {
+        GameEngineDirectory ResourcesDir;
+        ResourcesDir.MoveParent("CrazyArcade");
+        ResourcesDir.Move("Resources");
+        ResourcesDir.Move("Sound");
+        ResourcesDir.Move("Bgm");
+
+        std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile();
+
+        for (size_t i = 0; i < AllImageFileList.size(); i++)
+        {
+            GameEngineSound::LoadRes(AllImageFileList[i].GetFullPath());
+        }
+    }
     
     //////////////////////////////아래 이미지 컷//////////////////////////////
 
@@ -578,4 +594,5 @@ void CrazyArcade::GameLoop()
 void CrazyArcade::GameEnd()
 {
     GlobalUIName::Destroy();
+    GameBgmPlayer::BgmPlay_->Destory();
 }

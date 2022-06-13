@@ -1,4 +1,5 @@
 #include"CemetoryLevel.h"
+#include "GameBgmPlayer.h"
 #include"ContentsEnum.h"
 #include "GlobalUIName.h"
 #include "MapBackGround.h"
@@ -174,7 +175,7 @@ void CemetoryLevel::Update()
 
 void CemetoryLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
-
+	GameBgmPlayer::BgmPlay_->ChangeBgm("CemetoryBGM.mp3");
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
 		Player::MainPlayer_1 = nullptr;
@@ -205,4 +206,5 @@ void CemetoryLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 
 void CemetoryLevel::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 }

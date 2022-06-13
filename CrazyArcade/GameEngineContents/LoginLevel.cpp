@@ -3,6 +3,7 @@
 #include "Mouse.h"
 #include "LoginBackGround.h"
 #include "ContentsEnum.h"
+#include "GameBgmPlayer.h"
 
 LoginLevel::LoginLevel()
 {
@@ -27,9 +28,11 @@ void LoginLevel::Update()
 void LoginLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	ShowCursor(false);
+	GameBgmPlayer::BgmPlay_->ChangeBgm("LoginBGM.wav");
 }
 
 void LoginLevel::LevelChangeEnd(GameEngineLevel* NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 	ShowCursor(true);
 }
