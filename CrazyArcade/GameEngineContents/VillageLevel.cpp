@@ -177,12 +177,12 @@ void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 	GameBgmPlayer::BgmPlay_->ChangeBgm("VillageBGM.mp3");
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
-		Player::MainPlayer_1 = nullptr;
+		Player::MainPlayer_1->Death();
 	}
 
 	if (nullptr != Player::MainPlayer_2)
 	{
-		Player::MainPlayer_2 = nullptr;
+		Player::MainPlayer_2->Death();
 	}
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
@@ -196,7 +196,7 @@ void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
 		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
 		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetPosition({ 590.f, 450.f });
 		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 

@@ -75,11 +75,13 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 		if (true == IsDevil)
 		{
+			IsMove = true;
 			return;
 		}
 		// 누른 방향키와 반대로 이동 + CurAttCount만큼 연속으로 자동 공격 
 		AddAccTime(Time_);
 		IsDevil = true;
+		IsMove = false;
 	}
 	break;
 	case ItemType::Shoes:

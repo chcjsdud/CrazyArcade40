@@ -137,6 +137,20 @@ void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterBossStageBGM.mp3");
 
+	for (int x = 0; x < 15; ++x)
+	{
+		for (int y = 0; y < 13; ++y)
+		{
+			float StartX = static_cast<float>((600 / 15 * x) + 20);
+			float StartY = static_cast<float>((520 / 13 * y) + 40);
+			float EndX = static_cast<float>((600 / 15 * (x + 1)) + 20);
+			float EndY = static_cast<float>((520 / 13 * (y + 1)) + 40);
+
+			Area area(ColMapImage_, StartX, StartY, EndX, EndY);
+			Areas_.push_back(area);
+		}
+	}
+
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
 		Player::MainPlayer_1->Death();
@@ -150,7 +164,7 @@ void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
 	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition({ 100.f, 340.f });
+	Player::MainPlayer_1->SetPosition(Areas_[24].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 

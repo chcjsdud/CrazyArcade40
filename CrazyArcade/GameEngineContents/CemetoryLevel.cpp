@@ -178,12 +178,12 @@ void CemetoryLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 	GameBgmPlayer::BgmPlay_->ChangeBgm("CemetoryBGM.mp3");
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
-		Player::MainPlayer_1 = nullptr;
+		Player::MainPlayer_1->Death();
 	}
 
 	if (nullptr != Player::MainPlayer_2)
 	{
-		Player::MainPlayer_2 = nullptr;
+		Player::MainPlayer_2->Death();;
 	}
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");

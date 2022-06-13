@@ -659,10 +659,10 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Left", 16, 16, 0.09f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Up", 16, 16, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Down", 17, 17, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Left", 18, 18, 0.09f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Right", 19, 19, 0.09f, true);
 
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 32, 33, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 34, 35, 0.1f, true);

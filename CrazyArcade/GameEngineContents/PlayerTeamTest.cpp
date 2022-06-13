@@ -115,17 +115,20 @@ void PlayerTeamTest::Loading()
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
 	Item_->CreateItem({ 400.f, 50.f }, ItemType::Devil);
 
-	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
-	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	//Item_->CreateItem({ 400.f, 130.f }, ItemType::Turtle);
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 130.f }, ItemType::Turtle);
 
-	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
-	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	//Item_->CreateItem({ 400.f, 210.f }, ItemType::SpaceShip);
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 210.f }, ItemType::SpaceShip);
 
-	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
-	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	//Item_->CreateItem({ 400.f, 290.f }, ItemType::Owl);
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 290.f }, ItemType::Owl);
+
+
+
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(Areas_[0].GetCenter());

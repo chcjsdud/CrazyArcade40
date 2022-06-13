@@ -132,6 +132,7 @@ void Player::DieStart()
 
 void Player::OnOwlStart()
 {
+	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnOwl_";
@@ -140,6 +141,7 @@ void Player::OnOwlStart()
 
 void Player::OnTurtleStart()
 {
+	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnTurtle_";
@@ -148,6 +150,7 @@ void Player::OnTurtleStart()
 
 void Player::OnUFOStart()
 {
+	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnUFO_";
@@ -156,6 +159,7 @@ void Player::OnUFOStart()
 
 void Player::OffOwlStart()
 {
+	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnOwl_";
@@ -164,6 +168,7 @@ void Player::OffOwlStart()
 
 void Player::OffTurtleStart()
 {
+	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnTurtle_";
@@ -172,6 +177,7 @@ void Player::OffTurtleStart()
 
 void Player::OffUFOStart()
 {
+	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnUFO_";
@@ -366,8 +372,7 @@ void Player::OnOwlUpdate()
 {
 	if (2.f < GetAccTime())
 	{
-		ChangeState(PlayerState::RidingOwl);
-		CurDir_ = PlayerDir::Down;
+		ChangeState(PlayerState::IdleOwl);
 		return;
 	}
 }
@@ -376,8 +381,7 @@ void Player::OnTurtleUpdate()
 {
 	if (2.f < GetAccTime())
 	{
-		ChangeState(PlayerState::RidingTurtle);
-		ChangeDirText_ = "Down";
+		ChangeState(PlayerState::IdleTurtle);
 		return;
 	}
 }
@@ -387,7 +391,6 @@ void Player::OnUFOUpdate()
 	if (2.f < GetAccTime())
 	{
 		ChangeState(PlayerState::RidingUFO);
-		ChangeDirText_ = "Down";
 		return;
 	}
 }
@@ -466,8 +469,6 @@ void Player::RidingOwlUpdate()
 	{
 		Attack();
 	}
-
-	
 
 	StagePixelCheck(CurSpeed_);
 }
