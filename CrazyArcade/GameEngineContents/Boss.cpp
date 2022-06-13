@@ -57,10 +57,11 @@ void Boss::Start()
 	Renderer_->CreateAnimation("Boss.bmp", "MoveDown", 0, 1, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "Die", 36, 38, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "DieBubble", 39, 42, 0.2f, true);
-	Renderer_->CreateAnimation("Boss.bmp", "DieEnd", 43, 45, 0.2f, false); 
+	Renderer_->CreateAnimation("Boss.bmp", "DieEnd", 43, 45, 0.2f, false);
 	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageDown", 13, 14, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageRight", 15, 16, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageLeft", 17, 18, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageUp", 6, 7, 0.2f, true);
 	// Need to chk : TakeDamageUp 필요
 	Renderer_->CreateAnimation("Boss.bmp", "WaterAttack", 24, 35, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "RollAttackRight", 8, 12, 0.2f, true);
@@ -68,8 +69,8 @@ void Boss::Start()
 	Renderer_->ChangeAnimation("Idle");
 	Dir_ = float4::RIGHT;
 	Direction_ = "Right";
-	CenterCol_->SetScale(float4(120.0, 120.0f));
-	CenterCol_->SetPivot(float4(0.0f, -70.0f));
+	CenterCol_->SetScale(float4(100.0, 100.0f));
+	CenterCol_->SetPivot(float4(0.0f, -80.0f));
 
 	{
 		//Boss UI
@@ -189,7 +190,8 @@ void Boss::Update()
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	SpeechTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	IntervalTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
-	
+	GetAttTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+
 	if (true == IsSppechEnd_)
 	{
 		if (IsDie() != true)
@@ -391,7 +393,7 @@ void Boss::UpdateMove()
 
 	if (RandomAction_ < 3)
 	{
-		if (true != IsDie())
+		if (true != IsDie() && false == Renderer_->IsAnimationName("TakeDamage" + Direction_))
 		{
 			Renderer_->ChangeAnimation("Move" + Direction_);
 			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
@@ -502,14 +504,22 @@ void Boss::UpdateDirection()
 		}
 	}
 	CheckWaveTile(GetPosition());
+	CheckWaveTile(GetPosition() + float4(40.0f, 0.0f)); // 오른쪽
+	CheckWaveTile(GetPosition() + float4(-40.0f, 0.0f)); // 왼쪽
+	CheckWaveTile(GetPosition() + float4(0.0f, 40.0f)); // 아래쪽
+	CheckWaveTile(GetPosition() + float4(0.0f, -40.0f)); // 위쪽
+
+
 	if (LevelStart_ == true)
 	{
 		RandomAction_ = 3;
 	}
+
 	if (Dir_.x == 0 && Dir_.y == 0)
 	{
 		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
-			(Renderer_->IsAnimationName("RollAttack" + Direction_) && EndAttack_ == true))
+			(Renderer_->IsAnimationName("RollAttack" + Direction_) && EndAttack_ == true) ||
+			(Renderer_->IsAnimationName("TakeDamage" + Direction_) && true == Renderer_->IsEndAnimation()))
 		{
 			RandomAction_ = 0;
 			IsAreaChanged = true;
@@ -818,9 +828,9 @@ void Boss::UpdateDirection()
 		}
 
 		if (Dir_.x != 0 &&
-			Dir_.y != 0 )
+			Dir_.y != 0)
 		{
-		GameEngineSound::SoundPlayOneShot("Boss_Attack_Walk.mp3");
+			GameEngineSound::SoundPlayOneShot("Boss_Attack_Walk.mp3");
 
 		}
 	}
@@ -838,7 +848,7 @@ void Boss::UpdateDirection()
 
 void Boss::TakeDamage()
 {
-	if (GetAttTime_ > 2.0) // 2초 안에 다시 맞으면 DMG를 입지 않는다. (Need to chk : TIME)
+	if (GetAttTime_ > 1.0)
 	{
 		SetHP(GetHp() - 1);
 		GetAttTime_ = 0.0f;

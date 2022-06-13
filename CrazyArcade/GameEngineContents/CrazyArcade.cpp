@@ -528,7 +528,7 @@ void CrazyArcade::GameInit()
 
     CreateLevel<TileMapEditorLevel>("TileMapEditorLevel");
 
-    ChangeLevel("Monster1Level");
+    ChangeLevel("BossLevel");
 
 }
 
