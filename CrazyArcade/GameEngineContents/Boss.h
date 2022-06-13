@@ -27,6 +27,7 @@ protected:
     void UpdateDirection() override;
     void TakeDamage() override;
     void Die() override;
+    void AllMonsterDeathModeSwitch() override;
 
 private:
     float RollTime_;
