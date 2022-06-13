@@ -1,5 +1,6 @@
 #include"BossLevel.h"
 #include"ContentsEnum.h"
+#include "GameBgmPlayer.h"
 #include "MapBackGround.h"
 #include "Boss.h"
 #include "BossBoom.h"
@@ -115,9 +116,10 @@ void BossLevel::Update()
 
 void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-
+	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterBossStageBGM.mp3");
 }
 
 void BossLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 }

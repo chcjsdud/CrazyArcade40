@@ -20,6 +20,7 @@
 #include "PlayerFaceIconUI.h"
 #include "Mouse.h"
 #include "PlayNickName.h"
+#include "GameBgmPlayer.h"
 #include"ContentsEnum.h"
 #include "MapGameObject.h"
 #include"GameItemObject.h"
@@ -213,6 +214,7 @@ void Monster1Level::Update()
 }
 void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterStage1,2_Bgm.mp3");
 	if (nullptr != Player::MainPlayer_1)
 	{
 		Player::MainPlayer_1->Death();
@@ -242,5 +244,5 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 }
 void Monster1Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
-
+	GameBgmPlayer::BgmPlay_->Stop();
 }

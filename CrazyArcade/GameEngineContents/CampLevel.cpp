@@ -1,5 +1,6 @@
 #include"CampLevel.h"
 #include"ContentsEnum.h"
+#include "GameBgmPlayer.h"
 #include "GlobalUIName.h"
 #include "MapBackGround.h"
 #include "MapFront.h"
@@ -136,7 +137,7 @@ void CampLevel::Update()
 
 void CampLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-
+	GameBgmPlayer::BgmPlay_->ChangeBgm("CampBGM.mp3");
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
 		Player::MainPlayer_1->Death();
@@ -168,4 +169,5 @@ void CampLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void CampLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 }

@@ -24,6 +24,7 @@ protected:
 	bool IsDie();
 	void Die();
 	void UpdateDirection() override;
+	void AllMonsterDeathModeSwitch() override;
 
 private:
 	GameEngineRenderer* MiniRenderer_;

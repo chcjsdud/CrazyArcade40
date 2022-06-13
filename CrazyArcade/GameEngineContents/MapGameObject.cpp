@@ -372,32 +372,38 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir)
 	{
 		return;
 	}
-	if (PushTile_->MoveOn == true)
-	{
-		return;
-	}
+
 	if (BlockDir::LEFT == _Dir)
 	{
 		if (TileIndex_.X - 1 < 0)
 		{
 			return;
 		}
-		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y);
-		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X - 1, TileIndex_.Y);
+		int count = 0;
+		for (int i = 0; 0 <= TileIndex_.X - i; i++)
+		{
+			BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - i, TileIndex_.Y);
+			ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X - i, TileIndex_.Y);
+			if (NextTile_ != nullptr&& ItemTile_->BlockType_ != BlockType::ItemBlock && NextTile_->BlockType_ != BlockType::BushBlock)
+			{
+				count = i-1;
+				break;
+			}
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X - count, TileIndex_.Y);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X - count, TileIndex_.Y);
 		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
 		{
-			MapTile_->DeleteTile(TileIndex_.X - 1, TileIndex_.Y);
+			MapTile_->DeleteTile(TileIndex_.X - count, TileIndex_.Y);
 		}
 		if (NextTile_ == nullptr)
 		{
-			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X - count, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->TilePos_ = PushTile_->TilePos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
-			NextTile_->ItemType_ = PushTile_->ItemType_;
-			NextTile_->BlockHp_ = PushTile_->BlockHp_;
 			NextTile_->BlockDir_ = BlockDir::LEFT;
-			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X - 1, TileIndex_.Y);
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X - count, TileIndex_.Y);
 			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
 			MoveBlocks_.push_back(NextTile_);
 			PushTile_->MoveOn = true;
@@ -409,27 +415,36 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir)
 		if (TileIndex_.X + 1 > 14)
 		{
 			return;
+		}	
+		int count = 0;
+		for (int i = 0; 0 <= TileIndex_.X + i; i++)
+		{
+			BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + i, TileIndex_.Y);
+			ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X + i, TileIndex_.Y);
+			if (NextTile_ != nullptr && ItemTile_->BlockType_ != BlockType::ItemBlock && NextTile_->BlockType_ != BlockType::BushBlock)
+			{
+				count = i - 1;
+				break;
+			}
 		}
-		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y);
-		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X + 1, TileIndex_.Y);
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + count, TileIndex_.Y);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X + count, TileIndex_.Y);
 		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
 		{
-			MapTile_->DeleteTile(TileIndex_.X + 1, TileIndex_.Y);
+			MapTile_->DeleteTile(TileIndex_.X + count, TileIndex_.Y);
 		}
 		if (NextTile_ == nullptr)
 		{
-			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X + count, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->TilePos_ = PushTile_->TilePos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
-			NextTile_->ItemType_ = PushTile_->ItemType_;
-			NextTile_->BlockHp_ = PushTile_->BlockHp_;
 			NextTile_->BlockDir_ = BlockDir::RIGHT;
-			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X + 1, TileIndex_.Y);
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X + count, TileIndex_.Y);
 			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
 			MoveBlocks_.push_back(NextTile_);
-			PushTile_->MoveOn = true;
 			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+			PushTile_->MoveOn = true;
 		}
 	}
 	if (BlockDir::DOWN == _Dir)
@@ -438,22 +453,31 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir)
 		{
 			return;
 		}
-		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y + 1);
-		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		int count = 0;
+		for (int i = 0; 0 <= TileIndex_.Y + i; i++)
+		{
+			BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y + i);
+			ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + i);
+			if (NextTile_ != nullptr && ItemTile_->BlockType_ != BlockType::ItemBlock && NextTile_->BlockType_ != BlockType::BushBlock)
+			{
+				count = i - 1;
+				break;
+			}
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y + count);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + count);
 		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
 		{
-			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y + 1);
+			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y + count);
 		}
 		if (NextTile_ == nullptr)
 		{
-			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y + 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y + count, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->TilePos_ = PushTile_->TilePos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
-			NextTile_->ItemType_ = PushTile_->ItemType_;
-			NextTile_->BlockHp_ = PushTile_->BlockHp_;
 			NextTile_->BlockDir_ = BlockDir::DOWN;
-			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y + 1);
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y + count);
 			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
 			MoveBlocks_.push_back(NextTile_);
 			PushTile_->MoveOn = true;
@@ -466,22 +490,33 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir)
 		{
 			return;
 		}
-		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y - 1);
-		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		int count = 0;
+		for (int i = 0; 0 <= TileIndex_.Y + i; i++)
+		{
+			BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y - i);
+			ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y - i);
+			if (NextTile_ != nullptr && ItemTile_->BlockType_ != BlockType::ItemBlock && NextTile_->BlockType_ != BlockType::BushBlock)
+			{
+				count = i - 1;
+				break;
+			}
+		}
+		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y - count);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y - count);
 		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
 		{
 			MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y + 1);
 		}
 		if (NextTile_ == nullptr)
 		{
-			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y - 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
+			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y - count, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->TilePos_ = PushTile_->TilePos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->ItemType_ = PushTile_->ItemType_;
 			NextTile_->BlockHp_ = PushTile_->BlockHp_;
 			NextTile_->BlockDir_ = BlockDir::UP;
-			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y - 1);
+			float4 NextTileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y - count);
 			NextTile_->MoveNextTilePos_ = NextTileCenterPos_;
 			MoveBlocks_.push_back(NextTile_);
 			PushTile_->MoveOn = true;
@@ -595,7 +630,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 			return;
 		}
 		BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X , TileIndex_.Y - 1);
-		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y + 1);
+		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y - 1);
 		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
 		{
 			MapTile_->DeleteTile(TileIndex_.X , TileIndex_.Y + 1);

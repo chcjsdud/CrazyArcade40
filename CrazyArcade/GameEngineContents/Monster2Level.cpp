@@ -1,5 +1,6 @@
 #include"Monster2Level.h"
 #include "GlobalUIName.h"
+#include "GameBgmPlayer.h"
 #include"ContentsEnum.h"
 #include "MapBackGround.h"
 #include "MapFront.h"
@@ -217,6 +218,7 @@ void Monster2Level::Update()
 }
 void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
+	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterStage1,2_Bgm.mp3");
 	if (nullptr != Player::MainPlayer_1)
 	{
 		Player::MainPlayer_1->IsDeath();
@@ -245,5 +247,5 @@ void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 }
 void Monster2Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
-	
+	GameBgmPlayer::BgmPlay_->Stop();
 }

@@ -12,6 +12,7 @@
 #include <time.h>
 #include <random>
 #include "MapGameObject.h"
+#include <GameEngineBase/GameEngineInput.h>
 
 Boss::Boss()
 	: Monster()
@@ -49,14 +50,14 @@ void Boss::Start()
 	Renderer_->CreateAnimation("Boss.bmp", "MoveLeft", 4, 5, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "MoveUp", 6, 7, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "MoveDown", 0, 1, 0.2f, true);
-	Renderer_->CreateAnimation("Boss.bmp", "Die", 36, 38, 0.3f, true);
-	Renderer_->CreateAnimation("Boss.bmp", "DieBubble", 39, 42, 0.3f, true);
-	Renderer_->CreateAnimation("Boss.bmp", "DieEnd", 43, 45, 0.3f, false); // 이미지 높이
+	Renderer_->CreateAnimation("Boss.bmp", "Die", 36, 38, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "DieBubble", 39, 42, 0.2f, true);
+	Renderer_->CreateAnimation("Boss.bmp", "DieEnd", 43, 45, 0.2f, false); 
 	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageDown", 13, 14, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageRight", 15, 16, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "TakeDamageLeft", 17, 18, 0.2f, true);
 	// Need to chk : TakeDamageUp 필요
-	Renderer_->CreateAnimation("Boss.bmp", "WaterAttack", 24, 35, 0.2f, false);
+	Renderer_->CreateAnimation("Boss.bmp", "WaterAttack", 24, 35, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "RollAttackRight", 8, 12, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "RollAttackLeft", 19, 23, 0.2f, true);
 	Renderer_->ChangeAnimation("MoveRight");
@@ -129,6 +130,21 @@ void Boss::Start()
 	}
 }
 
+void Boss::AllMonsterDeathModeSwitch()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("AllMonsterDeath") && IsStageClear_ == false)
+	{
+		if (GetLevel()->GetNameCopy() == "BossLevel" && GetHP() > 0)
+		{
+			Renderer_->ChangeAnimation("Die");
+			SetHP(0);
+			BOSS_COUNT = 0;
+		}
+
+		IsStageClear_ = true;
+	}
+}
+
 void Boss::Render()
 {
 }
@@ -139,9 +155,14 @@ void Boss::Update()
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-	UpdateDirection();
-	UpdateMove();
-	UpdateHP();
+
+	if (IsDie() != true)
+	{
+		UpdateDirection();
+		UpdateMove();
+		UpdateHP();
+		AllMonsterDeathModeSwitch();
+	}
 	Die();
 
 }
@@ -150,17 +171,58 @@ void Boss::Die()
 {
 	if (true == IsDie()) // HP가 0이거나 0보다 작으면
 	{
-
-		if (true == Renderer_->IsAnimationName("Die") && true == Renderer_->IsEndAnimation())
-		{
-			CenterCol_->Off();
-			Death();
-		}
-
-		if (true != Renderer_->IsAnimationName("Die"))
+		if (true != Renderer_->IsAnimationName("Die") &&
+			true != Renderer_->IsAnimationName("DieBubble") &&
+			true != Renderer_->IsAnimationName("DieEnd"))
 		{
 			Dir_ = float4::ZERO;
 			Renderer_->ChangeAnimation("Die");
+		}
+
+		if (Renderer_->IsAnimationName("DieEnd"))
+		{
+			if (Renderer_->IsEndAnimation())
+			{
+				CenterCol_->Off();
+				Death();
+
+				if (BOSS_COUNT != 0)
+				{
+					BOSS_COUNT--;
+				}
+			}
+		}
+
+
+		else if (Renderer_->IsAnimationName("DieBubble"))
+		{
+			std::vector<GameEngineCollision*> Collision;
+
+			if (true == CenterCol_->CollisionResult("1PColl", Collision, CollisionType::Rect, CollisionType::Rect) ||
+				true == CenterCol_->CollisionResult("2PColl", Collision, CollisionType::Rect, CollisionType::Rect))
+			{
+				for (GameEngineCollision* ColActor : Collision)
+				{
+					GameEngineActor* ColPlayer = ColActor->GetActor();
+					if (dynamic_cast<Player*>(ColPlayer))
+					{
+						Renderer_->ChangeAnimation("DieEnd");
+					}
+				}
+			}
+
+			if (true == Renderer_->IsEndAnimation())
+			{
+				Renderer_->ChangeAnimation("DieEnd");
+			}
+		}
+
+		else if (true == Renderer_->IsAnimationName("Die"))
+		{
+			if (true == Renderer_->IsEndAnimation())
+			{
+				Renderer_->ChangeAnimation("DieBubble");
+			}
 		}
 	}
 
@@ -323,7 +385,7 @@ void Boss::UpdateDirection()
 								Index_ == 175 ||
 								Index_ == 188 ||
 								Index_ == 10 ||
-								Index_ == 23 )
+								Index_ == 23)
 							{
 								RandomAction_ = 4;
 								IsAreaChanged = true;
@@ -873,5 +935,3 @@ void Boss::CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex)
 
 	_BossBoom->BubbleBubblePop(_CanAttackAreas);
 }
-
-//Todo chowon: BOSS_COUNT--; -> boss 죽었을 때 
