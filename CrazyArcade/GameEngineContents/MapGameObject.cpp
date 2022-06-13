@@ -860,9 +860,9 @@ void MapGameObject::WaveDeathAni()
 void MapGameObject::DestroyBlock()
 {
 
-	for (float x = 0; x < 15; x++)
+	for (int x = 0; x < 15; x++)
 	{
-		for (float y = 0; y < 13; y++)
+		for (int y = 0; y < 13; y++)
 		{
 			BlockTile* BlockCheck = MapTile_->GetTile<BlockTile>(x, y);
 

@@ -87,11 +87,11 @@ public:
 	void BubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power, int _PlayerNum);
 	void SetGameItem();
-	int ReturnPlayer1BoomCount()
+size_t ReturnPlayer1BoomCount()
 	{
 		return Player1BlockTiles_.size();
 	}
-	int ReturnPlayer2BoomCount()
+size_t ReturnPlayer2BoomCount()
 	{
 		return Player2BlockTiles_.size();
 	}

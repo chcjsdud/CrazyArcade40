@@ -50,7 +50,7 @@ void Monster2::Start()
 	MiniRenderer_->SetAlpha(0);
 	MiniRenderer_->Off();
 	MiniRendererOn_ = false;
-	IsStageClear_ == false;
+	IsStageClear_ = false;
 }
 
 

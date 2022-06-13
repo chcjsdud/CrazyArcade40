@@ -35,6 +35,7 @@
 
 CampLevel::CampLevel()
 :MapBackGround_(nullptr)
+,ColMapImage_(nullptr)
 , MapFrontBackGround_(nullptr)
 , CampObject_(nullptr)
 {

@@ -11,7 +11,20 @@ class Area
 {
 	friend GameEngineLevel;
 public:
-	Area() {}
+	Area() 
+		:StartX_(0),
+		StartY_(0), 
+		EndX_(0), 
+		EndY_(0),
+		CenterX_(0),
+		CenterY_(0),
+		BlockType_(),
+		ColMapImage_(),
+		Monster_(),
+		MapTile_(),
+		TileIndex_()
+	{
+	}
 	Area(GameEngineImage* _ColMapImage, float _StartX, float _StartY, float _EndX, float _EndY);
 	~Area();
 
