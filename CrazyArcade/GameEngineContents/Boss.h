@@ -49,6 +49,7 @@ private:
     float SpeechTime_;
     float IntervalTime_;
     bool IsSppechEnd_;
+    bool IsAreaChanged;
 
 
 private:
