@@ -820,6 +820,23 @@ void MapGameObject::WaveDeathAni()
 
 	}
 }
+void MapGameObject::DestroyBlock()
+{
+	for(int x = 0; x < 14; x++)
+	{
+		for (int y = 0; y < 12; y++)
+		{
+			BlockTile* BlockCheck = MapTile_->GetTile<BlockTile>(x, y);
+			if (BlockCheck != nullptr && BlockCheck->BlockType_ != BlockType::Max)
+			{
+				if (BlockCheck->IsBlockDeath_ == true)
+				{
+					BlockCheck->Renderer->
+				}
+			}
+		}
+	}
+}
 void MapGameObject::DestroyWave()
 {
 

@@ -26,7 +26,8 @@ public:
 		CenterWaveY_(0),
 		DeathAniTime_(0.0f),
 		MoveNextTilePos_(),
-		MoveOn(false)
+		MoveOn(false),
+		IsBlockDeath_(false)
 	{
 
 	}
@@ -46,6 +47,7 @@ public:
 	float BlockHp_;
 	bool IsWaveDeath;
 	bool IsWaveDeathAni;
+	bool IsBlockDeath_;
 	int CenterWaveX_;
 	int CenterWaveY_;
 	GameEngineRenderer* Renderer;
@@ -111,6 +113,7 @@ private:
 	void MakeDownWave(TileIndex _Pos, float _Power);
 	void MakeUpWave(TileIndex _Pos, float _Power);
 
+	void DestroyBlock();
 	void DestroyBoom();
 	void DestroyWave();
 	void WaveDeathAni();

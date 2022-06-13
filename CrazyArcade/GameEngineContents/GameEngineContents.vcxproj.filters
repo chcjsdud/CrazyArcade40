@@ -5,9 +5,6 @@
     <ClInclude Include="MapBackGround.h">
       <Filter>Actor\Map</Filter>
     </ClInclude>
-    <ClInclude Include="MapGameObject.h">
-      <Filter>Actor\Map</Filter>
-    </ClInclude>
     <ClInclude Include="CampLevel.h">
       <Filter>Level\PlayLevel</Filter>
     </ClInclude>
@@ -153,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="BossBoom.h">
       <Filter>Actor\Play\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGameObject.h">
+      <Filter>Actor\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
