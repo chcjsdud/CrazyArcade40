@@ -143,7 +143,7 @@ private:
 	PlayerDir CheckDir_;
 	bool IsBoomblock;
 	bool IsLive;
-	bool IsInvincible;
+	bool IsShield;
 
 protected:
 	void SetSpeed(float _CurSpeed)
