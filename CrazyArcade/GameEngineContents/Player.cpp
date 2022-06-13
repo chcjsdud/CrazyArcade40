@@ -692,7 +692,6 @@ void Player::Update()
 	PlayerCollisionUpdate();
 	TileCheckResult();
 	FrontBlockCheck();
-
 	CollisionCheck();
 
 	if (true == IsDevil)
@@ -825,6 +824,9 @@ void Player::Render()
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
 
 	}
+
+	Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+
 }
 
 

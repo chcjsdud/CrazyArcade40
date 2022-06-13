@@ -459,16 +459,22 @@ void Player::Attack()
 	float4 ModifyPos = float4{ -20.f, -20.f };
 
 	if (Type == PlayerType::Player1)
-	{
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	{ 
 		Boom_->SetMapTile(MapTile_);
+		if (Player::MainPlayer_1->CurAttCount_ <= Boom_->ReturnPlayer1BoomCount())
+		{
+			return;
+		}
 		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_,1);
 	}
 
 	if (Type == PlayerType::Player2)
 	{
-		Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 		Boom_->SetMapTile(MapTile_);
+		if (Player::MainPlayer_2->CurAttCount_ <= Boom_->ReturnPlayer2BoomCount())
+		{
+			return;
+		}
 		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_,2);
 	}
 }

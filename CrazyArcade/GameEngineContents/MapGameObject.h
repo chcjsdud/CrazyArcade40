@@ -87,13 +87,13 @@ public:
 	void BubblePop(float4 _Pos, float _Power);
 	void CreateBoom(float4 _Pos, float _Power, int _PlayerNum);
 	void SetGameItem();
-size_t ReturnPlayer1BoomCount()
+	inline size_t ReturnPlayer1BoomCount()
 	{
-		return Player1BlockTiles_.size();
+		return Player1BoomNum_;
 	}
-size_t ReturnPlayer2BoomCount()
+	inline size_t ReturnPlayer2BoomCount()
 	{
-		return Player2BlockTiles_.size();
+		return Player2BoomNum_;
 	}
 protected:
 	void Start() override;
@@ -104,6 +104,8 @@ private:
 	std::vector<BlockTile*> WaveBlockTiles_;
 	std::vector<BlockTile*> Player1BlockTiles_;
 	std::vector<BlockTile*> Player2BlockTiles_;
+	static size_t Player1BoomNum_;
+	static size_t Player2BoomNum_;
 	GameEngineRendererTileMap* MapTile_;
 	GameItemObject* GameItem_;
 	ItemType ItemValue_;

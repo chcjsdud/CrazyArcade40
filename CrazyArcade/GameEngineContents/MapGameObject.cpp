@@ -5,6 +5,8 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineRandom.h>
 
+size_t MapGameObject::Player1BoomNum_;
+size_t MapGameObject::Player2BoomNum_;
 MapGameObject::MapGameObject()
 	:MapTile_(nullptr),
 	GameItem_(nullptr),
@@ -27,6 +29,10 @@ void MapGameObject::Start()
 
 void MapGameObject::Update()
 {
+	if (MapTile_ == nullptr)
+	{
+		return;
+	}
 	WaveDeathAni();
 	DestroyWave();
 	DestroyBoom();
@@ -308,10 +314,12 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		if (_PlayerNum == 1)
 		{
 			Player1BlockTiles_.push_back(CheckBlock);
+			Player1BoomNum_ += 1;
 		}
 		else if (_PlayerNum == 2)
 		{
 			Player2BlockTiles_.push_back(CheckBlock);
+			Player2BoomNum_ += 1;
 		}
 	}
 	else if (CheckBlock != nullptr && CheckItemBlock->BlockType_ == BlockType::ItemBlock)
@@ -332,10 +340,12 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		if (_PlayerNum == 1)
 		{
 			Player1BlockTiles_.push_back(Boom_);
+			Player1BoomNum_ += 1;
 		}
 		else if (_PlayerNum == 2)
 		{
 			Player2BlockTiles_.push_back(Boom_);
+			Player2BoomNum_ += 1;
 		}
 	}
 	else if (CheckBlock != nullptr)
@@ -359,10 +369,12 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		if (_PlayerNum == 1)
 		{
 			Player1BlockTiles_.push_back(Boom_);
+			Player1BoomNum_ += 1;
 		}
 		else if (_PlayerNum == 2)
 		{
 			Player2BlockTiles_.push_back(Boom_);
+			Player2BoomNum_ += 1;
 		}
 	}
 
@@ -967,6 +979,8 @@ void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 		Player1BlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
 		if (Player1BlockTiles_[i]->DeathTime_ <= 0.0f)
 		{
+
+			Player1BoomNum_ -= 1;
 			float4 _Poss = Player1BlockTiles_[i]->TilePos_;
 			float _Power = Player1BlockTiles_[i]->Power_;
 			MapTile_->DeleteTile(Player1BlockTiles_[i]->TileIndex_.X, Player1BlockTiles_[i]->TileIndex_.Y);
@@ -979,6 +993,7 @@ void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 		Player2BlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
 		if (Player2BlockTiles_[i]->DeathTime_ <= 0.0f)
 		{
+			Player2BoomNum_ -= 1;
 			float4 _Poss = Player2BlockTiles_[i]->TilePos_;
 			float _Power = Player2BlockTiles_[i]->Power_;
 			MapTile_->DeleteTile(Player2BlockTiles_[i]->TileIndex_.X, Player2BlockTiles_[i]->TileIndex_.Y);

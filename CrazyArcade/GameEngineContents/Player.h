@@ -123,9 +123,9 @@ protected:
 	float DaoMaxSpeed_;
 	float MaridMaxSpeed_;
 
-
-
-	int CurAttCount_;			// 물풍선 개수 
+	size_t Player1BoomCount_;
+	size_t Player2BoomCount_;
+	size_t CurAttCount_;			// 물풍선 개수 
 	float CurAttPower_;			// 물줄기 길이
 	float CurSpeed_;			// 플레이어 속도 
 
