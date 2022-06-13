@@ -21,6 +21,6 @@ protected:
 private:
 
 	float SpeechTime_;
-
+	bool DieSoundPlay_;
 	void Speech();
 };

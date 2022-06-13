@@ -1,5 +1,6 @@
 #include "BossBoom.h"
 #include "Area.h"
+#include <GameEngine/GameEngineImageManager.h>
 
 BossBoom::BossBoom()
 {
@@ -26,7 +27,7 @@ void BossBoom::Update()
 	{
 		if (CanAttackAreas_.find(8) != CanAttackAreas_.end())
 		{
-			SetMove(float4::DOWN);
+			SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() *  300);
 			if (CanAttackAreas_[8].GetCenter().y < GetPosition().y)
 			{
 				if (CanAttackAreas_.size() != 0)

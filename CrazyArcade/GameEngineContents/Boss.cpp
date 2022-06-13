@@ -32,6 +32,7 @@ Boss::Boss()
 	, IntervalTime_(0)
 	, SpeechNum_(0)
 	, IsAreaChanged(false)
+	, AttCount_(0)
 {
 }
 
@@ -192,10 +193,16 @@ void Boss::Update()
 	SpeechTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	IntervalTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
 	GetAttTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+	FirstAttInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 
 	if (true == IsSppechEnd_)
 	{
-		if (IsDie() != true)
+		if (LevelStart_ == true)
+		{
+			UpdateDirection();
+		}
+
+		if (IsDie() != true && LevelStart_ != true)
 		{
 			UpdateDirection();
 			UpdateMove();
@@ -410,7 +417,6 @@ void Boss::UpdateMove()
 			{
 				Dir_ = float4::ZERO;
 				EndAttack_ = true;
-				LevelStart_ = false;
 			}
 		}
 	}
@@ -902,34 +908,37 @@ void Boss::WaterAttack()
 {
 	UpdateAttack();
 	Renderer_->ChangeAnimation("WaterAttack");
-	if (WaterAttackInterval_ > 1.5f)
+
+	if (LevelStart_ == true && WaterAttackInterval_ > 0.4f)
 	{
-		if (LevelStart_ == true)
+		BossBoomIndex_ = 0;
+		std::vector<int> AttackIndices = { 28, 158, 162, 166, 101, 36, 32, 97 };
+		AttackIndex_ = AttackIndices[AttCount_];
+		BossBoom* _BossBoom = BossBooms_[BossBoomIndex_++];
+		AttCount_++;
+		CheckCanAttackTile(_BossBoom, AttackIndex_);
+		WaterAttackInterval_ = 0.0f;
+		if (BossBoomIndex_ == 8 || AttCount_ == 8)
 		{
-			BossBoomIndex_ = 0;
-			std::vector<int> AttackIndices = { 28, 32, 36, 97, 101, 158, 162, 166 };
-			for (int AttackIndex : AttackIndices)
-			{
-				BossBoom* _BossBoom = BossBooms_[BossBoomIndex_++ % BossBooms_.size()];
-				CheckCanAttackTile(_BossBoom, AttackIndex);
-			}
+			WaterAttackInterval_ = -1.0f;
+			LevelStart_ = false;
+		}
+	}
+	else if (WaterAttackInterval_ > 1.5f && LevelStart_ == false)
+	{
+		if (GetHP() < 5)
+		{
+			AttackIndex_ = (rand() % Areas_.size());
 		}
 		else
 		{
-			if (GetHP() < 5)
-			{
-				AttackIndex_ = (rand() % Areas_.size());
-			}
-			else
-			{
-				std::vector<int> AttackIndices = { 28, 32, 36, 93, 97, 101, 158, 162, 166 };
-				int RandomIndex = (rand() % AttackIndices.size());
-				AttackIndex_ = AttackIndices[RandomIndex];
-			}
-
-			BossBoom* _BossBoom = BossBooms_[(BossBoomIndex_++ % BossBooms_.size())];
-			CheckCanAttackTile(_BossBoom, AttackIndex_);
+			std::vector<int> AttackIndices = { 28, 32, 36, 93, 97, 101, 158, 162, 166 };
+			int RandomIndex = (rand() % AttackIndices.size());
+			AttackIndex_ = AttackIndices[RandomIndex];
 		}
+
+		BossBoom* _BossBoom = BossBooms_[(BossBoomIndex_++ % BossBooms_.size())];
+		CheckCanAttackTile(_BossBoom, AttackIndex_);
 		WaterAttackInterval_ = -1.0f;
 	}
 }

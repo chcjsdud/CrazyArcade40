@@ -65,11 +65,15 @@ void Monster1::Die()
 {
 	if (true == IsDie()) // HP가 0이거나 0보다 작으면
 	{
+		if (DieSoundPlay_ == false)
+		{
+			GameEngineSound::SoundPlayOneShot("Monster1_Die.mp3");
+			DieSoundPlay_ = true;
+		}
 		if (true == Renderer_->IsAnimationName("Die") && true == Renderer_->IsEndAnimation())
 		{
 			CenterCol_->Off();
 			Death();
-			GameEngineSound::SoundPlayOneShot("Monster1_Die.mp3");
 			if (GetLevel()->GetNameCopy() == "Monster1Level")
 			{
 				LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.

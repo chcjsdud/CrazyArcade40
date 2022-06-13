@@ -123,7 +123,7 @@ void Monster2::AllMonsterDeathModeSwitch()
 
 void Monster2::TakeDamage()
 {
-	if (GetAttTime_ > 2.0) // 1초 안에 다시 맞으면 DMG를 입지 않는다. (Need to chk : TIME)
+	if (GetAttTime_ > 2.0) 
 	{
 		SetHP(GetHp() - 1);
 		if (GetHP() >= 1)
@@ -135,6 +135,7 @@ void Monster2::TakeDamage()
 			SetSpeed(50); // Need to chk : Speed_
 			GetBackTime_ = 0.0f;
 			GetAttTime_ = 0.0f;
+			GameEngineSound::SoundPlayOneShot("Monster2_Hit.mp3");
 		}
 	}
 

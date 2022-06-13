@@ -50,6 +50,8 @@ private:
     float IntervalTime_;
     bool IsSppechEnd_;
     bool IsAreaChanged;
+    int AttCount_;
+    float FirstAttInterval_;
 
 
 private:
