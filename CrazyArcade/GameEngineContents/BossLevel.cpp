@@ -94,12 +94,12 @@ void BossLevel::Loading()
 		////// ¸ó½ºÅÍ //////
 		ColMapImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
 
-		Boss* Seal = CreateActor<Boss>((int)ORDER::BOSS);
+		Boss* Seal = CreateActor<Boss>((int)ORDER::PLAYER);
 		Seal->SetMapTile(&MapBackGround_->MapTileMap_);
 
 		for (int i = 0; i < 9; ++i)
 		{
-			BossBoom* _BossBoom = CreateActor<BossBoom>(static_cast<int>(ORDER::UI), "Bubble");
+			BossBoom* _BossBoom = CreateActor<BossBoom>(static_cast<int>(ORDER::PLAYER), "Bubble");
 			_BossBoom->SetMapTile(&MapBackGround_->MapTileMap_);
 			Seal->AddBoom(_BossBoom);
 		}

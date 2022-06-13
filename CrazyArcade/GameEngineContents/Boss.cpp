@@ -17,6 +17,7 @@
 Boss::Boss()
 	: Monster()
 	, WaterTime_(-7.0f)
+	, StartTime_(0.0f)
 	, WaterAttackInterval_(-8.5f)
 	, RollTime_(0.0f)
 	, AreaChangeCount_(0)
@@ -63,13 +64,13 @@ void Boss::Start()
 	Renderer_->ChangeAnimation("MoveRight");
 	Dir_ = float4::RIGHT;
 	Direction_ = "Right";
-	CenterCol_ = CreateCollision("Monster", float4(50.0f, 50.0f), float4(0.0f, 0.0f));
+	CenterCol_ = CreateCollision("Monster", float4(50.0f, 50.0f), float4(0.0f, -25.0f));
 	CenterCol_->SetScale(float4(130.0, 150.0f));
 	CenterCol_->SetPivot(float4(0.0f, -50.0f));
 
 	{
 		//Boss UI
-		HPUI_ = CreateRenderer("HPUI.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, float4(0.0f, -180.0f));
+		HPUI_ = CreateRenderer("HPUI.bmp", (int)ORDER::UI, RenderPivot::CENTER, float4(0.0f, -180.0f));
 		GameEngineImage* HPImage14 = GameEngineImageManager::GetInst()->Find("HP14.bmp");
 		HPImage14->CutCount(1, 1);
 		GameEngineImage* HPImage13 = GameEngineImageManager::GetInst()->Find("HP13.bmp");
@@ -99,7 +100,7 @@ void Boss::Start()
 		GameEngineImage* HPImage1 = GameEngineImageManager::GetInst()->Find("HP1.bmp");
 		HPImage1->CutCount(1, 1);
 
-		BossHP_ = CreateRenderer((int)ORDER::BOSS, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
+		BossHP_ = CreateRenderer((int)ORDER::UI, RenderPivot::CENTER, float4{ 0.0f, 0.0f });
 		BossHP_->CreateAnimation("HP14.bmp", "HP14", 0, 0, 1.0f, false);
 		BossHP_->CreateAnimation("HP13.bmp", "HP13", 0, 0, 1.0f, false);
 		BossHP_->CreateAnimation("HP12.bmp", "HP12", 0, 0, 1.0f, false);
@@ -155,16 +156,19 @@ void Boss::Update()
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+	StartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 
-	if (IsDie() != true)
-	{
-		UpdateDirection();
-		UpdateMove();
-		UpdateHP();
-		AllMonsterDeathModeSwitch();
-	}
-	Die();
-
+	//if (StartTime_ > 0)
+	//{
+		if (IsDie() != true)
+		{
+			UpdateDirection();
+			UpdateMove();
+			UpdateHP();
+			AllMonsterDeathModeSwitch();
+		}
+		Die();
+	//}
 }
 
 void Boss::Die()
