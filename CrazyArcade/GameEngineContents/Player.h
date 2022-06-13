@@ -145,7 +145,7 @@ private:
 	bool IsLive;
 	bool IsShield;
 	bool IsDevil;
-	bool CanAttack;
+	bool IsInvincible;
 
 protected:
 	void SetSpeed(float _CurSpeed)

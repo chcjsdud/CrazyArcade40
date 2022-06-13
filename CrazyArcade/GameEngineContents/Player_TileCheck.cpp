@@ -16,7 +16,8 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	case BlockType::WaveBlock:
 	{
 		// 무적이 아닐 때만
-		if (false == IsShield)
+		if (false == IsShield
+			&& false == IsInvincible)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl
@@ -48,7 +49,8 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	case BlockType::BubbleBlock:
 	{
 		// 무적이 아닐 때만
-		if (false == IsShield)
+		if (false == IsShield
+			&& false == IsInvincible)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl

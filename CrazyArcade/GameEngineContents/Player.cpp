@@ -57,6 +57,7 @@ Player::Player()
 	, IsShield(false)
 	, Box_(nullptr)
 	, IsDevil(false)
+	, IsInvincible(false)
 
 {
 	BazziAttCount_ = 1;
@@ -90,6 +91,21 @@ Player::~Player()
 
 void Player::DebugModeSwitch()
 {
+	if (true == GameEngineInput::GetInst()->IsDown("Invincible"))
+	{
+		if (false == IsInvincible)
+		{
+			IsInvincible = true;
+			//EffectRenderer_->On();
+		}
+		else
+		{
+			IsInvincible = false;
+			//EffectRenderer_->Off();
+		}
+		
+	}
+
 	if (true == GameEngineInput::GetInst()->IsDown("Debug_Col") && true == IsDebug)
 	{
 		GetLevel()->IsDebugModeOff();
@@ -306,7 +322,8 @@ void Player::CollisionCheck()
 	// 무적이 아닐 때만
 	if (Type == PlayerType::Player1)
 	{
-		if (false == IsShield)
+		if (false == IsShield 
+			&& false == IsInvincible)
 		{
 			std::vector<GameEngineCollision*> ColList;
 
@@ -352,7 +369,8 @@ void Player::CollisionCheck()
 		if (Type == PlayerType::Player2)
 		{
 			// 무적이 아닐 때만
-			if (false == IsShield)
+			if (false == IsShield
+				&& false == IsInvincible)
 			{
 				std::vector<GameEngineCollision*> ColList;
 
@@ -416,10 +434,6 @@ void Player::Start()
 	PlayerAnimationRender_->SetPivot({ 0.f, 0.f });
 	PlayerAnimationRender_->Off();
 
-	// 쉴드 이펙트
-	EffectRenderer_ = CreateRenderer((int)ORDER::EFFECT, RenderPivot::CENTER, float4{ 0.f, 0.f });
-	EffectRenderer_->Off();
-
 
 	// BAZZI
 	{
@@ -439,8 +453,14 @@ void Player::Start()
 		GameEngineImage* Effect = GameEngineImageManager::GetInst()->Find("Effect_Shield.bmp");
 		Effect->CutCount(5, 2);
 
+		// 쉴드 이펙트
+		EffectRenderer_ = CreateRenderer();
+		EffectRenderer_->SetPivotType(RenderPivot::CENTER);
+		EffectRenderer_->SetPivot({ 0.f, 0.f });
 		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.08f, true);
+		EffectRenderer_->Off();
 
+		
 		// 애니메이션
 
 		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
@@ -712,7 +732,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("2PItem", VK_LCONTROL);
 
 		// ============== 디버그 모드 =============
-		//GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
+		GameEngineInput::GetInst()->CreateKey("Invincible", 'O');
 
 		//GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}
