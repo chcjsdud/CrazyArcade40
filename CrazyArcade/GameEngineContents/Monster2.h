@@ -28,6 +28,8 @@ protected:
 
 private:
 	GameEngineRenderer* MiniRenderer_;
+	float SpeechTime_;
 	bool MiniRendererOn_;
 	float GetBackTime_;
+	void Speech();
 };

@@ -55,6 +55,7 @@ protected:
 	BlockTile* Tile_;
 	BlockType CurBlockType_;
 	GameEngineRenderer* Renderer_;
+	GameEngineRenderer* SpeechBubble_;
 	GameEngineImage* ColMapImage_;
 
 	MonsterClass MonsterClass_;
@@ -84,6 +85,7 @@ protected:
 	float MapSizeY_;
 	bool IndexCheck_;
 	bool IsStageClear_;
+	bool HasSpeechBubble_;
 
 	GameEngineCollision* TopCol_;
 	GameEngineCollision* LeftCol_;

@@ -44,7 +44,12 @@ private:
     GameEngineRenderer* HPUI_;
     std::vector<BossBoom*> BossBooms_;
     int AttackIndex_;
+    int SpeechNum_;
     int BossBoomIndex_;
+    float SpeechTime_;
+    float IntervalTime_;
+    bool IsSppechEnd_;
+
 
 private:
     void UpdateAttack();
@@ -52,5 +57,6 @@ private:
     void WaterAttack();
     void CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex);
     void UpdateHP();
+    void Speech();
 
 };

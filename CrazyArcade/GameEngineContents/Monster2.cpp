@@ -51,6 +51,29 @@ void Monster2::Start()
 	MiniRenderer_->Off();
 	MiniRendererOn_ = false;
 	IsStageClear_ = false;
+
+	SpeechBubble_ = CreateRenderer("SpeechBubble2.bmp");
+	GameEngineImage* SpeechBubbleImage = SpeechBubble_->GetImage();
+	SpeechBubbleImage->CutCount(10, 2);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble0", 0, 0, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble1", 1, 1, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble2", 2, 2, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble3", 3, 3, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble4", 4, 4, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble5", 5, 5, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble6", 6, 6, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble7", 7, 7, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble8", 8, 8, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble9", 9, 9, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble10", 10, 10, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble11", 11, 11, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble12", 12, 12, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble13", 13, 13, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble14", 14, 14, 0.5f, true);
+	SpeechBubble_->CreateAnimation("SpeechBubble2.bmp", "Bubble15", 15, 15, 0.5f, true);
+	SpeechBubble_->ChangeAnimation("Bubble15");
+	SpeechBubble_->SetOrder((int)ORDER::UI);
+	SpeechBubble_->SetPivot(float4(0.0f, -70.0f));
 }
 
 
@@ -58,12 +81,14 @@ void Monster2::Update()
 {
 	GetBackTime_ += GameEngineTime::GetDeltaTime();
 	GetAttTime_ += GameEngineTime::GetDeltaTime();
+	SpeechTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 
 	UpdateDirection();
 	UpdateMove();
 	UpdateGetBack();
 	AllMonsterDeathModeSwitch();
 	Die();
+	Speech();
 }
 
 
@@ -218,5 +243,16 @@ void Monster2::Render()
 	if (true == GetLevel()->GetIsDebug())
 	{
 		Monster::Render();
+	}
+}
+
+void Monster2::Speech()
+{
+	if (SpeechTime_ > 2.0f)
+	{
+		int RandomSpeech = (rand() % 16);
+		std::string SpeechNum = std::to_string(RandomSpeech);
+		SpeechBubble_->ChangeAnimation("Bubble" + SpeechNum);
+		SpeechTime_ = 0.0f;
 	}
 }

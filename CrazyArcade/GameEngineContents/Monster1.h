@@ -1,6 +1,7 @@
 #pragma once
 #include "Monster.h"
 
+class GameEngineRenderer;
 class Monster1 : public Monster
 {
 public:
@@ -17,4 +18,9 @@ protected:
 	void Render() override;
 	void Update() override;
 
+private:
+
+	float SpeechTime_;
+
+	void Speech();
 };
