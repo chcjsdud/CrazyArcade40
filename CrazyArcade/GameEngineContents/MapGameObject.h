@@ -116,8 +116,10 @@ private:
 	void WaveDeathAni();
 	float4 Move_;
 public:
-	void PushBubble(float4 _Pos, BlockDir _Dir);
+	void PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum);
 	void PushBlock(float4 _Pos, BlockDir _Dir);
 	void BlockMoveUpdate();
+	void BubbleMoveUpdate();
 	std::vector<BlockTile*> MoveBlocks_;
+	std::vector<BlockTile*> MoveBubble_;
 };
