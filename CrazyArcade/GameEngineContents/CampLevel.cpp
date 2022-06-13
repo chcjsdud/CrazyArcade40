@@ -153,6 +153,17 @@ void CampLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1->SetPosition({ 100.f, 340.f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
+	{
+
+		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+		Player::MainPlayer_2->SetPlayerType(PlayerType::Player1);
+		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	}
+
 }
 
 void CampLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
