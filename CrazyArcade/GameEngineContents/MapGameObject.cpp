@@ -502,6 +502,7 @@ void MapGameObject::BlockMoveUpdate()
 				MovePos_ += Move_;
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
+				MoveBlocks_[i]->MoveOn = true;
 			}
 			else
 			{
@@ -517,6 +518,7 @@ void MapGameObject::BlockMoveUpdate()
 				MovePos_ += Move_;
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
+				MoveBlocks_[i]->MoveOn = true;
 			}
 			else
 			{
@@ -532,6 +534,7 @@ void MapGameObject::BlockMoveUpdate()
 				MovePos_ += Move_;
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
+				MoveBlocks_[i]->MoveOn = true;
 			}
 			else
 			{
