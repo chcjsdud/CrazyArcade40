@@ -6,6 +6,7 @@
 
 class MapGameObject;
 class MapBackGround;
+class GameItemObject;
 class MapFront;
 class Area;
 class Player;
@@ -29,6 +30,7 @@ private:
 	MapBackGround* MapBackGround_;
 	MapFront* MapFrontBackGround_;
 	MapGameObject* PlayerTeamTestObject_;
+	GameItemObject* Item_;
 
 	//GameEngineImage* MapColMap_;
 	GameEngineRenderer* MapColRenderer_;

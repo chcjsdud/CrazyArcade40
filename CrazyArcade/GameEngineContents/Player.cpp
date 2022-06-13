@@ -439,6 +439,8 @@ void Player::Start()
 		GameEngineImage* Effect = GameEngineImageManager::GetInst()->Find("Effect_Shield.bmp");
 		Effect->CutCount(5, 2);
 
+		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.08f, true);
+
 		// 애니메이션
 
 		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
@@ -467,11 +469,15 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Right", 2, 2, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Up", 4, 4, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleTurtle_Left", 8, 8, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleTurtle_Right", 10, 10, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleTurtle_Up", 12, 12, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleTurtle_Down", 14, 14, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Left", 8, 9, 0.2f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
@@ -549,11 +555,15 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Right", 2, 2, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Up", 4, 4, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Left", 8, 8, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Right", 10, 10, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Up", 12, 12, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Down", 14, 14, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Left", 8, 9, 0.2f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
@@ -637,11 +647,15 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Right", 2, 2, 0.15f, false);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Up", 4, 4, 0.15f, false);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleTurtle_Left", 8, 8, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleTurtle_Right", 10, 10, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleTurtle_Up", 12, 12, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleTurtle_Down", 14, 14, 0.15f, false);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Down", 6, 7, 0.15f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Left", 8, 9, 0.02f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Left", 8, 9, 0.2f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Right", 10, 11, 0.2f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Up", 12, 13, 0.2f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingTurtle_Down", 14, 15, 0.2f, true);
