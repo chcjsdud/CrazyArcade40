@@ -32,6 +32,7 @@ protected:
 private:
     float RollTime_;
     float WaterTime_;
+    float StartTime_;
     float WaterAttackInterval_;
     float WaterAttackStartTime_;
     int AreaChangeCount_;

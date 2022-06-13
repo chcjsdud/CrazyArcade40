@@ -40,6 +40,7 @@ void BossBoom::Update()
 						{
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
 							_Area.GetMapTile()->DeleteTile(_TileIndex.X, _TileIndex.Y);
+							BubblePop(_Center, 0);
 						}
 
 						else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음

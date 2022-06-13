@@ -528,7 +528,7 @@ void CrazyArcade::GameInit()
 
     CreateLevel<TileMapEditorLevel>("TileMapEditorLevel");
 
-    ChangeLevel("PlayerTeamTest");
+    ChangeLevel("CemetoryLevel");
 
 }
 
