@@ -28,16 +28,34 @@ void Player::IdleStart()
 	IsMove = true;
 	ReSetAccTime();
 
-	AnimationName_ = "Idle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	if (true == IsDevil)
+	{
+		AnimationName_ = "Idle_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_ + "_Devil");
+	}
+	else
+	{
+		AnimationName_ = "Idle_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
+
 }
 
 void Player::MoveStart()
 {
 	IsMove = true;
 
-	AnimationName_ = "Move_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	if (true == IsDevil)
+	{
+		AnimationName_ = "Move_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_ + "_Devil");
+	}
+	else
+	{
+		AnimationName_ = "Move_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
+
 }
 
 

@@ -11,16 +11,36 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 {
 	CurCharacter = GetCharacter();
 
+	if (true == IsDevil)
+	{
+		AddAccTime(Time_);
+		// 10초가 지나면 데빌 모드 해제
+		if (10.f < GetAccTime())
+		{
+			IsDevil = false;
+			ReSetAccTime();
+		}
+	}
+
 	switch (_ItemType)
 	{
 	case ItemType::Roller:
 	{
+		float Speed = _Player->CurSpeed_;
+
+		if (_Player->CurSpeed_ > Speed)
+		{
+			return;
+		}
+
 		if (_Player->CurSpeed_ >= _Player->MaxSpeed_)
 		{
 			return;
 		}
 
 		_Player->CurSpeed_ += 1;
+	
+		
 		/*	switch (CurCharacter)
 			{
 			case Character::BAZZI:
@@ -147,38 +167,6 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		}
 
 		_Player->CurSpeed_ = _Player->MaxSpeed_;
-		/*switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurSpeed_ == MaxSpeed_)
-			{
-				return;
-			}
-			CurSpeed_ = MaxSpeed_;
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurSpeed_ == MaxSpeed_)
-			{
-				return;
-			}
-			CurSpeed_ = MaxSpeed_;
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurSpeed_ == MaxSpeed_)
-			{
-				return;
-			}
-			CurSpeed_ = MaxSpeed_;
-		}
-		break;
-		default:
-			break;
-		}*/
 
 	}
 	break;
@@ -200,29 +188,14 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Devil:
 	{
+		IsDevil = true;
+
 		// 1. 누른 방향키와 반대로 이동
-		if (CurDir_ == PlayerDir::Left)
-		{
-			CheckDir_ = PlayerDir::Right;
-			ChangeDirText_ = "Right";
-		}
-		else if (CurDir_ == PlayerDir::Right)
-		{
-			CheckDir_ = PlayerDir::Left;
-			ChangeDirText_ = "Left";
-		}
-		else if (CurDir_ == PlayerDir::Up)
-		{
-			CheckDir_ = PlayerDir::Down;
-			ChangeDirText_ = "Down";
-		}
-		else if (CurDir_ == PlayerDir::Down)
-		{
-			CheckDir_ = PlayerDir::Up;
-			ChangeDirText_ = "Up";
-		}
+
 
 		// 2. CurAttCount만큼 연속으로 자동 공격 
+
+
 	}
 	break;
 	case ItemType::Shoes:
@@ -234,14 +207,14 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 		AddAccTime(Time_);
 
-		// 3초가 지나기 전은 무적
-		if (3.f > GetAccTime())
-		{
-			IsShield = true;
-		}
-		else // 3초가 지나면 무적 해제 및 ResetTime
+		IsShield = true;
+		EffectRenderer_->On();
+
+		// 3초가 지나면 무적 해제 및 ResetTime
+		if (3.f < GetAccTime())
 		{
 			IsShield = false;
+			EffectRenderer_->Off();
 			ReSetAccTime();
 		}
 	}
@@ -275,6 +248,14 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	}
 	break;
 	default:
+	{
+		CurSpeed_ = CurSpeed_;
+		CurAttCount_ = CurAttCount_;
+		CurAttPower_ = CurAttPower_;
+
+		IsShield = false;
+		IsDevil = false;
+	}
 		break;
 	}
 
