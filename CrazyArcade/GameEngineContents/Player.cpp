@@ -79,8 +79,8 @@ Player::Player()
 	MaridMaxAttPower_ = 6.f;
 	DaoMaxAttPower_ = 7.f;
 
-	BazziMaxSpeed_ = 7.5f;
-	MaridMaxSpeed_ = 7.5f;
+	BazziMaxSpeed_ = 7.f;
+	MaridMaxSpeed_ = 7.f;
 	DaoMaxSpeed_ = 6.5f;
 }
 Player::~Player()
@@ -463,6 +463,10 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Die_", 0, 5, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Left", 0, 0, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Right", 2, 2, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Up", 4, 4, 0.15f, false);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
@@ -485,9 +489,14 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 18, 24, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 25, 31, 0.1f, true);
 
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnOwl_", 0, 7, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnTurtle_", 8, 15, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
+
 		BazziRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
 		AnimationName_ = "Ready_";
+
 		ChangeDirText_ = "Down";
 
 		//BazziRenderer_->ChangeAnimation("Idle_Down");
@@ -536,6 +545,10 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Die_", 0, 5, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Left", 0, 0, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Right", 2, 2, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Up", 4, 4, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
@@ -557,6 +570,10 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 73, 77, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 88, 92, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 93, 96, 0.1f, true);
+
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnOwl_", 0, 7, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnTurtle_", 8, 15, 0.1f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
 
 
 		MaridRenderer_->ChangeAnimation("Ready_");
@@ -616,6 +633,10 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_2.bmp", "Die_", 0, 5, 0.15f, false);
 		DaoRenderer_->CreateAnimation("Dao_2.bmp", "Revival_", 6, 9, 0.15f, false);
 
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Left", 0, 0, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Right", 2, 2, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Up", 4, 4, 0.15f, false);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);
@@ -637,6 +658,10 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 45, 49, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 50, 54, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 55, 59, 0.1f, true);
+
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnOwl_", 0, 7, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnTurtle_", 8, 15, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
 
 
 
@@ -690,23 +715,11 @@ void Player::Update()
 
 	PlayerStateUpdate();
 	PlayerCollisionUpdate();
+
+	ItemTime();
 	TileCheckResult();
 	FrontBlockCheck();
 	CollisionCheck();
-
-	if (true == IsDevil)
-	{
-		AddAccTime(Time_);
-
-		if(10.f < GetAccTime())
-		{
-			IsDevil = false;
-			ReSetAccTime();
-		}
-
-		// 10초가 지나면 데빌 모드 해제
-
-	}
 
 
 	DebugModeSwitch();

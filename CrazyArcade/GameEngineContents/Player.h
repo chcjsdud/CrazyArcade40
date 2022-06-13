@@ -145,6 +145,7 @@ private:
 	bool IsLive;
 	bool IsShield;
 	bool IsDevil;
+	bool CanAttack;
 
 protected:
 	void SetSpeed(float _CurSpeed)
@@ -182,6 +183,7 @@ protected:
 	void PlayerInit();
 	void PlayerInfoUpdate();
 	void ItemCheck(Player* _Player, ItemType _ItemType);
+	void ItemTime();
 
 	void Attack();
 

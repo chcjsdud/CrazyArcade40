@@ -15,53 +15,20 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 	case ItemType::Roller:
 	{
-		float Speed = _Player->CurSpeed_;
+		//float Speed = _Player->CurSpeed_;
 
-		if (_Player->CurSpeed_ > Speed)
-		{
-			return;
-		}
+		//if (_Player->CurSpeed_ > Speed)
+		//{
+		//	return;
+		//}
 
 		if (_Player->CurSpeed_ >= _Player->MaxSpeed_)
 		{
 			return;
 		}
 
-		_Player->CurSpeed_ += 1;
+		_Player->CurSpeed_ = _Player->CurSpeed_ + 1.0f;
 	
-		
-		/*	switch (CurCharacter)
-			{
-			case Character::BAZZI:
-			{
-				if (CurSpeed_ >= BazziMaxSpeed_)
-				{
-					return;
-				}
-			}
-			break;
-			case Character::LUXMARID:
-			{
-				if (CurSpeed_ >= MaridMaxSpeed_)
-				{
-					return;
-				}
-			}
-			break;
-			case Character::DAO:
-			{
-				if (CurSpeed_ >= DaoMaxSpeed_)
-				{
-					return;
-				}
-			}
-			break;
-			default:
-				break;
-
-			}
-
-			_Player->CurSpeed_ += 1;*/
 	}
 	break;
 	case ItemType::Bubble:
@@ -72,38 +39,6 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		}
 
 		_Player->CurAttCount_ += 1;
-
-		/*switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurAttCount_ >= BazziMaxAttCount_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurAttCount_ >= MaridMaxAttCount_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurAttCount_ >= DaoMaxAttCount_)
-			{
-				return;
-			}
-		}
-		break;
-		default:
-			break;
-		}
-
-		_Player->CurAttCount_ += 1;*/
 	}
 	break;
 	case ItemType::Fluid:
@@ -113,39 +48,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 			return;
 		}
 
-		_Player->CurAttPower_ += 1;
-
-		/*switch (CurCharacter)
-		{
-		case Character::BAZZI:
-		{
-			if (CurAttPower_ >= BazziMaxAttPower_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::LUXMARID:
-		{
-			if (CurAttPower_ >= MaridMaxAttPower_)
-			{
-				return;
-			}
-		}
-		break;
-		case Character::DAO:
-		{
-			if (CurAttPower_ >= DaoMaxAttPower_)
-			{
-				return;
-			}
-		}
-		break;
-		default:
-			break;
-		}
-
-		_Player->CurAttCount_ += 1;*/
+		_Player->CurAttPower_ += 1.f;
 	}
 	break;
 	case ItemType::RedDevil:
@@ -194,18 +97,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Shield:
 	{
-		AddAccTime(Time_);
-
 		IsShield = true;
 		EffectRenderer_->On();
-
-		// 3초가 지나면 무적 해제 및 ResetTime
-		if (3.f < GetAccTime())
-		{
-			IsShield = false;
-			EffectRenderer_->Off();
-			ReSetAccTime();
-		}
 	}
 	break;
 	case ItemType::SuperJump:
@@ -238,15 +131,69 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	default:
 	{
-		CurSpeed_ = CurSpeed_;
-		CurAttCount_ = CurAttCount_;
-		CurAttPower_ = CurAttPower_;
+		//CurSpeed_ = CurSpeed_;
+		//CurAttCount_ = CurAttCount_;
+		//CurAttPower_ = CurAttPower_;
 
-		IsShield = false;
-		IsDevil = false;
+		//IsShield = false;
+		//IsDevil = false;
 	}
 		break;
 	}
+
+}
+
+void Player::ItemTime()
+{
+	if (true == IsDevil)
+	{
+		AddAccTime(Time_);
+
+		// 10초가 지나면 데빌 모드 해제
+		if (10.f < GetAccTime())
+		{
+			IsDevil = false;
+			ReSetAccTime();
+		}
+	}
+
+	if (true == IsShield)
+	{
+		AddAccTime(Time_);
+
+		// 3초가 지나면 무적 해제 및 ResetTime
+		if (3.f < GetAccTime())
+		{
+			IsShield = false;
+			EffectRenderer_->Off();
+			ReSetAccTime();
+		}
+	}
+
+	//if (nullptr != MainPlayer_1)
+	//{
+
+	//	Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
+	//	Boom_->SetMapTile(MapTile_);
+
+	//	BoomCount_ = Boom_->ReturnPlayer1BoomCount();	// 내가 놓은 물풍선 개수 체크
+
+	//	if (BoomCount_ >= CurAttCount_)	// 내가 놓은 물풍선 개수가 공격 가능 개수보다 같거나 크다 -> 공격하지 않는다
+	//	{
+	//		CanAttack = false;
+	//	}
+	//	
+	//	if (BoomCount_ < CurAttCount_)
+	//	{
+	//		BoomCount_ = Boom_->ReturnPlayer1BoomCount();	// 내가 놓은 물풍선 개수 체크
+	//		CanAttack = true;
+	//	}
+
+	//	//if (BoomCount_ < CurAttCount_)		// 내가 놓은 물풍선 개수가 공격 가능 개수보다 작으면 공격 가능
+	//	//{
+	//	//	
+	//	//}
+	//}
 
 }
 
