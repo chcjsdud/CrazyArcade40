@@ -17,6 +17,17 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
+
+
+//UI ºÎºÐ
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
 BossLevel::BossLevel()
 	: ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
@@ -30,7 +41,6 @@ BossLevel::~BossLevel()
 
 void BossLevel::Loading()
 {
-
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	CreateActor<TimeUI>((int)UIType::Time);

@@ -1,5 +1,6 @@
 #include"Monster1Level.h"
 #include"ContentsEnum.h"
+#include "GlobalUIName.h"
 #include "MapFront.h"
 #include "MapBackGround.h"
 #include <GameEngine/GameEngine.h>
@@ -24,6 +25,17 @@
 #include"GameItemObject.h"
 #include <GameEngine/GameEngineRendererTileMap.h>
 
+
+//UI 부분
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
+
 Monster1Level::Monster1Level()
 	: ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
@@ -43,6 +55,7 @@ void Monster1Level::Loading()
 	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
+
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
 	MapBackGround_->GetRenderer()->SetImage("MonsterStage1_Back.bmp");//Actor에 이미지 세팅해주고
@@ -221,10 +234,20 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	Player::MainPlayer_1->SetCharacter(Character::DAO);
+	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
+	{
+
+		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	}
 }
 void Monster1Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {

@@ -18,6 +18,17 @@
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
 
+//UI 부분
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
+
+
 #include "Area.h"
 VillageLevel::VillageLevel()
 	: MapBackGround_(nullptr)
@@ -43,6 +54,14 @@ void VillageLevel::Loading()
 	MapBackGround_->GetRenderer()->SetImage("Village_Back.bmp");//Actor에 이미지 세팅해주고
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
+	
+	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<Mouse>((int)UIType::Mouse);
+	CreateActor<PlayNickName>((int)UIType::PopUpButton);
+	
 	{
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
 		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
@@ -170,6 +189,15 @@ void VillageLevel::LevelChangeStart(GameEngineLevel* _NextLevel)
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition({ 140.0f, 450.0f });
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
+	{
+		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	}
 
 }
 

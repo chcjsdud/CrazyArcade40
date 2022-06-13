@@ -174,5 +174,8 @@ bool Monster2::IsDie()
 
 void Monster2::Render()
 {
-	Monster::Render();
+	if (true == GetLevel()->GetIsDebug())
+	{
+		Monster::Render();
+	}
 }

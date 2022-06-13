@@ -1,4 +1,5 @@
 #include"Monster2Level.h"
+#include "GlobalUIName.h"
 #include"ContentsEnum.h"
 #include "MapBackGround.h"
 #include "MapFront.h"
@@ -17,6 +18,16 @@
 #include "Monster2.h"
 #include "Area.h"
 #include <GameEngine/GameEngineImageManager.h>
+
+//UI ºÎºÐ
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
 Monster2Level::Monster2Level()
 	:ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
@@ -228,6 +239,15 @@ void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[135].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+
+	if (true == GlobalUIName::GetInst()->Is2pUpdate())
+	{
+		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	}
 }
 void Monster2Level::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {

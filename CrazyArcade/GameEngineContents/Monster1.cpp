@@ -36,7 +36,10 @@ void Monster1::Start()
 
 void Monster1::Render()
 {
-	Monster::Render();
+	if (true == GetLevel()->GetIsDebug())
+	{
+		Monster::Render();
+	}
 }
 
 void Monster1::Update()
