@@ -68,8 +68,6 @@ void Player::JumpStart()
 void Player::AttackStart()
 {
 	AttMoveTime_ += GameEngineTime::GetDeltaTime();
-
- 	GameEngineSound::SoundPlayOneShot("Attack.mp3");
 }
 
 void Player::DamagedStartStart()
@@ -182,6 +180,7 @@ void Player::OffUFOStart()
 
 void Player::IdleOwlStart()
 {
+	IsMove = true;
 	ReSetAccTime();
 
 	AnimationName_ = "IdleOwl_";
@@ -190,6 +189,7 @@ void Player::IdleOwlStart()
 
 void Player::IdleTurtleStart()
 {
+	IsMove = true;
 	ReSetAccTime();
 
 	AnimationName_ = "IdleTurtle_";
@@ -198,7 +198,8 @@ void Player::IdleTurtleStart()
 
 void Player::RidingOwlStart()
 {
-	CurSpeed_ = 5.f;
+	IsMove = true;
+	CurSpeed_ = 5.5f;
 
 	AnimationName_ = "RidingOwl_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
@@ -206,7 +207,8 @@ void Player::RidingOwlStart()
 
 void Player::RidingTurtleStart()
 {
-	CurSpeed_ = 1.f;
+	IsMove = true;
+	CurSpeed_ = 2.f;
 
 	AnimationName_ = "RidingTurtle_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
@@ -214,10 +216,11 @@ void Player::RidingTurtleStart()
 
 void Player::RidingUFOStart()
 {
+	IsMove = true;
 	ReSetAccTime();
-	CurSpeed_ = 10.f;
+	CurSpeed_ = 8.5f;
 
-	AnimationName_ = "IdleUFO_";
+	AnimationName_ = "RidingUFO_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
@@ -364,7 +367,7 @@ void Player::OnOwlUpdate()
 	if (2.f < GetAccTime())
 	{
 		ChangeState(PlayerState::RidingOwl);
-		ChangeDirText_ = "Down";
+		CurDir_ = PlayerDir::Down;
 		return;
 	}
 }
@@ -394,7 +397,6 @@ void Player::OffOwlUpdate()
 	if (2.f < GetAccTime())
 	{
 		ChangeState(PlayerState::Idle);
-		ChangeDirText_ = "Down";
 		return;
 	}
 }
@@ -404,7 +406,6 @@ void Player::OffTurtleUpdate()
 	if (2.f < GetAccTime())
 	{
 		ChangeState(PlayerState::Idle);
-		ChangeDirText_ = "Down";
 		return;
 	}
 }
@@ -414,7 +415,6 @@ void Player::OffUFOUpdate()
 	if (2.f < GetAccTime())
 	{
 		ChangeState(PlayerState::Idle);
-		ChangeDirText_ = "Down";
 		return;
 	}
 }
@@ -426,7 +426,6 @@ void Player::IdleOwlUpdate()
 	if (true == IsMoveKey())
 	{
 		ChangeState(PlayerState::RidingOwl);
-		ChangeDirText_ = "Down";
 		return;
 	}
 
@@ -443,7 +442,6 @@ void Player::IdleTurtleUpdate()
 	if (true == IsMoveKey())
 	{
 		ChangeState(PlayerState::RidingTurtle);
-		ChangeDirText_ = "Down";
 		return;
 	}
 
@@ -455,6 +453,7 @@ void Player::IdleTurtleUpdate()
 
 void Player::RidingOwlUpdate()
 {
+	Move(CurSpeed_);
 	DirAnimationCheck();
 
 	if (false == IsMoveKey())
@@ -468,13 +467,14 @@ void Player::RidingOwlUpdate()
 		Attack();
 	}
 
-	Move(CurSpeed_);
+	
 
 	StagePixelCheck(CurSpeed_);
 }
 
 void Player::RidingTurtleUpdate()
 {
+	Move(CurSpeed_);
 	DirAnimationCheck();
 
 	if (false == IsMoveKey())
@@ -488,13 +488,13 @@ void Player::RidingTurtleUpdate()
 		Attack();
 	}
 
-	Move(CurSpeed_);
 
 	StagePixelCheck(CurSpeed_);
 }
 
 void Player::RidingUFOUpdate()
 {
+	Move(CurSpeed_);
 	DirAnimationCheck();
 
 	if (true == IsAttackKey())
@@ -502,9 +502,7 @@ void Player::RidingUFOUpdate()
 		Attack();
 	}
 
-
-	Move(CurSpeed_);
-	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * CurSpeed_);
+	StagePixelCheck(CurSpeed_);
 
 	IsMove = true;
 }
@@ -512,8 +510,6 @@ void Player::RidingUFOUpdate()
 void Player::Attack()
 {
 	float4 ModifyPos = float4{ -20.f, -20.f };
-	int InputCount = CurAttCount_;
-
 
 	if (Type == PlayerType::Player1)
 	{ 
@@ -522,6 +518,8 @@ void Player::Attack()
 		{
 			return;
 		}
+
+		GameEngineSound::SoundPlayOneShot("Attack.mp3");
 		Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_,1);
 	}
 	
@@ -533,6 +531,8 @@ void Player::Attack()
 		{
 			return;
 		}
+
+		GameEngineSound::SoundPlayOneShot("Attack.mp3");
 		Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_,2);
 	}
 }

@@ -15,19 +15,12 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 	case ItemType::Roller:
 	{
-		//float Speed = _Player->CurSpeed_;
-
-		//if (_Player->CurSpeed_ > Speed)
-		//{
-		//	return;
-		//}
-
 		if (_Player->CurSpeed_ >= _Player->MaxSpeed_)
 		{
 			return;
 		}
 
-		_Player->CurSpeed_ = _Player->CurSpeed_ + 1.0f;
+		_Player->CurSpeed_ += 0.5f;
 	
 	}
 	break;
@@ -80,14 +73,13 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Devil:
 	{
+		if (true == IsDevil)
+		{
+			return;
+		}
+		// 누른 방향키와 반대로 이동 + CurAttCount만큼 연속으로 자동 공격 
+		AddAccTime(Time_);
 		IsDevil = true;
-
-		// 1. 누른 방향키와 반대로 이동
-
-
-		// 2. CurAttCount만큼 연속으로 자동 공격 
-
-
 	}
 	break;
 	case ItemType::Shoes:
@@ -97,8 +89,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Shield:
 	{
-		IsShield = true;
-		EffectRenderer_->On();
+		//IsShield = true;
+		//EffectRenderer_->On();
 	}
 	break;
 	case ItemType::SuperJump:
@@ -147,14 +139,15 @@ void Player::ItemTime()
 {
 	if (true == IsDevil)
 	{
-		AddAccTime(Time_);
-
 		// 10초가 지나면 데빌 모드 해제
-		if (10.f < GetAccTime())
+		if (3.f < GetAccTime())
 		{
 			IsDevil = false;
 			ReSetAccTime();
 		}
+
+		Attack();
+
 	}
 
 	if (true == IsShield)
@@ -170,30 +163,7 @@ void Player::ItemTime()
 		}
 	}
 
-	//if (nullptr != MainPlayer_1)
-	//{
 
-	//	Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
-	//	Boom_->SetMapTile(MapTile_);
-
-	//	BoomCount_ = Boom_->ReturnPlayer1BoomCount();	// 내가 놓은 물풍선 개수 체크
-
-	//	if (BoomCount_ >= CurAttCount_)	// 내가 놓은 물풍선 개수가 공격 가능 개수보다 같거나 크다 -> 공격하지 않는다
-	//	{
-	//		CanAttack = false;
-	//	}
-	//	
-	//	if (BoomCount_ < CurAttCount_)
-	//	{
-	//		BoomCount_ = Boom_->ReturnPlayer1BoomCount();	// 내가 놓은 물풍선 개수 체크
-	//		CanAttack = true;
-	//	}
-
-	//	//if (BoomCount_ < CurAttCount_)		// 내가 놓은 물풍선 개수가 공격 가능 개수보다 작으면 공격 가능
-	//	//{
-	//	//	
-	//	//}
-	//}
 
 }
 

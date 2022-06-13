@@ -14,6 +14,7 @@
 #include"MapBackGround.h."
 #include "MapFront.h"
 #include "MapGameObject.h"
+#include "GameEngineContents/GameItemObject.h"
 #include "Monster1.h"
 #include "Monster2.h"
 #include "Boss.h"
@@ -75,43 +76,56 @@ void PlayerTeamTest::Loading()
 
 	//ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 
-	{
-		MapGameObject* BlockSet = CreateActor<MapGameObject>();
-		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
-		GameEngineDirectory Dir;
-	
-		Dir.MoveParent("CrazyArcade");
-		Dir.Move("Resources");
-		Dir.Move("Data");
-	
-		GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
-	
-		LoadFile.Open(OpenMode::Read);
-	
-		int Size = 0;
-		LoadFile.Read(&Size, sizeof(int));
-	
-		for (size_t y = 0; y < Size; y++)
-		{
-			int XSize = 0;
-			LoadFile.Read(&XSize, sizeof(int));
-			for (size_t x = 0; x < XSize; x++)
-			{
-				std::string Name;
-				LoadFile.Read(Name);
-	
-				if (Name == "None")
-				{
-					continue;
-				}
-	
-				//                          5 7
-				BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
-			}
-		}
-	}
+	//{
+	//	MapGameObject* BlockSet = CreateActor<MapGameObject>();
+	//	BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
+	//	GameEngineDirectory Dir;
+	//
+	//	Dir.MoveParent("CrazyArcade");
+	//	Dir.Move("Resources");
+	//	Dir.Move("Data");
+	//
+	//	GameEngineFile LoadFile = (Dir.GetFullPath() + "\\CampLevel.MapData").c_str();
+	//
+	//	LoadFile.Open(OpenMode::Read);
+	//
+	//	int Size = 0;
+	//	LoadFile.Read(&Size, sizeof(int));
+	//
+	//	for (size_t y = 0; y < Size; y++)
+	//	{
+	//		int XSize = 0;
+	//		LoadFile.Read(&XSize, sizeof(int));
+	//		for (size_t x = 0; x < XSize; x++)
+	//		{
+	//			std::string Name;
+	//			LoadFile.Read(Name);
+	//
+	//			if (Name == "None")
+	//			{
+	//				continue;
+	//			}
+	//
+	//			//                          5 7
+	//			BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
+	//		}
+	//	}
+	//}
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 50.f }, ItemType::Devil);
 
+	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Item_->CreateItem({ 400.f, 130.f }, ItemType::Turtle);
 
+	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Item_->CreateItem({ 400.f, 210.f }, ItemType::SpaceShip);
+
+	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Item_->CreateItem({ 400.f, 290.f }, ItemType::Owl);
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(Areas_[0].GetCenter());
