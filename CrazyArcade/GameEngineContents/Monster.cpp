@@ -52,6 +52,7 @@ Monster::Monster()
 	, MapTile_(nullptr)
 	, CurBlockType_(BlockType::Max)
 	, IsStageClear_(false)
+	, SpeechBubble_(nullptr)
 {
 }
 

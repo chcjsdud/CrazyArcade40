@@ -16,7 +16,7 @@
 
 Boss::Boss()
 	: Monster()
-	, WaterTime_(-7.0f)
+	, WaterTime_(-1.0f)
 	, StartTime_(0.0f)
 	, WaterAttackInterval_(-8.5f)
 	, RollTime_(0.0f)
@@ -27,6 +27,10 @@ Boss::Boss()
 	, AttackIndex_(0)
 	, BossBoomIndex_(1)
 	, LevelStart_(true)
+	, IsSppechEnd_(false)
+	, SpeechTime_(0)
+	, IntervalTime_(0)
+	, SpeechNum_(0)
 {
 }
 
@@ -61,7 +65,7 @@ void Boss::Start()
 	Renderer_->CreateAnimation("Boss.bmp", "WaterAttack", 24, 35, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "RollAttackRight", 8, 12, 0.2f, true);
 	Renderer_->CreateAnimation("Boss.bmp", "RollAttackLeft", 19, 23, 0.2f, true);
-	Renderer_->ChangeAnimation("MoveRight");
+	Renderer_->ChangeAnimation("Idle");
 	Dir_ = float4::RIGHT;
 	Direction_ = "Right";
 	CenterCol_ = CreateCollision("Monster", float4(50.0f, 50.0f), float4(0.0f, -25.0f));
@@ -116,6 +120,34 @@ void Boss::Start()
 		BossHP_->CreateAnimation("HP2.bmp", "HP2", 0, 0, 1.0f, false);
 		BossHP_->CreateAnimation("HP1.bmp", "HP1", 0, 0, 1.0f, false);
 		BossHP_->ChangeAnimation("HP14");
+		BossHP_->SetPivot(float4(0.0f, -176.0f));
+
+		SpeechBubble_ = CreateRenderer("SpeechBubble3.bmp");
+		GameEngineImage* SpeechBubbleImage = SpeechBubble_->GetImage();
+		SpeechBubbleImage->CutCount(10, 2);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble0", 0, 0, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble1", 1, 1, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble2", 2, 2, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble3", 3, 3, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble4", 4, 4, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble5", 5, 5, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble6", 6, 6, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble7", 7, 7, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble8", 8, 8, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble9", 9, 9, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble10", 10, 10, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble11", 11, 11, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble12", 12, 12, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble13", 13, 13, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble14", 14, 14, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble15", 15, 15, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble16", 16, 16, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble17", 17, 17, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble18", 18, 18, 0.5f, true);
+		SpeechBubble_->CreateAnimation("SpeechBubble3.bmp", "Bubble19", 19, 19, 0.5f, true);
+		SpeechBubble_->ChangeAnimation("Bubble0");
+		SpeechBubble_->SetOrder((int)ORDER::UI);
+		SpeechBubble_->SetPivot(float4(0.0f, -150.0f));
 	}
 
 	{
@@ -157,17 +189,24 @@ void Boss::Update()
 	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	StartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+	SpeechTime_ += GameEngineTime::GetInst()->GetDeltaTime();
+	IntervalTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
 
 	//if (StartTime_ > 0)
 	//{
+	if (true == IsSppechEnd_)
+	{
 		if (IsDie() != true)
 		{
 			UpdateDirection();
 			UpdateMove();
 			UpdateHP();
 			AllMonsterDeathModeSwitch();
+			Speech();
 		}
+	}
 		Die();
+		Speech();
 	//}
 }
 
@@ -296,6 +335,58 @@ void Boss::UpdateHP()
 		BossHP_->ChangeAnimation("HP14");
 		BossHP_->SetPivot(float4(0.0f, -176.0f));
 		break;
+	}
+}
+
+void Boss::Speech()
+{
+	if (IsSppechEnd_ == false)
+	{
+		if (SpeechNum_ < 5)
+		{
+			if (IntervalTime_ < 0.0f)
+			{
+				if (SpeechBubble_->IsAnimationName("Bubble" + std::to_string(SpeechNum_)))
+				{
+					if (SpeechBubble_->IsEndAnimation())
+					{
+						IntervalTime_ = 2.0f;
+						SpeechNum_++;
+						if (SpeechNum_ == 3)
+						{
+							Renderer_->ChangeAnimation("WaterAttack");
+							RandomAction_ = 4;
+							IntervalTime_ = 5.0f;
+						}
+						SpeechBubble_->ChangeAnimation("Bubble" + std::to_string(SpeechNum_));
+					}
+				}
+			}
+		}
+
+		if (SpeechNum_ == 5)
+		{
+			IsSppechEnd_ = true;
+		}
+	}
+
+	else if (IsSppechEnd_)
+	{
+		if (SpeechTime_ > 3.0f)
+		{
+			int RandomSpeech = (rand() % 20);
+			if (RandomSpeech < 5)
+			{
+				RandomSpeech += 5;
+			}
+			else if (RandomSpeech == 9 || RandomSpeech == 10 || RandomSpeech == 17)
+			{
+				RandomSpeech = 12;
+			}
+			std::string SpeechNum = std::to_string(RandomSpeech);
+			SpeechBubble_->ChangeAnimation("Bubble" + SpeechNum);
+			SpeechTime_ = 0.0f;
+		}
 	}
 }
 
