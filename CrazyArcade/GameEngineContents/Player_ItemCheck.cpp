@@ -11,17 +11,6 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 {
 	CurCharacter = GetCharacter();
 
-	if (true == IsDevil)
-	{
-		AddAccTime(Time_);
-		// 10초가 지나면 데빌 모드 해제
-		if (10.f < GetAccTime())
-		{
-			IsDevil = false;
-			ReSetAccTime();
-		}
-	}
-
 	switch (_ItemType)
 	{
 	case ItemType::Roller:

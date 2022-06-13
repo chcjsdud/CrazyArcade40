@@ -695,6 +695,20 @@ void Player::Update()
 
 	CollisionCheck();
 
+	if (true == IsDevil)
+	{
+		AddAccTime(Time_);
+
+		if(10.f < GetAccTime())
+		{
+			IsDevil = false;
+			ReSetAccTime();
+		}
+
+		// 10초가 지나면 데빌 모드 해제
+
+	}
+
 
 	DebugModeSwitch();
 }
