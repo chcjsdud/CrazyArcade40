@@ -144,6 +144,7 @@ private:
 	bool IsBoomblock;
 	bool IsLive;
 	bool IsShield;
+	bool IsDevil;
 
 protected:
 	void SetSpeed(float _CurSpeed)
@@ -283,6 +284,7 @@ protected:
 	GameEngineRenderer* BazziRenderer_;
 	GameEngineRenderer* MaridRenderer_;
 	GameEngineRenderer* DaoRenderer_;
+	GameEngineRenderer* EffectRenderer_;
 
 private:
 	GameEngineRendererTileMap* MapTile_;

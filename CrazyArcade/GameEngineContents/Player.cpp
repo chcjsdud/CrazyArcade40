@@ -31,7 +31,7 @@ Player::Player()
 	, MaridRenderer_(nullptr)
 	, MapColImage_(nullptr)
 	, CurCharacter(Character::MAX)
-	, IsDebug(true)		// false에서 잠시 바꿔둠
+	, IsDebug(false)		// false에서 잠시 바꿔둠
 	, CurrentLevel_("")
 	, IsMove(false)
 	, MapBackGround_(nullptr)
@@ -56,6 +56,7 @@ Player::Player()
 	, IsLive(true)
 	, IsShield(false)
 	, Box_(nullptr)
+	, IsDevil(false)
 
 {
 	BazziAttCount_ = 1;
@@ -68,7 +69,7 @@ Player::Player()
 
 	BazziSpeed_ = 5.f;
 	MaridSpeed_ = 5.f;
-	DaoSpeed_ = 5.f;
+	DaoSpeed_ = 4.5f;
 
 	BazziMaxAttCount_ = 6;
 	MaridMaxAttCount_ = 9;
@@ -78,9 +79,9 @@ Player::Player()
 	MaridMaxAttPower_ = 6.f;
 	DaoMaxAttPower_ = 7.f;
 
-	BazziMaxSpeed_ = 9.f;
-	MaridMaxSpeed_ = 9.f;
-	DaoMaxSpeed_ = 7.f;
+	BazziMaxSpeed_ = 7.5f;
+	MaridMaxSpeed_ = 7.5f;
+	DaoMaxSpeed_ = 6.5f;
 }
 Player::~Player()
 {
@@ -89,12 +90,12 @@ Player::~Player()
 
 void Player::DebugModeSwitch()
 {
-	if (true == GameEngineInput::GetInst()->IsDown("DebugMode") && true == IsDebug)
+	if (true == GameEngineInput::GetInst()->IsDown("Debug_Col") && true == IsDebug)
 	{
 		GetLevel()->IsDebugModeOff();
 		IsDebug = false;
 	}
-	else if (true == GameEngineInput::GetInst()->IsDown("DebugMode") && false == IsDebug)
+	else if (true == GameEngineInput::GetInst()->IsDown("Debug_Col") && false == IsDebug)
 	{
 		GetLevel()->IsDebugModeOn();
 		IsDebug = true;
@@ -413,8 +414,12 @@ void Player::Start()
 	PlayerAnimationRender_ = CreateRenderer();
 	PlayerAnimationRender_->SetPivotType(RenderPivot::CENTER);
 	PlayerAnimationRender_->SetPivot({ 0.f, 0.f });
-
 	PlayerAnimationRender_->Off();
+
+	// 쉴드 이펙트
+	EffectRenderer_ = CreateRenderer((int)ORDER::EFFECT, RenderPivot::CENTER, float4{ 0.f, 0.f });
+	EffectRenderer_->Off();
+
 
 	// BAZZI
 	{
@@ -428,6 +433,11 @@ void Player::Start()
 		Bazzi->CutCount(5, 18);
 		GameEngineImage* Bazzi4 = GameEngineImageManager::GetInst()->Find("Bazzi_4.bmp");
 		Bazzi4->CutCount(5, 7);
+
+		GameEngineImage* Devil = GameEngineImageManager::GetInst()->Find("Player_Devil.bmp");
+		Devil->CutCount(5, 18);
+		GameEngineImage* Effect = GameEngineImageManager::GetInst()->Find("Effect_Shield.bmp");
+		Effect->CutCount(5, 2);
 
 		// 애니메이션
 
@@ -466,6 +476,14 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
 
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 0, 1, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 2, 3, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil", 4, 5, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 6, 7, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 8, 12, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 13, 17, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 18, 24, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 25, 31, 0.1f, true);
 
 		BazziRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
@@ -476,6 +494,7 @@ void Player::Start()
 		//AnimationName_ = "Idle_";
 		//ChangeDirText_ = "Down";
 		//ChangeState(PlayerState::Idle);
+
 
 
 		BazziRenderer_->Off();
@@ -529,6 +548,15 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Right", 17, 17, 0.09f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
+
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 60, 61, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 62, 63, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil", 64, 65, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 66, 67, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 68, 72, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 73, 77, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 88, 92, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 93, 96, 0.1f, true);
 
 
 		MaridRenderer_->ChangeAnimation("Ready_");
@@ -601,6 +629,15 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
 
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 32, 33, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 34, 35, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil",36, 37, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 38, 39, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 40, 44, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 45, 49, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 50, 54, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 55, 59, 0.1f, true);
+
 
 
 		DaoRenderer_->ChangeAnimation("Ready_");
@@ -636,7 +673,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("2PItem", VK_LCONTROL);
 
 		// ============== 디버그 모드 =============
-		GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
+		//GameEngineInput::GetInst()->CreateKey("DebugMode", 'O');
 
 		//GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}
@@ -657,6 +694,20 @@ void Player::Update()
 	FrontBlockCheck();
 
 	CollisionCheck();
+
+	if (true == IsDevil)
+	{
+		AddAccTime(Time_);
+
+		if(10.f < GetAccTime())
+		{
+			IsDevil = false;
+			ReSetAccTime();
+		}
+
+		// 10초가 지나면 데빌 모드 해제
+
+	}
 
 
 	DebugModeSwitch();
@@ -765,18 +816,14 @@ void Player::Render()
 		MaxAttCount = "MAXCOUNT : " + std::to_string(MaxAttCount_);;
 		MaxAttPower = "MAXPOWER : " + std::to_string(MaxAttPower_);;
 
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, CurAttCount.c_str(), static_cast<int>(CurAttCount.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, CurAttPower.c_str(), static_cast<int>(CurAttPower.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
 
-
-		if (true == IsDebug)
-		{
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, CurAttCount.c_str(), static_cast<int>(CurAttCount.length()));
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, CurAttPower.c_str(), static_cast<int>(CurAttPower.length()));
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
-			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
-		}
 	}
 }
 
