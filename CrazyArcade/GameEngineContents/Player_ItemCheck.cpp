@@ -260,7 +260,9 @@ ItemType Player::CheckItem(float4 _Pos)
 	}
 	else
 	{
-		return Tiles_->ItemType_;
+		ItemType ItemType_= Tiles_->ItemType_;
+		MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+		return ItemType_;
 	}
 
 	return ItemType();

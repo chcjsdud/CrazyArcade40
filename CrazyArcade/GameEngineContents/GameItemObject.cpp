@@ -146,7 +146,9 @@ ItemType GameItemObject::CheckItem(float4 _Pos)
 	ItemBlockTile* Tiles_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y);
 	if (Tiles_  != nullptr &&Tiles_->ItemType_ != ItemType::Max)
 	{
-		return Tiles_->ItemType_;
+		ItemType ItemType_ = Tiles_->ItemType_;
+		MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
+		return ItemType_;
 	}
 	else
 	{
