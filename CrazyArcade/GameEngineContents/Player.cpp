@@ -685,96 +685,98 @@ void Player::Render()
 
 	/*TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, Posx.c_str(), static_cast<int>(Posx.length()));
 	TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, Posy.c_str(), static_cast<int>(Posy.length()));*/
+	if (true == GetLevel()->GetIsDebug())
+	{
+		std::string State = "";
+		std::string Item = "";
 
-	std::string State = "";
-	std::string Item = "";
+		std::string CurSpeed = "";
+		std::string CurAttCount = "";
+		std::string CurAttPower = "";
+		std::string MaxSpeed = "";
+		std::string MaxAttCount = "";
+		std::string MaxAttPower = "";
 
-	std::string CurSpeed = "";
-	std::string CurAttCount = "";
-	std::string CurAttPower = "";
-	std::string MaxSpeed = "";
-	std::string MaxAttCount = "";
-	std::string MaxAttPower = "";
+		if (CurState_ == PlayerState::Wait)
+		{
+			State = "STATE : Wait";
+		}
+		else if (CurState_ == PlayerState::Ready)
+		{
+			State = "STATE : Ready";
+		}
+		else if (CurState_ == PlayerState::Idle)
+		{
+			State = "STATE : Idle";
+		}
+		else if (CurState_ == PlayerState::Move)
+		{
+			State = "STATE : Move";
+		}
+		else if (CurState_ == PlayerState::Jump)
+		{
+			State = "STATE : Jump";
+		}
+		else if (CurState_ == PlayerState::Attack)
+		{
+			State = "STATE : Attack";
+		}
+		else if (CurState_ == PlayerState::Damaged)
+		{
+			State = "STATE : Damaged";
+		}
+		else if (CurState_ == PlayerState::Revival)
+		{
+			State = "STATE : Revival";
+		}
+		else if (CurState_ == PlayerState::Fade)
+		{
+			State = "STATE : Fade";
+		}
+		else if (CurState_ == PlayerState::Die)
+		{
+			State = "STATE : Die";
+		}
+		else if (CurState_ == PlayerState::IdleOwl)
+		{
+			State = "STATE : IdleOwl";
+		}
+		else if (CurState_ == PlayerState::IdleTurtle)
+		{
+			State = "STATE : IdleTurtle";
+		}
+		else if (CurState_ == PlayerState::RidingOwl)
+		{
+			State = "STATE : RidingOwl";
+		}
+		else if (CurState_ == PlayerState::RidingTurtle)
+		{
+			State = "STATE : RidingTurtle";
+		}
+		else if (CurState_ == PlayerState::RidingUFO)
+		{
+			State = "STATE : RidingUFO";
+		}
 
-	if (CurState_ == PlayerState::Wait)
-	{
-		State = "STATE : Wait";
-	}
-	else if (CurState_ == PlayerState::Ready)
-	{
-		State = "STATE : Ready";
-	}
-	else if (CurState_ == PlayerState::Idle)
-	{
-		State = "STATE : Idle";
-	}
-	else if (CurState_ == PlayerState::Move)
-	{
-		State = "STATE : Move";
-	}
-	else if (CurState_ == PlayerState::Jump)
-	{
-		State = "STATE : Jump";
-	}
-	else if (CurState_ == PlayerState::Attack)
-	{
-		State = "STATE : Attack";
-	}
-	else if (CurState_ == PlayerState::Damaged)
-	{
-		State = "STATE : Damaged";
-	}
-	else if (CurState_ == PlayerState::Revival)
-	{
-		State = "STATE : Revival";
-	}
-	else if (CurState_ == PlayerState::Fade)
-	{
-		State = "STATE : Fade";
-	}
-	else if (CurState_ == PlayerState::Die)
-	{
-		State = "STATE : Die";
-	}
-	else if (CurState_ == PlayerState::IdleOwl)
-	{
-		State = "STATE : IdleOwl";
-	}
-	else if (CurState_ == PlayerState::IdleTurtle)
-	{
-		State = "STATE : IdleTurtle";
-	}
-	else if (CurState_ == PlayerState::RidingOwl)
-	{
-		State = "STATE : RidingOwl";
-	}
-	else if (CurState_ == PlayerState::RidingTurtle)
-	{
-		State = "STATE : RidingTurtle";
-	}
-	else if (CurState_ == PlayerState::RidingUFO)
-	{
-		State = "STATE : RidingUFO";
-	}
-
-	CurSpeed = "SPEED : " + std::to_string(CurSpeed_);
-	CurAttCount = "COUNT : " + std::to_string(CurAttCount_);;
-	CurAttPower = "POWER : " + std::to_string(CurAttPower_);;
-	MaxSpeed = "MAXSPEED : " + std::to_string(MaxSpeed_);;
-	MaxAttCount = "MAXCOUNT : " + std::to_string(MaxAttCount_);;
-	MaxAttPower = "MAXPOWER : " + std::to_string(MaxAttPower_);;
+		CurSpeed = "SPEED : " + std::to_string(CurSpeed_);
+		CurAttCount = "COUNT : " + std::to_string(CurAttCount_);;
+		CurAttPower = "POWER : " + std::to_string(CurAttPower_);;
+		MaxSpeed = "MAXSPEED : " + std::to_string(MaxSpeed_);;
+		MaxAttCount = "MAXCOUNT : " + std::to_string(MaxAttCount_);;
+		MaxAttPower = "MAXPOWER : " + std::to_string(MaxAttPower_);;
 
 
 
-	if (true == IsDebug)
-	{
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, CurAttCount.c_str(), static_cast<int>(CurAttCount.length()));
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, CurAttPower.c_str(), static_cast<int>(CurAttPower.length()));
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
-		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
+		if (true == IsDebug)
+		{
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, CurAttCount.c_str(), static_cast<int>(CurAttCount.length()));
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 10, CurAttPower.c_str(), static_cast<int>(CurAttPower.length()));
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
+			TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
+		}
 	}
 }
 

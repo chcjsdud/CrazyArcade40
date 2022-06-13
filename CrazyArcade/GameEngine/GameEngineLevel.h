@@ -52,6 +52,11 @@ public:
 		IsDebug = !IsDebug;
 	}
 
+	static bool GetIsDebug()
+	{
+		return IsDebug;
+	}
+
 	template<typename ActorType>
 	ActorType* CreateActor(int _Order = 0, const std::string& _Name = "")
 	{
