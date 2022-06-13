@@ -60,6 +60,7 @@ void Monster2::Update()
 	UpdateMove();
 	UpdateGetBack();
 	Die();
+	AllMonsterDeathModeSwitch();
 }
 
 void Monster2::TakeDamage()
@@ -131,6 +132,7 @@ void Monster2::Die()
 			{
 				CenterCol_->Off();
 				Death();
+
 				if (GetLevel()->GetNameCopy() == "Monster1Level")
 				{
 					LV1_MON_COUNT--; // total 몬스터 수가 줄어든다.

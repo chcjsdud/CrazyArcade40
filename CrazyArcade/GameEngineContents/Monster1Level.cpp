@@ -156,43 +156,34 @@ void Monster1Level::Loading()
 		Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin1->SetPosition(Areas_[66].GetCenter());
 		Mandarin1->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster1* Mandarin2 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin2->SetPosition(Areas_[118].GetCenter());
 		Mandarin2->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster1* Mandarin3 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin3->SetPosition(Areas_[71].GetCenter());
 		Mandarin3->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster1* Mandarin4 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin4->SetPosition(Areas_[123].GetCenter());
 		Mandarin4->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster1* Mandarin5 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin5->SetPosition(Areas_[76].GetCenter());
 		Mandarin5->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster1* Mandarin6 = CreateActor<Monster1>((int)ORDER::PLAYER);
 		Mandarin6->SetPosition(Areas_[128].GetCenter());
 		Mandarin6->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile1->SetPosition(Areas_[19].GetCenter());
 		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
 
 		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile2->SetPosition(Areas_[175].GetCenter());
 		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV1_MON_COUNT++;
-		// LV1_MON_COUNT를 ++ 할지 아니면 한번에 세팅하고 줄일지 고민
 	}
 
 	Monster1Object_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");

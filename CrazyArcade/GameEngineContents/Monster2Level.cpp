@@ -170,32 +170,26 @@ void Monster2Level::Loading()
 		Monster2* Crocodile1 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile1->SetPosition(Areas_[12].GetCenter());
 		Crocodile1->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV2_MON_COUNT++;
 
 		Monster2* Crocodile2 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile2->SetPosition(Areas_[13].GetCenter());
 		Crocodile2->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV2_MON_COUNT++;
 
 		Monster2* Crocodile3 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile3->SetPosition(Areas_[48].GetCenter());
 		Crocodile3->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV2_MON_COUNT++;
 
 		Monster2* Crocodile4 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile4->SetPosition(Areas_[89].GetCenter());
 		Crocodile4->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV2_MON_COUNT++;
 
 		Monster2* Crocodile5 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile5->SetPosition(Areas_[131].GetCenter());
 		Crocodile5->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV2_MON_COUNT++;
 
 		Monster2* Crocodile6 = CreateActor<Monster2>((int)ORDER::PLAYER);
 		Crocodile6->SetPosition(Areas_[179].GetCenter());
 		Crocodile6->SetMapTile(&MapBackGround_->MapTileMap_);
-		Monster::LV2_MON_COUNT++;
 	}
 	Monster2Object_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	Monster2Object_->SetMapTile(&MapBackGround_->MapTileMap_);
