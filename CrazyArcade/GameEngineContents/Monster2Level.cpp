@@ -17,6 +17,16 @@
 #include "Monster2.h"
 #include "Area.h"
 #include <GameEngine/GameEngineImageManager.h>
+
+//UI ºÎºÐ
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
 Monster2Level::Monster2Level()
 	:ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)

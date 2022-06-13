@@ -24,6 +24,17 @@
 #include"GameItemObject.h"
 #include <GameEngine/GameEngineRendererTileMap.h>
 
+
+//UI 부분
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
+
 Monster1Level::Monster1Level()
 	: ColMapImage_(nullptr)
 	, MapBackGround_(nullptr)
@@ -43,6 +54,7 @@ void Monster1Level::Loading()
 	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
+
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
 	MapBackGround_->GetRenderer()->SetImage("MonsterStage1_Back.bmp");//Actor에 이미지 세팅해주고

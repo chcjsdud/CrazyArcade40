@@ -18,6 +18,17 @@
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
 
+//UI 부분
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
+
+
 #include "Area.h"
 VillageLevel::VillageLevel()
 	: MapBackGround_(nullptr)
@@ -43,6 +54,14 @@ void VillageLevel::Loading()
 	MapBackGround_->GetRenderer()->SetImage("Village_Back.bmp");//Actor에 이미지 세팅해주고
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
+	
+	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	CreateActor<TimeUI>((int)UIType::Time);
+	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<Mouse>((int)UIType::Mouse);
+	CreateActor<PlayNickName>((int)UIType::PopUpButton);
+	
 	{
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
 		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);

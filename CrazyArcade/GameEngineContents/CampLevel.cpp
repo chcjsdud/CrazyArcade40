@@ -18,6 +18,18 @@
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
 
+
+//UI ºÎºÐ
+#include "Mouse.h"
+#include "PlayBackGround.h"
+#include "TimeUI.h"
+#include "StartIntroUI.h"
+#include "PlayResultUI.h"
+#include "PlayNickName.h"
+#include "TimeUI.h"
+#include "PlayerFaceIconUI.h"
+
+
 #include "Area.h"
 
 CampLevel::CampLevel()
@@ -48,6 +60,15 @@ void CampLevel::Loading()
 	
 
 	{
+
+
+		CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+		CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+		CreateActor<TimeUI>((int)UIType::Time);
+		CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+		CreateActor<Mouse>((int)UIType::Mouse);
+		CreateActor<PlayNickName>((int)UIType::PopUpButton);
+
 
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
 		BlockSet->SetMapTile(&MapBackGround_->MapTileMap_);
