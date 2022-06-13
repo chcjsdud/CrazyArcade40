@@ -488,6 +488,7 @@ void CrazyArcade::GameInit()
         GameEngineInput::GetInst()->CreateKey("Monster2Level", '8');
         GameEngineInput::GetInst()->CreateKey("BossLevel", '9');
         GameEngineInput::GetInst()->CreateKey("Debug_Col", VK_OEM_6); // ]키
+        GameEngineInput::GetInst()->CreateKey("AllMonsterDeath", 'K');
     }
     //////시작부분
     CreateLevel<IntroLevel>("IntroLevel");
@@ -532,7 +533,6 @@ void CrazyArcade::GameLoop()
         GameEngineLevel::IsDebugModeSwitch();
     }
 
-    
     if (true == GameEngineInput::GetInst()->IsDown("MapTeamTest"))
     {
         GameEngine::GetInst().ChangeLevel("MapTeamTest");

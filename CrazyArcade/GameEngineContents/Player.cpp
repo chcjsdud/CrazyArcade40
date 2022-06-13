@@ -160,7 +160,7 @@ void Player::PlayerInit()
 }
 
 void Player::PlayerInfoUpdate()
-{	
+{
 	if (Type == PlayerType::Player1)
 	{
 		float4 Pos = MainPlayer_1->GetPosition() + float4{ -20.0f,-20.0f };
@@ -187,10 +187,10 @@ void Player::PlayerInfoUpdate()
 
 			ItemCheck(MainPlayer_2, CurItemType2_);
 
-	/*		if (true == IsItemKey())
-			{
-				ItemCheck(MainPlayer_2, CurItemType2_);
-			}*/
+			/*		if (true == IsItemKey())
+					{
+						ItemCheck(MainPlayer_2, CurItemType2_);
+					}*/
 		}
 	}
 }
@@ -323,7 +323,7 @@ void Player::CollisionCheck()
 		// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
 		{
 			std::vector<GameEngineCollision*> ColList;
-		
+
 			if (MainPlayer_1->CurState_ == PlayerState::Damaged
 				|| MainPlayer_1->CurState_ == PlayerState::Fade)
 			{
@@ -343,7 +343,7 @@ void Player::CollisionCheck()
 				}
 			}
 		}
-	
+
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -364,13 +364,13 @@ void Player::CollisionCheck()
 					}
 				}
 			}
-			
+
 
 			// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
 			{
 				std::vector<GameEngineCollision*> ColList;
 
-				
+
 				if (MainPlayer_2->CurState_ == PlayerState::Damaged
 					|| MainPlayer_2->CurState_ == PlayerState::Fade)
 				{
@@ -381,7 +381,7 @@ void Player::CollisionCheck()
 						{
 							return;
 						}
-					
+
 						for (size_t i = 0; i < ColList.size(); i++)
 						{
 							ChangeState(PlayerState::Die);
