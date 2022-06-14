@@ -226,6 +226,7 @@ void Boss::Die()
 		{
 			Dir_ = float4::ZERO;
 			Renderer_->ChangeAnimation("Die");
+			SpeechBubble_->ChangeAnimation("Bubble17");
 		}
 
 		if (Renderer_->IsAnimationName("DieEnd"))
@@ -268,6 +269,7 @@ void Boss::Die()
 
 		else if (true == Renderer_->IsAnimationName("Die"))
 		{
+
 			if (true == Renderer_->IsEndAnimation())
 			{
 				Renderer_->ChangeAnimation("DieBubble");
@@ -381,11 +383,7 @@ void Boss::Speech()
 			if (SpeechTime_ > 3.0f)
 			{
 				int RandomSpeech = (rand() % 20);
-				if (RandomSpeech < 5)
-				{
-					RandomSpeech += 5;
-				}
-				else if (RandomSpeech == 9 || RandomSpeech == 10 || RandomSpeech == 17)
+				if (RandomSpeech == 9 || RandomSpeech == 10 || RandomSpeech == 17 || RandomSpeech < 5)
 				{
 					RandomSpeech = 12;
 				}
@@ -418,12 +416,11 @@ void Boss::ZeroDirChng()
 }
 void Boss::UpdateMove()
 {
-
 	if (RandomAction_ < 3)
 	{
 		if (true != IsDie())
 		{
-			if (Dir_.x  == 0 && Dir_.y == 0)
+			if (Dir_.x == 0 && Dir_.y == 0)
 			{
 				if (Renderer_->IsAnimationName("TakeDamage" + Direction_))
 				{
@@ -432,7 +429,7 @@ void Boss::UpdateMove()
 						ZeroDirChng();
 					}
 				}
-				else if(true != Renderer_->IsAnimationName("TakeDamgage" + Direction_))
+				else if (true != Renderer_->IsAnimationName("TakeDamgage" + Direction_))
 				{
 					ZeroDirChng();
 				}
@@ -492,6 +489,7 @@ void Boss::UpdateDirection()
 	PrevIndex_ = Index_; // 이전 인덱스 저장
 	IsAreaChanged = false;
 
+	int _PrevRandomAction = RandomAction_;
 	if (false == Renderer_->IsAnimationName("WaterAttack") &&
 		false == Renderer_->IsAnimationName("RollAttack" + Direction_))
 	{
@@ -506,7 +504,7 @@ void Boss::UpdateDirection()
 					AreaChangeCount_++;
 
 					// 노란부분 무조건 이동 체크 필요한 구간
-					if(Index_ % 13 >= 2 &&
+					if (Index_ % 13 >= 2 &&
 						Index_ % 13 <= 10 &&
 						(Index_ >= 15 && Index_ <= 23) ||
 						(Index_ >= 171 && Index_ <= 179))
@@ -533,9 +531,9 @@ void Boss::UpdateDirection()
 
 					// 인덱스가 흰부분
 					else if ((Index_ % 13 > 2 &&
-							Index_ % 13 < 10 &&
-							Index_ >= 29 &&
-							Index_ <= 165))
+						Index_ % 13 < 10 &&
+						Index_ >= 29 &&
+						Index_ <= 165))
 					{
 
 						RandomAction_ = (rand() % 4); // 구르기 제외 모든 동작 가능
@@ -556,15 +554,18 @@ void Boss::UpdateDirection()
 		}
 	}
 
-	CheckWaveTile(GetPosition());
-	CheckWaveTile(GetPosition() + float4(40.0f, 0.0f)); // 오른쪽
-	CheckWaveTile(GetPosition() + float4(-40.0f, 0.0f)); // 왼쪽
-	CheckWaveTile(GetPosition() + float4(0.0f, 40.0f)); // 아래쪽
-	CheckWaveTile(GetPosition() + float4(0.0f, -40.0f)); // 위쪽
-	CheckWaveTile(GetPosition() + float4(-40.0f, -40.0f)); // 왼쪽위
-	CheckWaveTile(GetPosition() + float4(-40.0f, 40.0f)); // 오른쪽위
-	CheckWaveTile(GetPosition() + float4(40.0f, 40.0f)); 
-	CheckWaveTile(GetPosition() + float4(40.0f, -40.0f)); 
+	bool _IsActionChanged = _PrevRandomAction != RandomAction_;
+
+	bool _TakenDamage = CheckWaveTile(GetPosition());
+
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(40.0f, 0.0f)); // 오른쪽
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(-40.0f, 0.0f)); // 왼쪽
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(0.0f, 40.0f)); // 아래쪽
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(0.0f, -40.0f)); // 위쪽
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(-40.0f, -40.0f)); // 왼쪽위
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(-40.0f, 40.0f)); // 오른쪽위
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(40.0f, 40.0f));
+	if (_TakenDamage == false) _TakenDamage = CheckWaveTile(GetPosition() + float4(40.0f, -40.0f));
 
 
 
@@ -572,19 +573,23 @@ void Boss::UpdateDirection()
 	{
 		RandomAction_ = 3;
 	}
+	else if (_TakenDamage == true)
+	{
+		RandomAction_ = 5;
+	}
 
 	if (Dir_.x == 0 && Dir_.y == 0)
 	{
 		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
 			(Renderer_->IsAnimationName("RollAttack" + Direction_) && EndAttack_ == true) ||
-			Renderer_->IsAnimationName("Move"+Direction_))
-			
+			Renderer_->IsAnimationName("Move" + Direction_) ||
+			(Renderer_->IsAnimationName("TakeDamage" + Direction_) && Renderer_->IsEndAnimation()))
+
 		{
 			RandomAction_ = 0;
 			IsAreaChanged = true;
 		}
 	}
-
 	if (true == IsAreaChanged && RandomAction_ < 3)
 	{
 		MovableAreas.clear();
@@ -898,23 +903,33 @@ void Boss::UpdateDirection()
 
 		}
 	}
-
 	else if (RandomAction_ == 3)
 	{
 		Dir_ = float4::ZERO;
 		WaterAttack();
+		if (_IsActionChanged == true)
+		{
+			SpeechBubble_->ChangeAnimation("Bubble10");
+		}
+		
 	}
 	else if (RandomAction_ == 4)
 	{
 		RollAttack();
+		if (_IsActionChanged == true)
+		{
+			SpeechBubble_->ChangeAnimation("Bubble9");
+		}
+	}
+	else if (RandomAction_ == 5)
+	{
+		Dir_ = float4::ZERO;
 	}
 }
 
 void Boss::TakeDamage()
 {
-	if (GetAttTime_ > 1.0 && 
-		(true != Renderer_->IsAnimationName("RollAttackRight") && true!= Renderer_->IsAnimationName("RollAttackLeft")) &&
-		true != Renderer_->IsAnimationName("WaterAttack"))
+	if (GetAttTime_ > 1.0)
 	{
 		SetHP(GetHp() - 1);
 		GetAttTime_ = 0.0f;
@@ -946,7 +961,7 @@ void Boss::UpdateAttack()
 void Boss::RollAttack()
 {
 	UpdateAttack();
-	if ((Index_ >= 16 &&  Index_ <= 22) &&
+	if ((Index_ >= 16 && Index_ <= 22) &&
 		false == Renderer_->IsAnimationName("RollAttackRight") &&
 		false == Renderer_->IsAnimationName("RollAttackLeft"))
 	{

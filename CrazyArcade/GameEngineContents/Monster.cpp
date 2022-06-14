@@ -514,22 +514,23 @@ GameEngineImage* Monster::GetColMapImage()
 	return ColMapImage_;
 }
 
-void Monster::CheckWaveTile(float4 _Pos)
+bool Monster::CheckWaveTile(float4 _Pos)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
 	if (TileIndex_.Y >= 13 || TileIndex_.X >= 15 || TileIndex_.X < 0 || TileIndex_.Y < 0)
 	{
-		return;
+		return false;
 	}
 
 	BlockTile* Tiles_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 	if (Tiles_ == nullptr)
 	{
-		return;
+		return false;
 	}
 
 	else if (Tiles_->BlockType_ == BlockType::WaveBlock)
 	{
 		TakeDamage();
+		return true;
 	}
 }

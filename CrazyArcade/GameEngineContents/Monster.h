@@ -163,7 +163,7 @@ public:
 	}
 
 
-	void CheckWaveTile(float4 _Pos);
+	bool CheckWaveTile(float4 _Pos);
 	inline void SetMapTile(GameEngineRendererTileMap* _MapTile)
 	{
 		MapTile_ = _MapTile;
