@@ -136,6 +136,8 @@ protected:
 	float Time_;
 	float AttMoveTime_;
 
+	float MoveSpeed_;
+
 	float MovePos_;
 	// 플레이어 정보 세팅
 	void AddTime();

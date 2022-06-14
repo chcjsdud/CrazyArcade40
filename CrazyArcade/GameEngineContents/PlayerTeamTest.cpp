@@ -112,7 +112,7 @@ void PlayerTeamTest::Loading()
 	//}
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 450.f }, ItemType::Niddle);
+	Item_->CreateItem({ 400.f, 450.f }, ItemType::Turtle);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);

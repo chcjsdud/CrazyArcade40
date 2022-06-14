@@ -21,7 +21,9 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (PlayerRideState_ != PlayerRideState::Max)
 			{
-				ChangeState(PlayerState::Idle);
+				ChangeState(PlayerState::OffRide);
+				CurState_ = PlayerState::OffRide;
+				
 				return;
 			}
 			else if(CurState_ != PlayerState::Die
@@ -48,7 +50,9 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (PlayerRideState_ != PlayerRideState::Max)
 			{
-				ChangeState(PlayerState::Idle);
+				ChangeState(PlayerState::OffRide);
+				CurState_ = PlayerState::OffRide;
+
 				return;
 			}
 			else if(CurState_ != PlayerState::Die
@@ -151,26 +155,29 @@ void Player::FrontBlockCheckUpdate()
 			if (true == IsShoes)
 			{
 				IsLeftMove = false;
-				if (Playeractorvalue_ < 2)
-				{
-					Boom_ = GetLevel()->CreateActor<MapGameObject>();
-					Playeractorvalue_ += 1;
-				}
+				InputDir_ = CurDir_;
 
 				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Left == CurDir_
 					&& true == IsMoveKey())
 				{
-					if (Type == PlayerType::Player1)
+					if (InputDir_ == CurDir_)
 					{
-						Boom_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
+						if (Type == PlayerType::Player1)
+						{
+							Boom_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
 
-					}
-					else if (Type == PlayerType::Player2)
-					{
-						Boom_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
+						}
+						else if (Type == PlayerType::Player2)
+						{
+							Boom_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
+						}
 					}
 				}
+			}
+			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			{
+				IsLeftMove = false;
 			}
 			else
 			{
@@ -182,7 +189,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide&& PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsLeftMove = true;
 		}
@@ -194,7 +201,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsLeftMove = true;
 		}
@@ -242,12 +249,6 @@ void Player::FrontBlockCheckUpdate()
 				IsRightMove = false;
 				InputDir_ = CurDir_;
 
-			/*	if (Playeractorvalue_ < 2)
-				{
-
-					Playeractorvalue_ += 1;
-				}*/
-
 				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Right == CurDir_
 					&& true == IsMoveKey())
@@ -264,8 +265,11 @@ void Player::FrontBlockCheckUpdate()
 							Boom_->PushBubble(RightPos_2P, BlockDir::RIGHT, 2);
 						}
 					}
-				
 				}
+			}
+			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			{
+				IsRightMove = false;
 			}
 			else
 			{
@@ -277,7 +281,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsRightMove = true;
 		}
@@ -289,7 +293,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsRightMove = true;
 		}
@@ -337,26 +341,29 @@ void Player::FrontBlockCheckUpdate()
 			if (true == IsShoes)
 			{
 				IsUpMove = false;
-				if (Playeractorvalue_ < 2)
-				{
-					Boom_ = GetLevel()->CreateActor<MapGameObject>();
-					Playeractorvalue_ += 1;
-				}
+				InputDir_ = CurDir_;
 
 				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Up == CurDir_
 					&& true == IsMoveKey())
 				{
-					if (Type == PlayerType::Player1)
+					if (InputDir_ == CurDir_)
 					{
-						Boom_->PushBubble(UpPos_1P, BlockDir::UP, 1);
+						if (Type == PlayerType::Player1)
+						{
+							Boom_->PushBubble(UpPos_1P, BlockDir::UP, 1);
 
-					}
-					else if (Type == PlayerType::Player2)
-					{
-						Boom_->PushBubble(UpPos_2P, BlockDir::UP, 2);
+						}
+						else if (Type == PlayerType::Player2)
+						{
+							Boom_->PushBubble(UpPos_2P, BlockDir::UP, 2);
+						}
 					}
 				}
+			}
+			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			{
+				IsUpMove = false;
 			}
 			else
 			{
@@ -368,7 +375,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsUpMove = true;
 		}
@@ -380,7 +387,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsUpMove = true;
 		}
@@ -423,14 +430,45 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (IsBoomblock == false) {
-			IsDownMove = false;
+		if (IsBoomblock == false)
+		{
+			if (true == IsShoes)
+			{
+				IsDownMove = false;
+				InputDir_ = CurDir_;
+
+				Boom_->SetMapTile(MapTile_);
+				if (PlayerDir::Down == CurDir_
+					&& true == IsMoveKey())
+				{
+					if (InputDir_ == CurDir_)
+					{
+						if (Type == PlayerType::Player1)
+						{
+							Boom_->PushBubble(DownPos_1P, BlockDir::DOWN, 1);
+
+						}
+						else if (Type == PlayerType::Player2)
+						{
+							Boom_->PushBubble(DownPos_2P, BlockDir::DOWN, 2);
+						}
+					}
+				}
+			}
+			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			{
+				IsDownMove = false;
+			}
+			else
+			{
+				IsDownMove = false;
+			}
 		}
 	}
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsDownMove = true;
 		}
@@ -442,7 +480,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsDownMove = true;
 		}

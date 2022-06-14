@@ -146,11 +146,6 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		return;
 	}
 	break;
-	case ItemType::Bubble_Dark:
-	{
-		// 물풍선 이미지 변경
-	}
-	break;
 	default:
 	{
 		//CurSpeed_ = CurSpeed_;

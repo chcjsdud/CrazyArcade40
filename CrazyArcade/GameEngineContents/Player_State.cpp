@@ -25,6 +25,7 @@ void Player::ReadyStart()
 
 void Player::IdleStart()
 {
+	CurSpeed_ = CurSpeed_;
 	IsMove = true;
 	ReSetAccTime();
 
@@ -130,6 +131,8 @@ void Player::DieStart()
 //---------------------------------------------------
 void Player::OnRideStart()
 {
+	CheckDir_ = PlayerDir::None;
+
 	if (PlayerRideState_ == PlayerRideState::Owl)
 	{
 		IsMove = false;
@@ -158,6 +161,8 @@ void Player::OnRideStart()
 }
 void Player::OffRideStart()
 {
+	CheckDir_ = PlayerDir::None;
+
 	if (PlayerRideState_ == PlayerRideState::Owl)
 	{
 		IsMove = false;
@@ -176,12 +181,11 @@ void Player::OffRideStart()
 	}
 	else if (PlayerRideState_ == PlayerRideState::UFO)
 	{
-		
-	IsMove = false;
-	AddAccTime(Time_);
+		IsMove = false;
+		AddAccTime(Time_);
 
-	AnimationName_ = "OnUFO_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+		AnimationName_ = "OnUFO_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 	}
 
 }
@@ -371,21 +375,29 @@ void Player::DieUpdate()
 
 void Player::OnRideUpdate()
 {
-		if (2.f < GetAccTime()&& PlayerRideState_ != PlayerRideState::UFO)
-		{
-			ChangeState(PlayerState::IdleRide);
-			return;
-		}
-		if (2.f < GetAccTime() )
+	MoveSpeed_ = CurSpeed_;
+	IsMove = false;
+
+	if (1.8f < GetAccTime())
+	{
+		if (PlayerRideState_ == PlayerRideState::UFO)
 		{
 			ChangeState(PlayerState::RidingRide);
 			return;
 		}
+		else
+		{
+			ChangeState(PlayerState::IdleRide);
+			return;
+		}
+	}
 }
 
 void Player::OffRideUpdate()
 {
-	if (2.f < GetAccTime())
+	CurSpeed_ = MoveSpeed_;
+
+	if (1.8f < GetAccTime())
 	{
 		ChangeState(PlayerState::Idle);
 		return;

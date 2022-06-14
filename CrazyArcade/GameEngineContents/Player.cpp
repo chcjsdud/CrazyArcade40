@@ -63,6 +63,7 @@ Player::Player()
 	, CurItem_(ItemType::Max)
 	, IsNiddle(false)
 	, IsJump(false)
+	, MoveSpeed_(CurSpeed_)
 
 {
 	BazziAttCount_ = 1;
@@ -561,9 +562,9 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 18, 24, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 25, 31, 0.1f, true);
 
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnOwl_", 0, 7, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnTurtle_", 8, 15, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnOwl_", 0, 7, 0.08f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnTurtle_", 8, 15, 0.08f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnUFO_", 16, 19, 0.08f, true);
 
 		BazziRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
@@ -647,9 +648,9 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 88, 92, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 93, 96, 0.1f, true);
 
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnOwl_", 0, 7, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnTurtle_", 8, 15, 0.1f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnOwl_", 0, 7, 0.08f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnTurtle_", 8, 15, 0.08f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnUFO_", 16, 19, 0.08f, true);
 
 
 		MaridRenderer_->ChangeAnimation("Ready_");
@@ -739,9 +740,9 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 50, 54, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 55, 59, 0.1f, true);
 
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnOwl_", 0, 7, 0.1f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnTurtle_", 8, 15, 0.1f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnOwl_", 0, 7, 0.08f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnTurtle_", 8, 15, 0.08f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnUFO_", 16, 19, 0.08f, true);
 
 
 		DaoRenderer_->ChangeAnimation("Ready_");
