@@ -3,6 +3,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <vector>
 #include "Monster.h"
+#include "GameItemObject.h"
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineContents/MapGameObject.h>
@@ -56,10 +57,12 @@ bool Area::HasBlock()
 int Area::ChooseWaterAttackAni()
 {
     BlockTile* Tile_ = GetTile(float4(CenterX_, CenterY_));
+    TileIndex Pos_ = MapTile_->GetTileIndex(float4(CenterX_, CenterY_));
+    ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(Pos_.X, Pos_.Y);
 
     if (Tile_ != nullptr)
     {
-        if (Tile_->BlockType_ != BlockType::Max)
+        if (Tile_->BlockType_ == BlockType::FixBlock || Tile_->BlockType_ == BlockType::PullBlock)
         {
             return 0; // 1번 애니메이션
         }

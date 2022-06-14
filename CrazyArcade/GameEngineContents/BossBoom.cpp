@@ -43,7 +43,7 @@ void BossBoom::Update()
 							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
 							BlockTile* _check = _Area.GetMapTile()->GetTile<BlockTile>(_TileIndex.X, _TileIndex.Y);
-
+							_check->TilePos_ = _Center;
 							if (_check->BlockType_ == BlockType::BubbleBlock || _check->BlockType_ == BlockType::WaveBlock)
 							{
 								BossBubblePop(_Center);
@@ -58,9 +58,26 @@ void BossBoom::Update()
 							}
 						}
 
+
 						else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음
 						{
 							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
+							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
+							ItemBlockTile* _checkItem = _Area.GetMapTile()->GetTile<ItemBlockTile>(_TileIndex.X, _TileIndex.Y);
+							if (_checkItem != nullptr)
+							{
+								_Area.GetMapTile()->DeleteTile(_TileIndex.X, _TileIndex.Y);
+
+							}
+							BossBubblePop(_Center);
+						}
+
+						else if (3 == _Area.ChooseWaterAttackAni()) // 블럭 있음
+						{
+							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
+							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
+							ItemBlockTile* _checkItem = _Area.GetMapTile()->GetTile<ItemBlockTile>(_TileIndex.X, _TileIndex.Y);
+							_Area.GetMapTile()->DeleteTile(_TileIndex.X, _TileIndex.Y);
 							BossBubblePop(_Center);
 						}
 					}
@@ -99,10 +116,6 @@ void BossBoom::Update()
 
 			}
 
-		}
-		else
-		{
-			return;
 		}
 	}
 
