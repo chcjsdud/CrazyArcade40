@@ -21,7 +21,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		}
 
 		_Player->CurSpeed_ += 0.5f;
-	
+
 	}
 	break;
 	case ItemType::Bubble:
@@ -67,8 +67,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Niddle:
 	{
-		if (true == IsShield) 
-		CurItem_ = ItemType::Niddle;
+		CurItem_ = ItemType::Niddle; // ItemUI ¶ç¿ì±â¿ë
+
 		if (true == IsItemKey())
 		{
 			IsShield = false;
@@ -107,6 +107,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Shield:
 	{
+		CurItem_ = ItemType::Shield;
 		if (true == IsNiddle)
 		{
 			IsNiddle = false;
@@ -121,6 +122,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::SuperJump:
 	{
+		CurItem_ = ItemType::SuperJump;
 		IsJump = true;
 	}
 	break;
@@ -157,7 +159,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		//IsShield = false;
 		//IsDevil = false;
 	}
-		break;
+	break;
 	}
 
 }
@@ -198,7 +200,7 @@ void Player::ItemTime()
 
 	if (true == IsShield)
 	{
-		if(CurState_ != PlayerState::Damaged
+		if (CurState_ != PlayerState::Damaged
 			&& CurState_ != PlayerState::Fade
 			&& CurState_ != PlayerState::Die)
 		{
@@ -246,7 +248,7 @@ ItemType Player::CheckItem(float4 _Pos)
 	}
 	else
 	{
-		ItemType ItemType_= Tiles_->ItemType_;
+		ItemType ItemType_ = Tiles_->ItemType_;
 		MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
 		return ItemType_;
 	}
