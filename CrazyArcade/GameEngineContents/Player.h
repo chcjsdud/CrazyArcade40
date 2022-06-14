@@ -28,7 +28,7 @@ enum class  PlayerRideState
 	Max,
 	Owl,
 	Turtle,
-	UFO,
+	UFO
 };
 enum class PlayerDir
 {

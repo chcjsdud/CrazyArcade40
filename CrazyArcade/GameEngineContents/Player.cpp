@@ -201,8 +201,7 @@ void Player::PlayerInfoUpdate()
 		CurItemType1_ = Item->CheckItem(Pos);
 
 
-		if (CurState_ != PlayerState::RidingOwl
-			&& CurState_ != PlayerState::RidingTurtle)
+		if (PlayerRideState_ != PlayerRideState::UFO)
 		{
 			ItemCheck(MainPlayer_1, CurItemType1_);
 		}
@@ -219,8 +218,7 @@ void Player::PlayerInfoUpdate()
 			Item->SetMapTile(MapTile_);
 			CurItemType2_ = Item->CheckItem(Pos);
 
-			if (CurState_ != PlayerState::RidingOwl
-				&& CurState_ != PlayerState::RidingTurtle)
+			if (PlayerRideState_ != PlayerRideState::UFO)
 			{
 				ItemCheck(MainPlayer_2, CurItemType2_);
 			}

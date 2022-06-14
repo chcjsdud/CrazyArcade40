@@ -74,7 +74,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	break;
 	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 	{
-		if (CurState_ != PlayerState::RidingUFO)
+		if (PlayerRideState_ != PlayerRideState::UFO)
 		{
 			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
 			PlayerInfoUpdate();
