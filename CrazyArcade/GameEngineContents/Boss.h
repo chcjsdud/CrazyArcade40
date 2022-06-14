@@ -31,6 +31,7 @@ protected:
 
 private:
     float RollTime_;
+    float TakeDamageTime_;
     float WaterTime_;
     float StartTime_;
     float WaterAttackInterval_;

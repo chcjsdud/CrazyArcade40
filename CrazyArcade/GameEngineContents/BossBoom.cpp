@@ -1,5 +1,6 @@
 #include "BossBoom.h"
 #include "Area.h"
+#include "GameItemObject.h"
 #include <GameEngine/GameEngineImageManager.h>
 
 BossBoom::BossBoom()
@@ -42,10 +43,19 @@ void BossBoom::Update()
 							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
 							BlockTile* _check = _Area.GetMapTile()->GetTile<BlockTile>(_TileIndex.X, _TileIndex.Y);
-							_check->Renderer->ChangeAnimation("Death");
-							_check->TileIndex_ = _TileIndex;
-							DeleteTileList_.push_back(_check);
+
+							if (_check->BlockType_ == BlockType::BubbleBlock || _check->BlockType_ == BlockType::WaveBlock)
+							{
+								BossBubblePop(_Center);
+								return;
+							}
 							
+							else
+							{
+								_check->Renderer->ChangeAnimation("Death");
+								_check->TileIndex_ = _TileIndex;
+								DeleteTileList_.push_back(_check);
+							}
 						}
 
 						else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음
@@ -76,9 +86,23 @@ void BossBoom::Update()
 	{
 		if (DeleteTileList_[i]->Renderer->IsEndAnimation() == true)
 		{
+			BlockTile* Tiles_ = CanAttackAreas_.begin()->second.GetMapTile()->GetTile<BlockTile>(DeleteTileList_[i]->TileIndex_.X, DeleteTileList_[i]->TileIndex_.Y);//현재 검사중인 타일 정보
+			ItemType ItemValue = Tiles_->ItemType_;
+			float4 CreatePos = DeleteTileList_[i]->TilePos_;
 			CanAttackAreas_.begin()->second.GetMapTile()->DeleteTile(DeleteTileList_[i]->TileIndex_.X, DeleteTileList_[i]->TileIndex_.Y);
 			DeleteTileList_.erase(DeleteTileList_.begin() + i);
+			if (ItemValue != ItemType::Max)
+			{
+				GameItemObject* Item = GetLevel()->CreateActor<GameItemObject>(static_cast<int>(ORDER::MAPOBJECT));
+				Item->SetMapTile(CanAttackAreas_.begin()->second.GetMapTile());
+ 				Item->CreateItem(CreatePos , ItemValue);
 
+			}
+
+		}
+		else
+		{
+			return;
 		}
 	}
 
