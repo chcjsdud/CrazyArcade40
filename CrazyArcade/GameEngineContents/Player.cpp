@@ -344,7 +344,7 @@ void Player::CollisionCheck()
 					Monster* ColMonster = dynamic_cast<Monster*>(ColActor->GetActor());
 					if (ColMonster != nullptr)
 					{
-						if (ColMonster->GetHP() <= 1)
+						if (ColMonster->GetHP() <= 0)
 						{
 							return;
 						}

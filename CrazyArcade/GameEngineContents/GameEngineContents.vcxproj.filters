@@ -163,6 +163,9 @@
     <ClInclude Include="StartMonsterModeUI.h">
       <Filter>Actor\UI\Play</Filter>
     </ClInclude>
+    <ClInclude Include="ItemIcon.h">
+      <Filter>Actor\UI\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -346,6 +349,9 @@
     <ClCompile Include="ChattingHistory.cpp">
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
+    <ClCompile Include="ItemIcon.cpp">
+      <Filter>Actor\UI\Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -384,9 +390,6 @@
     <Filter Include="Actor\UI\RoomCreate">
       <UniqueIdentifier>{61c51dcf-e1e9-4d12-9c53-b93473a15c22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\UI\Play">
-      <UniqueIdentifier>{1e87fa18-9799-48aa-81c6-ecb1222944e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\UI\MapChoice">
       <UniqueIdentifier>{5df733e4-9135-47d2-91eb-49c84a202e22}</UniqueIdentifier>
     </Filter>
@@ -413,6 +416,9 @@
     </Filter>
     <Filter Include="Actor\UI\Room">
       <UniqueIdentifier>{2e4a20aa-9014-4c87-b2e0-277cd5a910f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\Play">
+      <UniqueIdentifier>{1e87fa18-9799-48aa-81c6-ecb1222944e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

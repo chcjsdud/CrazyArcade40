@@ -274,6 +274,16 @@ public:
 		return IsLive;
 	}
 
+
+	inline ItemType GetCurItemType1()
+	{
+		return CurItemType1_;
+	}
+
+	inline ItemType GetCurItemType2()
+	{
+		return CurItemType2_;
+	}
 protected:
 	GameEngineRenderer* PlayerAnimationRender_;
 	PlayerDir CurDir_;

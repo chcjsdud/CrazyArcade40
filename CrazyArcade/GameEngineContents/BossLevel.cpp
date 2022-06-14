@@ -25,6 +25,7 @@
 #include "Mouse.h"
 #include "GlobalUIName.h"
 #include "PlayBackGround.h"
+#include "ItemIcon.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
@@ -50,6 +51,7 @@ BossLevel::~BossLevel()
 void BossLevel::Loading()
 {
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<ItemIcon>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 

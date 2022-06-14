@@ -23,6 +23,7 @@
 //UI 부분
 #include "Mouse.h"
 #include "PlayBackGround.h"
+#include "ItemIcon.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
@@ -49,6 +50,7 @@ void Monster2Level::Loading()
 {
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
 	CreateActor<Mouse>((int)UIType::Mouse);
+	CreateActor<ItemIcon>((int)UIType::PopUpButton);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고

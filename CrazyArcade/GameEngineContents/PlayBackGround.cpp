@@ -25,8 +25,6 @@ void PlayBackGround::Start()
 	PlayBackGroundRenderer_->SetImage("PlayBackGroundUI.bmp");
 
 	ExitBtnCollision_ = CreateCollision("Exit", { 120 ,40 }, { 320.0f,274.0f });
-
-	
 }
 
 void PlayBackGround::Update()
@@ -40,3 +38,4 @@ void PlayBackGround::Update()
 	}
 
 }
+

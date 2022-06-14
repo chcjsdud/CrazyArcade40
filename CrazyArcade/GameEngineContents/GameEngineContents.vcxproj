@@ -200,6 +200,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="ItemIcon.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LoginBackGround.h">
       <SubType>
       </SubType>
@@ -333,6 +337,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="ItemIcon.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LoginBackGround.cpp">
       <SubType>
       </SubType>

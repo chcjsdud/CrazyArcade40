@@ -24,6 +24,7 @@
 //UI 부분
 #include "Mouse.h"
 #include "PlayBackGround.h"
+#include "ItemIcon.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
@@ -53,6 +54,7 @@ void CampLevel::Loading()
 {
 
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<ItemIcon>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 	MapBackGround_ = CreateActor<MapBackGround>(static_cast<int>(ORDER::BACKGROUND));//Actor 만들고
@@ -64,12 +66,6 @@ void CampLevel::Loading()
 	{
 
 
-		CreateActor<PlayBackGround>((int)ORDER::PLAYER);
-		CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
-		CreateActor<TimeUI>((int)UIType::Time);
-		CreateActor<PlayerFaceIconUI>((int)UIType::Time);
-		CreateActor<Mouse>((int)UIType::Mouse);
-		CreateActor<PlayNickName>((int)UIType::PopUpButton);
 
 
 		MapGameObject* BlockSet = CreateActor<MapGameObject>();
