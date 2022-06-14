@@ -18,9 +18,9 @@ ItemIcon::~ItemIcon()
 void ItemIcon::Start()
 {
 	
-	ItemIconBox_ = CreateRenderer(static_cast<int>(UIType::Time));
-	ItemIcon_1P_ = CreateRenderer(static_cast<int>(UIType::Time));
-	ItemIcon_2P_ = CreateRenderer(static_cast<int>(UIType::Time));
+	ItemIconBox_ = CreateRenderer(static_cast<int>(UIType::PlayResultUI));
+	ItemIcon_1P_ = CreateRenderer(static_cast<int>(UIType::PlayResultUI));
+	ItemIcon_2P_ = CreateRenderer(static_cast<int>(UIType::PlayResultUI));
 
 	ItemIcon_1P_->Off();
 	ItemIcon_2P_->Off();

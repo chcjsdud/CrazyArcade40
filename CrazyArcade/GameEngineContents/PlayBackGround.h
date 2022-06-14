@@ -24,6 +24,7 @@ private:
 
 	GameEngineRenderer* PlayBackGroundRenderer_;
 
+	GameEngineRenderer* ExitBtnRenderer_;
 	GameEngineCollision* ExitBtnCollision_;
 
 private:
