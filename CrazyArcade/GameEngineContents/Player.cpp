@@ -61,6 +61,8 @@ Player::Player()
 	, IsInvincible(false)
 	, IsShoes(false)
 	, InputDir_(CurDir_)
+	, IsNiddle(false)
+	, IsJump(false)
 
 {
 	BazziAttCount_ = 1;
@@ -131,6 +133,14 @@ void Player::PositionUpdate()
 	}
 }
 
+void Player::AddTime()
+{
+	if (true == IsTimeAdd)
+	{
+		AddAccTime(Time_);
+	}
+}
+
 
 void Player::SetCollision(GameEngineCollision* _Collision)
 {
@@ -188,13 +198,14 @@ void Player::PlayerInfoUpdate()
 		Item->SetMapTile(MapTile_);
 		CurItemType1_ = Item->CheckItem(Pos);
 
-		ItemCheck(MainPlayer_1, CurItemType1_);
+
+		if (CurState_ != PlayerState::RidingOwl
+			&& CurState_ != PlayerState::RidingTurtle)
+		{
+			ItemCheck(MainPlayer_1, CurItemType1_);
+		}
 
 		ArrowRenderer_1P->On();
-		//if (true == IsItemKey())
-		//{
-		//	ItemCheck(MainPlayer_1, CurItemType1_);
-		//}
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -206,15 +217,14 @@ void Player::PlayerInfoUpdate()
 			Item->SetMapTile(MapTile_);
 			CurItemType2_ = Item->CheckItem(Pos);
 
-			ItemCheck(MainPlayer_2, CurItemType2_);
+			if (CurState_ != PlayerState::RidingOwl
+				&& CurState_ != PlayerState::RidingTurtle)
+			{
+				ItemCheck(MainPlayer_2, CurItemType2_);
+			}
 
 
 			ArrowRenderer_1P->On();
-
-			/*		if (true == IsItemKey())
-					{
-						ItemCheck(MainPlayer_2, CurItemType2_);
-					}*/
 		}
 	}
 }
@@ -332,8 +342,7 @@ void Player::CollisionCheck()
 	// 무적이 아닐 때만
 	if (Type == PlayerType::Player1)
 	{
-		if (false == IsShield 
-			&& false == IsInvincible)
+		if (false == IsInvincible)
 		{
 			std::vector<GameEngineCollision*> ColList;
 
@@ -390,8 +399,8 @@ void Player::CollisionCheck()
 		if (Type == PlayerType::Player2)
 		{
 			// 무적이 아닐 때만
-			if (false == IsShield
-				&& false == IsInvincible)
+			if (/*false == IsShield
+				&&*/ false == IsInvincible)
 			{
 				std::vector<GameEngineCollision*> ColList;
 
@@ -494,7 +503,7 @@ void Player::Start()
 		EffectRenderer_ = CreateRenderer((int)ORDER::UI);
 		EffectRenderer_->SetPivotType(RenderPivot::CENTER);
 		EffectRenderer_->SetPivot({ 0.f, 0.f });
-		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.08f, true);
+		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.03f, true);
 		EffectRenderer_->ChangeAnimation("Effect_Shield");
 		EffectRenderer_->Off();
 
@@ -783,6 +792,7 @@ void Player::Start()
 
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("Invincible", 'O');
+		GameEngineInput::GetInst()->CreateKey("Revival", 'I');
 
 		//GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}

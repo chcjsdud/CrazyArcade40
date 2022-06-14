@@ -112,11 +112,11 @@ void PlayerTeamTest::Loading()
 	//}
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 450.f }, ItemType::Devil);
+	Item_->CreateItem({ 400.f, 450.f }, ItemType::Niddle);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 130.f }, ItemType::Turtle);
+	Item_->CreateItem({ 400.f, 130.f }, ItemType::Devil);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);

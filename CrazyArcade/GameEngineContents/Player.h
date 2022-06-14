@@ -140,6 +140,8 @@ protected:
 
 	float MovePos_;
 	// 플레이어 정보 세팅
+	void AddTime();
+	bool IsTimeAdd;
 
 private:
 	PlayerDir CheckDir_;
@@ -149,6 +151,8 @@ private:
 	bool IsDevil;
 	bool IsInvincible;
 	bool IsShoes;
+	bool IsNiddle;
+	bool IsJump;
 
 protected:
 	void SetSpeed(float _CurSpeed)

@@ -52,36 +52,40 @@ void Player::Move(float _CurSpeed)
 			}
 
 			///////////////////////////////////////////////////////////
-
-			if (CheckDir_ == PlayerDir::Right)
+			//bool a = false;
+			//if (a =true)
 			{
-				if (true == IsLeftMove)
+
+				if (CheckDir_ == PlayerDir::Right)
 				{
-					MoveDir.x = -MovePos_;
+					if (true == IsLeftMove)
+					{
+						MoveDir.x = -MovePos_;
+					}
+
 				}
-
-			}
-			else if (CheckDir_ == PlayerDir::Left)
-			{
-				if (true == IsRightMove)
+				else if (CheckDir_ == PlayerDir::Left)
 				{
-					MoveDir.x = MovePos_;
+					if (true == IsRightMove)
+					{
+						MoveDir.x = MovePos_;
+					}
+
 				}
-
-			}
-			else if (CheckDir_ == PlayerDir::Down)
-			{
-				if (true == IsUpMove)
+				else if (CheckDir_ == PlayerDir::Down)
 				{
-					MoveDir.y = -MovePos_;
+					if (true == IsUpMove)
+					{
+						MoveDir.y = -MovePos_;
+					}
+
 				}
-
-			}
-			else if (CheckDir_ == PlayerDir::Up)
-			{
-				if (true == IsDownMove)
+				else if (CheckDir_ == PlayerDir::Up)
 				{
-					MoveDir.y = MovePos_;
+					if (true == IsDownMove)
+					{
+						MoveDir.y = MovePos_;
+					}
 				}
 			}
 		}

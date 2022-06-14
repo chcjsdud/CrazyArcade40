@@ -91,6 +91,7 @@ void Player::DamagedStart()
 
 void Player::RevivalStart()
 {
+	IsNiddle = false;
 	IsMove = false;
 	MoveDir = float4::ZERO;
 
@@ -146,6 +147,7 @@ void Player::OffOwlStart()
 void Player::IdleOwlStart()
 {
 	IsMove = true;
+	CurSpeed_ = 5.5f;
 	ReSetAccTime();
 
 	AnimationName_ = "IdleOwl_";
@@ -302,7 +304,7 @@ void Player::DamagedStartUpdate()
 
 void Player::DamagedUpdate()
 {
-	if (true == IsItemKey())
+	if (true == GameEngineInput::GetInst()->IsDown("Revival"))
 	{
 		ChangeState(PlayerState::Revival);
 		return;
@@ -316,13 +318,6 @@ void Player::DamagedUpdate()
 		ChangeState(PlayerState::Fade);
 		return;
 	}
-
-	//if (PlayerAnimationRender_->IsEndAnimation())
-	//{
-	//	ChangeState(PlayerState::Fade);
-	//	return;
-	//}
-
 }
 
 
@@ -338,7 +333,7 @@ void Player::RevivalUpdate()
 
 void Player::FadeUpdate()
 {
-	if (true == IsItemKey())
+	if (true == GameEngineInput::GetInst()->IsDown("Revival"))
 	{
 		ChangeState(PlayerState::Revival);
 		return;

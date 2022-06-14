@@ -67,13 +67,16 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Niddle:
 	{
-		if (true == IsItemKey())
+		if (true == IsShield) 
 		{
-			//
+			IsShield = false;
+		}
+		else if (true == IsJump)
+		{
+			IsJump = false;
 		}
 
-		ChangeState(PlayerState::Revival);
-		return;
+		IsNiddle = true;
 	}
 	break;
 	case ItemType::Devil:
@@ -90,6 +93,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		IsMove = false;
 
 		CurDir_ = PlayerDir::None;
+		CheckDir_ = PlayerDir::None;
+		MoveDir = float4::ZERO;
 	}
 	break;
 	case ItemType::Shoes:
@@ -100,21 +105,21 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Shield:
 	{
-		AddAccTime(Time_);
-
-		if (true == IsItemKey())
+		if (true == IsNiddle)
 		{
-			IsShield = true;
-			EffectRenderer_->On();
+			IsNiddle = false;
 		}
+		else if (true == IsJump)
+		{
+			IsJump = false;
+		}
+
+		IsShield = true;
 	}
 	break;
 	case ItemType::SuperJump:
 	{
-		if (true == IsItemKey())
-		{
-			//
-		}
+		IsJump = true;
 	}
 	break;
 	case ItemType::Owl:
@@ -159,12 +164,14 @@ void Player::ItemTime()
 {
 	if (true == IsDevil)
 	{
+		float Time = GetAccTime();
 		// 10초가 지나면 데빌 모드 해제
-		if (3.f < GetAccTime())
+		if (4.f < GetAccTime())
 		{
 			IsDevil = false;
 			CurDir_ = PlayerDir::None;
 			MoveDir = float4::ZERO;
+			CheckDir_ = PlayerDir::None;
 
 			ReSetAccTime();
 		}
@@ -175,12 +182,47 @@ void Player::ItemTime()
 
 	if (true == IsShield)
 	{
-		// 3초가 지나면 무적 해제 및 ResetTime
-		if (3.f < GetAccTime())
+		if(CurState_ != PlayerState::Damaged
+			&& CurState_ != PlayerState::Fade
+			&& CurState_ != PlayerState::Die)
 		{
-			IsShield = false;
-			EffectRenderer_->Off();
-			ReSetAccTime();
+			if (true == IsItemKey())
+			{
+				GameEngineSound::SoundPlayOneShot("Shield.wav");
+				IsInvincible = true;
+
+				AddAccTime(Time_);
+				EffectRenderer_->On();
+				IsShield = false;
+
+				// 3초가 지나면 무적 해제 및 ResetTime
+				if (3.f < GetAccTime()
+					&& false == IsShield)
+				{
+					IsInvincible = false;
+					EffectRenderer_->Off();
+					ReSetAccTime();
+				}
+			}
+		}
+	}
+
+	if (true == IsNiddle)
+	{
+		if (true == IsItemKey())
+		{
+			ChangeState(PlayerState::Revival);
+			return;
+		}
+
+	}
+
+	if (true == IsJump)
+	{
+		if (true == IsItemKey())
+		{
+			//ChangeState(PlayerState::Jump);
+			//return;
 		}
 	}
 }

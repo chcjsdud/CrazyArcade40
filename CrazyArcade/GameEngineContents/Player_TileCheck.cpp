@@ -16,8 +16,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	case BlockType::WaveBlock:
 	{
 		// 무적이 아닐 때만
-		if (false == IsShield
-			&& false == IsInvincible)
+		if (false == IsInvincible)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl
@@ -29,11 +28,10 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 				ChangeState(PlayerState::Idle);
 				return;
 			}
-
-			if (CurState_ != PlayerState::Die
-				&& CurState_ != PlayerState::DamageStart
-				&& CurState_ != PlayerState::Damaged
-				&& CurState_ != PlayerState::Fade)
+			else if(CurState_ != PlayerState::Die
+					&& CurState_ != PlayerState::DamageStart
+					&& CurState_ != PlayerState::Damaged
+					&& CurState_ != PlayerState::Fade)
 			{
 				ChangeState(PlayerState::DamageStart);
 				return;
@@ -49,8 +47,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	case BlockType::BubbleBlock:
 	{
 		// 무적이 아닐 때만
-		if (false == IsShield
-			&& false == IsInvincible)
+		if (false == IsInvincible)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (CurState_ == PlayerState::IdleOwl
@@ -62,8 +59,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 				ChangeState(PlayerState::Idle);
 				return;
 			}
-
-			if (CurState_ != PlayerState::Die
+			else if(CurState_ != PlayerState::Die
 				&& CurState_ != PlayerState::DamageStart
 				&& CurState_ != PlayerState::Damaged
 				&& CurState_ != PlayerState::Fade)
@@ -86,14 +82,15 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	break;
 	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 	{
-		GameEngineSound::SoundPlayOneShot("eat_item.mp3");
-		//int a = 0;
-		PlayerInfoUpdate();
+		if (CurState_ != PlayerState::RidingUFO)
+		{
+			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
+			PlayerInfoUpdate();
+		}
 	}
 	break;
 	case BlockType::BoomBlock:
 	{
-
 		IsBoomblock = true;
 		break;
 	}
@@ -105,13 +102,6 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	}
 	break;
 	}
-
-	// UFO를 탄 상태가 아닐 때만 아이템 체크 
-	//if (CurState_ != PlayerState::RidingUFO)
-	//{
-	//	PlayerInfoUpdate();
-	//}
-	//
 }
 
 void Player::TileCheckResult()
@@ -443,6 +433,7 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::BoomBlock:
 	{
 		if (IsBoomblock == false) {
+			IsDownMove = false;
 		}
 	}
 	break;
