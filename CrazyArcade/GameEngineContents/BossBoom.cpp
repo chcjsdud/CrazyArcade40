@@ -44,9 +44,23 @@ void BossBoom::Update()
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
 							BlockTile* _check = _Area.GetMapTile()->GetTile<BlockTile>(_TileIndex.X, _TileIndex.Y);
 							_check->TilePos_ = _Center;
-							_check->Renderer->ChangeAnimation("Death");
-							_check->TileIndex_ = _TileIndex;
-							DeleteTileList_.push_back(_check);
+							if (_check->BlockType_ == BlockType::BubbleBlock) 
+							{
+								BossBubblePop(_Center);
+								return;
+							}
+
+							else if (_check->BlockType_ == BlockType::WaveBlock)
+							{
+								return;
+							}
+
+							else
+							{
+								_check->Renderer->ChangeAnimation("Death");
+								_check->TileIndex_ = _TileIndex;
+								DeleteTileList_.push_back(_check);
+							}
 						}
 
 

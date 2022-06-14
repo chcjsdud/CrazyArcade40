@@ -79,7 +79,7 @@ void Monster::Start()
 	}
 	else if (GetLevel()->GetNameCopy() == "BossLevel")
 	{
-		SetColMapImage("Boss_ColMap.bmp");
+		SetColMapImage("Test.bmp");
 	}
 	else if (GetLevel()->GetNameCopy() == "CemetoryLevel")
 	{
@@ -517,7 +517,7 @@ GameEngineImage* Monster::GetColMapImage()
 void Monster::CheckWaveTile(float4 _Pos)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos - float4(20.0f, 40.0f));
-	if (TileIndex_.Y >= 13 || TileIndex_.X >= 15)
+	if (TileIndex_.Y >= 13 || TileIndex_.X >= 15 || TileIndex_.X < 0 || TileIndex_.Y < 0)
 	{
 		return;
 	}

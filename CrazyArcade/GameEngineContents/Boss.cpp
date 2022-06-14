@@ -404,6 +404,25 @@ void Boss::UpdateMove()
 	{
 		if (true != IsDie())
 		{
+			if (Dir_.x  == 0 && Dir_.y == 0)
+			{
+				if (Direction_ == "Right")
+				{
+					Dir_ = float4::RIGHT;
+				}
+				else if (Direction_ == "Left")
+				{
+					Dir_ = float4::LEFT;
+				}
+				else if (Direction_ == "Up")
+				{
+					Dir_ = float4::UP;
+				}
+				else if (Direction_ == "Down")
+				{
+					Dir_ = float4::DOWN;
+				}
+			}
 			Renderer_->ChangeAnimation("Move" + Direction_);
 			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
 		}
@@ -471,46 +490,59 @@ void Boss::UpdateDirection()
 				{
 					Index_ = i;
 					AreaChangeCount_++;
-					if (AreaChangeCount_ == 3 ||
-						Index_ < AreaHeight_ ||
-						Index_ % AreaHeight_ == 0 ||
-						Index_ % AreaHeight_ == AreaHeight_ - 1 ||
-						Index_ >= (AreaWidth_ - 1) * AreaHeight_)
+
+					// 노란부분 무조건 이동 체크 필요한 구간
+					if(Index_ % 13 == 2 &&
+						Index_ % 13 == 10 &&
+						(Index_ >= 15 && Index_ <= 23) &&
+						(Index_ >= 171 && Index_ <= 179))
 					{
-						if ((Index_ < AreaHeight_ ||
-							Index_ >= (AreaWidth_ - 1) * AreaHeight_) &&
+						if ((Index_ >= 16 &&
+							Index_ <= 22 &&
+							Index_ % 4 == 0) ||
+							(Index_ >= 172 &&
+								Index_ <= 178 &&
+								Index_ % 4 == 0) &&
 							RandomAction_ != 0)
 						{
-							if (Index_ == 3 ||
-								Index_ == 16 ||
-								Index_ == 175 ||
-								Index_ == 188 ||
-								Index_ == 10 ||
-								Index_ == 23)
-							{
-								RandomAction_ = 4;
-								IsAreaChanged = true;
-								AreaChangeCount_ = 0;
-							}
-							else
-							{
-								RandomAction_ = 0;
-								IsAreaChanged = true;
-								AreaChangeCount_ = 0;
-							}
-						}
-						else
-						{
-							RandomAction_ = (rand() % 4);
+							RandomAction_ = 4;
 							IsAreaChanged = true;
 							AreaChangeCount_ = 0;
 						}
+						else // 엣지
+						{
+							Dir_ = float4::ZERO;
+							IsAreaChanged = true;
+							AreaChangeCount_ = 0;
+						}
+					}
+
+					// 인덱스가 흰부분
+					else if (AreaChangeCount_ == 3 &&
+						(Index_ % 13 > 2 &&
+							Index_ % 13 < 10 &&
+							Index_ >= 29 &&
+							Index_ <= 165))
+					{
+
+						RandomAction_ = (rand() % 3) + 1; // 구르기 제외 모든 동작 가능
+						IsAreaChanged = true;
+						AreaChangeCount_ = 0;
 						SetPosition(NewArea.GetCenter());
+
+					}
+
+
+					else // 벽부분
+					{
+						IsAreaChanged = true;
+						AreaChangeCount_ = 0;
 					}
 				}
 			}
 		}
 	}
+
 	CheckWaveTile(GetPosition());
 	CheckWaveTile(GetPosition() + float4(40.0f, 0.0f)); // 오른쪽
 	CheckWaveTile(GetPosition() + float4(-40.0f, 0.0f)); // 왼쪽
@@ -552,7 +584,6 @@ void Boss::UpdateDirection()
 			EastIndex < Areas_.size() &&
 			Index_ < Areas_.size() - AreaHeight_)
 		{
-			// 동쪽이 벽이 아니고, 물풍선이 아니면
 			EastArea = Areas_[EastIndex];
 			if (false == EastArea.HasWall())
 			{
@@ -565,7 +596,6 @@ void Boss::UpdateDirection()
 			WestIndex < Areas_.size() &&
 			Index_ >= AreaHeight_)
 		{
-			// 서쪽이 벽이 아니고, Wave 타일이 아니면
 			WestArea = Areas_[WestIndex];
 			if (false == WestArea.HasWall())
 			{
@@ -579,7 +609,6 @@ void Boss::UpdateDirection()
 			SouthIndex < Areas_.size() &&
 			Index_ % AreaHeight_ != AreaHeight_ - 1)
 		{
-			// 남쪽이 벽이 아니고, Wave 타일이 아니면
 			Area& SouthArea = Areas_[SouthIndex];
 			if (false == SouthArea.HasWall())
 			{
@@ -621,8 +650,7 @@ void Boss::UpdateDirection()
 				{
 					while (FoundArea == MovableAreas.end() ||
 						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
-							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
-						/* || RandomDir == 0*/)
+							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y))
 					{
 						RandomDir = (rand() % 4);
 						FoundArea = MovableAreas.find(RandomDir);
@@ -659,45 +687,53 @@ void Boss::UpdateDirection()
 			if (MovableAreas.size() == 0)
 			{
 				Dir_ = float4::ZERO;
-				//Direction_ = "Zero";
 			}
 			else
 			{
-				int RandomDir = (rand() % 4);
-				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+				//if (West != MovableAreas.end())
+				//{
+				//	Dir_ = float4::LEFT;
+				//	Direction_ = "Left";
+				//}
 
-				if (MovableAreas.size() > 1)
+				//else
 				{
-					while (FoundArea == MovableAreas.end() ||
-						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
-							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
-						/* || RandomDir == 1*/)
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+
+					if (MovableAreas.size() > 1)
 					{
-						RandomDir = (rand() % 4);
-						FoundArea = MovableAreas.find(RandomDir);
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 1*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
 					}
-				}
-				else
-				{
-					FoundArea = MovableAreas.begin();
-				}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
 
-				if (FoundArea == East)
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-				}
+					if (FoundArea == East)
+					{
+						Dir_ = float4::RIGHT;
+						Direction_ = "Right";
+					}
 
-				else if (FoundArea == South)
-				{
-					Dir_ = float4::DOWN;
-					Direction_ = "Down";
-				}
+					else if (FoundArea == South)
+					{
+						Dir_ = float4::DOWN;
+						Direction_ = "Down";
+					}
 
-				else if (FoundArea == North)
-				{
-					Dir_ = float4::UP;
-					Direction_ = "Up";
+					else if (FoundArea == North)
+					{
+						Dir_ = float4::UP;
+						Direction_ = "Up";
+					}
 				}
 			}
 		}
@@ -711,41 +747,49 @@ void Boss::UpdateDirection()
 			}
 			else
 			{
-				int RandomDir = (rand() % 4);
-				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
-				if (MovableAreas.size() > 1)
+				//if (North != MovableAreas.end())
+				//{
+				//	Dir_ = float4::UP;
+				//	Direction_ = "Up";
+				//}
+				//else
 				{
-					while (FoundArea == MovableAreas.end() ||
-						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
-							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
-						/* || RandomDir == 3*/)
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+					if (MovableAreas.size() > 1)
 					{
-						RandomDir = (rand() % 4);
-						FoundArea = MovableAreas.find(RandomDir);
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 3*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
 					}
-				}
 
-				else
-				{
-					FoundArea = MovableAreas.begin();
-				}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
 
-				if (FoundArea == East)
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-				}
+					if (FoundArea == East)
+					{
+						Dir_ = float4::RIGHT;
+						Direction_ = "Right";
+					}
 
-				else if (FoundArea == South)
-				{
-					Dir_ = float4::DOWN;
-					Direction_ = "Down";
-				}
+					else if (FoundArea == South)
+					{
+						Dir_ = float4::DOWN;
+						Direction_ = "Down";
+					}
 
-				else if (FoundArea == West)
-				{
-					Dir_ = float4::LEFT;
-					Direction_ = "Left";
+					else if (FoundArea == West)
+					{
+						Dir_ = float4::LEFT;
+						Direction_ = "Left";
+					}
 				}
 			}
 		}
@@ -759,85 +803,50 @@ void Boss::UpdateDirection()
 			}
 			else
 			{
-				int RandomDir = (rand() % 4);
-				std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
-				if (MovableAreas.size() > 1)
+				//if (South != MovableAreas.end())
+				//{
+				//	Dir_ = float4::DOWN;
+				//	Direction_ = "Down";
+				//}
+
+				//else
 				{
-					while (FoundArea == MovableAreas.end() ||
-						(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
-							FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
-						/* || RandomDir == 2*/)
+					int RandomDir = (rand() % 4);
+					std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
+					if (MovableAreas.size() > 1)
 					{
-						RandomDir = (rand() % 4);
-						FoundArea = MovableAreas.find(RandomDir);
+						while (FoundArea == MovableAreas.end() ||
+							(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
+								FoundArea->second.GetCenter().y == PrevArea.GetCenter().y)
+							/* || RandomDir == 2*/)
+						{
+							RandomDir = (rand() % 4);
+							FoundArea = MovableAreas.find(RandomDir);
+						}
+					}
+					else
+					{
+						FoundArea = MovableAreas.begin();
+					}
+
+					if (FoundArea == East)
+					{
+						Dir_ = float4::RIGHT;
+						Direction_ = "Right";
+					}
+
+					else if (FoundArea == North)
+					{
+						Dir_ = float4::UP;
+						Direction_ = "Up";
+					}
+
+					else if (FoundArea == West)
+					{
+						Dir_ = float4::LEFT;
+						Direction_ = "Left";
 					}
 				}
-				else
-				{
-					FoundArea = MovableAreas.begin();
-				}
-
-				if (FoundArea == East)
-				{
-					Dir_ = float4::RIGHT;
-					Direction_ = "Right";
-				}
-
-				else if (FoundArea == North)
-				{
-					Dir_ = float4::UP;
-					Direction_ = "Up";
-				}
-
-				else if (FoundArea == West)
-				{
-					Dir_ = float4::LEFT;
-					Direction_ = "Left";
-				}
-			}
-		}
-
-		else
-		{
-			int RandomDir = (rand() % 4);
-			std::map<int, Area>::const_iterator FoundArea = MovableAreas.find(RandomDir);
-			if (MovableAreas.size() > 1)
-			{
-				while (FoundArea == MovableAreas.end() ||
-					(FoundArea->second.GetCenter().x == PrevArea.GetCenter().x &&
-						FoundArea->second.GetCenter().y == PrevArea.GetCenter().y))
-				{
-					RandomDir = (rand() % 4);
-					FoundArea = MovableAreas.find(RandomDir);
-				}
-			}
-			else
-			{
-				FoundArea = MovableAreas.begin();
-			}
-
-			if (FoundArea == East)
-			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
-			}
-
-			else if (FoundArea == North)
-			{
-				Dir_ = float4::UP;
-				Direction_ = "Up";
-			}
-
-			else if (FoundArea == West)
-			{
-				Dir_ = float4::LEFT;
-				Direction_ = "Left";
-			}
-
-			else if (FoundArea == South)
-			{
-				Dir_ = float4::DOWN;
-				Direction_ = "Down";
 			}
 		}
 
@@ -894,7 +903,7 @@ void Boss::UpdateAttack()
 void Boss::RollAttack()
 {
 	UpdateAttack();
-	if (Index_ < AreaHeight_ &&
+	if ((Index_ >= 16 &&  Index_ <= 22) &&
 		false == Renderer_->IsAnimationName("RollAttackRight") &&
 		false == Renderer_->IsAnimationName("RollAttackLeft"))
 	{
@@ -902,7 +911,7 @@ void Boss::RollAttack()
 		GameEngineSound::SoundPlayOneShot("Boss_Attack_Roll.mp3");
 		Renderer_->ChangeAnimation("RollAttackRight");
 	}
-	else if (Index_ >= (AreaWidth_ - 1) * AreaHeight_ &&
+	else if ((Index_ >= 172 && Index_ <= 178) &&
 		false == Renderer_->IsAnimationName("RollAttackLeft") &&
 		false == Renderer_->IsAnimationName("RollAttackRight"))
 	{
@@ -978,7 +987,7 @@ void Boss::CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex)
 		_AttackIndex < Areas_.size() - AreaHeight_)
 	{
 		EastArea = Areas_[EastIndex];
-		if (false == EastArea.HasWall())
+		if (false == EastArea.BossHasWall())
 		{
 			Area& EastArea = Areas_[EastIndex];
 			_CanAttackAreas.insert(std::make_pair(0, EastArea));
@@ -990,7 +999,7 @@ void Boss::CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex)
 		_AttackIndex >= AreaHeight_)
 	{
 		WestArea = Areas_[WestIndex];
-		if (false == WestArea.HasWall())
+		if (false == WestArea.BossHasWall())
 		{
 			Area& WestArea = Areas_[WestIndex];
 			_CanAttackAreas.insert(std::make_pair(1, WestArea));
@@ -1002,7 +1011,7 @@ void Boss::CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex)
 		_AttackIndex % AreaHeight_ != AreaHeight_ - 1)
 	{
 		Area& SouthArea = Areas_[SouthIndex];
-		if (false == SouthArea.HasWall())
+		if (false == SouthArea.BossHasWall())
 		{
 			Area& SouthArea = Areas_[SouthIndex];
 			_CanAttackAreas.insert(std::make_pair(2, SouthArea));
@@ -1014,7 +1023,7 @@ void Boss::CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex)
 		_AttackIndex % AreaHeight_ != 0)
 	{
 		Area& NorthArea = Areas_[NorthIndex];
-		if (false == NorthArea.HasWall())
+		if (false == NorthArea.BossHasWall())
 		{
 			Area& NorthArea = Areas_[NorthIndex];
 			_CanAttackAreas.insert(std::make_pair(3, NorthArea));
