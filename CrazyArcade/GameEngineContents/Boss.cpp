@@ -33,6 +33,10 @@ Boss::Boss()
 	, SpeechNum_(0)
 	, IsAreaChanged(false)
 	, AttCount_(0)
+	, DieBubbleTime_(0.0f)
+	, EndAttack_(false)
+	, HPUI_(nullptr)
+	, RandomAction_(10)
 {
 }
 
@@ -156,7 +160,7 @@ void Boss::Start()
 
 		// 상태
 		SetMonsterClass(MonsterClass::BOSS);
-		SetHP(14);
+		SetHP(1);
 		SetSpeed(50); // Need to chk : Speed
 
 		// Index 설정
@@ -186,6 +190,7 @@ void Boss::Render()
 
 void Boss::Update()
 {
+	DieBubbleTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterAttackStartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
@@ -193,8 +198,6 @@ void Boss::Update()
 	SpeechTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	IntervalTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
 	GetAttTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-	FirstAttInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
-	TakeDamageTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 
 	if (true == IsSppechEnd_)
 	{
@@ -224,6 +227,7 @@ void Boss::Die()
 			true != Renderer_->IsAnimationName("DieBubble") &&
 			true != Renderer_->IsAnimationName("DieEnd"))
 		{
+			DieBubbleTime_ = 0.0f;
 			Dir_ = float4::ZERO;
 			Renderer_->ChangeAnimation("Die");
 			SpeechBubble_->ChangeAnimation("Bubble17");
@@ -261,7 +265,7 @@ void Boss::Die()
 				}
 			}
 
-			if (true == Renderer_->IsEndAnimation())
+			else if (DieBubbleTime_ > 5.0f)
 			{
 				Renderer_->ChangeAnimation("DieEnd");
 			}
@@ -456,7 +460,7 @@ void Boss::UpdateMove()
 	{
 		if (Renderer_->IsAnimationName("RollAttackRight"))
 		{
-			if (RollTime_ < 9.0f)
+			if (RollTime_ < 10.f)
 			{
 				SetMove(float4::RIGHT * GameEngineTime::GetInst()->GetDeltaTime() * Speed_);
 			}
@@ -468,7 +472,7 @@ void Boss::UpdateMove()
 		}
 		else if (Renderer_->IsAnimationName("RollAttackLeft"))
 		{
-			if (RollTime_ < 9.0f)
+			if (RollTime_ < 10.0f)
 			{
 				SetMove(float4::LEFT * GameEngineTime::GetInst()->GetDeltaTime() * Speed_);
 			}
@@ -661,10 +665,11 @@ void Boss::UpdateDirection()
 				//Direction_ = "Zero";
 			}
 
-			else if (East != MovableAreas.end())
+			else if (South != MovableAreas.end())
 			{
-				Dir_ = float4::RIGHT;
-				Direction_ = "Right";
+
+					Dir_ = float4::DOWN;
+					Direction_ = "Down";
 			}
 
 			else
@@ -778,11 +783,11 @@ void Boss::UpdateDirection()
 				//Direction_ = "Zero";
 			}
 
-			//else if (North != MovableAreas.end())
-			//{
-			//	Dir_ = float4::UP;
-			//	Direction_ = "Up";
-			//}
+			else if (North != MovableAreas.end())
+			{
+				Dir_ = float4::UP;
+				Direction_ = "Up";
+			}
 
 			else
 			{
@@ -935,7 +940,6 @@ void Boss::TakeDamage()
 		GetAttTime_ = 0.0f;
 		GameEngineSound::SoundPlayOneShot("Boss_Rage.mp3");
 		Renderer_->ChangeAnimation("TakeDamage" + Direction_);
-		TakeDamageTime_ = 0.0f;
 		Dir_ = float4::ZERO;
 		//EndAttack_ == true;
 	}
@@ -1004,7 +1008,9 @@ void Boss::WaterAttack()
 	{
 		if (GetHP() < 5)
 		{
-			AttackIndex_ = (rand() % Areas_.size());
+			std::vector<int> AttackIndices = { 42, 58, 49, 94, 123, 100, 146, 175, 153 };
+			int RandomIndex = (rand() % AttackIndices.size());
+			AttackIndex_ = AttackIndices[RandomIndex];
 		}
 		else
 		{

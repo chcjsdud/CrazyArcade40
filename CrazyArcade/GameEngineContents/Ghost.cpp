@@ -29,10 +29,10 @@ void Ghost::Start()
 	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartUp", 6, 6, 1.0f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartRight", 10, 10, 1.0f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartLeft", 16, 16, 1.0f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndDown", 3, 3, 0.5f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndUp", 7, 7, 0.5f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndRight", 11, 11, 0.5f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndLeft", 15, 15, 0.5f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndDown", 3, 3, 0.7f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndUp", 7, 7, 0.7f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndRight", 11, 11, 0.7f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndLeft", 15, 15, 0.7f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "Die", 12, 14, 0.2f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "Start", 13, 14, 0.1f, true); // need to chk : image 
 	Renderer_->ChangeAnimation("Start");
@@ -69,6 +69,7 @@ void Ghost::Update()
 	if (Renderer_->IsAnimationName("Die") &&
 		Renderer_->IsEndAnimation())
 	{
+		GameEngineSound::SoundPlayOneShot("Ghost.wav");
 		Death();
 	}
 }
@@ -402,6 +403,7 @@ void Ghost::UpdateMove()
 	{
 		if (true == Renderer_->IsEndAnimation())
 		{
+			GameEngineSound::SoundPlayOneShot("Ghost_Attack.wav");
 			Renderer_->ChangeAnimation("AttackEnd" + Direction_);
 		}
 	}
@@ -466,7 +468,6 @@ void Ghost::UpdateAttack()
 {
 	if (AttTime_ > 10.0f)
 	{
-
 		Renderer_->ChangeAnimation("AttackStart" + Direction_);
 		Dir_ = float4::ZERO;
 		AttTime_ = 0.0f;

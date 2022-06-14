@@ -31,7 +31,6 @@ protected:
 
 private:
     float RollTime_;
-    float TakeDamageTime_;
     float WaterTime_;
     float StartTime_;
     float WaterAttackInterval_;
@@ -52,7 +51,7 @@ private:
     bool IsSppechEnd_;
     bool IsAreaChanged;
     int AttCount_;
-    float FirstAttInterval_;
+    float DieBubbleTime_;
 
 
 private:
