@@ -43,7 +43,7 @@ void BossBoom::Update()
 							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
 							BlockTile* _check = _Area.GetMapTile()->GetTile<BlockTile>(_TileIndex.X, _TileIndex.Y);
-
+							_check->TilePos_ = _Center;
 							if (_check->BlockType_ == BlockType::BubbleBlock || _check->BlockType_ == BlockType::WaveBlock)
 							{
 								BossBubblePop(_Center);
@@ -116,10 +116,6 @@ void BossBoom::Update()
 
 			}
 
-		}
-		else
-		{
-			return;
 		}
 	}
 
