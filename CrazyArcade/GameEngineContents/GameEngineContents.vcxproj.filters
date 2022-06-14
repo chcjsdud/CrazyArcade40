@@ -340,6 +340,9 @@
     <ClCompile Include="GameBgmPlayer.cpp">
       <Filter>Actor\Etc</Filter>
     </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
     <ClCompile Include="StartMonsterModeUI.cpp">
       <Filter>Actor\Play\Player\UI\Play</Filter>
     </ClCompile>

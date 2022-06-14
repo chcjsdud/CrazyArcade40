@@ -426,7 +426,7 @@ void Player::Attack()
 
 	if (Type == PlayerType::Player1)
 	{ 
-		Boom_->SetMapTile(MapTile_);
+		
 		if (Player::MainPlayer_1->CurAttCount_ <= Boom_->ReturnPlayer1BoomCount())
 		{
 			return;

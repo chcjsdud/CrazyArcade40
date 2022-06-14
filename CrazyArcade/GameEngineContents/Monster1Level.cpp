@@ -272,6 +272,8 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
 	Player::MainPlayer_1->SetPosition(Areas_[23].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
+	Player::MainPlayer_1->Boom_ = CreateActor<MapGameObject>((int)ORDER::PLAYER);
+	Player::MainPlayer_1->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
@@ -281,6 +283,8 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
 		Player::MainPlayer_2->SetPosition(Areas_[179].GetCenter());
 		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+		Player::MainPlayer_2->Boom_ = CreateActor<MapGameObject>((int)ORDER::PLAYER);
+		Player::MainPlayer_2->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 	ShowCursor(false);
 }

@@ -240,10 +240,8 @@ public:
 		return MapBackGround_;
 	}
 
+	static MapGameObject* Boom_;
 protected:
-	MapGameObject* Boom_;
-	MapGameObject* Box_;
-	MapGameObject* Bubble_;
 
 	MapBackGround* MapBackGround_;
 

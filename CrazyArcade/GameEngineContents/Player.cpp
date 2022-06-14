@@ -11,7 +11,7 @@
 
 Player* Player::MainPlayer_1 = nullptr;
 Player* Player::MainPlayer_2 = nullptr;
-
+MapGameObject* Player::Boom_=nullptr;
 Player::Player()
 	: CurSpeed_(0.f)
 	, MaxSpeed_(0.f)
@@ -50,13 +50,11 @@ Player::Player()
 	, RightBlock(BlockType::Max)
 	, UpBlock(BlockType::Max)
 	, DownBlock(BlockType::Max)
-	, Boom_(nullptr)
 	, IsReady(true)
 	, AttMoveTime_(0.0f)
 	, MapTile_(nullptr)
 	, IsLive(true)
 	, IsShield(false)
-	, Box_(nullptr)
 	, IsDevil(false)
 	, IsInvincible(false)
 	, IsShoes(false)
@@ -463,6 +461,7 @@ void Player::CollisionCheck()
 void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	PlayerInit();
+
 }
 
 void Player::Start()
@@ -800,7 +799,6 @@ void Player::Start()
 	IsReady = true;
 	//PlayerInit();
 
-	Bubble_ = GetLevel()->CreateActor<MapGameObject>();
 }
 
 void Player::Update()
@@ -935,7 +933,6 @@ void Player::Render()
 
 	}
 
-	Boom_ = GetLevel()->CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 
 }
 

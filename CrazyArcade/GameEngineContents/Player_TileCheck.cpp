@@ -153,22 +153,22 @@ void Player::FrontBlockCheckUpdate()
 				IsLeftMove = false;
 				if (Playeractorvalue_ < 2)
 				{
-					Bubble_ = GetLevel()->CreateActor<MapGameObject>();
+					Boom_ = GetLevel()->CreateActor<MapGameObject>();
 					Playeractorvalue_ += 1;
 				}
 
-				Bubble_->SetMapTile(MapTile_);
+				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Left == CurDir_
 					&& true == IsMoveKey())
 				{
 					if (Type == PlayerType::Player1)
 					{
-						Bubble_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
+						Boom_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
 
 					}
 					else if (Type == PlayerType::Player2)
 					{
-						Bubble_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
+						Boom_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
 					}
 				}
 			}
@@ -203,21 +203,20 @@ void Player::FrontBlockCheckUpdate()
 			IsLeftMove = false;
 			if (Playeractorvalue_ < 2)
 			{
-				Box_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
-			Box_->SetMapTile(MapTile_);
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Left == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					Box_->PushBlock(LeftPos_1P, BlockDir::LEFT);
+					Boom_->PushBlock(LeftPos_1P, BlockDir::LEFT);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					Box_->PushBlock(LeftPos_2P, BlockDir::LEFT);
+					Boom_->PushBlock(LeftPos_2P, BlockDir::LEFT);
 				}
 			}
 		}
@@ -249,7 +248,7 @@ void Player::FrontBlockCheckUpdate()
 					Playeractorvalue_ += 1;
 				}*/
 
-				Bubble_->SetMapTile(MapTile_);
+				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Right == CurDir_
 					&& true == IsMoveKey())
 				{
@@ -257,12 +256,12 @@ void Player::FrontBlockCheckUpdate()
 					{
 						if (Type == PlayerType::Player1)
 						{
-							Bubble_->PushBubble(RightPos_1P, BlockDir::RIGHT, 1);
+ 							Boom_->PushBubble(RightPos_1P, BlockDir::RIGHT, 1);
 
 						}
 						else if (Type == PlayerType::Player2)
 						{
-							Bubble_->PushBubble(RightPos_2P, BlockDir::RIGHT, 2);
+							Boom_->PushBubble(RightPos_2P, BlockDir::RIGHT, 2);
 						}
 					}
 				
@@ -300,21 +299,21 @@ void Player::FrontBlockCheckUpdate()
 
 			if (Playeractorvalue_ < 2)
 			{
-				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Boom_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
-			Box_->SetMapTile(MapTile_);
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Right == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					Box_->PushBlock(RightPos_1P, BlockDir::RIGHT);
+					Boom_->PushBlock(RightPos_1P, BlockDir::RIGHT);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					Box_->PushBlock(RightPos_2P, BlockDir::RIGHT);
+					Boom_->PushBlock(RightPos_2P, BlockDir::RIGHT);
 				}
 			}
 		}
@@ -340,22 +339,22 @@ void Player::FrontBlockCheckUpdate()
 				IsUpMove = false;
 				if (Playeractorvalue_ < 2)
 				{
-					Bubble_ = GetLevel()->CreateActor<MapGameObject>();
+					Boom_ = GetLevel()->CreateActor<MapGameObject>();
 					Playeractorvalue_ += 1;
 				}
 
-				Bubble_->SetMapTile(MapTile_);
+				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Up == CurDir_
 					&& true == IsMoveKey())
 				{
 					if (Type == PlayerType::Player1)
 					{
-						Bubble_->PushBubble(UpPos_1P, BlockDir::UP, 1);
+						Boom_->PushBubble(UpPos_1P, BlockDir::UP, 1);
 
 					}
 					else if (Type == PlayerType::Player2)
 					{
-						Bubble_->PushBubble(UpPos_2P, BlockDir::UP, 2);
+						Boom_->PushBubble(UpPos_2P, BlockDir::UP, 2);
 					}
 				}
 			}
@@ -391,21 +390,21 @@ void Player::FrontBlockCheckUpdate()
 
 			if (Playeractorvalue_ < 2)
 			{
-				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Boom_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
-			Box_->SetMapTile(MapTile_);
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Up == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					Box_->PushBlock(UpPos_1P, BlockDir::UP);
+					Boom_->PushBlock(UpPos_1P, BlockDir::UP);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					Box_->PushBlock(UpPos_2P, BlockDir::UP);
+					Boom_->PushBlock(UpPos_2P, BlockDir::UP);
 				}
 			}
 		}
@@ -453,21 +452,21 @@ void Player::FrontBlockCheckUpdate()
 
 			if (Playeractorvalue_ < 2)
 			{
-				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Boom_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
-			Box_->SetMapTile(MapTile_);
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Down == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					Box_->PushBlock(DownPos_1P, BlockDir::DOWN);
+					Boom_->PushBlock(DownPos_1P, BlockDir::DOWN);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					Box_->PushBlock(DownPos_2P, BlockDir::DOWN);
+					Boom_->PushBlock(DownPos_2P, BlockDir::DOWN);
 				}
 			}
 		}
