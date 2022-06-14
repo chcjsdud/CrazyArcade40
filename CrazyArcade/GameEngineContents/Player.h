@@ -82,6 +82,8 @@ protected:
 	void DebugModeSwitch();
 
 protected:
+	float4 Position_;
+
 	float4 Player1Pos_;
 	float4 Player2Pos_;
 
@@ -146,6 +148,7 @@ private:
 	bool IsShield;
 	bool IsDevil;
 	bool IsInvincible;
+	bool IsShoes;
 
 protected:
 	void SetSpeed(float _CurSpeed)
@@ -237,6 +240,7 @@ public:
 protected:
 	MapGameObject* Boom_;
 	MapGameObject* Box_;
+	MapGameObject* Bubble_;
 
 	MapBackGround* MapBackGround_;
 
@@ -273,7 +277,7 @@ public:
 protected:
 	GameEngineRenderer* PlayerAnimationRender_;
 	PlayerDir CurDir_;
-	//PlayerDir InputDir_;
+	PlayerDir InputDir_;
 	std::string AnimationName_;
 	std::string ChangeDirText_;
 

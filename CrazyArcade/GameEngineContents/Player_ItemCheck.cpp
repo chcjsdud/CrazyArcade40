@@ -95,6 +95,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	case ItemType::Shoes:
 	{
 		// 물방울 던지기 
+		IsShoes = true;
 	}
 	break;
 	case ItemType::Shield:
@@ -103,11 +104,9 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 
 		if (true == IsItemKey())
 		{
-			//
+			IsShield = true;
+			EffectRenderer_->On();
 		}
-
-		IsShield = true;
-		EffectRenderer_->On();
 	}
 	break;
 	case ItemType::SuperJump:
@@ -132,6 +131,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::SpaceShip:
 	{
+		Position_ = _Player->GetPosition();
 		ChangeState(PlayerState::OnUFO);
 		return;
 	}
@@ -183,9 +183,6 @@ void Player::ItemTime()
 			ReSetAccTime();
 		}
 	}
-
-
-
 }
 
 ItemType Player::CheckItem(float4 _Pos)
