@@ -505,7 +505,7 @@ void Player::Start()
 		
 		// 애니메이션
 
-		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYERTEMP, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Ready_", 37, 53, 0.06f, false);
@@ -591,7 +591,7 @@ void Player::Start()
 		Marid5->CutCount(5, 6);
 
 		// 애니메이션
-		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYERTEMP, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		MaridRenderer_->CreateAnimation("luxMarid_4.bmp", "Ready_", 0, 17, 0.06f, false);
@@ -683,7 +683,7 @@ void Player::Start()
 		Dao5->CutCount(5, 6);
 
 		// 애니메이션
-		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYERTEMP, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		DaoRenderer_->CreateAnimation("Dao_4.bmp", "Ready_", 0, 17, 0.06f, false);
