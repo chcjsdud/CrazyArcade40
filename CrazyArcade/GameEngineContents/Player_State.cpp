@@ -67,22 +67,7 @@ void Player::JumpStart()
 
 void Player::AttackStart()
 {
-	AttMoveTime_ += GameEngineTime::GetDeltaTime();
 
-	if (Type == PlayerType::Player1)
-	{
-		if (Player::MainPlayer_1->CurAttCount_ > Boom_->ReturnPlayer1BoomCount())
-		{
-			GameEngineSound::SoundPlayOneShot("Attack.mp3");
-		}
-	}
-	else if (Type == PlayerType::Player2)
-	{
-		if (Player::MainPlayer_2->CurAttCount_ > Boom_->ReturnPlayer2BoomCount())
-		{
-			GameEngineSound::SoundPlayOneShot("Attack.mp3");
-		}
-	}
 }
 
 void Player::DamagedStartStart()
@@ -539,6 +524,7 @@ void Player::Attack()
 		if (BlockType::Max == CheckBlockTile(MainPlayer_1->GetPosition() + ModifyPos))
 		{
 			GameEngineSound::SoundPlayOneShot("Attack.mp3");
+
 			Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_, 1);
 		}
 		else

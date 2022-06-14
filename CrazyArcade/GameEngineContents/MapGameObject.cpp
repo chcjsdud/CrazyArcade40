@@ -4,6 +4,7 @@
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineRandom.h>
+#include<GameEngineBase/GameEngineSound.h>
 
 size_t MapGameObject::Player1BoomNum_;
 size_t MapGameObject::Player2BoomNum_;
@@ -1077,11 +1078,12 @@ void MapGameObject::WaveDeathAni()
 
 			WaveBlockTiles_[i]->Renderer->ChangeAnimation("Death");
 			WaveBlockTiles_[i]->IsWaveDeath = false;
-			
+			GameEngineSound::SoundPlayOneShot("Boom.wav");
 		}
 		if (WaveBlockTiles_[i]->Renderer->IsEndAnimation() == true)//시간이 다줄었으면
 		{
 			WaveBlockTiles_[i]->IsWaveDeathAni = true;
+
 
 		}
 
@@ -2044,6 +2046,7 @@ void MapGameObject::BossWaveDeath()
 		{
 			BossWaveTiles_[i]->Renderer->ChangeAnimation("Death");
 			BossWaveTiles_[i]->IsWaveDeath = true;
+			GameEngineSound::SoundPlayOneShot("Boom.wav");
 		}
 		else if (BossWaveTiles_[i]->IsWaveDeath == true&&BossWaveTiles_[i]->Renderer->IsEndAnimation() == true)
 		{
