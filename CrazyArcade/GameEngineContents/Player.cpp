@@ -7,6 +7,7 @@
 #include "MapBackGround.h"
 #include "GameEngine/GameEngine.h"
 #include "GameItemObject.h"
+#include <GameEngineContents/Monster.h>
 
 Player* Player::MainPlayer_1 = nullptr;
 Player* Player::MainPlayer_2 = nullptr;
@@ -96,12 +97,12 @@ void Player::DebugModeSwitch()
 		if (false == IsInvincible)
 		{
 			IsInvincible = true;
-			//EffectRenderer_->On();
+			EffectRenderer_->On();
 		}
 		else
 		{
 			IsInvincible = false;
-			//EffectRenderer_->Off();
+			EffectRenderer_->Off();
 		}
 		
 	}
@@ -329,10 +330,21 @@ void Player::CollisionCheck()
 
 			if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 			{
-				for (size_t i = 0; i < ColList.size(); i++)
+				for (GameEngineCollision* ColActor : ColList)
 				{
-					ChangeState(PlayerState::Die);
-					return;
+					Monster* ColMonster = dynamic_cast<Monster*>(ColActor->GetActor());
+					if (ColMonster != nullptr)
+					{
+						if (ColMonster->GetHP() <= 1)
+						{
+							return;
+						}
+
+						else
+						{
+							ChangeState(PlayerState::Die);
+						}
+					}
 				}
 			}
 		}
@@ -376,11 +388,27 @@ void Player::CollisionCheck()
 
 				if (true == Collision2P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 				{
-					for (size_t i = 0; i < ColList.size(); i++)
+					for (GameEngineCollision* ColActor : ColList)
 					{
-						ChangeState(PlayerState::Die);
-						return;
+						Monster* ColMonster = dynamic_cast<Monster*>(ColActor->GetActor());
+						if (ColMonster != nullptr)
+						{
+							if (ColMonster->GetHP() <= 1)
+							{
+								return;
+							}
+
+							else
+							{
+								ChangeState(PlayerState::Die);
+							}
+						}
 					}
+					//for (size_t i = 0; i < ColList.size(); i++)
+					//{
+					//	ChangeState(PlayerState::Die);
+					//	return;
+					//}
 				}
 			}
 
@@ -458,6 +486,7 @@ void Player::Start()
 		EffectRenderer_->SetPivotType(RenderPivot::CENTER);
 		EffectRenderer_->SetPivot({ 0.f, 0.f });
 		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.08f, true);
+		EffectRenderer_->ChangeAnimation("Effect_Shield");
 		EffectRenderer_->Off();
 
 		
@@ -641,7 +670,7 @@ void Player::Start()
 		Dao5->CutCount(5, 6);
 
 		// 애니메이션
-		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		DaoRenderer_ = CreateRenderer((int)ORDER::EFFECT, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		DaoRenderer_->CreateAnimation("Dao_4.bmp", "Ready_", 0, 17, 0.06f, false);
