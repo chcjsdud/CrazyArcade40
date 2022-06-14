@@ -397,6 +397,25 @@ void Boss::Speech()
 	}
 }
 
+void Boss::ZeroDirChng()
+{
+	if (Direction_ == "Right")
+	{
+		Dir_ = float4::RIGHT;
+	}
+	else if (Direction_ == "Left")
+	{
+		Dir_ = float4::LEFT;
+	}
+	else if (Direction_ == "Up")
+	{
+		Dir_ = float4::UP;
+	}
+	else if (Direction_ == "Down")
+	{
+		Dir_ = float4::DOWN;
+	}
+}
 void Boss::UpdateMove()
 {
 
@@ -406,21 +425,16 @@ void Boss::UpdateMove()
 		{
 			if (Dir_.x  == 0 && Dir_.y == 0)
 			{
-				if (Direction_ == "Right")
+				if (Renderer_->IsAnimationName("TakeDamage" + Direction_))
 				{
-					Dir_ = float4::RIGHT;
+					if (Renderer_->IsEndAnimation())
+					{
+						ZeroDirChng();
+					}
 				}
-				else if (Direction_ == "Left")
+				else if(true != Renderer_->IsAnimationName("TakeDamgage" + Direction_))
 				{
-					Dir_ = float4::LEFT;
-				}
-				else if (Direction_ == "Up")
-				{
-					Dir_ = float4::UP;
-				}
-				else if (Direction_ == "Down")
-				{
-					Dir_ = float4::DOWN;
+					ZeroDirChng();
 				}
 			}
 			Renderer_->ChangeAnimation("Move" + Direction_);
@@ -492,9 +506,9 @@ void Boss::UpdateDirection()
 					AreaChangeCount_++;
 
 					// 노란부분 무조건 이동 체크 필요한 구간
-					if(Index_ % 13 == 2 &&
-						Index_ % 13 == 10 &&
-						(Index_ >= 15 && Index_ <= 23) &&
+					if(Index_ % 13 >= 2 &&
+						Index_ % 13 <= 10 &&
+						(Index_ >= 15 && Index_ <= 23) ||
 						(Index_ >= 171 && Index_ <= 179))
 					{
 						if ((Index_ >= 16 &&
@@ -511,21 +525,20 @@ void Boss::UpdateDirection()
 						}
 						else // 엣지
 						{
-							Dir_ = float4::ZERO;
+							RandomAction_ = 3; // 구르기 제외 모든 동작 가능
 							IsAreaChanged = true;
 							AreaChangeCount_ = 0;
 						}
 					}
 
 					// 인덱스가 흰부분
-					else if (AreaChangeCount_ == 3 &&
-						(Index_ % 13 > 2 &&
+					else if ((Index_ % 13 > 2 &&
 							Index_ % 13 < 10 &&
 							Index_ >= 29 &&
 							Index_ <= 165))
 					{
 
-						RandomAction_ = (rand() % 3) + 1; // 구르기 제외 모든 동작 가능
+						RandomAction_ = (rand() % 4); // 구르기 제외 모든 동작 가능
 						IsAreaChanged = true;
 						AreaChangeCount_ = 0;
 						SetPosition(NewArea.GetCenter());
@@ -642,6 +655,13 @@ void Boss::UpdateDirection()
 				Dir_ = float4::ZERO;
 				//Direction_ = "Zero";
 			}
+
+			else if (East != MovableAreas.end())
+			{
+				Dir_ = float4::RIGHT;
+				Direction_ = "Right";
+			}
+
 			else
 			{
 				int RandomDir = (rand() % 4);
@@ -688,6 +708,13 @@ void Boss::UpdateDirection()
 			{
 				Dir_ = float4::ZERO;
 			}
+
+			else if (West != MovableAreas.end())
+			{
+				Dir_ = float4::LEFT;
+				Direction_ = "Left";
+			}
+
 			else
 			{
 				//if (West != MovableAreas.end())
@@ -745,6 +772,13 @@ void Boss::UpdateDirection()
 				Dir_ = float4::ZERO;
 				//Direction_ = "Zero";
 			}
+
+			//else if (North != MovableAreas.end())
+			//{
+			//	Dir_ = float4::UP;
+			//	Direction_ = "Up";
+			//}
+
 			else
 			{
 				//if (North != MovableAreas.end())
@@ -801,6 +835,13 @@ void Boss::UpdateDirection()
 				Dir_ = float4::ZERO;
 				//Direction_ = "Zero";
 			}
+
+			else if (South != MovableAreas.end())
+			{
+				Dir_ = float4::DOWN;
+				Direction_ = "Down";
+			}
+
 			else
 			{
 				//if (South != MovableAreas.end())
@@ -871,7 +912,9 @@ void Boss::UpdateDirection()
 
 void Boss::TakeDamage()
 {
-	if (GetAttTime_ > 1.0)
+	if (GetAttTime_ > 1.0 && 
+		(true != Renderer_->IsAnimationName("RollAttackRight") && true!= Renderer_->IsAnimationName("RollAttackLeft")) &&
+		true != Renderer_->IsAnimationName("WaterAttack"))
 	{
 		SetHP(GetHp() - 1);
 		GetAttTime_ = 0.0f;

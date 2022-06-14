@@ -62,5 +62,5 @@ private:
     void CheckCanAttackTile(BossBoom* _BossBoom, int _AttackIndex);
     void UpdateHP();
     void Speech();
-
+    void ZeroDirChng();
 };
