@@ -62,6 +62,10 @@ int Area::ChooseWaterAttackAni()
 
     if (Tile_ != nullptr)
     {
+        if(Tile_->BlockType_ == BlockType::BubbleBlock|| Tile_->BlockType_ == BlockType::WaveBlock)
+        {
+            return 2;
+        }
         if (Tile_->BlockType_ == BlockType::FixBlock || Tile_->BlockType_ == BlockType::PullBlock)
         {
             return 0; // 1번 애니메이션
