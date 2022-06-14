@@ -19,11 +19,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		if (false == IsInvincible)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
-			if (CurState_ == PlayerState::IdleOwl
-				|| CurState_ == PlayerState::IdleTurtle
-				|| CurState_ == PlayerState::RidingOwl
-				|| CurState_ == PlayerState::RidingTurtle
-				|| CurState_ == PlayerState::RidingUFO)
+			if (PlayerRideState_ != PlayerRideState::Max)
 			{
 				ChangeState(PlayerState::Idle);
 				return;
@@ -50,11 +46,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 		if (false == IsInvincible)
 		{
 			// 탈 것을 타고 있는 상태에서는 -> Idle
-			if (CurState_ == PlayerState::IdleOwl
-				|| CurState_ == PlayerState::IdleTurtle
-				|| CurState_ == PlayerState::RidingOwl
-				|| CurState_ == PlayerState::RidingTurtle
-				|| CurState_ == PlayerState::RidingUFO)
+			if (PlayerRideState_ != PlayerRideState::Max)
 			{
 				ChangeState(PlayerState::Idle);
 				return;
@@ -190,7 +182,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide&& PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsLeftMove = true;
 		}
@@ -202,7 +194,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsLeftMove = true;
 		}
@@ -286,7 +278,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsRightMove = true;
 		}
@@ -298,7 +290,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsRightMove = true;
 		}
@@ -377,7 +369,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsUpMove = true;
 		}
@@ -389,7 +381,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsUpMove = true;
 		}
@@ -439,7 +431,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::FixBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsDownMove = true;
 		}
@@ -451,7 +443,7 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
-		if (CurState_ == PlayerState::RidingUFO)
+		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ != PlayerRideState::UFO)
 		{
 			IsDownMove = true;
 		}

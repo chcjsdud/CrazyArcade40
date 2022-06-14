@@ -128,103 +128,109 @@ void Player::DieStart()
 	GameEngineSound::SoundPlayOneShot("Die.mp3");
 }
 //---------------------------------------------------
-void Player::OnOwlStart()
+void Player::OnRideStart()
 {
-	IsMove = false;
-	AddAccTime(Time_);
+	if (PlayerRideState_ == PlayerRideState::Owl)
+	{
+		IsMove = false;
+		AddAccTime(Time_);
 
-	AnimationName_ = "OnOwl_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+		AnimationName_ = "OnOwl_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+	}	
+	else if (PlayerRideState_ == PlayerRideState::Turtle)
+	{
+		IsMove = false;
+		AddAccTime(Time_);
+
+		AnimationName_ = "OnTurtle_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+	}
+	else if (PlayerRideState_ == PlayerRideState::UFO)
+	{
+
+	}
+
 }
-void Player::OffOwlStart()
+void Player::OffRideStart()
 {
-	IsMove = false;
-	AddAccTime(Time_);
+	if (PlayerRideState_ == PlayerRideState::Owl)
+	{
+		IsMove = false;
+		AddAccTime(Time_);
 
-	AnimationName_ = "OnOwl_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-void Player::IdleOwlStart()
-{
-	IsMove = true;
-	CurSpeed_ = 5.5f;
-	ReSetAccTime();
+		AnimationName_ = "OnOwl_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+	}
+	else if (PlayerRideState_ == PlayerRideState::Turtle)
+	{
+		IsMove = false;
+		AddAccTime(Time_);
 
-	AnimationName_ = "IdleOwl_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
-}
-
-void Player::RidingOwlStart()
-{
-	IsMove = true;
-	CurSpeed_ = 5.5f;
-
-	AnimationName_ = "RidingOwl_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
-}
-//---------------------------------------------------
-void Player::OnTurtleStart()
-{
-	IsMove = false;
-	AddAccTime(Time_);
-
-	AnimationName_ = "OnTurtle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-void Player::OffTurtleStart()
-{
-	IsMove = false;
-	AddAccTime(Time_);
-
-	AnimationName_ = "OnTurtle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-
-void Player::IdleTurtleStart()
-{
-	IsMove = true;
-	ReSetAccTime();
-
-	AnimationName_ = "IdleTurtle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
-}
-
-void Player::RidingTurtleStart()
-{
-	IsMove = true;
-	CurSpeed_ = 2.f;
-
-	AnimationName_ = "RidingTurtle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
-}
-
-//---------------------------------------------------
-void Player::OnUFOStart()
-{
+		AnimationName_ = "OnTurtle_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+	}
+	else if (PlayerRideState_ == PlayerRideState::UFO)
+	{
+		
 	IsMove = false;
 	AddAccTime(Time_);
 
 	AnimationName_ = "OnUFO_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+	}
+
+}
+void Player::IdleRideStart()
+{
+	if (PlayerRideState_ == PlayerRideState::Owl)
+	{
+		IsMove = true;
+		ReSetAccTime();
+
+		AnimationName_ = "IdleOwl_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
+	else if (PlayerRideState_ == PlayerRideState::Turtle)
+	{
+
+		IsMove = true;
+		ReSetAccTime();
+
+		AnimationName_ = "IdleTurtle_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
+	
 }
 
-void Player::OffUFOStart()
+void Player::RidingRideStart()
 {
-	IsMove = false;
-	AddAccTime(Time_);
+	if (PlayerRideState_ == PlayerRideState::Owl)
+	{
+		IsMove = true;
+		CurSpeed_ = 5.5f;
 
-	AnimationName_ = "OnUFO_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
+		AnimationName_ = "RidingOwl_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
+	else if (PlayerRideState_ == PlayerRideState::Turtle)
+	{
 
-void Player::RidingUFOStart()
-{
-	IsMove = true;
-	ReSetAccTime();
-	CurSpeed_ = 8.5f;
+		IsMove = true;
+		CurSpeed_ = 2.f;
 
-	AnimationName_ = "RidingUFO_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+		AnimationName_ = "RidingTurtle_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
+	else if (PlayerRideState_ == PlayerRideState::UFO)
+	{
+		IsMove = true;
+		ReSetAccTime();
+		CurSpeed_ = 8.5f;
+
+		AnimationName_ = "RidingUFO_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+	}
 }
 
 void Player::WaitUpdate()
@@ -359,34 +365,16 @@ void Player::DieUpdate()
 	}
 }
 
-void Player::OnOwlUpdate()
+void Player::OnRideUpdate()
 {
-	if (2.f < GetAccTime())
-	{
-		ChangeState(PlayerState::IdleOwl);
-		return;
-	}
+		if (2.f < GetAccTime())
+		{
+			ChangeState(PlayerState::IdleRide);
+			return;
+		}
 }
 
-void Player::OnTurtleUpdate()
-{
-	if (2.f < GetAccTime())
-	{
-		ChangeState(PlayerState::IdleTurtle);
-		return;
-	}
-}
-
-void Player::OnUFOUpdate()
-{
-	if (2.f < GetAccTime())
-	{
-		ChangeState(PlayerState::RidingUFO);
-		return;
-	}
-}
-
-void Player::OffOwlUpdate()
+void Player::OffRideUpdate()
 {
 	if (2.f < GetAccTime())
 	{
@@ -395,33 +383,16 @@ void Player::OffOwlUpdate()
 	}
 }
 
-void Player::OffTurtleUpdate()
-{
-	if (2.f < GetAccTime())
-	{
-		ChangeState(PlayerState::Idle);
-		return;
-	}
-}
 
-void Player::OffUFOUpdate()
-{
-	if (2.f < GetAccTime())
-	{
-		ChangeState(PlayerState::Idle);
-		return;
-	}
-}
-
-void Player::IdleOwlUpdate()
+void Player::IdleRideUpdate()
 {
 	DirAnimationCheck();
-
 	if (true == IsMoveKey())
 	{
-		ChangeState(PlayerState::RidingOwl);
+		ChangeState(PlayerState::RidingRide);
 		return;
 	}
+
 
 	if (true == IsAttackKey())
 	{
@@ -429,32 +400,17 @@ void Player::IdleOwlUpdate()
 	}
 }
 
-void Player::IdleTurtleUpdate()
-{
-	DirAnimationCheck();
-
-	if (true == IsMoveKey())
-	{
-		ChangeState(PlayerState::RidingTurtle);
-		return;
-	}
-
-	if (true == IsAttackKey())
-	{
-		Attack();
-	}
-}
-
-void Player::RidingOwlUpdate()
+void Player::RidingRideUpdate()
 {
 	Move(CurSpeed_);
 	DirAnimationCheck();
 
-	if (false == IsMoveKey())
+	if (false == IsMoveKey()&& PlayerRideState_ != PlayerRideState::UFO)
 	{
-		ChangeState(PlayerState::IdleOwl);
+		ChangeState(PlayerState::IdleRide);
 		return;
 	}
+
 
 	if (true == IsAttackKey())
 	{
@@ -462,41 +418,6 @@ void Player::RidingOwlUpdate()
 	}
 
 	StagePixelCheck(CurSpeed_);
-}
-
-void Player::RidingTurtleUpdate()
-{
-	Move(CurSpeed_);
-	DirAnimationCheck();
-
-	if (false == IsMoveKey())
-	{
-		ChangeState(PlayerState::IdleTurtle);
-		return;
-	}
-
-	if (true == IsAttackKey())
-	{
-		Attack();
-	}
-
-
-	StagePixelCheck(CurSpeed_);
-}
-
-void Player::RidingUFOUpdate()
-{
-	Move(CurSpeed_);
-	DirAnimationCheck();
-
-	if (true == IsAttackKey())
-	{
-		Attack();
-	}
-
-	StagePixelCheck(CurSpeed_);
-
-	IsMove = true;
 }
 
 void Player::Attack()

@@ -126,20 +126,23 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Owl:
 	{
-		ChangeState(PlayerState::OnOwl);
+		PlayerRideState_ = PlayerRideState::Owl;
+		ChangeState(PlayerState::OnRide);
 		return;
 	}
 	break;
 	case ItemType::Turtle:
 	{
-		ChangeState(PlayerState::OnTurtle);
+		PlayerRideState_ = PlayerRideState::Turtle;
+		ChangeState(PlayerState::OnRide);
 		return;
 	}
 	break;
 	case ItemType::SpaceShip:
 	{
 		Position_ = _Player->GetPosition();
-		ChangeState(PlayerState::OnUFO);
+		PlayerRideState_ = PlayerRideState::UFO;
+		ChangeState(PlayerState::OnRide);
 		return;
 	}
 	break;

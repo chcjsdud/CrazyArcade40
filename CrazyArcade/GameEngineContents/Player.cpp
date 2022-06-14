@@ -61,6 +61,7 @@ Player::Player()
 	, IsInvincible(false)
 	, IsShoes(false)
 	, InputDir_(CurDir_)
+	, PlayerRideState_(PlayerRideState::Max)
 	, CurItem_(ItemType::Max)
 	, IsNiddle(false)
 	, IsJump(false)
@@ -896,23 +897,23 @@ void Player::Render()
 		{
 			State = "STATE : Die";
 		}
-		else if (CurState_ == PlayerState::IdleOwl)
+		else if (CurState_ == PlayerState::IdleRide && PlayerRideState_ == PlayerRideState::Owl)
 		{
 			State = "STATE : IdleOwl";
 		}
-		else if (CurState_ == PlayerState::IdleTurtle)
+		else if (CurState_ == PlayerState::IdleRide && PlayerRideState_ == PlayerRideState::Turtle)
 		{
 			State = "STATE : IdleTurtle";
 		}
-		else if (CurState_ == PlayerState::RidingOwl)
+		else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::Owl)
 		{
 			State = "STATE : RidingOwl";
 		}
-		else if (CurState_ == PlayerState::RidingTurtle)
+		else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::Turtle)
 		{
 			State = "STATE : RidingTurtle";
 		}
-		else if (CurState_ == PlayerState::RidingUFO)
+		else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			State = "STATE : RidingUFO";
 		}
@@ -987,39 +988,19 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Die:
 			DieStart();
 			break;
-		case PlayerState::OnOwl:
-			OnOwlStart();
+		case PlayerState::OnRide:
+			OnRideStart();
 			break;
-		case PlayerState::OnTurtle:
-			OnTurtleStart();
+		case PlayerState::OffRide:
+			OffRideStart();
 			break;
-		case PlayerState::OnUFO:
-			OnUFOStart();
+		case PlayerState::IdleRide:
+			IdleRideStart();
 			break;
-		case PlayerState::OffOwl:
-			OffOwlStart();
+		case PlayerState::RidingRide:
+			RidingRideStart();
 			break;
-		case PlayerState::OffTurtle:
-			OffTurtleStart();
-			break;
-		case PlayerState::OffUFO:
-			OffUFOStart();
-			break;
-		case PlayerState::IdleOwl:
-			IdleOwlStart();
-			break;
-		case PlayerState::IdleTurtle:
-			IdleTurtleStart();
-			break;
-		case PlayerState::RidingOwl:
-			RidingOwlStart();
-			break;
-		case PlayerState::RidingTurtle:
-			RidingTurtleStart();
-			break;
-		case PlayerState::RidingUFO:
-			RidingUFOStart();
-			break;
+
 		}
 
 	}
@@ -1064,39 +1045,19 @@ void Player::PlayerStateUpdate()
 	case PlayerState::Die:
 		DieUpdate();
 		break;
-	case PlayerState::OnOwl:
-		OnOwlUpdate();
+	case PlayerState::OnRide:
+		OnRideUpdate();
 		break;
-	case PlayerState::OnTurtle:
-		OnTurtleUpdate();
+	case PlayerState::OffRide:
+		OffRideUpdate();
 		break;
-	case PlayerState::OnUFO:
-		OnUFOUpdate();
+	case PlayerState::IdleRide:
+		IdleRideUpdate();
 		break;
-	case PlayerState::OffOwl:
-		OffOwlUpdate();
+	case PlayerState::RidingRide:
+		RidingRideUpdate();
 		break;
-	case PlayerState::OffTurtle:
-		OffTurtleUpdate();
-		break;
-	case PlayerState::OffUFO:
-		OffUFOUpdate();
-		break;
-	case PlayerState::IdleOwl:
-		IdleOwlUpdate();
-		break;
-	case PlayerState::IdleTurtle:
-		IdleTurtleUpdate();
-		break;
-	case PlayerState::RidingOwl:
-		RidingOwlUpdate();
-		break;
-	case PlayerState::RidingTurtle:
-		RidingTurtleUpdate();
-		break;
-	case PlayerState::RidingUFO:
-		RidingUFOUpdate();
-		break;
+
 	}
 }
 

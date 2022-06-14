@@ -17,21 +17,19 @@ enum class PlayerState
 	Revival,
 	Fade,		// 물방울 갇혔을 때 2차 애니메이션
 	Die,
-	OnOwl,
-	OnTurtle,
-	OnUFO,
-	OffOwl,
-	OffTurtle,
-	OffUFO,
-	IdleOwl,
-	IdleTurtle,
-	RidingOwl,
-	RidingTurtle,
-	RidingUFO,
-
-	Max,
+	OnRide,
+	OffRide,
+	IdleRide,
+	RidingRide,
+	Max
 };
-
+enum class  PlayerRideState
+{
+	Max,
+	Owl,
+	Turtle,
+	UFO,
+};
 enum class PlayerDir
 {
 	Left,
@@ -90,8 +88,8 @@ protected:
 	float4 LeftPos_1P;
 	float4 RightPos_1P;
 	float4 UpPos_1P;
-	float4 DownPos_1P;	
-	
+	float4 DownPos_1P;
+
 	float4 LeftPos_2P;
 	float4 RightPos_2P;
 	float4 UpPos_2P;
@@ -159,7 +157,7 @@ protected:
 	{
 		CurSpeed_ = _CurSpeed;
 	}
-	 
+
 	void SetAttPower(float _CurAttPower)
 	{
 		CurAttPower_ = _CurAttPower;
@@ -313,7 +311,7 @@ private:
 	// 맵 관련
 	GameEngineImage* MapColImage_;
 	GameEngineRenderer* MapColRenderer_;
-	int Playeractorvalue_ =0;
+	int Playeractorvalue_ = 0;
 	std::string CurrentLevel_;
 	//std::string CurrentColMap_;
 
@@ -353,28 +351,24 @@ protected:
 	virtual void DirAnimationCheck();
 
 protected:
+	PlayerRideState PlayerRideState_;
+
 	void WaitStart();
 	void ReadyStart();
 	void IdleStart();
 	void MoveStart();
 	void JumpStart();
-	void AttackStart();	
+	void AttackStart();
 	void DamagedStartStart();
 	void DamagedStart();
 	void RevivalStart();
 	void FadeStart();
 	void DieStart();
-	void OnOwlStart();
-	void OnTurtleStart();
-	void OnUFOStart();
-	void OffOwlStart();
-	void OffTurtleStart();
-	void OffUFOStart();
-	void IdleOwlStart();
-	void IdleTurtleStart();
-	void RidingOwlStart();
-	void RidingTurtleStart();
-	void RidingUFOStart();
+
+	void OnRideStart();
+	void OffRideStart();
+	void IdleRideStart();
+	void RidingRideStart();
 
 	void WaitUpdate();
 	void ReadyUpdate();
@@ -387,15 +381,9 @@ protected:
 	void RevivalUpdate();
 	void FadeUpdate();
 	void DieUpdate();
-	void OnOwlUpdate();
-	void OnTurtleUpdate();
-	void OnUFOUpdate();
-	void OffOwlUpdate();
-	void OffTurtleUpdate();
-	void OffUFOUpdate();
-	void IdleOwlUpdate();
-	void IdleTurtleUpdate();
-	void RidingOwlUpdate();
-	void RidingTurtleUpdate();
-	void RidingUFOUpdate();
+
+	void OnRideUpdate();
+	void OffRideUpdate();
+	void IdleRideUpdate();
+	void RidingRideUpdate();
 };
