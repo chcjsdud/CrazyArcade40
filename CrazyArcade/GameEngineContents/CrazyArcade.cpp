@@ -239,6 +239,10 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("2P_Arrow.bmp");
         Image->Cut({ 176,100 });
+
+        Image = GameEngineImageManager::GetInst()->Find("PlayExitBtn.bmp");
+        Image->Cut({ 256,256 });
+
     }
 
     ////// UI 리소스 ChoiceMap에서 사용되는 리소스

@@ -30,6 +30,7 @@
 //UI ºÎºÐ
 #include "Mouse.h"
 #include "PlayBackGround.h"
+#include "ItemIcon.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
@@ -55,6 +56,7 @@ Monster1Level::~Monster1Level()
 void Monster1Level::Loading()
 {
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<ItemIcon>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 

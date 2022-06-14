@@ -227,6 +227,7 @@ private:
 	BlockType UpBlock;
 	BlockType DownBlock;
 
+	ItemType CurItem_;
 	ItemType CurItemType1_;
 	ItemType CurItemType2_;
 
@@ -277,6 +278,12 @@ public:
 	{
 		return IsLive;
 	}
+
+	inline ItemType GetCurItem()
+	{
+		return CurItem_;
+	}
+	
 
 protected:
 	GameEngineRenderer* PlayerAnimationRender_;

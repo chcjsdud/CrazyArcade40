@@ -68,6 +68,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	case ItemType::Niddle:
 	{
 		if (true == IsShield) 
+		CurItem_ = ItemType::Niddle;
+		if (true == IsItemKey())
 		{
 			IsShield = false;
 		}

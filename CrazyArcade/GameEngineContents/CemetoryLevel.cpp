@@ -24,6 +24,7 @@
 //UI 부분
 #include "Mouse.h"
 #include "PlayBackGround.h"
+#include "ItemIcon.h"
 #include "TimeUI.h"
 #include "StartIntroUI.h"
 #include "PlayResultUI.h"
@@ -48,6 +49,7 @@ CemetoryLevel::~CemetoryLevel()
 void CemetoryLevel::Loading()
 {
 	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
+	CreateActor<ItemIcon>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 
@@ -56,12 +58,6 @@ void CemetoryLevel::Loading()
 	MapBackGround_->GetRenderer()->SetPivot({ 320,280 });//윈도우기준 그려줄 위치 정해주고
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
 
-	CreateActor<PlayBackGround>((int)ORDER::PLAYER);
-	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
-	CreateActor<TimeUI>((int)UIType::Time);
-	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
-	CreateActor<Mouse>((int)UIType::Mouse);
-	CreateActor<PlayNickName>((int)UIType::PopUpButton);
 
 
 	{
