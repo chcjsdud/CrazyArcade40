@@ -34,11 +34,9 @@ private:
     float WaterTime_;
     float StartTime_;
     float WaterAttackInterval_;
-    float WaterAttackStartTime_;
     int AreaChangeCount_;
     int RandomAction_;
     bool EndAttack_;
-    bool WaterAttacOn_;
     bool LevelStart_;
     GameEngineRenderer* BossHP_;
     GameEngineRenderer* HPUI_;

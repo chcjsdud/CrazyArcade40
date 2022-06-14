@@ -16,27 +16,25 @@
 
 Boss::Boss()
 	: Monster()
+	, HPUI_(nullptr)
+	, BossHP_(nullptr)
+	, AttCount_(0)
+	, SpeechNum_(0)
+	, AttackIndex_(0)
+	, RandomAction_(10)
+	, BossBoomIndex_(1)
+	, AreaChangeCount_(0)
+	, RollTime_(0.0f)
 	, WaterTime_(0.0f)
 	, StartTime_(0.0f)
-	, WaterAttackInterval_(1.5f)
-	, RollTime_(0.0f)
-	, AreaChangeCount_(0)
-	, BossHP_(nullptr)
-	, WaterAttackStartTime_(0.0f)
-	, WaterAttacOn_(false)
-	, AttackIndex_(0)
-	, BossBoomIndex_(1)
-	, LevelStart_(true)
-	, IsSppechEnd_(false)
-	, SpeechTime_(0)
-	, IntervalTime_(0)
-	, SpeechNum_(0)
-	, IsAreaChanged(false)
-	, AttCount_(0)
+	, SpeechTime_(0.0f)
+	, IntervalTime_(0.0f)
 	, DieBubbleTime_(0.0f)
+	, WaterAttackInterval_(1.5f)
+	, LevelStart_(true)
 	, EndAttack_(false)
-	, HPUI_(nullptr)
-	, RandomAction_(10)
+	, IsSppechEnd_(false)
+	, IsAreaChanged(false)
 {
 }
 
@@ -160,7 +158,7 @@ void Boss::Start()
 
 		// 상태
 		SetMonsterClass(MonsterClass::BOSS);
-		SetHP(1);
+		SetHP(14);
 		SetSpeed(50); // Need to chk : Speed
 
 		// Index 설정
@@ -191,7 +189,6 @@ void Boss::Render()
 void Boss::Update()
 {
 	DieBubbleTime_ += GameEngineTime::GetInst()->GetDeltaTime();
-	WaterAttackStartTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	WaterAttackInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
 	RollTime_ += GameEngineTime::GetInst()->GetDeltaTime();
@@ -1008,7 +1005,7 @@ void Boss::WaterAttack()
 	{
 		if (GetHP() < 5)
 		{
-			std::vector<int> AttackIndices = { 42, 58, 49, 94, 123, 100, 146, 175, 153 };
+			std::vector<int> AttackIndices = { 42, 58, 49, 94, 123, 100, 146, 163, 152 };
 			int RandomIndex = (rand() % AttackIndices.size());
 			AttackIndex_ = AttackIndices[RandomIndex];
 		}

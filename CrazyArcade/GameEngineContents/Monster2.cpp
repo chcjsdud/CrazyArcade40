@@ -192,8 +192,8 @@ void Monster2::Die()
 			if (true == MiniRenderer_->IsEndAnimation())
 			{
 				CenterCol_->Off();
-				Death();
 				GameEngineSound::SoundPlayOneShot("Monster2_Die.mp3");
+				Death();
 
 				if (GetLevel()->GetNameCopy() == "Monster1Level")
 				{
