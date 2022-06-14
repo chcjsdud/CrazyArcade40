@@ -148,7 +148,11 @@ void Player::OnRideStart()
 	}
 	else if (PlayerRideState_ == PlayerRideState::UFO)
 	{
+		IsMove = false;
+		AddAccTime(Time_);
 
+		AnimationName_ = "OnUFO_";
+		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 	}
 
 }
@@ -367,9 +371,14 @@ void Player::DieUpdate()
 
 void Player::OnRideUpdate()
 {
-		if (2.f < GetAccTime())
+		if (2.f < GetAccTime()&& PlayerRideState_ != PlayerRideState::UFO)
 		{
 			ChangeState(PlayerState::IdleRide);
+			return;
+		}
+		if (2.f < GetAccTime() )
+		{
+			ChangeState(PlayerState::RidingRide);
 			return;
 		}
 }
@@ -387,6 +396,8 @@ void Player::OffRideUpdate()
 void Player::IdleRideUpdate()
 {
 	DirAnimationCheck();
+
+	Move(CurSpeed_);
 	if (true == IsMoveKey())
 	{
 		ChangeState(PlayerState::RidingRide);
