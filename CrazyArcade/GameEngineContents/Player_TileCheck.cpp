@@ -26,13 +26,17 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 				
 				return;
 			}
-			else if(CurState_ != PlayerState::Die
+			else if (PlayerRideState_ == PlayerRideState::Max)
+			{
+				CurState_ = PlayerState::Idle;
+				if (CurState_ != PlayerState::Die
 					&& CurState_ != PlayerState::DamageStart
 					&& CurState_ != PlayerState::Damaged
 					&& CurState_ != PlayerState::Fade)
-			{
-				ChangeState(PlayerState::DamageStart);
-				return;
+				{
+					ChangeState(PlayerState::DamageStart);
+					return;
+				}
 			}
 		}
 		else
@@ -55,18 +59,23 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 
 				return;
 			}
-			else if(CurState_ != PlayerState::Die
-				&& CurState_ != PlayerState::DamageStart
-				&& CurState_ != PlayerState::Damaged
-				&& CurState_ != PlayerState::Fade)
+			else if (PlayerRideState_ == PlayerRideState::Max)
 			{
-				ChangeState(PlayerState::DamageStart);
-				return;
+				CurState_ = PlayerState::Idle;
+				if (CurState_ != PlayerState::Die
+					&& CurState_ != PlayerState::DamageStart
+					&& CurState_ != PlayerState::Damaged
+					&& CurState_ != PlayerState::Fade)
+				{
+					ChangeState(PlayerState::DamageStart);
+					return;
+				}
 			}
 		}
 		else
 		{
 			return;
+
 		}
 	}
 	break;
@@ -78,7 +87,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	break;
 	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 	{
-		if (PlayerRideState_ != PlayerRideState::UFO)
+		if (false == IsUFO)
 		{
 			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
 			PlayerInfoUpdate();
@@ -175,7 +184,7 @@ void Player::FrontBlockCheckUpdate()
 					}
 				}
 			}
-			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			else if (true == IsUFO)
 			{
 				IsLeftMove = false;
 			}
@@ -201,6 +210,12 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
+		if (true == IsDevil)
+		{
+			IsLeftMove;
+			return;
+		}
+
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsLeftMove = true;
@@ -267,7 +282,7 @@ void Player::FrontBlockCheckUpdate()
 					}
 				}
 			}
-			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			else if (true == IsUFO)
 			{
 				IsRightMove = false;
 			}
@@ -293,6 +308,12 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
+		if (true == IsDevil)
+		{
+			IsRightMove;
+			return;
+		}
+
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsRightMove = true;
@@ -361,7 +382,7 @@ void Player::FrontBlockCheckUpdate()
 					}
 				}
 			}
-			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			else if (true == IsUFO)
 			{
 				IsUpMove = false;
 			}
@@ -387,6 +408,12 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
+		if (true == IsDevil)
+		{
+			IsUpMove = false;
+			return;
+		}
+
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsUpMove = true;
@@ -455,7 +482,7 @@ void Player::FrontBlockCheckUpdate()
 					}
 				}
 			}
-			else if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
+			else if (true == IsUFO)
 			{
 				IsDownMove = false;
 			}
@@ -480,6 +507,12 @@ void Player::FrontBlockCheckUpdate()
 	break;
 	case BlockType::PullBlock:
 	{
+		if (true == IsDevil)
+		{
+			IsDownMove = false;
+			return;
+		}
+
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
 		{
 			IsDownMove = true;

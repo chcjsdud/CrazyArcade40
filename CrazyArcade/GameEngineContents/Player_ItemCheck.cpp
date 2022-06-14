@@ -102,7 +102,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	case ItemType::Shoes:
 	{
 		// 물방울 던지기 
-		IsShoes = true;
+		//IsShoes = true;
 	}
 	break;
 	case ItemType::Shield:
@@ -142,6 +142,8 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 		Position_ = _Player->GetPosition();
 		PlayerRideState_ = PlayerRideState::UFO;
+
+		IsUFO = true;
 		ChangeState(PlayerState::OnRide);
 		return;
 	}
@@ -162,11 +164,25 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 
 void Player::ItemTime()
 {
+
+	if (true == UseShield)
+	{
+		// 3초가 지나면 무적 해제 및 ResetTime
+		if (3.f < GetAccTime())
+		{
+			IsShield = false;
+			IsInvincible = false;
+			EffectRenderer_->Off();
+			ReSetAccTime();
+		}
+	}
+
+
 	if (true == IsDevil)
 	{
 		float Time = GetAccTime();
 		// 10초가 지나면 데빌 모드 해제
-		if (4.f < GetAccTime())
+		if (3.f < Time)
 		{
 			IsDevil = false;
 			CurDir_ = PlayerDir::None;
@@ -193,19 +209,12 @@ void Player::ItemTime()
 
 				AddAccTime(Time_);
 				EffectRenderer_->On();
-				IsShield = false;
 
-				// 3초가 지나면 무적 해제 및 ResetTime
-				if (3.f < GetAccTime()
-					&& false == IsShield)
-				{
-					IsInvincible = false;
-					EffectRenderer_->Off();
-					ReSetAccTime();
-				}
+				UseShield = true;
 			}
 		}
 	}
+
 
 	if (true == IsNiddle)
 	{

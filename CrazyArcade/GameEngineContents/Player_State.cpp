@@ -62,7 +62,13 @@ void Player::MoveStart()
 
 void Player::JumpStart()
 {
-	AnimationName_ = "Jump";
+	//GameEngineSound::SoundPlayOneShot("Jump.wav");
+	AddAccTime(Time_);
+
+	MoveDir = float4::ZERO;
+	//2CheckDir_ = PlayerDir::None;
+
+	AnimationName_ = "Idle_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
@@ -182,6 +188,7 @@ void Player::OffRideStart()
 	else if (PlayerRideState_ == PlayerRideState::UFO)
 	{
 		IsMove = false;
+		IsUFO = false;
 		AddAccTime(Time_);
 
 		AnimationName_ = "OnUFO_";
@@ -297,6 +304,49 @@ void Player::MoveUpdate()
 
 void Player::JumpUpdate()
 {
+	DirAnimationCheck();
+	StagePixelCheck(CurSpeed_);
+
+	if (CurDir_ == PlayerDir::None)
+	{
+		CheckDir_ = PlayerDir::None;
+		ChangeState(PlayerState::Idle);
+		return;
+	}
+
+	MoveDir.y = -170.f * GameEngineTime::GetDeltaTime();
+
+	if (CurDir_ == PlayerDir::Left)
+	{
+		MoveDir.x = -1.f;
+	}
+	else if (CurDir_ == PlayerDir::Right)
+	{
+		MoveDir.x = 1.f;
+	}
+
+	SetMove(MoveDir);
+
+	if (0.6f < GetAccTime())
+	{
+		MoveDir.y += 10.f * GameEngineTime::GetDeltaTime();
+
+		if (CurDir_ == PlayerDir::Left)
+		{
+			MoveDir.x = -0.7f;
+		}
+		else if (CurDir_ == PlayerDir::Right)
+		{
+			MoveDir.x = 0.7f;
+		}
+
+		SetMove(MoveDir);
+
+		CheckDir_ = PlayerDir::None;
+		ChangeState(PlayerState::Idle);
+		return;
+	}
+
 }
 
 void Player::AttackUpdate()
@@ -376,9 +426,9 @@ void Player::DieUpdate()
 void Player::OnRideUpdate()
 {
 	MoveSpeed_ = CurSpeed_;
-	IsMove = false;
 
-	if (1.8f < GetAccTime())
+	if (2.f < GetAccTime()
+		&& PlayerAnimationRender_->IsEndAnimation())
 	{
 		if (PlayerRideState_ == PlayerRideState::UFO)
 		{
@@ -389,7 +439,7 @@ void Player::OnRideUpdate()
 		{
 			ChangeState(PlayerState::IdleRide);
 			return;
-		}
+		} 
 	}
 }
 
@@ -400,6 +450,7 @@ void Player::OffRideUpdate()
 	if (1.8f < GetAccTime())
 	{
 		ChangeState(PlayerState::Idle);
+		CurState_ = PlayerState::Idle;
 		return;
 	}
 }

@@ -40,11 +40,6 @@ private:
 	std::vector<Area> Areas_;
 	GameEngineImage* ColMapImage_;
 
-	Player* Player1_;
-	Player* Player2_;
-
-
-
 	PlayScoreBoard* PlayScoreBoard_;
 	PlayResultUI* PlayResultUI_;
 	TimeUI* TimeUI_;

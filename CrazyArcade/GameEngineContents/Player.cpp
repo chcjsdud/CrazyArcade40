@@ -64,6 +64,13 @@ Player::Player()
 	, IsNiddle(false)
 	, IsJump(false)
 	, MoveSpeed_(CurSpeed_)
+	, IsUFO(false)
+	, UseShield(false)
+	, CurItemType1_(ItemType::Max)
+	, CurItemType2_(ItemType::Max)
+	, EffectRenderer_(nullptr)
+	, Player1BoomCount_(CurAttCount_)
+	, Player2BoomCount_(CurAttCount_)
 
 {
 	BazziAttCount_ = 1;
@@ -134,15 +141,6 @@ void Player::PositionUpdate()
 	}
 }
 
-void Player::AddTime()
-{
-	if (true == IsTimeAdd)
-	{
-		AddAccTime(Time_);
-	}
-}
-
-
 void Player::SetCollision(GameEngineCollision* _Collision)
 {
 	_Collision->GetActor();
@@ -192,6 +190,11 @@ void Player::PlayerInit()
 
 void Player::PlayerInfoUpdate()
 {
+	if (true == IsDevil)
+	{
+		IsDevil = false;
+	}
+
 	if (Type == PlayerType::Player1)
 	{
 		float4 Pos = MainPlayer_1->GetPosition() + float4{ -20.0f,-20.0f };
@@ -199,11 +202,7 @@ void Player::PlayerInfoUpdate()
 		Item->SetMapTile(MapTile_);
 		CurItemType1_ = Item->CheckItem(Pos);
 
-
-		if (PlayerRideState_ != PlayerRideState::UFO)
-		{
-			ItemCheck(MainPlayer_1, CurItemType1_);
-		}
+		ItemCheck(MainPlayer_1, CurItemType1_);
 
 		ArrowRenderer_1P->On();
 	}
@@ -217,11 +216,7 @@ void Player::PlayerInfoUpdate()
 			Item->SetMapTile(MapTile_);
 			CurItemType2_ = Item->CheckItem(Pos);
 
-			if (PlayerRideState_ != PlayerRideState::UFO)
-			{
-				ItemCheck(MainPlayer_2, CurItemType2_);
-			}
-
+			ItemCheck(MainPlayer_2, CurItemType2_);
 
 			ArrowRenderer_1P->On();
 		}
@@ -553,18 +548,18 @@ void Player::Start()
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
 		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
 
-		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 0, 1, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 2, 3, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil", 4, 5, 0.1f, true);
-		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 6, 7, 0.1f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 0, 1, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 2, 3, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil", 4, 5, 0.15f, true);
+		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 6, 7, 0.15f, true);
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 8, 12, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 13, 17, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 18, 24, 0.1f, true);
 		BazziRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 25, 31, 0.1f, true);
 
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnOwl_", 0, 7, 0.08f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnTurtle_", 8, 15, 0.08f, true);
-		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnUFO_", 16, 19, 0.08f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnOwl_", 0, 7, 0.035f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnTurtle_", 8, 15, 0.035f, true);
+		BazziRenderer_->CreateAnimation("Bazzi_3.bmp", "OnUFO_", 16, 19, 0.05f, true);
 
 		BazziRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
@@ -639,18 +634,18 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Up", 18, 18, 0.09f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingUFO_Down", 19, 19, 0.09f, true);
 
-		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 60, 61, 0.1f, true);
-		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 62, 63, 0.1f, true);
-		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil", 64, 65, 0.1f, true);
-		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 66, 67, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 60, 61, 0.15f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 62, 63, 0.15f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil", 64, 65, 0.15f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 66, 67, 0.15f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 68, 72, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 73, 77, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 88, 92, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 93, 96, 0.1f, true);
 
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnOwl_", 0, 7, 0.08f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnTurtle_", 8, 15, 0.08f, true);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnUFO_", 16, 19, 0.08f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnOwl_", 0, 7, 0.035f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnTurtle_", 8, 15, 0.035f, true);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnUFO_", 16, 19, 0.05f, true);
 
 
 		MaridRenderer_->ChangeAnimation("Ready_");
@@ -731,18 +726,18 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Left", 18, 18, 0.09f, true);
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "RidingUFO_Right", 19, 19, 0.09f, true);
 
-		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 32, 33, 0.1f, true);
-		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 34, 35, 0.1f, true);
-		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil",36, 37, 0.1f, true);
-		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 38, 39, 0.1f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Left_Devil", 32, 33, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Right_Devil", 34, 35, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Up_Devil",36, 37, 0.15f, true);
+		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 38, 39, 0.15f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 40, 44, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 45, 49, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 50, 54, 0.1f, true);
 		DaoRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 55, 59, 0.1f, true);
 
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnOwl_", 0, 7, 0.08f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnTurtle_", 8, 15, 0.08f, true);
-		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnUFO_", 16, 19, 0.08f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnOwl_", 0, 7, 0.035f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnTurtle_", 8, 15, 0.035f, true);
+		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnUFO_", 16, 19, 0.05f, true);
 
 
 		DaoRenderer_->ChangeAnimation("Ready_");
@@ -793,6 +788,7 @@ void Player::Start()
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("Invincible", 'O');
 		GameEngineInput::GetInst()->CreateKey("Revival", 'I');
+		GameEngineInput::GetInst()->CreateKey("Jump", 'J');
 
 		//GameEngineInput::GetInst()->CreateKey("2POn", 'X');
 	}
@@ -817,6 +813,13 @@ void Player::Update()
 	CollisionCheck();
 
 	DebugModeSwitch();
+
+	// ======= 테스트 중 
+	/*if (true == GameEngineInput::GetInst()->IsDown("Jump"))
+	{
+		ChangeState(PlayerState::Jump);
+		return;
+	}*/
 }
 
 void Player::Render()
@@ -931,7 +934,6 @@ void Player::Render()
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
-
 	}
 
 
