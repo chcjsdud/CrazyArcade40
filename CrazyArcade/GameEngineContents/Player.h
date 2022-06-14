@@ -292,6 +292,8 @@ protected:
 	GameEngineRenderer* DaoRenderer_;
 	GameEngineRenderer* EffectRenderer_;
 
+	GameEngineRenderer* ArrowRenderer_1P;
+	GameEngineRenderer* ArrowRenderer_2P;
 private:
 	GameEngineRendererTileMap* MapTile_;
 

@@ -233,6 +233,12 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("MaridFace_Icon.bmp");
         Image->Cut({ 64,64 });
+
+        Image = GameEngineImageManager::GetInst()->Find("1P_Arrow.bmp");
+        Image->Cut({ 176,100 });
+
+        Image = GameEngineImageManager::GetInst()->Find("2P_Arrow.bmp");
+        Image->Cut({ 176,100 });
     }
 
     ////// UI 리소스 ChoiceMap에서 사용되는 리소스

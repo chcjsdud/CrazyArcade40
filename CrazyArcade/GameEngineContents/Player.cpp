@@ -190,6 +190,7 @@ void Player::PlayerInfoUpdate()
 
 		ItemCheck(MainPlayer_1, CurItemType1_);
 
+		ArrowRenderer_1P->On();
 		//if (true == IsItemKey())
 		//{
 		//	ItemCheck(MainPlayer_1, CurItemType1_);
@@ -206,6 +207,9 @@ void Player::PlayerInfoUpdate()
 			CurItemType2_ = Item->CheckItem(Pos);
 
 			ItemCheck(MainPlayer_2, CurItemType2_);
+
+
+			ArrowRenderer_1P->On();
 
 			/*		if (true == IsItemKey())
 					{
@@ -313,10 +317,13 @@ void Player::PlayerCollisionUpdate()
 	if (Type == PlayerType::Player1)
 	{
 		Collision1P_->On();
+		ArrowRenderer_1P->On();
+
 	}
 	else
 	{
 		Collision2P_->On();
+		ArrowRenderer_2P->On();
 	}
 }
 
@@ -729,7 +736,6 @@ void Player::Start()
 		DaoRenderer_->CreateAnimation("Dao_3.bmp", "OnUFO_", 16, 19, 0.15f, true);
 
 
-
 		DaoRenderer_->ChangeAnimation("Ready_");
 		CurState_ = PlayerState::Ready;
 		AnimationName_ = "Ready_";
@@ -741,6 +747,19 @@ void Player::Start()
 		//ChangeDirText_ = "Down";
 
 		DaoRenderer_->Off();
+
+
+		
+		ArrowRenderer_1P = CreateRenderer((int)ORDER::UI, RenderPivot::CENTER, float4{ 0.f, -53.f });
+		ArrowRenderer_1P->CreateAnimation("1P_Arrow.bmp", "1P_Arrow", 0, 16, 0.06f, true);
+		ArrowRenderer_1P->ChangeAnimation("1P_Arrow");
+		ArrowRenderer_1P->Off();
+		
+		ArrowRenderer_2P = CreateRenderer((int)ORDER::UI, RenderPivot::CENTER, float4{ 25.f, -57.f });
+		ArrowRenderer_2P->CreateAnimation("2P_Arrow.bmp", "2P_Arrow", 0, 10, 0.1f, true);
+		ArrowRenderer_2P->ChangeAnimation("2P_Arrow");
+		ArrowRenderer_2P->Off();
+		
 	}
 
 
@@ -787,7 +806,6 @@ void Player::Update()
 	TileCheckResult();
 	FrontBlockCheck();
 	CollisionCheck();
-
 
 	DebugModeSwitch();
 }
