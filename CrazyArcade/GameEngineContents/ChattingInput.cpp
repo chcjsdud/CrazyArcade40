@@ -181,7 +181,7 @@ void ChattingInput::Update()
 
 void ChattingInput::Render()
 {
-	if (false == GetLevel()->FindActor("ChoiceMap")->IsUpdate())
+	if (false == GetLevel()->FindActor("ChoiceMap")->IsUpdate() && false == GetLevel()->FindActor("Mypage")->IsUpdate())
 	{
 		if (!InputText_.empty())
 		{

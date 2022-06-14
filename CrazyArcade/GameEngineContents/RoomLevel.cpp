@@ -13,6 +13,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngine.h>
 #include "GlobalUIName.h"
+#include "MyPageButton.h"
 
 RoomLevel::RoomLevel()
 {
@@ -31,6 +32,7 @@ void RoomLevel::Loading()
 	CreateActor<ChattingInput>((int)UIType::PopUpButton);
 	CreateActor<ChattingHistory>((int)UIType::PopUpButton);
 	CreateActor<RoomNickName>((int)UIType::PopUpButton);
+	CreateActor<MyPageButton>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 
 }

@@ -11,6 +11,8 @@ GlobalUIName::GlobalUIName()
 	, ChoiceMap_(1)
 	, Is1pUpdate_(true)
 	, Is2pUpdate_(false)
+	, Bubble_1P("BubbleDefault")
+	, Bubble_2P("BubbleDefault")
 {
 }
 

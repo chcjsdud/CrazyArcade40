@@ -65,40 +65,37 @@
       <Filter>Level\UILevel</Filter>
     </ClInclude>
     <ClInclude Include="LoginBackGround.h">
-      <Filter>Actor\Play\Player\UI\Login</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateRoomBackGround.h">
-      <Filter>Actor\Play\Player\UI</Filter>
+      <Filter>Actor\UI\Login</Filter>
     </ClInclude>
     <ClInclude Include="RoomLevel.h">
       <Filter>Level\UILevel</Filter>
     </ClInclude>
     <ClInclude Include="RoomCharaterSelectUI.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="Area.h">
       <Filter>Actor\Play\Monster</Filter>
     </ClInclude>
     <ClInclude Include="RoomBackGround.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="StartButton.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="CreateRoomBackGround.h">
       <Filter>Actor\UI\RoomCreate</Filter>
     </ClInclude>
     <ClInclude Include="StartIntroUI.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="TimeUI.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="PlayBackGround.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="ChoiceMap.h">
-      <Filter>Actor\Play\Player\UI\MapChoice</Filter>
+      <Filter>Actor\UI\MapChoice</Filter>
     </ClInclude>
     <ClInclude Include="GameItemObject.h">
       <Filter>Actor\Map</Filter>
@@ -116,31 +113,31 @@
       <Filter>Actor\Etc</Filter>
     </ClInclude>
     <ClInclude Include="MapChoiceUI.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="GlobalUIName.h">
       <Filter>Actor\Etc</Filter>
     </ClInclude>
     <ClInclude Include="ChattingHistory.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="ChattingInput.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="MonsterRoomLevel.h">
       <Filter>Level\UILevel</Filter>
     </ClInclude>
     <ClInclude Include="PlayResultUI.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="RoomNickName.h">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFaceIconUI.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="PlayNickName.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="Ghost.h">
       <Filter>Actor\Play\Monster</Filter>
@@ -155,14 +152,25 @@
       <Filter>Actor\Map</Filter>
     </ClInclude>
     <ClInclude Include="PlayScoreBoard.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
     <ClInclude Include="StartMonsterModeUI.h">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClInclude>
-    <ClInclude Include="ItemIcon.h" />
     <ClInclude Include="Player.h">
       <Filter>Actor\Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemIcon.h">
+      <Filter>Actor\UI\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateRoomBackGround.h">
+      <Filter>Actor\UI\RoomCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="Mypage.h">
+      <Filter>Actor\UI\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPageButton.h">
+      <Filter>Actor\UI\Room</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -239,40 +247,37 @@
       <Filter>Level\UILevel</Filter>
     </ClCompile>
     <ClCompile Include="LoginBackGround.cpp">
-      <Filter>Actor\Play\Player\UI\Login</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateRoomBackGround.cpp">
-      <Filter>Actor\Play\Player\UI</Filter>
+      <Filter>Actor\UI\Login</Filter>
     </ClCompile>
     <ClCompile Include="Area.cpp">
       <Filter>Actor\Play\Monster</Filter>
     </ClCompile>
     <ClCompile Include="RoomCharaterSelectUI.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="RoomBackGround.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="RoomLevel.cpp">
       <Filter>Level\UILevel</Filter>
     </ClCompile>
     <ClCompile Include="StartButton.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="CreateRoomBackGround.cpp">
       <Filter>Actor\UI\RoomCreate</Filter>
     </ClCompile>
     <ClCompile Include="StartIntroUI.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="TimeUI.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="PlayBackGround.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="ChoiceMap.cpp">
-      <Filter>Actor\Play\Player\UI\MapChoice</Filter>
+      <Filter>Actor\UI\MapChoice</Filter>
     </ClCompile>
     <ClCompile Include="CrazyArcade.cpp" />
     <ClCompile Include="GameItemObject.cpp">
@@ -291,31 +296,31 @@
       <Filter>Actor\Etc</Filter>
     </ClCompile>
     <ClCompile Include="MapChoiceUI.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="GlobalUIName.cpp">
       <Filter>Actor\Etc</Filter>
     </ClCompile>
     <ClCompile Include="ChattingInput.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="MonsterRoomLevel.cpp">
       <Filter>Level\UILevel</Filter>
     </ClCompile>
     <ClCompile Include="PlayResultUI.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="RoomNickName.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFaceIconUI.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="PlayNickName.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="PlayScoreBoard.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
       <Filter>Actor\Play\Monster</Filter>
@@ -327,13 +332,12 @@
       <Filter>Actor\Etc</Filter>
     </ClCompile>
     <ClCompile Include="StartMonsterModeUI.cpp">
-      <Filter>Actor\Play\Player\UI\Play</Filter>
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
     <ClCompile Include="ChattingHistory.cpp">
-      <Filter>Actor\Play\Player\UI\Room</Filter>
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="ChattingHistory.cpp" />
-    <ClCompile Include="ItemIcon.cpp" />
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Play\Player</Filter>
     </ClCompile>
@@ -348,6 +352,18 @@
     </ClCompile>
     <ClCompile Include="Player_TileCheck.cpp">
       <Filter>Actor\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemIcon.cpp">
+      <Filter>Actor\UI\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateRoomBackGround.cpp">
+      <Filter>Actor\UI\RoomCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="Mypage.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPageButton.cpp">
+      <Filter>Actor\UI\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -399,26 +415,23 @@
     <Filter Include="Level\TileMapEditorLevel">
       <UniqueIdentifier>{de1c8388-a91f-46ab-b38b-099b3a10b351}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\Player\UI">
+    <Filter Include="Actor\UI">
       <UniqueIdentifier>{b0aa6619-e9b1-40ba-85ce-6353b28d0955}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\Player\UI\Login">
+    <Filter Include="Actor\UI\Login">
       <UniqueIdentifier>{b1f1557b-bdea-4ad9-b8e5-e6af4747c4c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\Player\UI\RoomCreate">
+    <Filter Include="Actor\UI\RoomCreate">
       <UniqueIdentifier>{61c51dcf-e1e9-4d12-9c53-b93473a15c22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\Play\Player\UI\Play">
-      <UniqueIdentifier>{1e87fa18-9799-48aa-81c6-ecb1222944e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\Play\Player\UI\MapChoice">
-      <UniqueIdentifier>{5df733e4-9135-47d2-91eb-49c84a202e22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\Play\Player\UI\Room">
-      <UniqueIdentifier>{2e4a20aa-9014-4c87-b2e0-277cd5a910f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Actor\UI\Play">
       <UniqueIdentifier>{1e87fa18-9799-48aa-81c6-ecb1222944e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\MapChoice">
+      <UniqueIdentifier>{5df733e4-9135-47d2-91eb-49c84a202e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\Room">
+      <UniqueIdentifier>{2e4a20aa-9014-4c87-b2e0-277cd5a910f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

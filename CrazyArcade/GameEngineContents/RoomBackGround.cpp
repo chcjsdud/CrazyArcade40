@@ -27,8 +27,8 @@ void RoomBackGround::Start()
 		CreateRenderer((int)UIType::PopUp)->SetImage("RoomBackGround.bmp");
 	}
 
-	BackBtnCollision_ = CreateCollision("Back", { 40 ,40 }, { -365.0f,280.0f });
-	ExitBtnCollision_ = CreateCollision("Exit", { 40 ,40 }, { 360.0f,280.0f });
+	BackBtnCollision_ = CreateCollision("Back", { 25 ,25 }, { -370.0f,280.0f });
+	ExitBtnCollision_ = CreateCollision("Exit", { 25 ,25 }, { 363.0f,280.0f });
 }
 
 

@@ -10,6 +10,7 @@
 #include "ChattingHistory.h"
 #include "RoomNickName.h"
 #include "StartButton.h"
+#include "MyPageButton.h"
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngine.h>
 
@@ -28,6 +29,7 @@ void MonsterRoomLevel::Loading()
 	CreateActor<RoomCharaterSelectUI>((int)UIType::PopUpButton);
 	CreateActor<MapChoiceUI>((int)UIType::PopUpButton);
 	CreateActor<RoomNickName>((int)UIType::PopUpButton);
+	CreateActor<MyPageButton>((int)UIType::PopUpButton);
 	CreateActor<Mouse>((int)UIType::Mouse);
 
 	

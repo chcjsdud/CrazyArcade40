@@ -112,6 +112,26 @@ public:
 		Is2pUpdate_ = false;
 	}
 
+	inline void SetBubble_1P(const std::string& _BubbleName)
+	{
+		Bubble_1P = _BubbleName;
+	}
+
+	inline void SetBubble_2P(const std::string& _BubbleName)
+	{
+		Bubble_2P = _BubbleName;
+	}
+
+	std::string GetBubble_1P()
+	{
+		return Bubble_1P;
+	}
+
+	std::string GetBubble_2P()
+	{
+		return Bubble_2P;
+	}
+
 private:
 	std::string NickName_1;
 	std::string NickName_2;
@@ -124,6 +144,8 @@ private:
 	bool Is1pUpdate_;
 	bool Is2pUpdate_;
 
+	std::string Bubble_1P;
+	std::string Bubble_2P;
 
 private:
 	//construcuter destructer

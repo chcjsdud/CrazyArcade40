@@ -4,7 +4,8 @@
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineRandom.h>
-#include<GameEngineBase/GameEngineSound.h>
+#include <GameEngineBase/GameEngineSound.h>
+#include "GlobalUIName.h"
 
 size_t MapGameObject::Player1BoomNum_;
 size_t MapGameObject::Player2BoomNum_;
@@ -355,6 +356,12 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
 		Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
 		Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_1.bmp", "Bubble1", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_2.bmp", "Bubble2", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_3.bmp", "Bubble3", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_4.bmp", "Bubble4", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_5.bmp", "Bubble5", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_6.bmp", "Bubble6", 0, 3, 0.2f, true);
 		Boom_->Renderer->ChangeAnimation("BubbleDefault");
 		Boom_->TileIndex_ = TileIndex_;
 		Boom_->TilePos_ = _Pos;
@@ -362,11 +369,13 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		Boom_->Power_ = _Power;	
 		if (_PlayerNum == 1)
 		{
+			Boom_->Renderer->ChangeAnimation(GlobalUIName::GetInst()->GetBubble_1P());
 			Player1BlockTiles_.push_back(Boom_);
 			Player1BoomNum_ += 1;
 		}
 		else if (_PlayerNum == 2)
 		{
+			Boom_->Renderer->ChangeAnimation(GlobalUIName::GetInst()->GetBubble_2P());
 			Player2BlockTiles_.push_back(Boom_);
 			Player2BoomNum_ += 1;
 		}
@@ -384,6 +393,12 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
 		Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
 		Boom_->Renderer->CreateAnimation("Bubble_Boss.bmp", "BubbleBoss", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_1.bmp", "Bubble1", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_2.bmp", "Bubble2", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_3.bmp", "Bubble3", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_4.bmp", "Bubble4", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_5.bmp", "Bubble5", 0, 3, 0.2f, true);
+		Boom_->Renderer->CreateAnimation("Bubble_6.bmp", "Bubble6", 0, 3, 0.2f, true);
 		Boom_->Renderer->ChangeAnimation("BubbleDefault");
 		Boom_->TileIndex_ = TileIndex_;
 		Boom_->TilePos_ = _Pos;
@@ -391,11 +406,13 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		Boom_->Power_ = _Power;
 		if (_PlayerNum == 1)
 		{
+			Boom_->Renderer->ChangeAnimation(GlobalUIName::GetInst()->GetBubble_1P());
 			Player1BlockTiles_.push_back(Boom_);
 			Player1BoomNum_ += 1;
 		}
 		else if (_PlayerNum == 2)
 		{
+			Boom_->Renderer->ChangeAnimation(GlobalUIName::GetInst()->GetBubble_2P());
 			Player2BlockTiles_.push_back(Boom_);
 			Player2BoomNum_ += 1;
 		}

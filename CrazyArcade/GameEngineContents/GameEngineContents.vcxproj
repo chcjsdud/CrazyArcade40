@@ -239,6 +239,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Mypage.h" />
+    <ClInclude Include="MyPageButton.h" />
     <ClInclude Include="PlayBackGround.h" />
     <ClInclude Include="Player.h">
       <SubType>
@@ -376,6 +378,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Mypage.cpp" />
+    <ClCompile Include="MyPageButton.cpp" />
     <ClCompile Include="PlayBackGround.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>

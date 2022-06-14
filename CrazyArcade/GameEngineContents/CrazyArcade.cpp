@@ -192,6 +192,12 @@ void CrazyArcade::GameInit()
 
         Image = GameEngineImageManager::GetInst()->Find("MapChoiceButton.bmp");
         Image->Cut({ 200,100 });
+
+        Image = GameEngineImageManager::GetInst()->Find("MyPageBtn.bmp");
+        Image->Cut({ 128,128 });
+
+        Image = GameEngineImageManager::GetInst()->Find("MyPageCloseBtn.bmp");
+        Image->Cut({ 256,256 });
     }
 
     ////// UI 리소스 Play에서 사용되는 리소스
@@ -450,6 +456,19 @@ void CrazyArcade::GameInit()
     Bubble_Boss->CutCount(4, 1);
     GameEngineImage* Bubble_Default = GameEngineImageManager::GetInst()->Find("Bubble_Default.bmp");
     Bubble_Default->CutCount(5, 1);
+    GameEngineImage* Bubble_ = GameEngineImageManager::GetInst()->Find("Bubble_1.bmp");
+    Bubble_->CutCount(4, 1);
+    Bubble_ = GameEngineImageManager::GetInst()->Find("Bubble_2.bmp");
+    Bubble_->CutCount(4, 1);
+    Bubble_ = GameEngineImageManager::GetInst()->Find("Bubble_3.bmp");
+    Bubble_->CutCount(4, 1);
+    Bubble_ = GameEngineImageManager::GetInst()->Find("Bubble_4.bmp");
+    Bubble_->CutCount(4, 1);
+    Bubble_ = GameEngineImageManager::GetInst()->Find("Bubble_5.bmp");
+    Bubble_->CutCount(4, 1);
+    Bubble_ = GameEngineImageManager::GetInst()->Find("Bubble_6.bmp");
+    Bubble_->CutCount(4, 1);
+
     //아이템 이미지
     GameEngineImage* Fluid = GameEngineImageManager::GetInst()->Find("Fluid.bmp");
     Fluid->CutCount(6, 1);
