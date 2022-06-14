@@ -49,6 +49,16 @@ bool Area::HasWall()
     return false;
 }
 
+bool Area::BossHasWall()
+{
+    if (RGB(0, 0, 0) == ColMapImage_->GetImagePixel(float4(CenterX_, CenterY_)))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 bool Area::HasBlock()
 {
     return GetTile(float4(CenterX_, CenterY_)) != nullptr;

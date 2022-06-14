@@ -52,6 +52,7 @@ public:
 	bool Contains(float4 _Pos);
 	// ColMap이 검은색
 	bool HasWall();
+	bool BossHasWall();
 	bool HasWaveTile();
 	bool HasBlock();
 	int ChooseWaterAttackAni();

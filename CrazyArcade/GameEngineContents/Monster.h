@@ -96,6 +96,7 @@ protected:
 	std::map<int, Area> MovableAreas;
 
 public:
+
 	void SetMapSizeY(float _MapSizeY)
 	{
 		MapSizeY_ = _MapSizeY;
