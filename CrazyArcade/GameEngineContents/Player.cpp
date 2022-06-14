@@ -891,6 +891,7 @@ void Player::Render()
 		MaxAttCount = "MAXCOUNT : " + std::to_string(MaxAttCount_);;
 		MaxAttPower = "MAXPOWER : " + std::to_string(MaxAttPower_);;
 
+		SetBkMode(GameEngine::BackBufferDC(), OPAQUE);
 		SetTextColor(GameEngine::BackBufferDC(), RGB(0, 0, 0));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
