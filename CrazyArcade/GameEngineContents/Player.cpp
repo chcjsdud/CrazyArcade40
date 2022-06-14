@@ -7,6 +7,7 @@
 #include "MapBackGround.h"
 #include "GameEngine/GameEngine.h"
 #include "GameItemObject.h"
+#include <GameEngineContents/Monster.h>
 
 Player* Player::MainPlayer_1 = nullptr;
 Player* Player::MainPlayer_2 = nullptr;
@@ -96,12 +97,12 @@ void Player::DebugModeSwitch()
 		if (false == IsInvincible)
 		{
 			IsInvincible = true;
-			//EffectRenderer_->On();
+			EffectRenderer_->On();
 		}
 		else
 		{
 			IsInvincible = false;
-			//EffectRenderer_->Off();
+			EffectRenderer_->Off();
 		}
 		
 	}
@@ -329,10 +330,21 @@ void Player::CollisionCheck()
 
 			if (true == Collision1P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 			{
-				for (size_t i = 0; i < ColList.size(); i++)
+				for (GameEngineCollision* ColActor : ColList)
 				{
-					ChangeState(PlayerState::Die);
-					return;
+					Monster* ColMonster = dynamic_cast<Monster*>(ColActor->GetActor());
+					if (ColMonster != nullptr)
+					{
+						if (ColMonster->GetHP() <= 1)
+						{
+							return;
+						}
+
+						else
+						{
+							ChangeState(PlayerState::Die);
+						}
+					}
 				}
 			}
 		}
@@ -376,11 +388,27 @@ void Player::CollisionCheck()
 
 				if (true == Collision2P_->CollisionResult("Monster", ColList, CollisionType::Rect, CollisionType::Rect))
 				{
-					for (size_t i = 0; i < ColList.size(); i++)
+					for (GameEngineCollision* ColActor : ColList)
 					{
-						ChangeState(PlayerState::Die);
-						return;
+						Monster* ColMonster = dynamic_cast<Monster*>(ColActor->GetActor());
+						if (ColMonster != nullptr)
+						{
+							if (ColMonster->GetHP() <= 1)
+							{
+								return;
+							}
+
+							else
+							{
+								ChangeState(PlayerState::Die);
+							}
+						}
 					}
+					//for (size_t i = 0; i < ColList.size(); i++)
+					//{
+					//	ChangeState(PlayerState::Die);
+					//	return;
+					//}
 				}
 			}
 
@@ -458,6 +486,7 @@ void Player::Start()
 		EffectRenderer_->SetPivotType(RenderPivot::CENTER);
 		EffectRenderer_->SetPivot({ 0.f, 0.f });
 		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.08f, true);
+		EffectRenderer_->ChangeAnimation("Effect_Shield");
 		EffectRenderer_->Off();
 
 		
@@ -862,6 +891,8 @@ void Player::Render()
 		MaxAttCount = "MAXCOUNT : " + std::to_string(MaxAttCount_);;
 		MaxAttPower = "MAXPOWER : " + std::to_string(MaxAttPower_);;
 
+		SetBkMode(GameEngine::BackBufferDC(), OPAQUE);
+		SetTextColor(GameEngine::BackBufferDC(), RGB(0, 0, 0));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 50, State.c_str(), static_cast<int>(State.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 30, CurSpeed.c_str(), static_cast<int>(CurSpeed.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() - 10, CurAttCount.c_str(), static_cast<int>(CurAttCount.length()));

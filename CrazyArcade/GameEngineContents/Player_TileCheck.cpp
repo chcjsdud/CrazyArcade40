@@ -421,6 +421,10 @@ BlockType Player::CheckBlockTile(float4 _Pos)
 	{
 		return  BlockType::WaveBlock;
 	}
+	if (Tiles_->BlockType_ == BlockType::BubbleBlock)
+	{
+		return  BlockType::BubbleBlock;
+	}
 
 	if (ItemTiles_ != nullptr && ItemTiles_->ItemType_ != ItemType::Max)
 	{

@@ -126,6 +126,10 @@ void PlayerTeamTest::Loading()
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
 	Item_->CreateItem({ 400.f, 290.f }, ItemType::Owl);
 
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 370.f }, ItemType::Shield);
+
 
 
 

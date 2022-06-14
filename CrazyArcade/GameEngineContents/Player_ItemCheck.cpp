@@ -67,6 +67,11 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Niddle:
 	{
+		if (true == IsItemKey())
+		{
+			//
+		}
+
 		ChangeState(PlayerState::Revival);
 		return;
 	}
@@ -80,8 +85,11 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		}
 		// 누른 방향키와 반대로 이동 + CurAttCount만큼 연속으로 자동 공격 
 		AddAccTime(Time_);
+
 		IsDevil = true;
 		IsMove = false;
+
+		CurDir_ = PlayerDir::None;
 	}
 	break;
 	case ItemType::Shoes:
@@ -91,13 +99,23 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Shield:
 	{
-		//IsShield = true;
-		//EffectRenderer_->On();
+		AddAccTime(Time_);
+
+		if (true == IsItemKey())
+		{
+			//
+		}
+
+		IsShield = true;
+		EffectRenderer_->On();
 	}
 	break;
 	case ItemType::SuperJump:
 	{
-
+		if (true == IsItemKey())
+		{
+			//
+		}
 	}
 	break;
 	case ItemType::Owl:
@@ -145,6 +163,9 @@ void Player::ItemTime()
 		if (3.f < GetAccTime())
 		{
 			IsDevil = false;
+			CurDir_ = PlayerDir::None;
+			MoveDir = float4::ZERO;
+
 			ReSetAccTime();
 		}
 
@@ -154,8 +175,6 @@ void Player::ItemTime()
 
 	if (true == IsShield)
 	{
-		AddAccTime(Time_);
-
 		// 3초가 지나면 무적 해제 및 ResetTime
 		if (3.f < GetAccTime())
 		{
