@@ -43,11 +43,19 @@ void BossBoom::Update()
 							GameEngineSound::SoundPlayOneShot("Boss_Hit.mp3");
 							TileIndex _TileIndex = _Area.GetMapTile()->GetTileIndex(_Center);
 							BlockTile* _check = _Area.GetMapTile()->GetTile<BlockTile>(_TileIndex.X, _TileIndex.Y);
-							_check->Renderer->ChangeAnimation("Death");
-							_check->TileIndex_ = _TileIndex;
-							_check->TilePos_ = _Center;
-							DeleteTileList_.push_back(_check);
+
+							if (_check->BlockType_ == BlockType::BubbleBlock || _check->BlockType_ == BlockType::WaveBlock)
+							{
+								BossBubblePop(_Center);
+								return;
+							}
 							
+							else
+							{
+								_check->Renderer->ChangeAnimation("Death");
+								_check->TileIndex_ = _TileIndex;
+								DeleteTileList_.push_back(_check);
+							}
 						}
 
 						else if (1 == _Area.ChooseWaterAttackAni()) // 블럭 없음
@@ -91,6 +99,10 @@ void BossBoom::Update()
 
 			}
 
+		}
+		else
+		{
+			return;
 		}
 	}
 

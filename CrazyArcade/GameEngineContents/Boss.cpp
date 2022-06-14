@@ -194,6 +194,7 @@ void Boss::Update()
 	IntervalTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
 	GetAttTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 	FirstAttInterval_ += GameEngineTime::GetInst()->GetDeltaTime();
+	TakeDamageTime_ += GameEngineTime::GetInst()->GetDeltaTime();
 
 	if (true == IsSppechEnd_)
 	{
@@ -252,7 +253,7 @@ void Boss::Die()
 				for (GameEngineCollision* ColActor : Collision)
 				{
 					GameEngineActor* ColPlayer = ColActor->GetActor();
-					if (dynamic_cast<Player*>(ColPlayer))
+					if (nullptr != dynamic_cast<Player*>(ColPlayer))
 					{
 						Renderer_->ChangeAnimation("DieEnd");
 					}
@@ -401,7 +402,7 @@ void Boss::UpdateMove()
 
 	if (RandomAction_ < 3)
 	{
-		if (true != IsDie() && false == Renderer_->IsAnimationName("TakeDamage" + Direction_))
+		if (true != IsDie())
 		{
 			Renderer_->ChangeAnimation("Move" + Direction_);
 			SetMove(Dir_ * GameEngineTime::GetDeltaTime() * Speed_);
@@ -515,6 +516,11 @@ void Boss::UpdateDirection()
 	CheckWaveTile(GetPosition() + float4(-40.0f, 0.0f)); // 왼쪽
 	CheckWaveTile(GetPosition() + float4(0.0f, 40.0f)); // 아래쪽
 	CheckWaveTile(GetPosition() + float4(0.0f, -40.0f)); // 위쪽
+	CheckWaveTile(GetPosition() + float4(-40.0f, -40.0f)); // 왼쪽위
+	CheckWaveTile(GetPosition() + float4(-40.0f, 40.0f)); // 오른쪽위
+	CheckWaveTile(GetPosition() + float4(40.0f, 40.0f)); 
+	CheckWaveTile(GetPosition() + float4(40.0f, -40.0f)); 
+
 
 
 	if (LevelStart_ == true)
@@ -526,7 +532,8 @@ void Boss::UpdateDirection()
 	{
 		if ((Renderer_->IsAnimationName("WaterAttack") && EndAttack_ == true) ||
 			(Renderer_->IsAnimationName("RollAttack" + Direction_) && EndAttack_ == true) ||
-			(Renderer_->IsAnimationName("TakeDamage" + Direction_) && true == Renderer_->IsEndAnimation()))
+			Renderer_->IsAnimationName("Move"+Direction_))
+			
 		{
 			RandomAction_ = 0;
 			IsAreaChanged = true;
@@ -861,7 +868,9 @@ void Boss::TakeDamage()
 		GetAttTime_ = 0.0f;
 		GameEngineSound::SoundPlayOneShot("Boss_Rage.mp3");
 		Renderer_->ChangeAnimation("TakeDamage" + Direction_);
+		TakeDamageTime_ = 0.0f;
 		Dir_ = float4::ZERO;
+		//EndAttack_ == true;
 	}
 }
 
