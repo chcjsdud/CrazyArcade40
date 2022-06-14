@@ -1121,6 +1121,7 @@ void MapGameObject::DestroyBlock()
 			{
 				if (BlockCheck->IsBlockDeath_ == true)//죽어야하는 타일이라면
 				{
+					BlockCheck->BlockType_ = BlockType::FixBlock;
 					BlockCheck->Renderer->ChangeAnimation("Death");
 					if (BlockCheck->Renderer->IsEndAnimation() == true)//애니메이션이 끝났다면
 					{
