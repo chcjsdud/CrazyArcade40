@@ -88,16 +88,16 @@ void ItemIcon::ChangeImage()
 		switch (Player2pItem)
 		{
 		case ItemType::Max:
-			ItemIcon_1P_->SetImage("EmptyIcon.bmp");
+			ItemIcon_2P_->SetImage("EmptyIcon.bmp");
 			break;
 		case ItemType::Niddle:
-			ItemIcon_1P_->SetImage("NiddleIcon.bmp");
+			ItemIcon_2P_->SetImage("NiddleIcon.bmp");
 			break;
 		case ItemType::Shield:
-			ItemIcon_1P_->SetImage("ShieldIcon.bmp");
+			ItemIcon_2P_->SetImage("ShieldIcon.bmp");
 			break;
 		case ItemType::SuperJump:
-			ItemIcon_1P_->SetImage("SuperJumpIcon.bmp");
+			ItemIcon_2P_->SetImage("SuperJumpIcon.bmp");
 			break;
 		default:
 			break;
