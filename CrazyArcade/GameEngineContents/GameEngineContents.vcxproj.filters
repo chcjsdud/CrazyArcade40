@@ -160,6 +160,9 @@
     <ClInclude Include="PlayScoreBoard.h">
       <Filter>Actor\UI\Play</Filter>
     </ClInclude>
+    <ClInclude Include="StartMonsterModeUI.h">
+      <Filter>Actor\UI\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BossLevel.cpp">
@@ -339,6 +342,9 @@
     </ClCompile>
     <ClCompile Include="ChattingHistory.cpp">
       <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMonsterModeUI.cpp">
+      <Filter>Actor\UI\Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

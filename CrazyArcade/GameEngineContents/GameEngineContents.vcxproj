@@ -266,6 +266,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="StartMonsterModeUI.h" />
     <ClInclude Include="TileMapEditor.h">
       <SubType>
       </SubType>
@@ -408,6 +409,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="StartIntroUI.cpp" />
+    <ClCompile Include="StartMonsterModeUI.cpp" />
     <ClCompile Include="TextArea.cpp">
       <SubType>
       </SubType>

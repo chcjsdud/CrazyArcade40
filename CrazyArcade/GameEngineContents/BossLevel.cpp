@@ -33,6 +33,7 @@
 #include "PlayerFaceIconUI.h"
 #include "PlayResultUI.h"
 #include "PlayScoreBoard.h"
+#include "StartMonsterModeUI.h"
 
 BossLevel::BossLevel()
 	: ColMapImage_(nullptr)
@@ -176,7 +177,9 @@ void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	TimeUI_ = CreateActor<TimeUI>((int)UIType::Time);
 	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<StartMonsterModeUI>((int)UIType::StartIntroUI);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	IsGameEnd_ = false;
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterBossStageBGM.mp3");
 
 	for (int x = 0; x < 15; ++x)
@@ -215,8 +218,8 @@ void BossLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
 		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
-		Player::MainPlayer_2->SetPlayerType(PlayerType::Player1);
-		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+		Player::MainPlayer_2->SetPosition(Areas_[180].GetCenter());
 		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 }

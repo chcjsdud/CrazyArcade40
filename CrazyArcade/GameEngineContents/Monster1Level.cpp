@@ -38,6 +38,7 @@
 #include "PlayerFaceIconUI.h"
 #include "PlayResultUI.h"
 #include "PlayScoreBoard.h"
+#include "StartMonsterModeUI.h"
 
 Monster1Level::Monster1Level()
 	: ColMapImage_(nullptr)
@@ -257,6 +258,7 @@ void Monster1Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
 	TimeUI_ = CreateActor<TimeUI>((int)UIType::Time);
 	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<StartMonsterModeUI>((int)UIType::StartIntroUI);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
 	IsGameEnd_ = false;
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterStage1,2_Bgm.mp3");

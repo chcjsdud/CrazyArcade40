@@ -31,6 +31,7 @@
 #include "PlayerFaceIconUI.h"
 #include "PlayResultUI.h"
 #include "PlayScoreBoard.h"
+#include "StartMonsterModeUI.h"
 
 Monster2Level::Monster2Level()
 	:ColMapImage_(nullptr)
@@ -261,15 +262,17 @@ void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 {
 	TimeUI_ = CreateActor<TimeUI>((int)UIType::Time);
 	CreateActor<PlayerFaceIconUI>((int)UIType::Time);
+	CreateActor<StartMonsterModeUI>((int)UIType::StartIntroUI);
 	CreateActor<StartIntroUI>((int)UIType::StartIntroUI);
+	IsGameEnd_ = false;
 	GameBgmPlayer::BgmPlay_->ChangeBgm("MonsterStage1,2_Bgm.mp3");
 	
 
 
 	Player::MainPlayer_1 = CreateActor<Player>((int)ORDER::PLAYER, "Player1");
-	Player::MainPlayer_1->SetCharacter(Character::BAZZI);
+	Player::MainPlayer_1->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get1PChar()));
 	Player::MainPlayer_1->SetPlayerType(PlayerType::Player1);
-	Player::MainPlayer_1->SetPosition(Areas_[135].GetCenter());
+	Player::MainPlayer_1->SetPosition(Areas_[83].GetCenter());
 	Player::MainPlayer_1->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	if (true == GlobalUIName::GetInst()->Is2pUpdate())
@@ -277,7 +280,7 @@ void Monster2Level::LevelChangeStart(GameEngineLevel* _NextLevel)
 		Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
 		Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
 		Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-		Player::MainPlayer_2->SetPosition({ 100.f, 340.f });
+		Player::MainPlayer_2->SetPosition(Areas_[109].GetCenter());
 		Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 
