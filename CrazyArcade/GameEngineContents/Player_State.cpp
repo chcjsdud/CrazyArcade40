@@ -101,7 +101,6 @@ void Player::RevivalStart()
 
 	GameEngineSound::SoundPlayOneShot("Revival.mp3");
 }
-
 void Player::FadeStart()
 {
 	IsMove = false;
@@ -113,8 +112,6 @@ void Player::FadeStart()
 	AnimationName_ = "Fade_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
-
-
 void Player::DieStart()
 {
 	IsMove = false;
@@ -129,7 +126,7 @@ void Player::DieStart()
 
 	GameEngineSound::SoundPlayOneShot("Die.mp3");
 }
-
+//---------------------------------------------------
 void Player::OnOwlStart()
 {
 	IsMove = false;
@@ -138,25 +135,6 @@ void Player::OnOwlStart()
 	AnimationName_ = "OnOwl_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
-
-void Player::OnTurtleStart()
-{
-	IsMove = false;
-	AddAccTime(Time_);
-
-	AnimationName_ = "OnTurtle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-
-void Player::OnUFOStart()
-{
-	IsMove = false;
-	AddAccTime(Time_);
-
-	AnimationName_ = "OnUFO_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-
 void Player::OffOwlStart()
 {
 	IsMove = false;
@@ -165,40 +143,12 @@ void Player::OffOwlStart()
 	AnimationName_ = "OnOwl_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
-
-void Player::OffTurtleStart()
-{
-	IsMove = false;
-	AddAccTime(Time_);
-
-	AnimationName_ = "OnTurtle_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-
-void Player::OffUFOStart()
-{
-	IsMove = false;
-	AddAccTime(Time_);
-
-	AnimationName_ = "OnUFO_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
-}
-
 void Player::IdleOwlStart()
 {
 	IsMove = true;
 	ReSetAccTime();
 
 	AnimationName_ = "IdleOwl_";
-	PlayerAnimationRender_->ChangeAnimation(AnimationName_+ ChangeDirText_);
-}
-
-void Player::IdleTurtleStart()
-{
-	IsMove = true;
-	ReSetAccTime();
-
-	AnimationName_ = "IdleTurtle_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
 
@@ -210,6 +160,32 @@ void Player::RidingOwlStart()
 	AnimationName_ = "RidingOwl_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 }
+//---------------------------------------------------
+void Player::OnTurtleStart()
+{
+	IsMove = false;
+	AddAccTime(Time_);
+
+	AnimationName_ = "OnTurtle_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+}
+void Player::OffTurtleStart()
+{
+	IsMove = false;
+	AddAccTime(Time_);
+
+	AnimationName_ = "OnTurtle_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+}
+
+void Player::IdleTurtleStart()
+{
+	IsMove = true;
+	ReSetAccTime();
+
+	AnimationName_ = "IdleTurtle_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+}
 
 void Player::RidingTurtleStart()
 {
@@ -218,6 +194,25 @@ void Player::RidingTurtleStart()
 
 	AnimationName_ = "RidingTurtle_";
 	PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
+}
+
+//---------------------------------------------------
+void Player::OnUFOStart()
+{
+	IsMove = false;
+	AddAccTime(Time_);
+
+	AnimationName_ = "OnUFO_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
+}
+
+void Player::OffUFOStart()
+{
+	IsMove = false;
+	AddAccTime(Time_);
+
+	AnimationName_ = "OnUFO_";
+	PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 }
 
 void Player::RidingUFOStart()
