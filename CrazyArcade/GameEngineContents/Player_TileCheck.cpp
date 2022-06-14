@@ -93,6 +93,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	break;
 	case BlockType::BoomBlock:
 	{
+
 		IsBoomblock = true;
 		break;
 	}
@@ -163,38 +164,82 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (IsBoomblock == false) {
-			IsLeftMove = false;
+		if (IsBoomblock == false)
+		{
+			if (true == IsShoes)
+			{
+				IsLeftMove = false;
+				if (Playeractorvalue_ < 2)
+				{
+					Bubble_ = GetLevel()->CreateActor<MapGameObject>();
+					Playeractorvalue_ += 1;
+				}
+
+				Bubble_->SetMapTile(MapTile_);
+				if (PlayerDir::Left == CurDir_
+					&& true == IsMoveKey())
+				{
+					if (Type == PlayerType::Player1)
+					{
+						Bubble_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
+
+					}
+					else if (Type == PlayerType::Player2)
+					{
+						Bubble_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
+					}
+				}
+			}
+			else
+			{
+				IsLeftMove = false;
+			}
 		}
+		
 	}
 	break;
 	case BlockType::FixBlock:
 	{
-		IsLeftMove = false;
+		if (CurState_ == PlayerState::RidingUFO)
+		{
+			IsLeftMove = true;
+		}
+		else
+		{
+			IsLeftMove = false;
+		}
 	}
 	break;
 	case BlockType::PullBlock:
 	{
-		IsLeftMove = false;
-		if (Playeractorvalue_ <2)
+		if (CurState_ == PlayerState::RidingUFO)
 		{
-			Box_ = GetLevel()->CreateActor<MapGameObject>();
-			Playeractorvalue_ += 1;
+			IsLeftMove = true;
 		}
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Left == CurDir_
-			&& true == IsMoveKey())
+		else
 		{
-			if (Type == PlayerType::Player1)
+			IsLeftMove = false;
+			if (Playeractorvalue_ < 2)
 			{
-				Box_->PushBlock(LeftPos_1P, BlockDir::LEFT);
+				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Playeractorvalue_ += 1;
+			}
+			Box_->SetMapTile(MapTile_);
+			if (PlayerDir::Left == CurDir_
+				&& true == IsMoveKey())
+			{
+				if (Type == PlayerType::Player1)
+				{
+					Box_->PushBlock(LeftPos_1P, BlockDir::LEFT);
 
-			}
-			else if (Type == PlayerType::Player2)
-			{
-				Box_->PushBlock(LeftPos_2P, BlockDir::LEFT);
+				}
+				else if (Type == PlayerType::Player2)
+				{
+					Box_->PushBlock(LeftPos_2P, BlockDir::LEFT);
+				}
 			}
 		}
+
 	}
 	break;
 	default:
@@ -209,39 +254,89 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (IsBoomblock == false) {
-			IsRightMove = false;
+		if (IsBoomblock == false)
+		{
+			if (true == IsShoes)
+			{
+				IsRightMove = false;
+				InputDir_ = CurDir_;
+
+			/*	if (Playeractorvalue_ < 2)
+				{
+
+					Playeractorvalue_ += 1;
+				}*/
+
+				Bubble_->SetMapTile(MapTile_);
+				if (PlayerDir::Right == CurDir_
+					&& true == IsMoveKey())
+				{
+					if(InputDir_ == CurDir_)
+					{
+						if (Type == PlayerType::Player1)
+						{
+							Bubble_->PushBubble(RightPos_1P, BlockDir::RIGHT, 1);
+
+						}
+						else if (Type == PlayerType::Player2)
+						{
+							Bubble_->PushBubble(RightPos_2P, BlockDir::RIGHT, 2);
+						}
+					}
+				
+				}
+			}
+			else
+			{
+				IsRightMove = false;
+			}
 		}
+
 	}
 	break;
 	case BlockType::FixBlock:
 	{
-		IsRightMove = false;
+		if (CurState_ == PlayerState::RidingUFO)
+		{
+			IsRightMove = true;
+		}
+		else
+		{
+			IsRightMove = false;
+		}
 	}
 	break;
 	case BlockType::PullBlock:
 	{
-		IsRightMove = false;
-
-		if (Playeractorvalue_ < 2)
+		if (CurState_ == PlayerState::RidingUFO)
 		{
-			Box_ = GetLevel()->CreateActor<MapGameObject>();
-			Playeractorvalue_ += 1;
+			IsRightMove = true;
 		}
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Right == CurDir_
-			&& true == IsMoveKey())
+		else
 		{
-			if (Type == PlayerType::Player1)
-			{
-				Box_->PushBlock(RightPos_1P, BlockDir::RIGHT);
+			IsRightMove = false;
 
-			}
-			else if (Type == PlayerType::Player2)
+			if (Playeractorvalue_ < 2)
 			{
-				Box_->PushBlock(RightPos_2P, BlockDir::RIGHT);
+				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Playeractorvalue_ += 1;
+			}
+			Box_->SetMapTile(MapTile_);
+			if (PlayerDir::Right == CurDir_
+				&& true == IsMoveKey())
+			{
+				if (Type == PlayerType::Player1)
+				{
+					Box_->PushBlock(RightPos_1P, BlockDir::RIGHT);
+
+				}
+				else if (Type == PlayerType::Player2)
+				{
+					Box_->PushBlock(RightPos_2P, BlockDir::RIGHT);
+				}
 			}
 		}
+	
 	}
 	break;
 	default:
@@ -256,39 +351,81 @@ void Player::FrontBlockCheckUpdate()
 	{
 	case BlockType::BoomBlock:
 	{
-		if (IsBoomblock == false) {
-			IsUpMove = false;
+		if (IsBoomblock == false)
+		{
+			if (true == IsShoes)
+			{
+				IsUpMove = false;
+				if (Playeractorvalue_ < 2)
+				{
+					Bubble_ = GetLevel()->CreateActor<MapGameObject>();
+					Playeractorvalue_ += 1;
+				}
+
+				Bubble_->SetMapTile(MapTile_);
+				if (PlayerDir::Up == CurDir_
+					&& true == IsMoveKey())
+				{
+					if (Type == PlayerType::Player1)
+					{
+						Bubble_->PushBubble(UpPos_1P, BlockDir::UP, 1);
+
+					}
+					else if (Type == PlayerType::Player2)
+					{
+						Bubble_->PushBubble(UpPos_2P, BlockDir::UP, 2);
+					}
+				}
+			}
+			else
+			{
+				IsUpMove = false;
+			}
 		}
+
 	}
 	break;
 	case BlockType::FixBlock:
 	{
-		IsUpMove = false;
+		if (CurState_ == PlayerState::RidingUFO)
+		{
+			IsUpMove = true;
+		}
+		else
+		{
+			IsUpMove = false;
+		}
 	}
 	break;
 	case BlockType::PullBlock:
 	{
-		IsUpMove = false;
-
-		if (Playeractorvalue_ < 2)
+		if (CurState_ == PlayerState::RidingUFO)
 		{
-			Box_ = GetLevel()->CreateActor<MapGameObject>();
-			Playeractorvalue_ += 1;
+			IsUpMove = true;
 		}
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Up == CurDir_
-			&& true == IsMoveKey())
+		else
 		{
-			if (Type == PlayerType::Player1)
-			{
-				Box_->PushBlock(UpPos_1P, BlockDir::UP);
+			IsUpMove = false;
 
-			}
-			else if (Type == PlayerType::Player2)
+			if (Playeractorvalue_ < 2)
 			{
-				Box_->PushBlock(UpPos_2P, BlockDir::UP);
+				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Playeractorvalue_ += 1;
 			}
+			Box_->SetMapTile(MapTile_);
+			if (PlayerDir::Up == CurDir_
+				&& true == IsMoveKey())
+			{
+				if (Type == PlayerType::Player1)
+				{
+					Box_->PushBlock(UpPos_1P, BlockDir::UP);
 
+				}
+				else if (Type == PlayerType::Player2)
+				{
+					Box_->PushBlock(UpPos_2P, BlockDir::UP);
+				}
+			}
 		}
 	}
 	break;
@@ -306,36 +443,49 @@ void Player::FrontBlockCheckUpdate()
 	case BlockType::BoomBlock:
 	{
 		if (IsBoomblock == false) {
-			IsDownMove = false;
 		}
 	}
 	break;
 	case BlockType::FixBlock:
 	{
-		IsDownMove = false;
+		if (CurState_ == PlayerState::RidingUFO)
+		{
+			IsDownMove = true;
+		}
+		else
+		{
+			IsDownMove = false;
+		}
 	}
 	break;
 	case BlockType::PullBlock:
 	{
-		IsDownMove = false;
-
-		if (Playeractorvalue_ < 2)
+		if (CurState_ == PlayerState::RidingUFO)
 		{
-			Box_ = GetLevel()->CreateActor<MapGameObject>();
-			Playeractorvalue_ += 1;
+			IsDownMove = true;
 		}
-		Box_->SetMapTile(MapTile_);
-		if (PlayerDir::Down == CurDir_
-			&& true == IsMoveKey())
+		else
 		{
-			if (Type == PlayerType::Player1)
-			{
-				Box_->PushBlock(DownPos_1P, BlockDir::DOWN);
+			IsDownMove = false;
 
-			}
-			else if (Type == PlayerType::Player2)
+			if (Playeractorvalue_ < 2)
 			{
-				Box_->PushBlock(DownPos_2P, BlockDir::DOWN);
+				Box_ = GetLevel()->CreateActor<MapGameObject>();
+				Playeractorvalue_ += 1;
+			}
+			Box_->SetMapTile(MapTile_);
+			if (PlayerDir::Down == CurDir_
+				&& true == IsMoveKey())
+			{
+				if (Type == PlayerType::Player1)
+				{
+					Box_->PushBlock(DownPos_1P, BlockDir::DOWN);
+
+				}
+				else if (Type == PlayerType::Player2)
+				{
+					Box_->PushBlock(DownPos_2P, BlockDir::DOWN);
+				}
 			}
 		}
 	}

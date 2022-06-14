@@ -484,13 +484,14 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 	}
 	if (BlockDir::RIGHT == _Dir)
 	{
-		if (TileIndex_.X + 1 > 14)
-		{
-			return;
-		}	
+		
 		int count = 0;
 		for (int i = 0; 14 >= TileIndex_.X + i; i++)
 		{
+			if (TileIndex_.X + i > 14)
+			{
+				return;
+			}
 			BlockTile* NextTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X + i, TileIndex_.Y);
 			ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X + i, TileIndex_.Y);
 			if (NextTile_ != nullptr && ItemTile_->BlockType_ != BlockType::ItemBlock && NextTile_->BlockType_ != BlockType::BushBlock)

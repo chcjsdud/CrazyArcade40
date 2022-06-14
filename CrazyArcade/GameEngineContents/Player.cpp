@@ -59,6 +59,8 @@ Player::Player()
 	, Box_(nullptr)
 	, IsDevil(false)
 	, IsInvincible(false)
+	, IsShoes(false)
+	, InputDir_(CurDir_)
 
 {
 	BazziAttCount_ = 1;
@@ -482,7 +484,7 @@ void Player::Start()
 		Effect->CutCount(5, 2);
 
 		// ½¯µå ÀÌÆåÆ®
-		EffectRenderer_ = CreateRenderer();
+		EffectRenderer_ = CreateRenderer((int)ORDER::UI);
 		EffectRenderer_->SetPivotType(RenderPivot::CENTER);
 		EffectRenderer_->SetPivot({ 0.f, 0.f });
 		EffectRenderer_->CreateAnimation("Effect_Shield.bmp", "Effect_Shield", 0, 5, 0.08f, true);
@@ -768,6 +770,8 @@ void Player::Start()
 
 	IsReady = true;
 	//PlayerInit();
+
+	Bubble_ = GetLevel()->CreateActor<MapGameObject>();
 }
 
 void Player::Update()

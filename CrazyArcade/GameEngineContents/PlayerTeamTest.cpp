@@ -112,7 +112,7 @@ void PlayerTeamTest::Loading()
 	//}
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 50.f }, ItemType::Devil);
+	Item_->CreateItem({ 400.f, 450.f }, ItemType::Devil);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
@@ -131,7 +131,9 @@ void PlayerTeamTest::Loading()
 	Item_->CreateItem({ 400.f, 370.f }, ItemType::Shield);
 
 
-
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 50.f }, ItemType::Shoes);
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(Areas_[0].GetCenter());
