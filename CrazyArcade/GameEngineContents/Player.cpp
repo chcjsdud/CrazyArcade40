@@ -61,6 +61,7 @@ Player::Player()
 	, IsInvincible(false)
 	, IsShoes(false)
 	, InputDir_(CurDir_)
+	, CurItem_(ItemType::Max)
 
 {
 	BazziAttCount_ = 1;

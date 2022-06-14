@@ -28,7 +28,7 @@ void ItemIcon::Start()
 
 void ItemIcon::Update()
 {
-
+	ChangeImage();
 }
 
 void ItemIcon::LevelChangeStart(GameEngineLevel* PrevLevel)
@@ -61,7 +61,7 @@ void ItemIcon::LevelChangeStart(GameEngineLevel* PrevLevel)
 void ItemIcon::ChangeImage()
 {
 
-	ItemType Player1pItem = Player::MainPlayer_1->GetCurItemType1();
+	ItemType Player1pItem = Player::MainPlayer_1->GetCurItem();
 
 	switch (Player1pItem)
 	{
@@ -72,7 +72,7 @@ void ItemIcon::ChangeImage()
 		ItemIcon_1P_->SetImage("NiddleIcon.bmp");
 		break;
 	case ItemType::Shield:
-		ItemIcon_1P_->SetImage("ShiledIcon.bmp");
+		ItemIcon_1P_->SetImage("ShieldIcon.bmp");
 		break;
 	case ItemType::SuperJump:
 		ItemIcon_1P_->SetImage("SuperJumpIcon.bmp");
@@ -83,7 +83,7 @@ void ItemIcon::ChangeImage()
 
 	if (true == GlobalUIName::GetInst()->Is2pUpdate())
 	{
-		ItemType Player2pItem = Player::MainPlayer_2->GetCurItemType2();
+		ItemType Player2pItem = Player::MainPlayer_2->GetCurItem();
 
 		switch (Player2pItem)
 		{
@@ -94,7 +94,7 @@ void ItemIcon::ChangeImage()
 			ItemIcon_1P_->SetImage("NiddleIcon.bmp");
 			break;
 		case ItemType::Shield:
-			ItemIcon_1P_->SetImage("ShiledIcon.bmp");
+			ItemIcon_1P_->SetImage("ShieldIcon.bmp");
 			break;
 		case ItemType::SuperJump:
 			ItemIcon_1P_->SetImage("SuperJumpIcon.bmp");

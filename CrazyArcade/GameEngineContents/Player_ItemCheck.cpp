@@ -67,6 +67,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Niddle:
 	{
+		CurItem_ = ItemType::Niddle;
 		if (true == IsItemKey())
 		{
 			//
@@ -101,7 +102,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	case ItemType::Shield:
 	{
 		AddAccTime(Time_);
-
+		CurItem_ = ItemType::Shield;
 		if (true == IsItemKey())
 		{
 			IsShield = true;
@@ -111,6 +112,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::SuperJump:
 	{
+		CurItem_ = ItemType::SuperJump;
 		if (true == IsItemKey())
 		{
 			//

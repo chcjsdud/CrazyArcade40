@@ -223,6 +223,7 @@ private:
 	BlockType UpBlock;
 	BlockType DownBlock;
 
+	ItemType CurItem_;
 	ItemType CurItemType1_;
 	ItemType CurItemType2_;
 
@@ -274,16 +275,12 @@ public:
 		return IsLive;
 	}
 
-
-	inline ItemType GetCurItemType1()
+	inline ItemType GetCurItem()
 	{
-		return CurItemType1_;
+		return CurItem_;
 	}
+	
 
-	inline ItemType GetCurItemType2()
-	{
-		return CurItemType2_;
-	}
 protected:
 	GameEngineRenderer* PlayerAnimationRender_;
 	PlayerDir CurDir_;
