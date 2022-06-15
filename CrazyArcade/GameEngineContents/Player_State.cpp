@@ -512,6 +512,12 @@ void Player::Attack()
 
 			Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_, 1);
 		}
+		else if (BlockType::BushBlock == CheckBlockTile(MainPlayer_1->GetPosition() + ModifyPos))
+		{
+			GameEngineSound::SoundPlayOneShot("Attack.mp3");
+
+			Boom_->CreateBoom(MainPlayer_1->GetPosition() + ModifyPos, Player::MainPlayer_1->CurAttPower_, 1);
+		}
 		else
 			return;
 	}
@@ -528,6 +534,12 @@ void Player::Attack()
 		if (BlockType::Max == CheckBlockTile(MainPlayer_2->GetPosition() + ModifyPos))
 		{
 			GameEngineSound::SoundPlayOneShot("Attack.mp3");
+			Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_, 2);
+		}
+		else if (BlockType::BushBlock == CheckBlockTile(MainPlayer_2->GetPosition() + ModifyPos))
+		{
+			GameEngineSound::SoundPlayOneShot("Attack.mp3");
+
 			Boom_->CreateBoom(MainPlayer_2->GetPosition() + ModifyPos, Player::MainPlayer_2->CurAttPower_, 2);
 		}
 		else
