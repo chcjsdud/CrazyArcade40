@@ -223,10 +223,7 @@ void Player::FrontBlockCheckUpdate()
 		else
 		{
 			IsLeftMove = false;
-			if (Playeractorvalue_ < 2)
-			{
-				Playeractorvalue_ += 1;
-			}
+
 			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Left == CurDir_
 				&& true == IsMoveKey())
@@ -324,7 +321,6 @@ void Player::FrontBlockCheckUpdate()
 
 			if (Playeractorvalue_ < 2)
 			{
-				Boom_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
 			Boom_->SetMapTile(MapTile_);
@@ -424,7 +420,6 @@ void Player::FrontBlockCheckUpdate()
 
 			if (Playeractorvalue_ < 2)
 			{
-				Boom_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
 			Boom_->SetMapTile(MapTile_);
@@ -523,7 +518,6 @@ void Player::FrontBlockCheckUpdate()
 
 			if (Playeractorvalue_ < 2)
 			{
-				Boom_ = GetLevel()->CreateActor<MapGameObject>();
 				Playeractorvalue_ += 1;
 			}
 			Boom_->SetMapTile(MapTile_);

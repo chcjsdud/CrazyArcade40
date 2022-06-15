@@ -102,7 +102,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	case ItemType::Shoes:
 	{
 		// 물방울 던지기 
-		//IsShoes = true;
+		//	IsShoes = true;
 	}
 	break;
 	case ItemType::Shield:

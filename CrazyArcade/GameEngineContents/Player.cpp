@@ -848,7 +848,7 @@ void Player::Render()
 	if (true == GetLevel()->GetIsDebug())
 	{
 		std::string State = "";
-		std::string Item = "";
+		std::string RideState = "";
 
 		std::string CurSpeed = "";
 		std::string CurAttCount = "";
@@ -918,6 +918,15 @@ void Player::Render()
 			State = "STATE : RidingUFO";
 		}
 
+		if (PlayerRideState_ == PlayerRideState::UFO)
+		{
+			RideState = "RIDE : UFO";
+		}
+		else if (PlayerRideState_ == PlayerRideState::Max)
+		{
+			RideState = "RIDE : MAX";
+		}
+
 		CurSpeed = "SPEED : " + std::to_string(CurSpeed_);
 		CurAttCount = "COUNT : " + std::to_string(CurAttCount_);;
 		CurAttPower = "POWER : " + std::to_string(CurAttPower_);;
@@ -934,6 +943,8 @@ void Player::Render()
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 30, MaxSpeed.c_str(), static_cast<int>(MaxSpeed.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 50, MaxAttCount.c_str(), static_cast<int>(MaxAttCount.length()));
 		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 70, MaxAttPower.c_str(), static_cast<int>(MaxAttPower.length()));
+		TextOut(GameEngine::BackBufferDC(), GetCameraEffectPosition().ix() + 40, GetCameraEffectPosition().iy() + 100, RideState.c_str(), static_cast<int>(RideState.length()));
+
 	}
 
 

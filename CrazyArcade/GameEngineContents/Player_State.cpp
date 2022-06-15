@@ -25,7 +25,12 @@ void Player::ReadyStart()
 
 void Player::IdleStart()
 {
+	PlayerRideState_ = PlayerRideState::Max;
+
+	MoveSpeed_ = CurSpeed_;
 	CurSpeed_ = CurSpeed_;
+
+
 	IsMove = true;
 	ReSetAccTime();
 
@@ -425,13 +430,12 @@ void Player::DieUpdate()
 
 void Player::OnRideUpdate()
 {
-	MoveSpeed_ = CurSpeed_;
-
 	if (2.f < GetAccTime()
 		&& PlayerAnimationRender_->IsEndAnimation())
 	{
 		if (PlayerRideState_ == PlayerRideState::UFO)
 		{
+			PlayerRideState_ = PlayerRideState::UFO;
 			ChangeState(PlayerState::RidingRide);
 			return;
 		}
