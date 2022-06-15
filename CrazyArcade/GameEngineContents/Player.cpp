@@ -361,8 +361,9 @@ void Player::CollisionCheck()
 			}
 		}
 
-
-		// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+		if (GetLevel()->GetNameCopy() == "Monster1Level"
+			|| GetLevel()->GetNameCopy() == "Monster2Level"
+			|| GetLevel()->GetNameCopy() == "BossLevel")
 		{
 			std::vector<GameEngineCollision*> ColList;
 
@@ -379,13 +380,38 @@ void Player::CollisionCheck()
 
 					for (size_t i = 0; i < ColList.size(); i++)
 					{
-						ChangeState(PlayerState::Die);
+						ChangeState(PlayerState::Revival);
 						return;
 					}
 				}
 			}
 		}
+		else
+		{
+				// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+			{
+				std::vector<GameEngineCollision*> ColList;
 
+				if (MainPlayer_1->CurState_ == PlayerState::Damaged
+					|| MainPlayer_1->CurState_ == PlayerState::Fade)
+				{
+					if (true == Collision1P_->CollisionResult("2PColl", ColList, CollisionType::Rect, CollisionType::Rect))
+					{
+						if (MainPlayer_2->CurState_ == PlayerState::Damaged
+							|| MainPlayer_2->CurState_ == PlayerState::Fade)
+						{
+							return;
+						}
+
+						for (size_t i = 0; i < ColList.size(); i++)
+						{
+							ChangeState(PlayerState::Die);
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -424,8 +450,9 @@ void Player::CollisionCheck()
 				}
 			}
 
-
-			// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+			if (GetLevel()->GetNameCopy() == "Monster1Level"
+				|| GetLevel()->GetNameCopy() == "Monster2Level"
+				|| GetLevel()->GetNameCopy() == "BossLevel")
 			{
 				std::vector<GameEngineCollision*> ColList;
 
@@ -443,8 +470,35 @@ void Player::CollisionCheck()
 
 						for (size_t i = 0; i < ColList.size(); i++)
 						{
-							ChangeState(PlayerState::Die);
+							ChangeState(PlayerState::Revival);
 							return;
+						}
+					}
+				}
+			}
+			else {
+
+					// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+				{
+					std::vector<GameEngineCollision*> ColList;
+
+
+					if (MainPlayer_2->CurState_ == PlayerState::Damaged
+						|| MainPlayer_2->CurState_ == PlayerState::Fade)
+					{
+						if (true == Collision2P_->CollisionResult("1PColl", ColList, CollisionType::Rect, CollisionType::Rect))
+						{
+							if (MainPlayer_1->CurState_ == PlayerState::Damaged
+								|| MainPlayer_1->CurState_ == PlayerState::Fade)
+							{
+								return;
+							}
+
+							for (size_t i = 0; i < ColList.size(); i++)
+							{
+								ChangeState(PlayerState::Die);
+								return;
+							}
 						}
 					}
 				}

@@ -351,7 +351,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 		MapTile_->DeleteTile(TileIndex_.X, TileIndex_.Y);
 		BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 		Boom_->BlockType_ = BlockType::BoomBlock;
-		Boom_->Renderer = CreateRenderer();
+		Boom_->Renderer = CreateRenderer(static_cast<int>(ORDER::EFFECT));
 		Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
 		Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
 		Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
@@ -388,7 +388,7 @@ void MapGameObject::CreateBoom(float4 _Pos, float _Power, int _PlayerNum)
 	{
 		BlockTile* Boom_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 		Boom_->BlockType_ = BlockType::BoomBlock;
-		Boom_->Renderer = CreateRenderer();
+		Boom_->Renderer = CreateRenderer(static_cast<int>(ORDER::EFFECT));
 		Boom_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
 		Boom_->Renderer->CreateAnimation("Bubble_Dark.bmp", "BubbleDark", 0, 3, 0.2f, true);
 		Boom_->Renderer->CreateAnimation("Bubble_Default.bmp", "BubbleDefault", 0, 3, 0.2f, true);
