@@ -1941,7 +1941,7 @@ void MapGameObject::BlockValueSetting()
 		ShoesValue_ = 1;
 		NiddleValue_ = 2;
 		ShieldValue_ = 1;
-		SuperJumpValue_ = 2;
+		SuperJumpValue_ = 0;
 		TurtleValue_ = 2;
 		SpaceShipValue_ = 1;
 		OwlValue_ = 2;
@@ -1962,7 +1962,7 @@ void MapGameObject::BlockValueSetting()
 		ShoesValue_ = 3;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
-		SuperJumpValue_ = 3;
+		SuperJumpValue_ = 0;
 		TurtleValue_ = 2;
 		SpaceShipValue_ = 2;
 		OwlValue_ = 2;
@@ -2046,7 +2046,7 @@ void MapGameObject::BlockValueSetting()
 		ShoesValue_ = 3;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
-		SuperJumpValue_ = 3;
+		SuperJumpValue_ = 0;
 		TurtleValue_ = 0;
 		SpaceShipValue_ = 0;
 		OwlValue_ = 0;
