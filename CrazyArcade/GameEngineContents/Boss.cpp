@@ -158,9 +158,8 @@ void Boss::Start()
 
 		// 상태
 		SetMonsterClass(MonsterClass::BOSS);
-		SetHP(14);
 		SetSpeed(50); // Need to chk : Speed
-
+		SetHP(14);
 		// Index 설정
 		Index_ = 94; // 시작 Index를
 		SetPosition(Areas_[94].GetCenter());
@@ -284,6 +283,14 @@ void Boss::UpdateHP()
 {
 	switch (GetHP())
 	{
+	case -5:
+	case -4:
+	case -3:
+	case -2:
+	case -1:
+		BossHP_->SetAlpha(0);
+		HPUI_->SetAlpha(0);
+		break;
 	case 0:
 		BossHP_->SetAlpha(0);
 		HPUI_->SetAlpha(0);
@@ -507,15 +514,15 @@ void Boss::UpdateDirection()
 					// 노란부분 무조건 이동 체크 필요한 구간
 					if (Index_ % 13 >= 2 &&
 						Index_ % 13 <= 10 &&
-						(Index_ >= 15 && Index_ <= 23) ||
+						(Index_ >= 15 && Index_ <= 24) ||
 						(Index_ >= 171 && Index_ <= 179))
 					{
-						if ((Index_ >= 16 &&
-							Index_ <= 22 &&
-							Index_ % 4 == 0) ||
+						if ((/*Index_ >= 16 &&*/
+							Index_ <= 24 &&
+							Index_ % 3 == 0) ||
 							(Index_ >= 172 &&
-								Index_ <= 178 &&
-								Index_ % 4 == 0) &&
+								/*Index_ <= 178 &&*/
+								Index_ % 3 == 0) &&
 							RandomAction_ != 0)
 						{
 							RandomAction_ = 4;
@@ -524,9 +531,25 @@ void Boss::UpdateDirection()
 						}
 						else // 엣지
 						{
-							RandomAction_ = 3; // 구르기 제외 모든 동작 가능
-							IsAreaChanged = true;
-							AreaChangeCount_ = 0;
+							if (Index_ == 23)
+							{
+								RandomAction_ = (rand() % 1) + 1;
+								if (RandomAction_ == 1)
+								{
+									RandomAction_ = 4;
+								}
+								else
+								{
+									RandomAction_ = 3;
+								}
+							}
+
+							else
+							{
+								RandomAction_ = 3; // 구르기 제외 모든 동작 가능
+								IsAreaChanged = true;
+								AreaChangeCount_ = 0;
+							}
 						}
 					}
 
@@ -536,12 +559,16 @@ void Boss::UpdateDirection()
 						Index_ >= 29 &&
 						Index_ <= 165))
 					{
-
-						RandomAction_ = (rand() % 4); // 구르기 제외 모든 동작 가능
-						IsAreaChanged = true;
-						AreaChangeCount_ = 0;
-						SetPosition(NewArea.GetCenter());
-
+						if (AreaChangeCount_ == 3)
+						{
+							RandomAction_ = (rand() % 3) + 1; // 구르기 제외 모든 동작 가능
+							IsAreaChanged = true;
+							AreaChangeCount_ = 0;
+						}
+						else
+						{
+							SetPosition(NewArea.GetCenter());
+						}
 					}
 
 
@@ -722,6 +749,12 @@ void Boss::UpdateDirection()
 				Direction_ = "Left";
 			}
 
+			else if (West == MovableAreas.end() && North != MovableAreas.end())
+			{
+				Dir_ = float4::UP;
+				Direction_ = "Up";
+			}
+
 			else
 			{
 				//if (West != MovableAreas.end())
@@ -849,6 +882,12 @@ void Boss::UpdateDirection()
 				Direction_ = "Down";
 			}
 
+			else if (South == MovableAreas.end() && West != MovableAreas.end())
+			{
+				Dir_ = float4::LEFT;
+				Direction_ = "Left";
+			}
+
 			else
 			{
 				//if (South != MovableAreas.end())
@@ -933,7 +972,7 @@ void Boss::TakeDamage()
 {
 	if (GetAttTime_ > 1.0)
 	{
-		SetHP(GetHp() - 1);
+		SetHP(GetHp() - 3);
 		GetAttTime_ = 0.0f;
 		GameEngineSound::SoundPlayOneShot("Boss_Rage.mp3");
 		if (Renderer_->IsAnimationName("WaterAttack"))
@@ -967,7 +1006,7 @@ void Boss::UpdateAttack()
 void Boss::RollAttack()
 {
 	UpdateAttack();
-	if ((Index_ >= 16 && Index_ <= 22) &&
+	if ((Index_ >= 16 && Index_ <= 23) &&
 		false == Renderer_->IsAnimationName("RollAttackRight") &&
 		false == Renderer_->IsAnimationName("RollAttackLeft"))
 	{
