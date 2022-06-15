@@ -220,12 +220,14 @@ void Player::ItemTime()
 
 	if (true == IsNiddle)
 	{
-		if (true == IsItemKey())
+		if (CurState_ == PlayerState::Damaged)
 		{
-			ChangeState(PlayerState::Revival);
-			return;
+			if (true == IsItemKey())
+			{
+				ChangeState(PlayerState::Revival);
+				return;
+			}
 		}
-
 	}
 
 	if (true == IsJump)
