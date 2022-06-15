@@ -334,9 +334,6 @@
     <ClCompile Include="StartMonsterModeUI.cpp">
       <Filter>Actor\UI\Play</Filter>
     </ClCompile>
-    <ClCompile Include="ChattingHistory.cpp">
-      <Filter>Actor\UI\Room</Filter>
-    </ClCompile>
     <ClCompile Include="ChattingHistory.cpp" />
     <ClCompile Include="Player.cpp">
       <Filter>Actor\Play\Player</Filter>
@@ -363,6 +360,9 @@
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
     <ClCompile Include="MyPageButton.cpp">
+      <Filter>Actor\UI\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
       <Filter>Actor\UI\Room</Filter>
     </ClCompile>
   </ItemGroup>
