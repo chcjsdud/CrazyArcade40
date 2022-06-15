@@ -89,7 +89,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	break;
 	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 	{
-		if (false == IsUFO )
+		if (false == IsUFO)
 		{
 			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
 			PlayerInfoUpdate();
@@ -147,7 +147,7 @@ void Player::FrontBlockCheckUpdate()
 		DownPos_1P = MainPlayer_1->GetPosition() + float4{ -20.0f, 0.0f };
 	}
 
-	if(nullptr != MainPlayer_2)
+	if (nullptr != MainPlayer_2)
 	{
 		LeftPos_2P = MainPlayer_2->GetPosition() + float4{ -40.0f, -20.0f };
 		RightPos_2P = MainPlayer_2->GetPosition() + float4{ 0.0f, -20.0f };
@@ -168,8 +168,7 @@ void Player::FrontBlockCheckUpdate()
 				IsLeftMove = false;
 				InputDir_ = CurDir_;
 
-				MapGameObject* block_ = GetLevel()->CreateActor<MapGameObject>();
-				block_->SetMapTile(MapTile_);
+				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Left == CurDir_
 					&& true == IsMoveKey())
 				{
@@ -177,12 +176,12 @@ void Player::FrontBlockCheckUpdate()
 					{
 						if (Type == PlayerType::Player1)
 						{
-							block_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
+							Boom_->PushBubble(LeftPos_1P, BlockDir::LEFT, 1);
 
 						}
 						else if (Type == PlayerType::Player2)
 						{
-							block_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
+							Boom_->PushBubble(LeftPos_2P, BlockDir::LEFT, 2);
 						}
 					}
 				}
@@ -196,7 +195,7 @@ void Player::FrontBlockCheckUpdate()
 				IsLeftMove = false;
 			}
 		}
-		
+
 	}
 	break;
 	case BlockType::FixBlock:
@@ -226,19 +225,19 @@ void Player::FrontBlockCheckUpdate()
 		else
 		{
 			IsLeftMove = false;
-			MapGameObject* block_ = GetLevel()->CreateActor<MapGameObject>();
-			block_->SetMapTile(MapTile_);
+
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Left == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					block_->PushBlock(LeftPos_1P, BlockDir::LEFT);
+					Boom_->PushBlock(LeftPos_1P, BlockDir::LEFT);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					block_->PushBlock(LeftPos_2P, BlockDir::LEFT);
+					Boom_->PushBlock(LeftPos_2P, BlockDir::LEFT);
 				}
 			}
 		}
@@ -264,21 +263,20 @@ void Player::FrontBlockCheckUpdate()
 				IsRightMove = false;
 				InputDir_ = CurDir_;
 
-				MapGameObject* block_ = GetLevel()->CreateActor<MapGameObject>();
-				block_->SetMapTile(MapTile_);
+				Boom_->SetMapTile(MapTile_);
 				if (PlayerDir::Right == CurDir_
 					&& true == IsMoveKey())
 				{
-					if(InputDir_ == CurDir_)
+					if (InputDir_ == CurDir_)
 					{
 						if (Type == PlayerType::Player1)
 						{
-							block_->PushBubble(RightPos_1P, BlockDir::RIGHT, 1);
+							Boom_->PushBubble(RightPos_1P, BlockDir::RIGHT, 1);
 
 						}
 						else if (Type == PlayerType::Player2)
 						{
-							block_->PushBubble(RightPos_2P, BlockDir::RIGHT, 2);
+							Boom_->PushBubble(RightPos_2P, BlockDir::RIGHT, 2);
 						}
 					}
 				}
@@ -327,23 +325,22 @@ void Player::FrontBlockCheckUpdate()
 			{
 				Playeractorvalue_ += 1;
 			}
-			MapGameObject* block_ = GetLevel()->CreateActor<MapGameObject>();
-			block_->SetMapTile(MapTile_);
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Right == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					block_->PushBlock(RightPos_1P, BlockDir::RIGHT);
+					Boom_->PushBlock(RightPos_1P, BlockDir::RIGHT);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					block_->PushBlock(RightPos_2P, BlockDir::RIGHT);
+					Boom_->PushBlock(RightPos_2P, BlockDir::RIGHT);
 				}
 			}
 		}
-	
+
 	}
 	break;
 	default:
@@ -427,19 +424,18 @@ void Player::FrontBlockCheckUpdate()
 			{
 				Playeractorvalue_ += 1;
 			}
-			MapGameObject* block_ = GetLevel()->CreateActor<MapGameObject>();
-			block_->SetMapTile(MapTile_);
+			Boom_->SetMapTile(MapTile_);
 			if (PlayerDir::Up == CurDir_
 				&& true == IsMoveKey())
 			{
 				if (Type == PlayerType::Player1)
 				{
-					block_->PushBlock(UpPos_1P, BlockDir::UP);
+					Boom_->PushBlock(UpPos_1P, BlockDir::UP);
 
 				}
 				else if (Type == PlayerType::Player2)
 				{
-					block_->PushBlock(UpPos_2P, BlockDir::UP);
+					Boom_->PushBlock(UpPos_2P, BlockDir::UP);
 				}
 			}
 		}
