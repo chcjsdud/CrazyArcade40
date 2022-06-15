@@ -134,6 +134,8 @@ protected:
 
 	float Time_;
 	float AttMoveTime_;
+	float ShieldTime_;
+	float DevilTime_;
 
 	float MoveSpeed_;
 

@@ -72,6 +72,8 @@ Player::Player()
 	, Player1BoomCount_(CurAttCount_)
 	, Player2BoomCount_(CurAttCount_)
 	, TestTime_(0.0f)
+	, ShieldTime_(0.0f)
+	, DevilTime_(0.0f)
 
 {
 	BazziAttCount_ = 1;
@@ -697,8 +699,8 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Idle_Down_Devil", 66, 67, 0.15f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Right_Devil", 68, 72, 0.1f, true);
 		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Left_Devil", 73, 77, 0.1f, true);
-		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 88, 92, 0.1f, true);
-		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 93, 96, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Up_Devil", 78, 82, 0.1f, true);
+		MaridRenderer_->CreateAnimation("Player_Devil.bmp", "Move_Down_Devil", 83, 87, 0.1f, true);
 
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnOwl_", 0, 7, 0.035f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "OnTurtle_", 8, 15, 0.035f, true);

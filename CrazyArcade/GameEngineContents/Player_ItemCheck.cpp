@@ -89,7 +89,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 			return;
 		}
 		// 누른 방향키와 반대로 이동 + CurAttCount만큼 연속으로 자동 공격 
-		AddAccTime(Time_);
+		DevilTime_ = 6.f;
 
 		IsDevil = true;
 		IsMove = false;
@@ -118,6 +118,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 		}
 
 		IsShield = true;
+		ShieldTime_ = 3.f;
 	}
 	break;
 	case ItemType::SuperJump:
@@ -181,28 +182,30 @@ void Player::ItemTime()
 
 	if (true == UseShield)
 	{
-		// 3초가 지나면 무적 해제 및 ResetTime
-		if (3.f < GetAccTime())
+		ShieldTime_ -= 1.f * GameEngineTime::GetDeltaTime();
+		if (ShieldTime_ <= 0.f)
 		{
+			UseShield = false;
 			IsShield = false;
 			IsInvincible = false;
+
 			EffectRenderer_->Off();
-			ReSetAccTime();
 		}
+		// 3초가 지나면 무적 해제 및 ResetTime
 	}
 
 
 	if (true == IsDevil)
 	{
 		// 10초가 지나면 데빌 모드 해제
-		if (3.f < GetAccTime())
+		DevilTime_ -= 1.f * GameEngineTime::GetDeltaTime();
+
+		if(DevilTime_ <= 0.f)
 		{
 			IsDevil = false;
 			CurDir_ = PlayerDir::None;
 			MoveDir = float4::ZERO;
 			CheckDir_ = PlayerDir::None;
-
-			ReSetAccTime();
 		}
 
 		Attack();
@@ -219,8 +222,7 @@ void Player::ItemTime()
 			{
 				GameEngineSound::SoundPlayOneShot("Shield.wav");
 				IsInvincible = true;
-
-				AddAccTime(Time_);
+	
 				EffectRenderer_->On();
 
 				UseShield = true;
