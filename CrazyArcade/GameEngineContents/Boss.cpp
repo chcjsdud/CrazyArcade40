@@ -223,7 +223,6 @@ void Boss::Die()
 			true != Renderer_->IsAnimationName("DieBubble") &&
 			true != Renderer_->IsAnimationName("DieEnd"))
 		{
-			DieBubbleTime_ = 0.0f;
 			Dir_ = float4::ZERO;
 			Renderer_->ChangeAnimation("Die");
 			SpeechBubble_->ChangeAnimation("Bubble17");
@@ -273,6 +272,7 @@ void Boss::Die()
 			if (true == Renderer_->IsEndAnimation())
 			{
 				Renderer_->ChangeAnimation("DieBubble");
+				DieBubbleTime_ = 0.0f;
 			}
 		}
 	}
