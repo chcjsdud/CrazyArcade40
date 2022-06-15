@@ -746,7 +746,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X - 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->ItemType_ = PushTile_->ItemType_;
 			NextTile_->BlockHp_ = PushTile_->BlockHp_;
@@ -774,7 +774,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X + 1, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->ItemType_ = PushTile_->ItemType_;
 			NextTile_->BlockHp_ = PushTile_->BlockHp_;
@@ -802,7 +802,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y + 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->ItemType_ = PushTile_->ItemType_;
 			NextTile_->BlockHp_ = PushTile_->BlockHp_;
@@ -830,7 +830,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 		{
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y - 1, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->ItemType_ = PushTile_->ItemType_;
 			NextTile_->BlockHp_ = PushTile_->BlockHp_;
@@ -938,6 +938,10 @@ void MapGameObject::BlockMoveUpdate()
 				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime()*100.0f;
 				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
 				MovePos_ += Move_;
+				if (MovePos_.x <= 0 || MovePos_.y <= 0)
+				{
+					return;
+				}
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{0,-4});
 				MoveBlocks_[i]->TilePos_ = MovePos_;
 				MoveBlocks_[i]->MoveOn = true;
@@ -955,6 +959,10 @@ void MapGameObject::BlockMoveUpdate()
 				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 100.0f;
 				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
 				MovePos_ += Move_;
+				if (MovePos_.x <= 0 || MovePos_.y <= 0)
+				{
+					return;
+				}
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
 				MoveBlocks_[i]->MoveOn = true;
@@ -971,6 +979,10 @@ void MapGameObject::BlockMoveUpdate()
 				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 100.0f;
 				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
 				MovePos_ += Move_;
+				if (MovePos_.x <= 0 || MovePos_.y <= 0)
+				{
+					return;
+				}
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
 				MoveBlocks_[i]->MoveOn = true;
@@ -987,6 +999,10 @@ void MapGameObject::BlockMoveUpdate()
 				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 100.0f;
 				float4 MovePos_ = { MoveBlocks_[i]->TilePos_.x,MoveBlocks_[i]->TilePos_.y };
 				MovePos_ += Move_;
+				if (MovePos_.x <= 0 || MovePos_.y <= 0)
+				{
+					return;
+				}
 				MoveBlocks_[i]->Renderer->SetPivot(MovePos_ + float4{ 0,-4 });
 				MoveBlocks_[i]->TilePos_ = MovePos_;
 				MoveBlocks_[i]->MoveOn = true;
