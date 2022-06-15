@@ -423,6 +423,7 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 {
 	TileIndex TileIndex_ = MapTile_->GetTileIndex(_Pos);
 	float4 TileCenterPos_ = MapTile_->GetWorldPostion(TileIndex_.X, TileIndex_.Y);
+	TileCenterPos_ -= float4{ 20,40 };
 	BlockTile* PushTile_ = MapTile_->GetTile<BlockTile>(TileIndex_.X, TileIndex_.Y);
 	if (PushTile_ == nullptr)
 	{
@@ -462,7 +463,7 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X - count, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->Renderer->SetPivot({ TileCenterPos_.x - count, TileCenterPos_.y + 20 });
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->TileIndex_ = TileIndex_;
 			NextTile_->TileIndex_.X -= count;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
@@ -538,7 +539,7 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X + count, TileIndex_.Y, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->TileIndex_ = TileIndex_;
 			NextTile_->TileIndex_.X += count;
@@ -606,7 +607,7 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y + count, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->TileIndex_ = TileIndex_;
 			NextTile_->TileIndex_.Y += count;
@@ -674,7 +675,7 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			BlockTile* NextTile_ = MapTile_->CreateTile<BlockTile>(TileIndex_.X, TileIndex_.Y - count, "TIleBase.bmp", static_cast<int>(ORDER::PLAYER));
 			NextTile_->Renderer = PushTile_->Renderer;
 			NextTile_->Renderer->SetPivot({ TileCenterPos_.x, TileCenterPos_.y + 20 });
-			NextTile_->TilePos_ = PushTile_->TilePos_;
+			NextTile_->TilePos_ = TileCenterPos_;
 			NextTile_->BlockType_ = PushTile_->BlockType_;
 			NextTile_->TileIndex_ = TileIndex_;
 			NextTile_->TileIndex_.Y -= count;
@@ -854,6 +855,7 @@ void MapGameObject::BubbleMoveUpdate()
 		{
 			if (MoveBubble_[i]->TilePos_.x >= MoveBubble_[i]->MoveNextTilePos_.x)
 			{
+
 				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime() * 200.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
@@ -864,7 +866,9 @@ void MapGameObject::BubbleMoveUpdate()
 			else
 			{
 				MoveBubble_[i]->TilePos_.x = MoveBubble_[i]->MoveNextTilePos_.x;
+	
 				MoveBubble_[i]->MoveOn = false;
+				//MoveBubble_.erase(MoveBubble_.begin() + i);
 			}
 
 		}
@@ -916,7 +920,7 @@ void MapGameObject::BubbleMoveUpdate()
 			else
 			{
 				MoveBubble_[i]->TilePos_.y = MoveBubble_[i]->MoveNextTilePos_.y;
-				MoveBlocks_[i]->MoveOn = false;
+				MoveBubble_[i]->MoveOn = false;
 			}
 		}
 	}
@@ -1035,8 +1039,10 @@ void MapGameObject::DestroyBoom()//폭탄마다 각자 타이머 돌림
 
 	for (int i = 0; i < Player1BlockTiles_.size(); i++)
 	{
+
 		Player1BlockTiles_[i]->DeathTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
-		if (Player1BlockTiles_[i]->DeathTime_ <= 0.0f)
+
+		if (Player1BlockTiles_[i]->DeathTime_ <= 0.0f&& Player1BlockTiles_[i]->MoveOn != true)
 		{
 
 			Player1BoomNum_ -= 1;
