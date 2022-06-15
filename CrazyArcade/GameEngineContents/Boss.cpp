@@ -936,7 +936,12 @@ void Boss::TakeDamage()
 		SetHP(GetHp() - 1);
 		GetAttTime_ = 0.0f;
 		GameEngineSound::SoundPlayOneShot("Boss_Rage.mp3");
-		Renderer_->ChangeAnimation("TakeDamage" + Direction_);
+		if (Renderer_->IsAnimationName("WaterAttack"))
+		{
+			Direction_ = "Down";
+			Dir_ = float4::DOWN;
+		}
+			Renderer_->ChangeAnimation("TakeDamage" + Direction_);
 		Dir_ = float4::ZERO;
 		//EndAttack_ == true;
 	}
@@ -1005,7 +1010,7 @@ void Boss::WaterAttack()
 	{
 		if (GetHP() < 5)
 		{
-			std::vector<int> AttackIndices = { 42, 58, 49, 94, 123, 100, 146, 163, 152 };
+			std::vector<int> AttackIndices = { 56, 134, 125, 73, 30, 34, 98, 163, 152 };
 			int RandomIndex = (rand() % AttackIndices.size());
 			AttackIndex_ = AttackIndices[RandomIndex];
 		}
