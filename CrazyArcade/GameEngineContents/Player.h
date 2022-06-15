@@ -6,7 +6,6 @@
 
 enum class PlayerState
 {
-	Wait,
 	Ready,
 	Idle,
 	Move,
@@ -357,7 +356,6 @@ protected:
 protected:
 	PlayerRideState PlayerRideState_;
 
-	void WaitStart();
 	void ReadyStart();
 	void IdleStart();
 	void MoveStart();
@@ -374,7 +372,6 @@ protected:
 	void IdleRideStart();
 	void RidingRideStart();
 
-	void WaitUpdate();
 	void ReadyUpdate();
 	void IdleUpdate();
 	void MoveUpdate();

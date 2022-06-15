@@ -10,11 +10,6 @@
 #include "MapGameObject.h"
 #include "MapBackGround.h"
 
-
-void Player::WaitStart()
-{
-}
-
 void Player::ReadyStart()
 {
 	IsMove = false;
@@ -30,7 +25,7 @@ void Player::IdleStart()
 	MoveSpeed_ = CurSpeed_;
 	CurSpeed_ = CurSpeed_;
 
-
+	IsUFO = false;
 	IsMove = true;
 	ReSetAccTime();
 
@@ -193,7 +188,6 @@ void Player::OffRideStart()
 	else if (PlayerRideState_ == PlayerRideState::UFO)
 	{
 		IsMove = false;
-		IsUFO = false;
 		AddAccTime(Time_);
 
 		AnimationName_ = "OnUFO_";
@@ -230,6 +224,7 @@ void Player::RidingRideStart()
 		IsMove = true;
 		CurSpeed_ = 5.5f;
 
+		PlayerRideState_ = PlayerRideState::Owl;
 		AnimationName_ = "RidingOwl_";
 		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 	}
@@ -239,6 +234,7 @@ void Player::RidingRideStart()
 		IsMove = true;
 		CurSpeed_ = 2.f;
 
+		PlayerRideState_ = PlayerRideState::Turtle;
 		AnimationName_ = "RidingTurtle_";
 		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 	}
@@ -248,13 +244,10 @@ void Player::RidingRideStart()
 		ReSetAccTime();
 		CurSpeed_ = 8.5f;
 
+		PlayerRideState_ = PlayerRideState::UFO;
 		AnimationName_ = "RidingUFO_";
 		PlayerAnimationRender_->ChangeAnimation(AnimationName_ + ChangeDirText_);
 	}
-}
-
-void Player::WaitUpdate()
-{
 }
 
 void Player::ReadyUpdate()

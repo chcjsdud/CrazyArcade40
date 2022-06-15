@@ -109,14 +109,14 @@ void PlayerTeamTest::Loading()
 	//			BlockSet->CreateBlock(float4(x * 40, y * 40), Name);
 	//		}
 	//	}
-	//}
+	//
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 450.f }, ItemType::Turtle);
+	Item_->CreateItem({ 400.f, 50.f }, ItemType::Shoes);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 130.f }, ItemType::Devil);
+	Item_->CreateItem({ 400.f, 130.f }, ItemType::Turtle);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
@@ -130,10 +130,11 @@ void PlayerTeamTest::Loading()
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
 	Item_->CreateItem({ 400.f, 370.f }, ItemType::Shield);
 
-
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 50.f }, ItemType::Shoes);
+	Item_->CreateItem({ 400.f, 450.f }, ItemType::Devil);
+
+
 
 	//Monster1* Mandarin1 = CreateActor<Monster1>((int)ORDER::MONSTER);
 	//Mandarin1->SetPosition(Areas_[0].GetCenter());

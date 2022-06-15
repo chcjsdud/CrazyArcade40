@@ -128,6 +128,10 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Owl:
 	{
+		if (IsShoes = true)
+		{
+			IsShoes = false;
+		}
 		PlayerRideState_ = PlayerRideState::Owl;
 		ChangeState(PlayerState::OnRide);
 		return;
@@ -135,6 +139,10 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::Turtle:
 	{
+		if (IsShoes = true)
+		{
+			IsShoes = false;
+		}
 		PlayerRideState_ = PlayerRideState::Turtle;
 		ChangeState(PlayerState::OnRide);
 		return;
@@ -142,6 +150,10 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	break;
 	case ItemType::SpaceShip:
 	{
+		if (IsShoes = true)
+		{
+			IsShoes = false;
+		}
 		Position_ = _Player->GetPosition();
 		PlayerRideState_ = PlayerRideState::UFO;
 

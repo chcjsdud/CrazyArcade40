@@ -110,11 +110,13 @@ void Player::DebugModeSwitch()
 		if (false == IsInvincible)
 		{
 			IsInvincible = true;
+
 			EffectRenderer_->On();
 		}
 		else
 		{
 			IsInvincible = false;
+
 			EffectRenderer_->Off();
 		}
 		
@@ -912,11 +914,7 @@ void Player::Render()
 		std::string MaxAttCount = "";
 		std::string MaxAttPower = "";
 
-		if (CurState_ == PlayerState::Wait)
-		{
-			State = "STATE : Wait";
-		}
-		else if (CurState_ == PlayerState::Ready)
+		if (CurState_ == PlayerState::Ready)
 		{
 			State = "STATE : Ready";
 		}
@@ -1019,9 +1017,6 @@ void Player::ChangeState(PlayerState _State)
 	{
 		switch (_State)
 		{
-		case PlayerState::Wait:
-			WaitStart();
-			break;
 		case PlayerState::Ready:
 			ReadyStart();
 			break;
@@ -1076,9 +1071,6 @@ void Player::PlayerStateUpdate()
 {
 	switch (CurState_)
 	{
-	case PlayerState::Wait:
-		WaitUpdate();
-		break;
 	case PlayerState::Ready:
 		ReadyUpdate();
 		break;
