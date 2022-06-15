@@ -193,7 +193,7 @@ void Monster2Level::Loading()
 		Crocodile5->SetMapTile(&MapBackGround_->MapTileMap_);
 
 		Monster2* Crocodile6 = CreateActor<Monster2>((int)ORDER::PLAYER);
-		Crocodile6->SetPosition(Areas_[179].GetCenter());
+		Crocodile6->SetPosition(Areas_[170].GetCenter());
 		Crocodile6->SetMapTile(&MapBackGround_->MapTileMap_);
 	}
 	Monster2Object_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");

@@ -80,9 +80,9 @@ Player::Player()
 	MaridAttCount_ = 2;
 	DaoAttCount_ = 1;
 
-	BazziAttPower_ = 1.f;
-	MaridAttPower_ = 1.f;
-	DaoAttPower_ = 1.f;
+	BazziAttPower_ = 2.f;
+	MaridAttPower_ = 2.f;
+	DaoAttPower_ = 2.f;
 
 	BazziSpeed_ = 5.f;
 	MaridSpeed_ = 5.f;

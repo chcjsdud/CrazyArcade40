@@ -2031,14 +2031,14 @@ void MapGameObject::BlockValueSetting()
 	}
 	else if (GetLevel()->GetNameConstRef() == "Monster2Level")//รั6
 	{
-		MaxValue_ = 5;
+		MaxValue_ = 3; // 5->3
 		RollerValue_ = 2;
-		BubbleValue_ = 10;
-		FluidValue_ = 7;
-		UltraBubbleValue_ = 2;
-		RedDevilValue_ = 1;
+		BubbleValue_ = 12;		// 10->12
+		FluidValue_ = 10;
+		UltraBubbleValue_ = 4; // 2->4
+		RedDevilValue_ = 1; 
 		DevilValue_ = 2;
-		ShoesValue_ = 2;
+		ShoesValue_ = 0;
 		NiddleValue_ = 1;
 		ShieldValue_ = 1;
 		SuperJumpValue_ = 0;
