@@ -71,6 +71,7 @@ Player::Player()
 	, EffectRenderer_(nullptr)
 	, Player1BoomCount_(CurAttCount_)
 	, Player2BoomCount_(CurAttCount_)
+	, TestTime_(0.0f)
 
 {
 	BazziAttCount_ = 1;

@@ -221,6 +221,8 @@ private:
 	BlockType CheckBlockTile(float4 _Pos);
 	ItemType CheckItem(float4 _Pos);
 
+	float TestTime_;
+
 	BlockType CurBlockType1_;
 	BlockType CurBlockType2_;
 

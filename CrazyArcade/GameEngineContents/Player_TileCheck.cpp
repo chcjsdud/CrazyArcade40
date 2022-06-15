@@ -21,9 +21,11 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			// 탈 것을 타고 있는 상태에서는 -> Idle
 			if (PlayerRideState_ != PlayerRideState::Max)
 			{
+
+
 				ChangeState(PlayerState::OffRide);
 				CurState_ = PlayerState::OffRide;
-				
+				IsInvincible = true;
 				return;
 			}
 			else if (PlayerRideState_ == PlayerRideState::Max)

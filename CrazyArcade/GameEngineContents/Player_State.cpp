@@ -173,7 +173,7 @@ void Player::OnRideStart()
 void Player::OffRideStart()
 {
 	CheckDir_ = PlayerDir::None;
-
+	TestTime_ = 1.6f;
 	if (PlayerRideState_ == PlayerRideState::Owl)
 	{
 		IsMove = false;
@@ -450,9 +450,13 @@ void Player::OnRideUpdate()
 void Player::OffRideUpdate()
 {
 	CurSpeed_ = MoveSpeed_;
+	
+	TestTime_ -= 1.0f * GameEngineTime::GetDeltaTime();
+	IsInvincible = true;
 
-	if (1.8f < GetAccTime())
+	if (0.0f >= TestTime_)
 	{
+		IsInvincible = false;
 		ChangeState(PlayerState::Idle);
 		CurState_ = PlayerState::Idle;
 		return;
