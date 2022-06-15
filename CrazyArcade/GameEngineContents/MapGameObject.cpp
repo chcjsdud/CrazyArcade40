@@ -824,7 +824,7 @@ void MapGameObject::PushBlock(float4 _Pos, BlockDir _Dir)
 		ItemBlockTile* ItemTile_ = MapTile_->GetTile<ItemBlockTile>(TileIndex_.X, TileIndex_.Y - 1);
 		if (ItemTile_ != nullptr && ItemTile_->BlockType_ == BlockType::ItemBlock)
 		{
-			MapTile_->DeleteTile(TileIndex_.X , TileIndex_.Y + 1);
+			MapTile_->DeleteTile(TileIndex_.X , TileIndex_.Y - 1);
 		}
 		if (NextTile_ == nullptr)
 		{
