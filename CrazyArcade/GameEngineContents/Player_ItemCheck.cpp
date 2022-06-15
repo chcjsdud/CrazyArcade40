@@ -69,7 +69,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 		CurItem_ = ItemType::Niddle; // ItemUI ¶ç¿ì±â¿ë
 
-		if (true == IsItemKey())
+		if (true == IsShield)
 		{
 			IsShield = false;
 		}
