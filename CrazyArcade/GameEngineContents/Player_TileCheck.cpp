@@ -22,7 +22,6 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			if (PlayerRideState_ != PlayerRideState::Max)
 			{
 
-
 				ChangeState(PlayerState::OffRide);
 				CurState_ = PlayerState::OffRide;
 				IsInvincible = true;
@@ -30,7 +29,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 			}
 			else if (PlayerRideState_ == PlayerRideState::Max)
 			{
-				CurState_ = PlayerState::Idle;
+				//CurState_ = PlayerState::Idle;
 				if (CurState_ != PlayerState::Die
 					&& CurState_ != PlayerState::DamageStart
 					&& CurState_ != PlayerState::Damaged
