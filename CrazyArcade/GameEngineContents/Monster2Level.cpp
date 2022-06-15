@@ -106,7 +106,7 @@ void Monster2Level::Loading()
 			BlockSet->CreateBlock(float4(static_cast<float>(12 * 40), (static_cast<float>(2 * 40))), "WallBlock");
 
 			BlockSet->CreateBlock(float4(static_cast<float>(2 * 40), (static_cast<float>(3 * 40))), "WallBlock");
-			BlockSet->CreateBlock(float4(static_cast<float>(10 * 40), (static_cast<float>(3 * 40))), "WallBlock");
+			BlockSet->CreateBlock(float4(static_cast<float>(9 * 40), (static_cast<float>(3 * 40))), "WallBlock");
 			BlockSet->CreateBlock(float4(static_cast<float>(12 * 40), (static_cast<float>(3 * 40))), "WallBlock");
 
 			BlockSet->CreateBlock(float4(static_cast<float>(2 * 40), (static_cast<float>(4 * 40))), "WallBlock");
