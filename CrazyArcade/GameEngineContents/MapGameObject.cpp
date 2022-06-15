@@ -1821,7 +1821,7 @@ void MapGameObject::SetGameItem()
 		{
 			if (MapTile_->GetTile<BlockTile>(x, y) != nullptr)
 			{
-				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock)
+				if (MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::FixBlock|| MapTile_->GetTile<BlockTile>(x, y)->BlockType_ == BlockType::PullBlock)
 				{
 					ItemValue_ = static_cast<ItemType>(ItemRandom.RandomInt(0,17));
 					if (ItemValue_ == ItemType::Roller && RollerValue_>0)
@@ -1931,7 +1931,7 @@ void MapGameObject::BlockValueSetting()
 		FluidValue_ = 7;
 		UltraBubbleValue_ = 2;
 		RedDevilValue_ = 1;
-		DevilValue_ = 5;
+		DevilValue_ =2;
 		ShoesValue_ = 1;
 		NiddleValue_ = 2;
 		ShieldValue_ = 1;
@@ -1948,11 +1948,11 @@ void MapGameObject::BlockValueSetting()
 	{
 		MaxValue_ = 8;
 		RollerValue_ = 7;
-		BubbleValue_ = 7;
+		BubbleValue_ = 10;
 		FluidValue_ = 7;
 		UltraBubbleValue_ = 3;
 		RedDevilValue_ = 2;
-		DevilValue_ = 5;
+		DevilValue_ = 2;
 		ShoesValue_ = 3;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
@@ -1968,8 +1968,8 @@ void MapGameObject::BlockValueSetting()
 	else if (GetLevel()->GetNameConstRef() == "CemetoryLevel")//รั30
 	{
 		MaxValue_ = 6;
-		RollerValue_ = 3;
-		BubbleValue_ = 3;
+		RollerValue_ = 10;
+		BubbleValue_ = 7;
 		FluidValue_ = 4;
 		UltraBubbleValue_ = 1;
 		RedDevilValue_ = 2;
@@ -1990,11 +1990,11 @@ void MapGameObject::BlockValueSetting()
 	{
 		MaxValue_ = 4;
 		RollerValue_ = 6;
-		BubbleValue_ = 6;
-		FluidValue_ = 6;
+		BubbleValue_ = 10;
+		FluidValue_ = 7;
 		UltraBubbleValue_ = 2;
 		RedDevilValue_ = 1;
-		DevilValue_ = 5;
+		DevilValue_ = 2;
 		ShoesValue_ =2;
 		NiddleValue_ = 2;
 		ShieldValue_ = 2;
@@ -2011,8 +2011,8 @@ void MapGameObject::BlockValueSetting()
 	{
 		MaxValue_ = 5;
 		RollerValue_ = 2;
-		BubbleValue_ = 2;
-		FluidValue_ = 2;
+		BubbleValue_ = 10;
+		FluidValue_ = 7;
 		UltraBubbleValue_ = 2;
 		RedDevilValue_ = 1;
 		DevilValue_ = 2;
@@ -2031,12 +2031,12 @@ void MapGameObject::BlockValueSetting()
 		else if (GetLevel()->GetNameConstRef() == "BossLevel")//รั81
 	{
 		MaxValue_ = 38;
-		RollerValue_ = 7;
-		BubbleValue_ = 7;
+		RollerValue_ = 3;
+		BubbleValue_ = 10;
 		FluidValue_ = 7;
 		UltraBubbleValue_ = 3;
 		RedDevilValue_ = 2;
-		DevilValue_ = 5;
+		DevilValue_ = 2;
 		ShoesValue_ = 3;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
