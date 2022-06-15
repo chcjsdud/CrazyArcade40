@@ -89,7 +89,7 @@ void Player::TileCheckResultUpdate(BlockType _CurBlockType)
 	break;
 	case BlockType::ItemBlock:		// 아이템 체크하는 부분 
 	{
-		if (false == IsUFO)
+		if (false == IsUFO )
 		{
 			GameEngineSound::SoundPlayOneShot("eat_item.mp3");
 			PlayerInfoUpdate();

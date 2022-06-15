@@ -182,9 +182,8 @@ void Player::ItemTime()
 
 	if (true == IsDevil)
 	{
-		float Time = GetAccTime();
 		// 10초가 지나면 데빌 모드 해제
-		if (3.f < Time)
+		if (3.f < GetAccTime())
 		{
 			IsDevil = false;
 			CurDir_ = PlayerDir::None;

@@ -191,7 +191,7 @@ void Player::PlayerInit()
 
 void Player::PlayerInfoUpdate()
 {
-	if (true == IsDevil)
+	if (true == IsDevil && PlayerRideState::Max != PlayerRideState_)
 	{
 		IsDevil = false;
 	}
