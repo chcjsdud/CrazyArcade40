@@ -36,8 +36,8 @@ RoomCharaterSelectUI::~RoomCharaterSelectUI()
 
 void RoomCharaterSelectUI::Start()
 {
-	Rank_1P = CreateRenderer((int)UIType::StartIntroUI);
-	Rank_2P = CreateRenderer((int)UIType::StartIntroUI);
+	Rank_1P = CreateRenderer(4);
+	Rank_2P = CreateRenderer(4);
 	Rank_1P->SetImage("rank_High.bmp");
 	Rank_2P->SetImage("rank_low.bmp");
 	Rank_1P->SetScale(float4{ 20.0f, 20.0f });
