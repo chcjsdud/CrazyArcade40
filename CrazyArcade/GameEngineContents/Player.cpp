@@ -333,6 +333,7 @@ void Player::PlayerCollisionUpdate()
 	{
 		Collision2P_->On();
 		ArrowRenderer_2P->On();
+		ArrowRenderer_1P->Off();
 	}
 }
 
