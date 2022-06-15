@@ -676,8 +676,8 @@ void Player::Start()
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleOwl_Down", 6, 6, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Left", 8, 8, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Right", 10, 10, 0.15f, false);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Up", 12, 12, 0.15f, false);
-		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Down", 14, 14, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Down", 12, 12, 0.15f, false);
+		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "IdleTurtle_Up", 14, 14, 0.15f, false);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Left", 0, 1, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Right", 2, 3, 0.15f, true);
 		MaridRenderer_->CreateAnimation("luxMarid_3.bmp", "RidingOwl_Up", 4, 5, 0.15f, true);

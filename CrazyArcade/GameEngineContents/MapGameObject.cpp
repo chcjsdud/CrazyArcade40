@@ -1990,7 +1990,7 @@ void MapGameObject::BlockValueSetting()
 		Bubble_DarkValue_ = 0;
 		Bubble_BossValue_ = 0;
 		Bubble_DefaultValue_ = 0;
-		GhostValue_ = 1;
+		GhostValue_ = 0;
 	}
 	else if (GetLevel()->GetNameConstRef() == "Monster1Level")//รั36
 	{
