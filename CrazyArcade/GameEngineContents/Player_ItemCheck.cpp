@@ -69,7 +69,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	{
 		CurItem_ = ItemType::Niddle; // ItemUI 띄우기용
 
-		if (true == IsItemKey())
+		if (true == IsShield)
 		{
 			IsShield = false;
 		}
@@ -102,7 +102,7 @@ void Player::ItemCheck(Player* _Player, ItemType _ItemType)
 	case ItemType::Shoes:
 	{
 		// 물방울 던지기 
-		//	IsShoes = true;
+		IsShoes = true;
 	}
 	break;
 	case ItemType::Shield:
@@ -220,12 +220,14 @@ void Player::ItemTime()
 
 	if (true == IsNiddle)
 	{
-		if (true == IsItemKey())
+		if (CurState_ == PlayerState::Damaged)
 		{
-			ChangeState(PlayerState::Revival);
-			return;
+			if (true == IsItemKey())
+			{
+				ChangeState(PlayerState::Revival);
+				return;
+			}
 		}
-
 	}
 
 	if (true == IsJump)

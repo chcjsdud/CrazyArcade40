@@ -38,6 +38,7 @@ public:
 			Renderer->Death();
 			Renderer = nullptr;
 		}
+
 		BlockType_ = BlockType::Max;
 		ItemType_ = ItemType::Max;
 	}

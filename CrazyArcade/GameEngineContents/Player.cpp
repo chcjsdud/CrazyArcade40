@@ -361,8 +361,9 @@ void Player::CollisionCheck()
 			}
 		}
 
-
-		// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+		if (GetLevel()->GetNameCopy() == "Monster1Level"
+			|| GetLevel()->GetNameCopy() == "Monster2Level"
+			|| GetLevel()->GetNameCopy() == "BossLevel")
 		{
 			std::vector<GameEngineCollision*> ColList;
 
@@ -379,13 +380,38 @@ void Player::CollisionCheck()
 
 					for (size_t i = 0; i < ColList.size(); i++)
 					{
-						ChangeState(PlayerState::Die);
+						ChangeState(PlayerState::Revival);
 						return;
 					}
 				}
 			}
 		}
+		else
+		{
+				// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+			{
+				std::vector<GameEngineCollision*> ColList;
 
+				if (MainPlayer_1->CurState_ == PlayerState::Damaged
+					|| MainPlayer_1->CurState_ == PlayerState::Fade)
+				{
+					if (true == Collision1P_->CollisionResult("2PColl", ColList, CollisionType::Rect, CollisionType::Rect))
+					{
+						if (MainPlayer_2->CurState_ == PlayerState::Damaged
+							|| MainPlayer_2->CurState_ == PlayerState::Fade)
+						{
+							return;
+						}
+
+						for (size_t i = 0; i < ColList.size(); i++)
+						{
+							ChangeState(PlayerState::Die);
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	if (nullptr != MainPlayer_2)
@@ -424,8 +450,9 @@ void Player::CollisionCheck()
 				}
 			}
 
-
-			// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+			if (GetLevel()->GetNameCopy() == "Monster1Level"
+				|| GetLevel()->GetNameCopy() == "Monster2Level"
+				|| GetLevel()->GetNameCopy() == "BossLevel")
 			{
 				std::vector<GameEngineCollision*> ColList;
 
@@ -443,8 +470,35 @@ void Player::CollisionCheck()
 
 						for (size_t i = 0; i < ColList.size(); i++)
 						{
-							ChangeState(PlayerState::Die);
+							ChangeState(PlayerState::Revival);
 							return;
+						}
+					}
+				}
+			}
+			else {
+
+					// 물방울에 갇힌 상태힐 때 다른 플레이어가 터뜨릴 수 있다
+				{
+					std::vector<GameEngineCollision*> ColList;
+
+
+					if (MainPlayer_2->CurState_ == PlayerState::Damaged
+						|| MainPlayer_2->CurState_ == PlayerState::Fade)
+					{
+						if (true == Collision2P_->CollisionResult("1PColl", ColList, CollisionType::Rect, CollisionType::Rect))
+						{
+							if (MainPlayer_1->CurState_ == PlayerState::Damaged
+								|| MainPlayer_1->CurState_ == PlayerState::Fade)
+							{
+								return;
+							}
+
+							for (size_t i = 0; i < ColList.size(); i++)
+							{
+								ChangeState(PlayerState::Die);
+								return;
+							}
 						}
 					}
 				}
@@ -505,7 +559,7 @@ void Player::Start()
 		
 		// 애니메이션
 
-		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYERTEMP, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		BazziRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		BazziRenderer_->CreateAnimation("Bazzi_1.bmp", "Ready_", 37, 53, 0.06f, false);
@@ -591,7 +645,7 @@ void Player::Start()
 		Marid5->CutCount(5, 6);
 
 		// 애니메이션
-		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYERTEMP, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		MaridRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
 		// Idle
 		MaridRenderer_->CreateAnimation("luxMarid_4.bmp", "Ready_", 0, 17, 0.06f, false);
@@ -683,9 +737,9 @@ void Player::Start()
 		Dao5->CutCount(5, 6);
 
 		// 애니메이션
-		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYERTEMP, RenderPivot::CENTER, float4{ 0.f, 0.f });
+		DaoRenderer_ = CreateRenderer((int)ORDER::PLAYER, RenderPivot::CENTER, float4{ 0.f, 0.f });
 
-		// Idle
+		// Idle4
 		DaoRenderer_->CreateAnimation("Dao_4.bmp", "Ready_", 0, 17, 0.06f, false);
 		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Idle_Right", 0, 0, 1.f, false);
 		DaoRenderer_->CreateAnimation("Dao_1.bmp", "Idle_Left", 6, 6, 1.f, false);
@@ -775,7 +829,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("1PUp", VK_UP);
 		GameEngineInput::GetInst()->CreateKey("1PDown", VK_DOWN);
 		GameEngineInput::GetInst()->CreateKey("1PAttack", VK_SPACE);
-		GameEngineInput::GetInst()->CreateKey("1PItem", VK_HANGUL);
+		GameEngineInput::GetInst()->CreateKey("1PItem", VK_HANJA);
 
 		// =============== 2P 이동 ===============
 		GameEngineInput::GetInst()->CreateKey("2PLeft", 'A');

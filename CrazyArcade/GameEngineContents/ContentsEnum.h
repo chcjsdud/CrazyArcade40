@@ -9,7 +9,6 @@ enum class ORDER
 	MAPOBJECT,
 	EFFECT,
 	PLAYER,
-	PLAYERTEMP,
 	UI
 };
 enum class BlockDir

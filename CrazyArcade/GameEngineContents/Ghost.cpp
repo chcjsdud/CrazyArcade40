@@ -29,10 +29,10 @@ void Ghost::Start()
 	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartUp", 6, 6, 1.0f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartRight", 10, 10, 1.0f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackStartLeft", 16, 16, 1.0f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndDown", 3, 3, 0.7f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndUp", 7, 7, 0.7f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndRight", 11, 11, 0.7f, true);
-	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndLeft", 15, 15, 0.7f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndDown", 3, 3, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndUp", 7, 7, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndRight", 11, 11, 1.0f, true);
+	Renderer_->CreateAnimation("BasicMonster.bmp", "AttackEndLeft", 15, 15, 1.0f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "Die", 12, 14, 0.2f, true);
 	Renderer_->CreateAnimation("BasicMonster.bmp", "Start", 13, 14, 0.1f, true); // need to chk : image 
 	Renderer_->ChangeAnimation("Start");

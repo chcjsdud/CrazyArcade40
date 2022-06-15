@@ -366,6 +366,7 @@ bool Player::IsItemKey()
 	{
 		if (true == GameEngineInput::GetInst()->IsDown("1PItem"))
 		{
+			CurItem_ = ItemType::Max;
 			return true;
 		}
 	}
@@ -373,6 +374,7 @@ bool Player::IsItemKey()
 	{
 		if (true == GameEngineInput::GetInst()->IsDown("2PItem"))
 		{
+			CurItem_ = ItemType::Max;
 			return true;
 		}
 	}

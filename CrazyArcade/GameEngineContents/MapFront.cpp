@@ -18,7 +18,7 @@ void MapFront::Start()
 		GameEngineRenderer* Y1 = CreateRenderer("CampY1.bmp",static_cast<int>(ORDER::PLAYER));
 		Y1->SetPivot({ 0,-240 });
 		GameEngineRenderer* Y2 = CreateRenderer("CampY2.bmp", static_cast<int>(ORDER::PLAYER));
-		Y2->SetPivot({ 0,-160 });
+		Y2->SetPivot({ 0,-200 });
 		GameEngineRenderer* Y12 = CreateRenderer("CampY12.bmp", static_cast<int>(ORDER::PLAYER));
 		Y12->SetPivot({ 0,200 });
 		GameEngineRenderer* Y13 = CreateRenderer("CampY13.bmp", static_cast<int>(ORDER::PLAYER));
