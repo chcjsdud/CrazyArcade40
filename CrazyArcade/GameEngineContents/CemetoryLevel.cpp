@@ -172,11 +172,6 @@ void CemetoryLevel::Loading()
 			Areas_.push_back(area);
 		}
 	}
-
-	{// Test Ghost : need to delete
-		Ghost* Ghost_ = CreateActor<Ghost>((int)ORDER::PLAYER);
-		Ghost_->SetMapTile(&MapBackGround_->MapTileMap_);
-	}
 }
 
 void CemetoryLevel::Update()

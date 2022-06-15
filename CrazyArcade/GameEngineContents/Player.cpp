@@ -830,7 +830,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("1PUp", VK_UP);
 		GameEngineInput::GetInst()->CreateKey("1PDown", VK_DOWN);
 		GameEngineInput::GetInst()->CreateKey("1PAttack", VK_SPACE);
-		GameEngineInput::GetInst()->CreateKey("1PItem", VK_HANGUL);
+		GameEngineInput::GetInst()->CreateKey("1PItem", VK_HANJA);
 
 		// =============== 2P ÀÌµ¿ ===============
 		GameEngineInput::GetInst()->CreateKey("2PLeft", 'A');
