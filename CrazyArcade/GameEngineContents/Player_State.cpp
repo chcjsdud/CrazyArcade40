@@ -160,6 +160,8 @@ void Player::OnRideStart()
 		IsMove = false;
 		AddAccTime(Time_);
 
+		PlayerAnimationRender_->SetOrder(static_cast<int>(ORDER::UI));
+
 		AnimationName_ = "OnUFO_";
 		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 	}
@@ -350,7 +352,6 @@ void Player::JumpUpdate()
 void Player::AttackUpdate()
 {
 	Attack();
-
 	ChangeState(PlayerState::Move);
 	return;
 }
@@ -449,6 +450,7 @@ void Player::OffRideUpdate()
 
 	if (0.0f >= TestTime_)
 	{
+		PlayerAnimationRender_->SetOrder(static_cast<int>(ORDER::PLAYER));
 		IsInvincible = false;
 		ChangeState(PlayerState::Idle);
 		CurState_ = PlayerState::Idle;
