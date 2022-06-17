@@ -522,10 +522,10 @@ void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void Player::Start()
 {
-	Collision1P_ = CreateCollision("1PColl", { 40.f, 40.f }, { 0.f, 0.f });
+	Collision1P_ = CreateCollision("1PColl", { 35.f, 35.f }, { 0.f, 10.f });
 	Collision1P_->Off();
 
-	Collision2P_ = CreateCollision("2PColl", { 40.f, 40.f }, { 0.f, 0.f });
+	Collision2P_ = CreateCollision("2PColl", { 35.f, 35.f }, { 0.f, 10.f });
 	Collision2P_->Off();
 
 
@@ -899,7 +899,7 @@ void Player::Render()
 
 	//std::string Posx = "";
 	//std::string Posy = "";
-
+	
 	//Posx = "Pos x : " + std::to_string(GetPosition().ix());
 	//Posy = "Pos y : " + std::to_string(GetPosition().iy());
 

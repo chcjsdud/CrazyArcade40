@@ -244,7 +244,7 @@ void Player::RidingRideStart()
 	{
 		IsMove = true;
 		ReSetAccTime();
-		CurSpeed_ = 8.5f;
+		CurSpeed_ = 7.5f;
 
 		PlayerRideState_ = PlayerRideState::UFO;
 		AnimationName_ = "RidingUFO_";
