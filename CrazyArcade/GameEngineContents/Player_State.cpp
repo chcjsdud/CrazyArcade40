@@ -170,7 +170,7 @@ void Player::OnRideStart()
 void Player::OffRideStart()
 {
 	CheckDir_ = PlayerDir::None;
-	TestTime_ = 1.6f;
+	TestTime_ = 1.0f;
 	if (PlayerRideState_ == PlayerRideState::Owl)
 	{
 		IsMove = false;
@@ -424,7 +424,7 @@ void Player::DieUpdate()
 
 void Player::OnRideUpdate()
 {
-	if (2.f < GetAccTime()
+	if (1.0f < GetAccTime()
 		&& PlayerAnimationRender_->IsEndAnimation())
 	{
 		if (PlayerRideState_ == PlayerRideState::UFO)

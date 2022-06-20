@@ -636,9 +636,9 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			{
 				for (int i = 0; i < Player2BlockTiles_.size(); i++)
 				{
-					if (Player1BlockTiles_[i] == PushTile_)
+					if (Player2BlockTiles_[i] == PushTile_)
 					{
-						Player2BlockTiles_.erase(Player1BlockTiles_.begin() + i);
+						Player2BlockTiles_.erase(Player2BlockTiles_.begin() + i);
 						Player2BlockTiles_.push_back(NextTile_);
 
 					}
@@ -704,9 +704,9 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			{
 				for (int i = 0; i < Player2BlockTiles_.size(); i++)
 				{
-					if (Player1BlockTiles_[i] == PushTile_)
+					if (Player2BlockTiles_[i] == PushTile_)
 					{
-						Player2BlockTiles_.erase(Player1BlockTiles_.begin() + i);
+						Player2BlockTiles_.erase(Player2BlockTiles_.begin() + i);
 						Player2BlockTiles_.push_back(NextTile_);
 
 					}
@@ -856,7 +856,7 @@ void MapGameObject::BubbleMoveUpdate()
 			if (MoveBubble_[i]->TilePos_.x >= MoveBubble_[i]->MoveNextTilePos_.x)
 			{
 
-				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -876,7 +876,7 @@ void MapGameObject::BubbleMoveUpdate()
 		{
 			if (MoveBubble_[i]->TilePos_.x < MoveBubble_[i]->MoveNextTilePos_.x)
 			{
-				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -893,7 +893,7 @@ void MapGameObject::BubbleMoveUpdate()
 		{
 			if (MoveBubble_[i]->TilePos_.y <= MoveBubble_[i]->MoveNextTilePos_.y)
 			{
-				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -910,7 +910,7 @@ void MapGameObject::BubbleMoveUpdate()
 		{
 			if (MoveBubble_[i]->TilePos_.y >= MoveBubble_[i]->MoveNextTilePos_.y)
 			{
-				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
