@@ -55,16 +55,6 @@ void PlayerTeamTest::Loading()
 	
 	
 
-	{
-		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
-		MapBackGround_->GetRenderer()->SetImage("Camp_ColMap.bmp");//Actor에 이미지 세팅해주고
-
-		float4 Actor = {};
-		Actor.x = (MapBackGround_->GetRenderer()->GetImage()->GetScale().Half().x);
-		Actor.y = (MapBackGround_->GetRenderer()->GetImage()->GetScale().Half().y);
-
-		MapBackGround_->GetRenderer()->SetPivot(Actor);
-	}
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
 	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고d
@@ -72,7 +62,7 @@ void PlayerTeamTest::Loading()
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
 
 
-	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
+	//MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
 
 	//ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 
@@ -320,16 +310,15 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
-	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
-	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
-	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
-	Player::MainPlayer_2->Boom_ = CreateActor<MapGameObject>((int)ORDER::PLAYER);
-	Player::MainPlayer_2->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	//Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	//Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
+	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Player::MainPlayer_2->Boom_ = CreateActor<MapGameObject>((int)ORDER::PLAYER);
+	//Player::MainPlayer_2->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	Character Char1 = Player::MainPlayer_1->GetCharacter();
-	Character Char = Player::MainPlayer_2->GetCharacter();
 	//윈도우 마우스 숨김
 
 	PlayerTeamTestObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");

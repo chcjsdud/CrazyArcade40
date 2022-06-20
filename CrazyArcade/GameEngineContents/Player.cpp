@@ -265,8 +265,8 @@ void Player::ColMapUpdate()
 	// ====================================== 테스트 레벨
 	if (CurrentLevel_ == "PlayerTeamTest")
 	{
-		//MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
-		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
+		//MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 	}
 
 
