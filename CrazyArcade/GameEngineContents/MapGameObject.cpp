@@ -1954,7 +1954,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 2;
 		RedDevilValue_ = 1;
 		DevilValue_ =2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 3;
 		NiddleValue_ = 2;
 		ShieldValue_ = 1;
 		SuperJumpValue_ = 0;
@@ -1975,7 +1975,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 3;
 		RedDevilValue_ = 2;
 		DevilValue_ = 2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 1;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
 		SuperJumpValue_ = 0;
@@ -1996,7 +1996,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 1;
 		RedDevilValue_ = 2;
 		DevilValue_ = 2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 1;
 		NiddleValue_ = 2;
 		ShieldValue_ = 0;
 		SuperJumpValue_ = 0;
@@ -2038,7 +2038,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 4; // 2->4
 		RedDevilValue_ = 1; 
 		DevilValue_ = 2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 1;
 		NiddleValue_ = 1;
 		ShieldValue_ = 1;
 		SuperJumpValue_ = 0;
@@ -2059,7 +2059,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 3;
 		RedDevilValue_ = 2;
 		DevilValue_ = 2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 1;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
 		SuperJumpValue_ = 0;
