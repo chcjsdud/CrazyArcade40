@@ -843,7 +843,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("2PUp", 'W');
 		GameEngineInput::GetInst()->CreateKey("2PDown", 'S');
 		GameEngineInput::GetInst()->CreateKey("2PAttack", VK_LSHIFT);
-		GameEngineInput::GetInst()->CreateKey("2PItem", VK_LCONTROL);
+		GameEngineInput::GetInst()->CreateKey("2PItem", 'Z');
 
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("Invincible", 'O');
