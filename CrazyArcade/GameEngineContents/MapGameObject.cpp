@@ -853,7 +853,7 @@ void MapGameObject::BubbleMoveUpdate()
 
 		if (BlockDir::LEFT == MoveBubble_[i]->BlockDir_)
 		{
-			if (MoveBubble_[i]->TilePos_.x >= MoveBubble_[i]->MoveNextTilePos_.x)
+			if (MoveBubble_[i]->TilePos_.x > MoveBubble_[i]->MoveNextTilePos_.x)
 			{
 
 				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime() * 600.0f;
@@ -891,7 +891,7 @@ void MapGameObject::BubbleMoveUpdate()
 		}
 		if (BlockDir::DOWN == MoveBubble_[i]->BlockDir_)
 		{
-			if (MoveBubble_[i]->TilePos_.y <= MoveBubble_[i]->MoveNextTilePos_.y)
+			if (MoveBubble_[i]->TilePos_.y < MoveBubble_[i]->MoveNextTilePos_.y)
 			{
 				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
@@ -908,7 +908,7 @@ void MapGameObject::BubbleMoveUpdate()
 		}
 		if (BlockDir::UP == MoveBubble_[i]->BlockDir_)
 		{
-			if (MoveBubble_[i]->TilePos_.y >= MoveBubble_[i]->MoveNextTilePos_.y)
+			if (MoveBubble_[i]->TilePos_.y > MoveBubble_[i]->MoveNextTilePos_.y)
 			{
 				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
