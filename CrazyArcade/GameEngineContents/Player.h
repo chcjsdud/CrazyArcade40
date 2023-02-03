@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngine/GameEngineRendererTileMap.h>
 #include "ContentsEnum.h"
+#include <GameEngine/GameEngineLevel.h>
 
 enum class PlayerState
 {

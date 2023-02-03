@@ -1,6 +1,7 @@
 #include"MapFront.h"
 #include "ContentsEnum.h"
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngine/GameEngineLevel.h>
 
 MapFront::MapFront()
 {

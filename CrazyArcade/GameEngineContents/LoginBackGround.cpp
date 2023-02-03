@@ -8,6 +8,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include "CreateRoomBackGround.h"
 #include "ContentsEnum.h"
+#include <GameEngine/GameEngineLevel.h>
 
 LoginBackGround::LoginBackGround()
 	: LoginBackGroundRenderer_(nullptr)

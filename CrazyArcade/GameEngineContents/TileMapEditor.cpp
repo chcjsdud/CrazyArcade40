@@ -6,6 +6,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
+#include <GameEngine/GameEngineLevel.h>
 
 TileMapEditor* TileMapEditor::MapEditorSet=nullptr;
 

@@ -5,6 +5,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include "ContentsEnum.h"
 #include "ChoiceMap.h"
+#include <GameEngine/GameEngineLevel.h>
 
 
 

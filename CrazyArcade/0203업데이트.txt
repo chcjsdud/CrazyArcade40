@@ -1,0 +1,28 @@
+문제내용 -----------------------------
+17.3x -> 17.4x vs 버전 업데이트에 따라서
+GameEngineLevel
+GameEngineActor가 빌드단계에서 서로를 잘 모르는 현상 발생
+
+
+문제 판단---------------------------------
+빌드 단계에서 Level과 Actor의 상호참조가 문제라고 판단함
+
+
+문제 해결------------------------------
+
+GameEngineLevel 헤더부분에서 Actor를 탬플릿 함수로 생성해주기 때문에 Level은 Actor를 알아야한다고 판단
+
+Actor의 경우 헤더부분에서 GetCameraEffectPosition()를 구현하고 있고
+
+ 이 함수 내에서 Level ptr을 참조하는데 
+
+이때문에 Level의 헤더를 추가하고 있었음
+
+이에 따라 구현부분을 cpp로 넘기고 cpp에서 Level을 추가해줬음
+
+
+부가적인 문제로 위 변경사항으로 인해 기존의 actor.h 에서 Level.h 를 알고 있음으로 인해 
+
+actor.h를 알고 있는 클래스들은 별도의 Level.h추가 없이 Level을 참조할수 있었음 
+
+이제 GetLevel함수 쓸려면 Level.h 를 따로 추가해줘야함 !!

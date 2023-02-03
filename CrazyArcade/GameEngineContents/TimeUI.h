@@ -1,6 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
-
+#include <GameEngine/GameEngineLevel.h>
 class GameEngineRenderer;
 class TimeUI : public GameEngineActor
 {

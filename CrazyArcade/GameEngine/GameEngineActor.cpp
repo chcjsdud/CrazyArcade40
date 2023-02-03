@@ -1,4 +1,5 @@
 #include "GameEngineActor.h"
+#include "GameEngineLevel.h"
 #include "GameEngine/GameEngine.h"
 #include <GameEngineBase/GameEngineWindow.h>
 #include "GameEngineRenderer.h"
@@ -43,6 +44,11 @@ GameEngineActor::~GameEngineActor()
 			(*StartIter) = nullptr;
 		}
 	}
+}
+
+ float4 GameEngineActor::GetCameraEffectPosition()
+{
+	return Position_ - GetLevel()->GetCameraPos();
 }
 
 void GameEngineActor::DebugRectRender()

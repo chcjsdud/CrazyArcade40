@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineContents/MapGameObject.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include <GameEngine/GameEngineLevel.h>
 
 Monster2::Monster2()
 	: Monster()

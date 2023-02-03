@@ -6,6 +6,8 @@
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineBase/GameEngineSound.h>
 #include "GlobalUIName.h"
+#include <GameEngine/GameEngineLevel.h>
+
 
 size_t MapGameObject::Player1BoomNum_;
 size_t MapGameObject::Player2BoomNum_;
