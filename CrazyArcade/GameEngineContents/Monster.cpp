@@ -63,7 +63,7 @@ Monster::~Monster()
 
 void Monster::Start()
 {
-	CenterCol_ = CreateCollision("Monster", float4(25.0f, 35.0f), float4(0.0f, 0.0f));
+	CenterCol_ = CreateCollision("Monster", float4(25.0f, 25.0f), float4(0.0f, 0.0f));
 
 	if (GetLevel()->GetNameCopy() == "Monster1Level")
 	{

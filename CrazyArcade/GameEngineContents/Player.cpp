@@ -265,8 +265,8 @@ void Player::ColMapUpdate()
 	// ====================================== 테스트 레벨
 	if (CurrentLevel_ == "PlayerTeamTest")
 	{
-		//MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
-		MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
+		MapColImage_ = GameEngineImageManager::GetInst()->Find("Boss_ColMap.bmp");
+		//MapColImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 	}
 
 
@@ -522,10 +522,10 @@ void Player::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void Player::Start()
 {
-	Collision1P_ = CreateCollision("1PColl", { 40.f, 40.f }, { 0.f, 0.f });
+	Collision1P_ = CreateCollision("1PColl", { 35.f, 35.f }, { 0.f, 10.f });
 	Collision1P_->Off();
 
-	Collision2P_ = CreateCollision("2PColl", { 40.f, 40.f }, { 0.f, 0.f });
+	Collision2P_ = CreateCollision("2PColl", { 35.f, 35.f }, { 0.f, 10.f });
 	Collision2P_->Off();
 
 
@@ -843,7 +843,7 @@ void Player::Start()
 		GameEngineInput::GetInst()->CreateKey("2PUp", 'W');
 		GameEngineInput::GetInst()->CreateKey("2PDown", 'S');
 		GameEngineInput::GetInst()->CreateKey("2PAttack", VK_LSHIFT);
-		GameEngineInput::GetInst()->CreateKey("2PItem", VK_LCONTROL);
+		GameEngineInput::GetInst()->CreateKey("2PItem", 'Z');
 
 		// ============== 디버그 모드 =============
 		GameEngineInput::GetInst()->CreateKey("Invincible", 'O');
@@ -899,7 +899,7 @@ void Player::Render()
 
 	//std::string Posx = "";
 	//std::string Posy = "";
-
+	
 	//Posx = "Pos x : " + std::to_string(GetPosition().ix());
 	//Posy = "Pos y : " + std::to_string(GetPosition().iy());
 

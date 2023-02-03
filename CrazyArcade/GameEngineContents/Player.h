@@ -233,6 +233,12 @@ private:
 	BlockType UpBlock;
 	BlockType DownBlock;
 
+
+	BlockType LeftTopBlock;
+	BlockType RightTopBlock;
+	BlockType LeftBotBlock;
+	BlockType RightBotBlock;
+
 	ItemType CurItem_;
 	ItemType CurItemType1_;
 	ItemType CurItemType2_;

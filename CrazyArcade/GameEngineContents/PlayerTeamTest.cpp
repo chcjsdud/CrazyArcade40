@@ -18,6 +18,7 @@
 #include "Monster1.h"
 #include "Monster2.h"
 #include "Boss.h"
+#include "GameBgmPlayer.h"
 
 ////////////////////UI
 #include "Mouse.h"
@@ -54,16 +55,6 @@ void PlayerTeamTest::Loading()
 	
 	
 
-	{
-		MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
-		MapBackGround_->GetRenderer()->SetImage("Camp_ColMap.bmp");//Actor에 이미지 세팅해주고
-
-		float4 Actor = {};
-		Actor.x = (MapBackGround_->GetRenderer()->GetImage()->GetScale().Half().x);
-		Actor.y = (MapBackGround_->GetRenderer()->GetImage()->GetScale().Half().y);
-
-		MapBackGround_->GetRenderer()->SetPivot(Actor);
-	}
 
 	MapBackGround_ = CreateActor<MapBackGround>((int)ORDER::BACKGROUND);//Actor 만들고
 	MapBackGround_->GetRenderer()->SetImage("Camp_Back.bmp");//Actor에 이미지 세팅해주고d
@@ -71,7 +62,7 @@ void PlayerTeamTest::Loading()
 	MapBackGround_->MapTileMap_.TileRangeSetting(15, 13, { 40,40 });// 타일맵 만들어줌
 
 
-	MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
+	//MapFrontBackGround_ = CreateActor<MapFront>((int)ORDER::PLAYER);//Actor 만들고
 
 	//ColMapImage_ = GameEngineImageManager::GetInst()->Find("Camp_ColMap.bmp");
 
@@ -110,29 +101,121 @@ void PlayerTeamTest::Loading()
 	//		}
 	//	}
 	//
-	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
-	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 50.f }, ItemType::Shoes);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 130.f }, ItemType::Turtle);
+	Item_->CreateItem({ 320.f, 50.f }, ItemType::Bubble);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 210.f }, ItemType::SpaceShip);
+	Item_->CreateItem({ 320.f, 130.f }, ItemType::Bubble);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 290.f }, ItemType::Owl);
+	Item_->CreateItem({ 320.f, 210.f }, ItemType::Bubble);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 370.f }, ItemType::Shield);
+	Item_->CreateItem({ 320.f, 290.f }, ItemType::Bubble);
 
 	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
 	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
-	Item_->CreateItem({ 400.f, 450.f }, ItemType::Devil);
+	Item_->CreateItem({ 320.f, 370.f }, ItemType::Bubble);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 320.f, 450.f }, ItemType::Bubble);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 50.f }, ItemType::Roller);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 130.f }, ItemType::Roller);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 210.f }, ItemType::Roller);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 290.f }, ItemType::Roller);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 370.f }, ItemType::Roller);
+
+	//Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	//Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Item_->CreateItem({ 400.f, 450.f }, ItemType::Roller);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 560.f, 50.f }, ItemType::Shoes);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 480.f, 50.f }, ItemType::Fluid);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 480.f, 130.f }, ItemType::Fluid);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 480.f, 210.f }, ItemType::Fluid);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 480.f, 290.f }, ItemType::Fluid);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 480.f, 370.f }, ItemType::Fluid);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 480.f, 450.f }, ItemType::Fluid);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 400.f, 450.f }, ItemType::Roller);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 240.f, 50.f }, ItemType::RedDevil);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 240.f, 130.f }, ItemType::UltraBubble);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 240.f, 210.f }, ItemType::Shield);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 240.f, 290.f }, ItemType::Niddle);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 80.f, 210.f }, ItemType::Devil);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 160.f, 290.f }, ItemType::SpaceShip);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 160.f, 370.f }, ItemType::Turtle);
+
+	Item_ = CreateActor<GameItemObject>((int)ORDER::MAPOBJECT);
+	Item_->SetMapTile(&MapBackGround_->MapTileMap_);
+	Item_->CreateItem({ 160.f, 450.f }, ItemType::Owl);
+
+
+
 
 
 
@@ -227,27 +310,28 @@ void PlayerTeamTest::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Player::MainPlayer_1->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
 
 
-	Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
-	Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
-	Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
-	Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
-	Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
-	Player::MainPlayer_2->Boom_ = CreateActor<MapGameObject>((int)ORDER::PLAYER);
-	Player::MainPlayer_2->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Player::MainPlayer_2 = CreateActor<Player>((int)ORDER::PLAYER, "Player2");
+	//Player::MainPlayer_2->SetCharacter(static_cast<Character>(GlobalUIName::GetInst()->Get2PChar()));
+	//Player::MainPlayer_2->SetPlayerType(PlayerType::Player2);
+	//Player::MainPlayer_2->SetPosition(Areas_[36].GetCenter());	//170
+	//Player::MainPlayer_2->SetMapTile(&MapBackGround_->MapTileMap_);
+	//Player::MainPlayer_2->Boom_ = CreateActor<MapGameObject>((int)ORDER::PLAYER);
+	//Player::MainPlayer_2->Boom_->SetMapTile(&MapBackGround_->MapTileMap_);
 
 	Character Char1 = Player::MainPlayer_1->GetCharacter();
-	Character Char = Player::MainPlayer_2->GetCharacter();
 	//윈도우 마우스 숨김
 
 	PlayerTeamTestObject_ = CreateActor<MapGameObject>(static_cast<int>(ORDER::EFFECT), "Bubble");
 	PlayerTeamTestObject_->SetMapTile(&MapBackGround_->MapTileMap_);
 	PlayerTeamTestObject_->SetGameItem();
 
+	GameBgmPlayer::BgmPlay_->ChangeBgm("CampBGM.mp3");
 	ShowCursor(false);
 }
 
 void PlayerTeamTest::LevelChangeEnd(GameEngineLevel* _PrevLevel)
 {
+	GameBgmPlayer::BgmPlay_->Stop();
 	if (nullptr != Player::MainPlayer_1)		// 플레이어1이 null이 아니었다 => 다른 레벨의 플레이어 초기화 후 플레이어 생성 
 	{
 		Player::MainPlayer_1->Death();

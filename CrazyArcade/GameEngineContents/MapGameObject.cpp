@@ -638,9 +638,9 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			{
 				for (int i = 0; i < Player2BlockTiles_.size(); i++)
 				{
-					if (Player1BlockTiles_[i] == PushTile_)
+					if (Player2BlockTiles_[i] == PushTile_)
 					{
-						Player2BlockTiles_.erase(Player1BlockTiles_.begin() + i);
+						Player2BlockTiles_.erase(Player2BlockTiles_.begin() + i);
 						Player2BlockTiles_.push_back(NextTile_);
 
 					}
@@ -706,9 +706,9 @@ void MapGameObject::PushBubble(float4 _Pos, BlockDir _Dir, int _PlayerNum)
 			{
 				for (int i = 0; i < Player2BlockTiles_.size(); i++)
 				{
-					if (Player1BlockTiles_[i] == PushTile_)
+					if (Player2BlockTiles_[i] == PushTile_)
 					{
-						Player2BlockTiles_.erase(Player1BlockTiles_.begin() + i);
+						Player2BlockTiles_.erase(Player2BlockTiles_.begin() + i);
 						Player2BlockTiles_.push_back(NextTile_);
 
 					}
@@ -855,10 +855,10 @@ void MapGameObject::BubbleMoveUpdate()
 
 		if (BlockDir::LEFT == MoveBubble_[i]->BlockDir_)
 		{
-			if (MoveBubble_[i]->TilePos_.x >= MoveBubble_[i]->MoveNextTilePos_.x)
+			if (MoveBubble_[i]->TilePos_.x > MoveBubble_[i]->MoveNextTilePos_.x)
 			{
 
-				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::LEFT * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -878,7 +878,7 @@ void MapGameObject::BubbleMoveUpdate()
 		{
 			if (MoveBubble_[i]->TilePos_.x < MoveBubble_[i]->MoveNextTilePos_.x)
 			{
-				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::RIGHT * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -893,9 +893,9 @@ void MapGameObject::BubbleMoveUpdate()
 		}
 		if (BlockDir::DOWN == MoveBubble_[i]->BlockDir_)
 		{
-			if (MoveBubble_[i]->TilePos_.y <= MoveBubble_[i]->MoveNextTilePos_.y)
+			if (MoveBubble_[i]->TilePos_.y < MoveBubble_[i]->MoveNextTilePos_.y)
 			{
-				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::DOWN * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -910,9 +910,9 @@ void MapGameObject::BubbleMoveUpdate()
 		}
 		if (BlockDir::UP == MoveBubble_[i]->BlockDir_)
 		{
-			if (MoveBubble_[i]->TilePos_.y >= MoveBubble_[i]->MoveNextTilePos_.y)
+			if (MoveBubble_[i]->TilePos_.y > MoveBubble_[i]->MoveNextTilePos_.y)
 			{
-				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 200.0f;
+				Move_ = float4::UP * GameEngineTime::GetDeltaTime() * 600.0f;
 				float4 MovePos_ = { MoveBubble_[i]->TilePos_.x,MoveBubble_[i]->TilePos_.y };
 				MovePos_ += Move_;
 				MoveBubble_[i]->Renderer->SetPivot(MovePos_ + float4{ 20,60 });
@@ -1956,7 +1956,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 2;
 		RedDevilValue_ = 1;
 		DevilValue_ =2;
-		ShoesValue_ = 1;
+		ShoesValue_ = 3;
 		NiddleValue_ = 2;
 		ShieldValue_ = 1;
 		SuperJumpValue_ = 0;
@@ -1977,7 +1977,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 3;
 		RedDevilValue_ = 2;
 		DevilValue_ = 2;
-		ShoesValue_ = 3;
+		ShoesValue_ = 1;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
 		SuperJumpValue_ = 0;
@@ -1998,7 +1998,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 1;
 		RedDevilValue_ = 2;
 		DevilValue_ = 2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 1;
 		NiddleValue_ = 2;
 		ShieldValue_ = 0;
 		SuperJumpValue_ = 0;
@@ -2040,7 +2040,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 4; // 2->4
 		RedDevilValue_ = 1; 
 		DevilValue_ = 2;
-		ShoesValue_ = 0;
+		ShoesValue_ = 1;
 		NiddleValue_ = 1;
 		ShieldValue_ = 1;
 		SuperJumpValue_ = 0;
@@ -2061,7 +2061,7 @@ void MapGameObject::BlockValueSetting()
 		UltraBubbleValue_ = 3;
 		RedDevilValue_ = 2;
 		DevilValue_ = 2;
-		ShoesValue_ = 3;
+		ShoesValue_ = 1;
 		NiddleValue_ = 3;
 		ShieldValue_ = 3;
 		SuperJumpValue_ = 0;

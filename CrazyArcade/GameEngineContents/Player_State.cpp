@@ -160,6 +160,8 @@ void Player::OnRideStart()
 		IsMove = false;
 		AddAccTime(Time_);
 
+		PlayerAnimationRender_->SetOrder(static_cast<int>(ORDER::UI));
+
 		AnimationName_ = "OnUFO_";
 		PlayerAnimationRender_->ChangeAnimation(AnimationName_);
 	}
@@ -168,7 +170,7 @@ void Player::OnRideStart()
 void Player::OffRideStart()
 {
 	CheckDir_ = PlayerDir::None;
-	TestTime_ = 1.6f;
+	TestTime_ = 1.0f;
 	if (PlayerRideState_ == PlayerRideState::Owl)
 	{
 		IsMove = false;
@@ -242,7 +244,7 @@ void Player::RidingRideStart()
 	{
 		IsMove = true;
 		ReSetAccTime();
-		CurSpeed_ = 8.5f;
+		CurSpeed_ = 7.5f;
 
 		PlayerRideState_ = PlayerRideState::UFO;
 		AnimationName_ = "RidingUFO_";
@@ -350,7 +352,6 @@ void Player::JumpUpdate()
 void Player::AttackUpdate()
 {
 	Attack();
-
 	ChangeState(PlayerState::Move);
 	return;
 }
@@ -423,7 +424,7 @@ void Player::DieUpdate()
 
 void Player::OnRideUpdate()
 {
-	if (2.f < GetAccTime()
+	if (1.0f < GetAccTime()
 		&& PlayerAnimationRender_->IsEndAnimation())
 	{
 		if (PlayerRideState_ == PlayerRideState::UFO)
@@ -449,6 +450,7 @@ void Player::OffRideUpdate()
 
 	if (0.0f >= TestTime_)
 	{
+		PlayerAnimationRender_->SetOrder(static_cast<int>(ORDER::PLAYER));
 		IsInvincible = false;
 		ChangeState(PlayerState::Idle);
 		CurState_ = PlayerState::Idle;

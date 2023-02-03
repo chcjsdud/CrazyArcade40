@@ -197,6 +197,12 @@ void Player::FrontBlockCheckUpdate()
 
 	}
 	break;
+
+	case BlockType::WallBlock:
+	{
+		IsLeftMove = false;
+	}
+	break;
 	case BlockType::FixBlock:
 	{
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
@@ -290,6 +296,11 @@ void Player::FrontBlockCheckUpdate()
 			}
 		}
 
+	}
+	break;
+	case BlockType::WallBlock:
+	{
+		IsRightMove = false;
 	}
 	break;
 	case BlockType::FixBlock:
@@ -391,6 +402,12 @@ void Player::FrontBlockCheckUpdate()
 
 	}
 	break;
+
+	case BlockType::WallBlock:
+	{
+		IsUpMove = false;
+	}
+	break;
 	case BlockType::FixBlock:
 	{
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
@@ -489,6 +506,12 @@ void Player::FrontBlockCheckUpdate()
 		}
 	}
 	break;
+
+	case BlockType::WallBlock:
+	{
+		IsDownMove = false;
+	}
+	break;
 	case BlockType::FixBlock:
 	{
 		if (CurState_ == PlayerState::RidingRide && PlayerRideState_ == PlayerRideState::UFO)
@@ -544,6 +567,422 @@ void Player::FrontBlockCheckUpdate()
 	}
 	break;
 	}
+
+
+
+	//////////////////////////
+	if (PlayerRideState_ != PlayerRideState::UFO)
+	{
+		switch (LeftTopBlock)
+		{
+		case BlockType::FixBlock:
+		{
+
+			if (RightTopBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+
+			if (LeftBotBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+		}
+
+		case BlockType::PullBlock:
+		{
+
+			if (RightTopBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+
+			if (LeftBotBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+		}
+		case BlockType::WallBlock:
+		{
+
+			if (RightTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+
+			if (LeftBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+		}
+
+		}
+
+		switch (RightTopBlock)
+		{
+
+		case BlockType::FixBlock:
+		{
+
+			if (LeftTopBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+			if (RightBotBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+		}
+		case BlockType::PullBlock:
+		{
+
+			if (LeftTopBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+			if (RightBotBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+		}
+		case BlockType::WallBlock:
+		{
+
+			if (LeftTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+			if (RightBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+
+		}
+		}
+
+
+		switch (LeftBotBlock)
+		{
+
+		case BlockType::FixBlock:
+		{
+
+			if (RightBotBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (LeftTopBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+		}
+		case BlockType::PullBlock:
+		{
+
+			if (RightBotBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (LeftTopBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+
+
+		}
+		case BlockType::WallBlock:
+		{
+
+			if (RightBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (LeftTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+
+
+		}
+		}
+
+
+		switch (RightBotBlock)
+		{
+
+		case BlockType::FixBlock:
+		{
+
+			if (LeftBotBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (RightTopBlock != BlockType::FixBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::FixBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+		}
+
+		case BlockType::PullBlock:
+		{
+
+			if (LeftBotBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (RightTopBlock != BlockType::PullBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::PullBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+
+		}
+		case BlockType::WallBlock:
+		{
+
+			if (LeftBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (RightTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+
+		}
+
+		}
+
+	}
+	else if (PlayerRideState_ == PlayerRideState::UFO)
+	{
+		switch (LeftTopBlock)
+		{
+		case BlockType::WallBlock:
+		{
+
+			if (RightTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+
+			if (LeftBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+		}
+
+		}
+
+		switch (RightTopBlock)
+		{
+
+		case BlockType::WallBlock:
+		{
+
+			if (LeftTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Up) {
+				IsUpMove = false;
+			}
+
+			if (RightBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+
+		}
+		}
+
+
+		switch (LeftBotBlock)
+		{
+
+		case BlockType::WallBlock:
+		{
+
+			if (RightBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (LeftTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Left) {
+				IsLeftMove = false;
+			}
+			break;
+
+
+
+		}
+		}
+
+
+		switch (RightBotBlock)
+		{
+
+		case BlockType::WallBlock:
+		{
+
+			if (LeftBotBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+				SetMove(float4::LEFT * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (LeftBotBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Down) {
+				IsDownMove = false;
+			}
+
+
+			if (RightTopBlock != BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+				SetMove(float4::UP * GameEngineTime::GetDeltaTime() * CurSpeed_ * 50.0f);
+			}
+			else if (RightTopBlock == BlockType::WallBlock && CheckDir_ == PlayerDir::Right) {
+				IsRightMove = false;
+			}
+			break;
+
+
+		}
+
+		}
+
+	}
 }
 
 void Player::FrontBlockCheck()
@@ -560,13 +999,24 @@ void Player::FrontBlockCheck()
 		LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
 		UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
 
+
+		LeftTopBlock = CheckBlockTile(Pos + float4{ -39.0f, -39.0f });
+
 		if (RightIndex.X != 15)
 		{
 			RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+
+			RightTopBlock = CheckBlockTile(Pos + float4{ -1.0f, -39.0f });
+			if (DownIndex.Y != 13)
+			{
+				RightBotBlock = CheckBlockTile(Pos + float4{ -1.0f, -1.0f });
+			}
 		}
 		if (DownIndex.Y != 13)
 		{
 			DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+
+			LeftBotBlock = CheckBlockTile(Pos + float4{ -39.0f, -1.0f });
 		}
 
 		FrontBlockCheckUpdate();
@@ -587,13 +1037,24 @@ void Player::FrontBlockCheck()
 			LeftBlock = CheckBlockTile(Pos + float4{ -40.0f, -20.0f });
 			UpBlock = CheckBlockTile(Pos + float4{ -20.0f, -40.0f });
 
+
+			LeftTopBlock = CheckBlockTile(Pos + float4{ -39.0f, -39.0f });
+
 			if (RightIndex.X != 15)
 			{
 				RightBlock = CheckBlockTile(Pos + float4{ 0.0f, -20.0f });
+
+				RightTopBlock = CheckBlockTile(Pos + float4{ -1.0f, -39.0f });
+				if (DownIndex.Y != 13)
+				{
+					RightBotBlock = CheckBlockTile(Pos + float4{ -1.0f, -1.0f });
+				}
 			}
 			if (DownIndex.Y != 13)
 			{
 				DownBlock = CheckBlockTile(Pos + float4{ -20.0f, 0.0f });
+
+				LeftBotBlock = CheckBlockTile(Pos + float4{ -39.0f, -1.0f });
 			}
 
 			FrontBlockCheckUpdate();
